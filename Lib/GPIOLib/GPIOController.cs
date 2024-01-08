@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace Library.GPIOLib
 {
     using System.Device.Gpio;
-    public class GPIO
+    public class GPIOController
     {
         GpioController _controller;
-        public GPIO(GpioController controller)
+        public GPIOController(GpioController controller)
         {
             _controller = controller;
         }
