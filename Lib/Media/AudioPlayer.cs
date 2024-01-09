@@ -1,6 +1,6 @@
-﻿using NAudio.Wave;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,20 +9,34 @@ namespace Library.Media
 {
     public class AudioPlayer
     {
-        private WaveOutEvent waveOut;
-        private AudioFileReader audioFile;
-
-        public void StartAudio(string soundFilePath)
+        private Process audioProcess;
+        string soundFilePath;
+        public void StartAudio(SoundType soundType)
         {
-            if (waveOut == null)
+            switch (soundType)
             {
-                waveOut = new WaveOutEvent();
-                audioFile = new AudioFileReader(soundFilePath);
+                case SoundType.Beeb:
+                    soundFilePath = "file bath";
+                    break;
+                case SoundType.Warning:
+                    break;
+                default:
+                    break;
+            }
 
-                waveOut.Init(audioFile);
-                waveOut.Play();
 
+            if (audioProcess == null)
+            {
+                audioProcess = new Process();
+                audioProcess.StartInfo.FileName = "aplay";
+                audioProcess.StartInfo.Arguments = soundFilePath;
+                audioProcess.StartInfo.UseShellExecute = false;
+                audioProcess.StartInfo.RedirectStandardOutput = true;
+                audioProcess.StartInfo.RedirectStandardError = true;
+                audioProcess.Start();
                 Console.WriteLine("Audio playback started.");
+                // Allow some time for playback before returning
+                Thread.Sleep(5000);
             }
             else
             {
@@ -32,14 +46,10 @@ namespace Library.Media
 
         public void StopAudio()
         {
-            if (waveOut != null)
+            if (audioProcess != null && !audioProcess.HasExited)
             {
-                waveOut.Stop();
-                waveOut.Dispose();
-                audioFile.Dispose();
-
-                waveOut = null;
-                audioFile = null;
+                audioProcess.Kill();
+                audioProcess.WaitForExit();
 
                 Console.WriteLine("Audio playback stopped.");
             }
