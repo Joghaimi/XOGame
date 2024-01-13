@@ -24,7 +24,7 @@ using Library;
 // mcp23017
 Console.WriteLine("Hello World!");
 var displayControl = new DisplayController();
-displayControl.Init(SerialPortMapping.PortMap["SerialTest"]);
+displayControl.Init(SerialPortMapping.PortMap["Serial2"]);
 
 var connectionSettingsx20 = new I2cConnectionSettings(1, 0x20);
 var i2cDevicex20 = I2cDevice.Create(connectionSettingsx20);
