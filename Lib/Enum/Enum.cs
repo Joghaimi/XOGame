@@ -13,7 +13,7 @@ namespace Library
     }
     public enum Displays
     {
-        first,
+        first=1,
         second,
         third,
         fourth

@@ -20,7 +20,7 @@ namespace Library.Display
         public bool SendCommand(Displays DisplayNumber  , DisplayCommand command) {
             if(isBusy)
                 return false;
-            SerialPort.WriteLine($"{DisplayNumber} {command}");
+            SerialPort.WriteLine($"{(int)DisplayNumber}{(int)command}");
             isBusy = true;
             string receivedData = SerialPort.ReadTo("\r");
             isBusy = false;
