@@ -21,6 +21,7 @@ namespace GatheringRoom.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            GPIOController _controller= new GPIOController();
             // Init the Pin's
             _controller.Setup(PIRPin1, PinMode.Input);
             _controller.Setup(PIRPin2, PinMode.Input);

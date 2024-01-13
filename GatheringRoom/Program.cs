@@ -10,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHostedService<RFIDService>();
+builder.Services.AddHostedService<RoomSensorServices>();
 
 var app = builder.Build();
 

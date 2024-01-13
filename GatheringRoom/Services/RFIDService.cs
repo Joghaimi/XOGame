@@ -25,7 +25,7 @@ namespace GatheringRoom.Services
                 if (_rfidController.CheckCardExisting() && Teams.player.Count<5)
                 {
                     // Read Card Info .. 
-                    Console.WriteLine("CArd Found .. ");
+                    Console.WriteLine("Card Found .. ");
                 }
                 else {
                     //TestTest++;
