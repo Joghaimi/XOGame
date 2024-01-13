@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library", "Lib\Library.cspr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{04890733-61CB-4022-BBC1-E1830A99DE55}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatheringRoom", "GatheringRoom\GatheringRoom.csproj", "{88C4AD76-411F-4CBE-A3EA-2395A9C0B9A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{04890733-61CB-4022-BBC1-E1830A99DE55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04890733-61CB-4022-BBC1-E1830A99DE55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04890733-61CB-4022-BBC1-E1830A99DE55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88C4AD76-411F-4CBE-A3EA-2395A9C0B9A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88C4AD76-411F-4CBE-A3EA-2395A9C0B9A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88C4AD76-411F-4CBE-A3EA-2395A9C0B9A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88C4AD76-411F-4CBE-A3EA-2395A9C0B9A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

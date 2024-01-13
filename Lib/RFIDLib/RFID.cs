@@ -37,8 +37,17 @@ namespace Library.RFIDLib
         }
         public bool CheckCardExisting()
         {
-            byte[] buffer = new byte[2]; // Assuming a buffer of 10 bytes
-            return Mfrc522.IsCardPresent(buffer, false);
+            if (Mfrc522 != null)
+            {
+                byte[] buffer = new byte[2]; // Assuming a buffer of 10 bytes
+                return Mfrc522.IsCardPresent(buffer, false);
+            }
+            else {
+                Console.WriteLine("RFID Not Initialized");
+               
+                return false;
+            }
+            
         }
         public string ReadCardInfo()
         {
