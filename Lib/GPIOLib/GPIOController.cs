@@ -9,10 +9,10 @@ namespace Library.GPIOLib
     using System.Device.Gpio;
     public class GPIOController
     {
-        GpioController _controller;
-        public GPIOController(GpioController controller)
+        GpioController _controller ;
+        public GPIOController()
         {
-            _controller = controller;
+            _controller = new GpioController();
         }
         public void Setup(int pin , PinMode mode ) { 
             _controller.OpenPin(pin, mode);

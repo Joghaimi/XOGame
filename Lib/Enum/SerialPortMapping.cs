@@ -11,7 +11,8 @@ namespace Library.Enum
         public static Dictionary<string, string> PortMap = new Dictionary<string, string>
         {
             { "Serial0", "/dev/ttyS0" },
-            { "Serial2", "/dev/ttyS1" },
+            { "Serial2", "/dev/ttyAMA2" },
+            { "SerialTest", "COM2" },
         };
     }
 }

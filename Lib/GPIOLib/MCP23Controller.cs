@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Iot.Device.Mcp23xxx;
+using System;
 using System.Collections.Generic;
+using System.Device.I2c;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +10,10 @@ namespace Library.GPIOLib
 {
     public class MCP23Controller
     {
+
+        Mcp23017 mcp23017x20; 
+        Mcp23017 mcp23017x21;
+
         //var connectionSettingsx20 = new I2cConnectionSettings(1, 0x20);
         //var i2cDevicex20 = I2cDevice.Create(connectionSettingsx20);
 
@@ -24,7 +30,13 @@ namespace Library.GPIOLib
         //    Task.Delay(1000).Wait();
         //}
 
-        public void init() { 
+        public void init() {
+            var connectionSettingsx20 = new I2cConnectionSettings(1, 0x20);
+            var connectionSettingsx21 = new I2cConnectionSettings(1, 0x21);
+            var i2cDevicex20 = I2cDevice.Create(connectionSettingsx20);
+            var i2cDevicex21 = I2cDevice.Create(connectionSettingsx21);
+            mcp23017x20 = new Mcp23017(i2cDevicex20);
+            mcp23017x21 = new Mcp23017(i2cDevicex21);
         }
     }
 }
