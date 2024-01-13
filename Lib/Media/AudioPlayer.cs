@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,9 +10,12 @@ namespace Library.Media
 {
     public class AudioPlayer
     {
+        SerialPort SerialPort;
         private Process audioProcess;
         string soundFilePath;
-        public void StartAudio(SoundType soundType)
+        
+        // For the PI
+        public void PIStartAudio(SoundType soundType)
         {
             switch (soundType)
             {
@@ -43,8 +47,7 @@ namespace Library.Media
                 Console.WriteLine("Audio is already playing.");
             }
         }
-
-        public void StopAudio()
+        public void PIStopAudio()
         {
             if (audioProcess != null && !audioProcess.HasExited)
             {
@@ -57,6 +60,15 @@ namespace Library.Media
             {
                 Console.WriteLine("No audio is currently playing.");
             }
+        }
+        // For the external chip
+        public void JQ8400Init(string serialPort) {
+            this.SerialPort = new SerialPort(serialPort, 9600); // Replace "COM1" with your actual serial port name
+        }
+        public void JQ8400PlayAudio() { 
+        }
+        public void JQ8400PauseAudio()
+        {
         }
     }
 }

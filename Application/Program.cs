@@ -19,27 +19,23 @@ using Iot.Device.Mcp25xxx.Register.ErrorDetection;
 using System.Diagnostics;
 using Iot.Device.Mcp23xxx;
 // mcp23017
-
 Console.WriteLine("Hello World!");
-
 // Configure I2C connection settings for MCP23017
-var connectionSettingsx20 = new I2cConnectionSettings(1, 0x20);
-var i2cDevicex20 = I2cDevice.Create(connectionSettingsx20);
+//var connectionSettingsx20 = new I2cConnectionSettings(1, 0x20);
+//var i2cDevicex20 = I2cDevice.Create(connectionSettingsx20);
 
-// Create an instance of MCP23017
-var mcp23017x20 = new Mcp23017(i2cDevicex20);
+//// Create an instance of MCP23017
+//var mcp23017x20 = new Mcp23017(i2cDevicex20);
 
-// Set the I/O direction for PortA and PortB (0 means output, 1 means input)
-mcp23017x20.WriteByte(Register.IODIR, 0b0000_0000, Port.PortA);
-mcp23017x20.WriteByte(Register.IODIR, 0b0000_0000, Port.PortB);
-while (true) {
-    mcp23017x20.WriteByte(Register.GPIO, 0b0000_0011, Port.PortA);
-    Task.Delay(1000).Wait();
-
-    mcp23017x20.WriteByte(Register.GPIO, 0b0000_0000, Port.PortA);
-    Task.Delay(1000).Wait();
-
-}
+//// Set the I/O direction for PortA and PortB (0 means output, 1 means input)
+//mcp23017x20.WriteByte(Register.IODIR, 0b0000_0000, Port.PortA);
+//mcp23017x20.WriteByte(Register.IODIR, 0b0000_0000, Port.PortB);
+//while (true) {
+//    mcp23017x20.WriteByte(Register.GPIO, 0b0000_0011, Port.PortA);
+//    Task.Delay(1000).Wait();
+//    mcp23017x20.WriteByte(Register.GPIO, 0b0000_0000, Port.PortA);
+//    Task.Delay(1000).Wait();
+//}
 
 
 
@@ -68,7 +64,7 @@ while (true) {
 //    else
 //    {
 //        Console.WriteLine("No card.");
-//        Console.WriteLine(mfrc522.IsCardPresent(buffer , false));
+//        Console.WriteLine(mfrc522.IsCardPresent(buffer, false));
 //    }
 //    Thread.Sleep(res ? 0 : 1000);
 //}
