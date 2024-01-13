@@ -26,35 +26,39 @@ Console.WriteLine("Hello World!");
 var displayControl = new DisplayController();
 displayControl.Init(SerialPortMapping.PortMap["Serial2"]);
 
-//var connectionSettingsx20 = new I2cConnectionSettings(1, 0x20);
-//var i2cDevicex20 = I2cDevice.Create(connectionSettingsx20);
+var connectionSettingsx20 = new I2cConnectionSettings(1, 0x20);
+var i2cDevicex20 = I2cDevice.Create(connectionSettingsx20);
 
 ////Create an instance of MCP23017
-//var mcp23017x20 = new Mcp23017(i2cDevicex20);
+var mcp23017x20 = new Mcp23017(i2cDevicex20);
 
 //// Set the I/O direction for PortA and PortB (0 means output, 1 means input)
-//mcp23017x20.WriteByte(Register.IODIR, 0b0000_0000, Port.PortA);
-//mcp23017x20.WriteByte(Register.IODIR, 0b0000_0000, Port.PortB);
+mcp23017x20.WriteByte(Register.IODIR, 0b0000_0000, Port.PortA);
+mcp23017x20.WriteByte(Register.IODIR, 0b0000_0000, Port.PortB);
 
 while (true) {
-    //mcp23017x20.WriteByte(Register.GPIO, 0b0000_0011, Port.PortA);
-    displayControl.SendCommand(Displays.first, DisplayCommand.rightArrow);
-    Thread.Sleep(1000);
-    //mcp23017x20.WriteByte(Register.GPIO, 0b0000_0000, Port.PortA);
-    displayControl.SendCommand(Displays.first, DisplayCommand.clear);
-    Thread.Sleep(1000);
-    displayControl.SendCommand(Displays.second, DisplayCommand.rightArrow);
-    Thread.Sleep(1000);
-    displayControl.SendCommand(Displays.second, DisplayCommand.clear);
-    Thread.Sleep(1000);
-    displayControl.SendCommand(Displays.third, DisplayCommand.rightArrow);
-    Thread.Sleep(1000);
-    displayControl.SendCommand(Displays.third, DisplayCommand.clear);
-    Thread.Sleep(1000);
-    displayControl.SendCommand(Displays.fourth, DisplayCommand.rightArrow);
-    Thread.Sleep(1000);
-    displayControl.SendCommand(Displays.fourth, DisplayCommand.clear);
-    Thread.Sleep(1000);
+    ////mcp23017x20.WriteByte(Register.GPIO, 0b0000_0011, Port.PortA);
+    //displayControl.SendCommand(Displays.first, DisplayCommand.rightArrow);
+    //Thread.Sleep(1000);
+    ////mcp23017x20.WriteByte(Register.GPIO, 0b0000_0000, Port.PortA);
+    //displayControl.SendCommand(Displays.first, DisplayCommand.clear);
+    //Thread.Sleep(1000);
+    //displayControl.SendCommand(Displays.second, DisplayCommand.rightArrow);
+    //Thread.Sleep(1000);
+    //displayControl.SendCommand(Displays.second, DisplayCommand.clear);
+    //Thread.Sleep(1000);
+    //displayControl.SendCommand(Displays.third, DisplayCommand.rightArrow);
+    //Thread.Sleep(1000);
+    //displayControl.SendCommand(Displays.third, DisplayCommand.clear);
+    //Thread.Sleep(1000);
+    //displayControl.SendCommand(Displays.fourth, DisplayCommand.rightArrow);
+    //Thread.Sleep(1000);
+    //displayControl.SendCommand(Displays.fourth, DisplayCommand.clear);
+    //Thread.Sleep(1000);
+    mcp23017x20.WriteByte(Register.GPIO, 0b0000_0011, Port.PortA);
+    Task.Delay(1000).Wait();
+    mcp23017x20.WriteByte(Register.GPIO, 0b0000_0000, Port.PortA);
+    Task.Delay(1000).Wait();
 
 }
 
