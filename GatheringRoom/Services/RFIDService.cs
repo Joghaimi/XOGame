@@ -25,16 +25,16 @@ namespace GatheringRoom.Services
                 if (_rfidController.CheckCardExisting() && Teams.player.Count<5)
                 {
                     // Read Card Info .. 
-                    Console.WriteLine("Test .. ");
+                    Console.WriteLine("CArd Found .. ");
                 }
                 else {
-                    TestTest++;
-                    if (TestTest > 20)
-                    {
-                        if(Teams.player.Count < 5)
-                        Teams.player.Add($"Ahmad {TestTest}");
-                        TestTest = 0;
-                    }
+                    //TestTest++;
+                    //if (TestTest > 20)
+                    //{
+                    //    if(Teams.player.Count < 5)
+                    //    Teams.player.Add($"Ahmad {TestTest}");
+                    //    TestTest = 0;
+                    //}
                 }
                 await Task.Delay(TimeSpan.FromMilliseconds(500), cancellationToken); 
             }

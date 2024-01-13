@@ -26,11 +26,6 @@ namespace GatheringRoom.Services
             _controller.Setup(PIRPin2, PinMode.Input);
             _controller.Setup(PIRPin3, PinMode.Input);
             _controller.Setup(PIRPin4, PinMode.Input);
-
-
-
-
-
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
@@ -44,8 +39,7 @@ namespace GatheringRoom.Services
                 PIR2 = _controller.Read(PIRPin2);
                 PIR3 = _controller.Read(PIRPin3);
                 PIR4 = _controller.Read(PIRPin4);
-
-
+                Console.WriteLine($"PIR Status PIR1:{PIR1} PIR2:{PIR2} PIR3{PIR3} PIR4:{PIR4}");
                 bool isAnyOfRIPSensorActive = PIR1 || PIR2 || PIR3 || PIR4 || isTheirAreSomeOneInTheRoom;
                 if (isAnyOfRIPSensorActive && !isTheirAreSomeOneInTheRoom)
                 {
@@ -60,7 +54,7 @@ namespace GatheringRoom.Services
 
 
 
-                //await Task.Delay(TimeSpan.FromMilliseconds(500), cancellationToken);
+                await Task.Delay(TimeSpan.FromMilliseconds(1000), cancellationToken);
             }
         }
 
