@@ -216,17 +216,19 @@ Console.WriteLine("Hello World!");
 
 // === Test Led Work
 
-//Console.WriteLine("Blinking LED. Press Ctrl+C to end.");
-//int pin = 17;
-//using var controller = new GpioController();
-//controller.OpenPin(pin, PinMode.Output);
-//bool ledOn = true;
-//while (true)
-//{
-//    controller.Write(pin, ((ledOn) ? PinValue.High : PinValue.Low));
-//    Thread.Sleep(1000);
-//    ledOn = !ledOn;
-//}
+Console.WriteLine("Blinking LED. Press Ctrl+C to end.");
+int pin = 17;
+using var controller = new GpioController();
+controller.OpenPin(pin, PinMode.Input);
+bool ledOn = true;
+while (true)
+{
+    var value= controller.Read(pin);
+    Console.WriteLine($"status {ledOn}");
+    controller.Write(pin, ((ledOn) ? PinValue.High : PinValue.Low));
+    Thread.Sleep(1000);
+;
+}
 
 
 
