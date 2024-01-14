@@ -69,35 +69,6 @@ namespace Library.RFIDLib
                     mifare.BlockNumber = block;
                     mifare.Command = MifareCardCommand.AuthenticationB;
                     ret = mifare.RunMifareCardCommand();
-                    if (ret < 0)
-                    {
-                        // If you have an authentication error, you have to deselect and reselect the card again and retry
-                        // Those next lines shows how to try to authenticate with other known default keys
-                        mifare.ReselectCard();
-                        // Try the other key
-                        mifare.KeyA = MifareCard.DefaultKeyA.ToArray();
-                        mifare.Command = MifareCardCommand.AuthenticationA;
-                        ret = mifare.RunMifareCardCommand();
-                        if (ret < 0)
-                        {
-                            mifare.ReselectCard();
-                            mifare.KeyA = MifareCard.DefaultBlocksNdefKeyA.ToArray();
-                            mifare.Command = MifareCardCommand.AuthenticationA;
-                            ret = mifare.RunMifareCardCommand();
-                            if (ret < 0)
-                            {
-                                mifare.ReselectCard();
-                                mifare.KeyA = MifareCard.DefaultFirstBlockNdefKeyA.ToArray();
-                                mifare.Command = MifareCardCommand.AuthenticationA;
-                                ret = mifare.RunMifareCardCommand();
-                                if (ret < 0)
-                                {
-                                    mifare.ReselectCard();
-                                    Console.WriteLine($"Error reading bloc: {block}");
-                                }
-                            }
-                        }
-                    }
                     if (ret >= 0)
                     {
                         mifare.BlockNumber = block;
@@ -107,7 +78,7 @@ namespace Library.RFIDLib
                         {
                             if (mifare.Data is object)
                             {
-                                Console.WriteLine($"Bloc: {block}, Data: {BitConverter.ToString(mifare.Data)}");
+                                Console.WriteLine($"Bloc: {block}, Data: {mifare.Data}");
                                 Console.WriteLine(Encoding.UTF8.GetString(mifare.Data));
                             }
                         }
@@ -116,24 +87,7 @@ namespace Library.RFIDLib
                             mifare.ReselectCard();
                             Console.WriteLine($"Error reading bloc: {block}");
                         }
-                        //if (block % 4 == 3)
-                        //{
-                        //    if (mifare.Data != null)
-                        //    {
-                        //        // Check what are the permissions
-                        //        for (byte j = 3; j > 0; j--)
-                        //        {
-                        //            var access = mifare.BlockAccess((byte)(block - j), mifare.Data);
-                        //            Console.WriteLine($"Bloc: {block - j}, Access: {access}");
-                        //        }
-                        //        var sector = mifare.SectorTailerAccess(block, mifare.Data);
-                        //        Console.WriteLine($"Bloc: {block}, Access: {sector}");
-                        //    }
-                        //    else
-                        //    {
-                        //        Console.WriteLine("Can't check any sector bloc");
-                        //    }
-                        //}
+                       
                     }
                     else
                     {
