@@ -88,153 +88,153 @@ Console.WriteLine("Hello World!");
 //}
 
 // RFID Test
-//GpioController gpioController = new GpioController();
-//int pinReset = 25;
+GpioController gpioController = new GpioController();
+int pinReset = 25;
 
-//SpiConnectionSettings connection = new(0, 0);
-//connection.ClockFrequency = 10_000_000;
-//SpiDevice spi = SpiDevice.Create(connection);
-//MfRc522 mfrc522 = new(spi, pinReset, gpioController, false);
-//byte[] buffer = new byte[2];
-//bool res;
-//Data106kbpsTypeA card;
-//do
-//{
-//    res = mfrc522.ListenToCardIso14443TypeA(out card, TimeSpan.FromSeconds(2));
-//    if (res)
-//    {
-//        Console.WriteLine("card");
-//    }
-//    else
-//    {
-//        Console.WriteLine("No card.");
-//        Console.WriteLine(mfrc522.IsCardPresent(buffer, false));
-//    }
-//    Thread.Sleep(res ? 0 : 1000);
-//}
-//while (!res);
-//if (UltralightCard.IsUltralightCard(card.Atqa, card.Sak))
-//{
-//    Debug.WriteLine("Ultralight card detected, running various tests.");
-//    //ProcessUltralight();
-//}
-//else
-//{
-//    Debug.WriteLine("Mifare card detected, dumping the memory.");
-//    ProcessMifare();
-//}
-//void ProcessMifare()
-//{
-//    var mifare = new MifareCard(mfrc522!, 0);
-//    mifare.SerialNumber = card.NfcId;
-//    mifare.Capacity = MifareCardCapacity.Mifare1K;
-//    mifare.KeyA = MifareCard.DefaultKeyA.ToArray();
-//    mifare.KeyB = MifareCard.DefaultKeyB.ToArray();
-//    int ret;
+SpiConnectionSettings connection = new(0, 0);
+connection.ClockFrequency = 10_000_000;
+SpiDevice spi = SpiDevice.Create(connection);
+MfRc522 mfrc522 = new(spi, pinReset, gpioController, false);
+byte[] buffer = new byte[2];
+bool res;
+Data106kbpsTypeA card;
+do
+{
+    res = mfrc522.ListenToCardIso14443TypeA(out card, TimeSpan.FromSeconds(2));
+    if (res)
+    {
+        Console.WriteLine("card");
+    }
+    else
+    {
+        Console.WriteLine("No card.");
+        Console.WriteLine(mfrc522.IsCardPresent(buffer, false));
+    }
+    Thread.Sleep(res ? 0 : 1000);
+}
+while (!res);
+if (UltralightCard.IsUltralightCard(card.Atqa, card.Sak))
+{
+    Debug.WriteLine("Ultralight card detected, running various tests.");
+    //ProcessUltralight();
+}
+else
+{
+    Debug.WriteLine("Mifare card detected, dumping the memory.");
+    ProcessMifare();
+}
+void ProcessMifare()
+{
+    var mifare = new MifareCard(mfrc522!, 0);
+    mifare.SerialNumber = card.NfcId;
+    mifare.Capacity = MifareCardCapacity.Mifare1K;
+    mifare.KeyA = MifareCard.DefaultKeyA.ToArray();
+    mifare.KeyB = MifareCard.DefaultKeyB.ToArray();
+    int ret;
 
-//    for (byte block = 0; block < 64; block++)
-//    {
-//        mifare.BlockNumber = block;
-//        mifare.Command = MifareCardCommand.AuthenticationB;
-//        ret = mifare.RunMifareCardCommand();
-//        if (ret < 0)
-//        {
-//            // If you have an authentication error, you have to deselect and reselect the card again and retry
-//            // Those next lines shows how to try to authenticate with other known default keys
-//            mifare.ReselectCard();
-//            // Try the other key
-//            mifare.KeyA = MifareCard.DefaultKeyA.ToArray();
-//            mifare.Command = MifareCardCommand.AuthenticationA;
-//            ret = mifare.RunMifareCardCommand();
-//            if (ret < 0)
-//            {
-//                mifare.ReselectCard();
-//                mifare.KeyA = MifareCard.DefaultBlocksNdefKeyA.ToArray();
-//                mifare.Command = MifareCardCommand.AuthenticationA;
-//                ret = mifare.RunMifareCardCommand();
-//                if (ret < 0)
-//                {
-//                    mifare.ReselectCard();
-//                    mifare.KeyA = MifareCard.DefaultFirstBlockNdefKeyA.ToArray();
-//                    mifare.Command = MifareCardCommand.AuthenticationA;
-//                    ret = mifare.RunMifareCardCommand();
-//                    if (ret < 0)
-//                    {
-//                        mifare.ReselectCard();
-//                        Debug.WriteLine($"Error reading bloc: {block}");
-//                    }
-//                }
-//            }
-//        }
+    for (byte block = 0; block < 64; block++)
+    {
+        mifare.BlockNumber = block;
+        mifare.Command = MifareCardCommand.AuthenticationB;
+        ret = mifare.RunMifareCardCommand();
+        if (ret < 0)
+        {
+            // If you have an authentication error, you have to deselect and reselect the card again and retry
+            // Those next lines shows how to try to authenticate with other known default keys
+            mifare.ReselectCard();
+            // Try the other key
+            mifare.KeyA = MifareCard.DefaultKeyA.ToArray();
+            mifare.Command = MifareCardCommand.AuthenticationA;
+            ret = mifare.RunMifareCardCommand();
+            if (ret < 0)
+            {
+                mifare.ReselectCard();
+                mifare.KeyA = MifareCard.DefaultBlocksNdefKeyA.ToArray();
+                mifare.Command = MifareCardCommand.AuthenticationA;
+                ret = mifare.RunMifareCardCommand();
+                if (ret < 0)
+                {
+                    mifare.ReselectCard();
+                    mifare.KeyA = MifareCard.DefaultFirstBlockNdefKeyA.ToArray();
+                    mifare.Command = MifareCardCommand.AuthenticationA;
+                    ret = mifare.RunMifareCardCommand();
+                    if (ret < 0)
+                    {
+                        mifare.ReselectCard();
+                        Debug.WriteLine($"Error reading bloc: {block}");
+                    }
+                }
+            }
+        }
 
-//        if (ret >= 0)
-//        {
-//            mifare.BlockNumber = block;
-//            mifare.Command = MifareCardCommand.Read16Bytes;
-//            ret = mifare.RunMifareCardCommand();
-//            if (ret >= 0)
-//            {
-//                if (mifare.Data is object)
-//                {
-//                    Debug.WriteLine($"Bloc: {block}, Data: {BitConverter.ToString(mifare.Data)}");
-//                }
-//            }
-//            else
-//            {
-//                mifare.ReselectCard();
-//                Debug.WriteLine($"Error reading bloc: {block}");
-//            }
+        if (ret >= 0)
+        {
+            mifare.BlockNumber = block;
+            mifare.Command = MifareCardCommand.Read16Bytes;
+            ret = mifare.RunMifareCardCommand();
+            if (ret >= 0)
+            {
+                if (mifare.Data is object)
+                {
+                    Debug.WriteLine($"Bloc: {block}, Data: {BitConverter.ToString(mifare.Data)}");
+                }
+            }
+            else
+            {
+                mifare.ReselectCard();
+                Debug.WriteLine($"Error reading bloc: {block}");
+            }
 
-//            if (block % 4 == 3)
-//            {
-//                if (mifare.Data != null)
-//                {
-//                    // Check what are the permissions
-//                    for (byte j = 3; j > 0; j--)
-//                    {
-//                        var access = mifare.BlockAccess((byte)(block - j), mifare.Data);
-//                        Debug.WriteLine($"Bloc: {block - j}, Access: {access}");
-//                    }
+            if (block % 4 == 3)
+            {
+                if (mifare.Data != null)
+                {
+                    // Check what are the permissions
+                    for (byte j = 3; j > 0; j--)
+                    {
+                        var access = mifare.BlockAccess((byte)(block - j), mifare.Data);
+                        Debug.WriteLine($"Bloc: {block - j}, Access: {access}");
+                    }
 
-//                    var sector = mifare.SectorTailerAccess(block, mifare.Data);
-//                    Debug.WriteLine($"Bloc: {block}, Access: {sector}");
-//                }
-//                else
-//                {
-//                    Debug.WriteLine("Can't check any sector bloc");
-//                }
-//            }
-//        }
-//        else
-//        {
-//            Debug.WriteLine($"Authentication error");
-//        }
-//    }
-//}
+                    var sector = mifare.SectorTailerAccess(block, mifare.Data);
+                    Debug.WriteLine($"Bloc: {block}, Access: {sector}");
+                }
+                else
+                {
+                    Debug.WriteLine("Can't check any sector bloc");
+                }
+            }
+        }
+        else
+        {
+            Debug.WriteLine($"Authentication error");
+        }
+    }
+}
 
 
 
 
 // === Test Led Work
 
-Console.WriteLine("Blinking LED. Press Ctrl+C to end.");
-int pin = 27;
-using var controller = new GpioController();
-controller.OpenPin(pin, PinMode.Input);
-var mode =controller.GetPinMode(pin);
-bool ledOn = true;
-Console.WriteLine($"Mode {mode}");
-while (true)
-{
-    var value= controller.Read(pin);
-    Console.WriteLine($"status {value}");
+//Console.WriteLine("Blinking LED. Press Ctrl+C to end.");
+//int pin = 27;
+//using var controller = new GpioController();
+//controller.OpenPin(pin, PinMode.Input);
+//var mode =controller.GetPinMode(pin);
+//bool ledOn = true;
+//Console.WriteLine($"Mode {mode}");
+//while (true)
+//{
+//    var value= controller.Read(pin);
+//    Console.WriteLine($"status {value}");
 
 
 
-    //controller.Write(pin, ((ledOn) ? PinValue.High : PinValue.Low));
-    Thread.Sleep(1000);
-;
-}
+//    //controller.Write(pin, ((ledOn) ? PinValue.High : PinValue.Low));
+//    Thread.Sleep(1000);
+//;
+//}
 
 
 
