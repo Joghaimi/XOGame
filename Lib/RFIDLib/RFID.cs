@@ -78,7 +78,7 @@ namespace Library.RFIDLib
                         {
                             if (mifare.Data is object)
                             {
-                                Console.WriteLine($"Bloc: {block}, Data: {mifare.Data}");
+                                Console.WriteLine($"Bloc: {block}, Data: {BitConverter.ToString(mifare.Data)}");
                                 Console.WriteLine(Encoding.UTF8.GetString(mifare.Data));
                             }
                         }
