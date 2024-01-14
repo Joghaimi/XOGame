@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Iot.Device.Rfid;
 using Iot.Device.Card.Mifare;
 using System.Diagnostics;
+using Iot.Device.Nmea0183;
 
 namespace Library.RFIDLib
 {
@@ -107,6 +108,7 @@ namespace Library.RFIDLib
                             if (mifare.Data is object)
                             {
                                 Console.WriteLine($"Bloc: {block}, Data: {BitConverter.ToString(mifare.Data)}");
+                                Console.WriteLine(Encoding.UTF8.GetString(mifare.Data));
                             }
                         }
                         else
@@ -114,24 +116,24 @@ namespace Library.RFIDLib
                             mifare.ReselectCard();
                             Console.WriteLine($"Error reading bloc: {block}");
                         }
-                        if (block % 4 == 3)
-                        {
-                            if (mifare.Data != null)
-                            {
-                                // Check what are the permissions
-                                for (byte j = 3; j > 0; j--)
-                                {
-                                    var access = mifare.BlockAccess((byte)(block - j), mifare.Data);
-                                    Console.WriteLine($"Bloc: {block - j}, Access: {access}");
-                                }
-                                var sector = mifare.SectorTailerAccess(block, mifare.Data);
-                                Console.WriteLine($"Bloc: {block}, Access: {sector}");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Can't check any sector bloc");
-                            }
-                        }
+                        //if (block % 4 == 3)
+                        //{
+                        //    if (mifare.Data != null)
+                        //    {
+                        //        // Check what are the permissions
+                        //        for (byte j = 3; j > 0; j--)
+                        //        {
+                        //            var access = mifare.BlockAccess((byte)(block - j), mifare.Data);
+                        //            Console.WriteLine($"Bloc: {block - j}, Access: {access}");
+                        //        }
+                        //        var sector = mifare.SectorTailerAccess(block, mifare.Data);
+                        //        Console.WriteLine($"Bloc: {block}, Access: {sector}");
+                        //    }
+                        //    else
+                        //    {
+                        //        Console.WriteLine("Can't check any sector bloc");
+                        //    }
+                        //}
                     }
                     else
                     {
