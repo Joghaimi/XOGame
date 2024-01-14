@@ -23,10 +23,10 @@ namespace GatheringRoom.Services
         {
             GPIOController _controller = new GPIOController();
             // Init the Pin's
-            _controller.Setup(PIRPin1, PinMode.Input);
-            _controller.Setup(PIRPin2, PinMode.Input);
-            _controller.Setup(PIRPin3, PinMode.Input);
-            _controller.Setup(PIRPin4, PinMode.Input);
+            _controller.Setup(PIRPin1, PinMode.InputPullDown);
+            _controller.Setup(PIRPin3, PinMode.InputPullDown);
+            _controller.Setup(PIRPin4, PinMode.InputPullDown);
+            _controller.Setup(PIRPin2, PinMode.InputPullDown);
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
