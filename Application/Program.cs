@@ -217,7 +217,7 @@ Console.WriteLine("Hello World!");
 // === Test Led Work
 
 Console.WriteLine("Blinking LED. Press Ctrl+C to end.");
-int pin = 17;
+int pin = 27;
 using var controller = new GpioController();
 controller.OpenPin(pin, PinMode.Input);
 bool ledOn = true;
