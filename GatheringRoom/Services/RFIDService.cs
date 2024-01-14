@@ -8,6 +8,7 @@ namespace GatheringRoom.Services
         private RFID _rfidController =new();
         int pinReset = 6;
         int TestTest = 0;
+        bool stop = false;
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -22,10 +23,12 @@ namespace GatheringRoom.Services
             {
                 // Your service logic goes here
                 // Check The RFID 
-                if (_rfidController.CheckCardExisting() && Teams.player.Count<5)
+                if (_rfidController.CheckCardExisting() && Teams.player.Count<5 && !stop)
                 {
                     // Read Card Info .. 
                     Console.WriteLine("Card Found .. ");
+                    _rfidController.ReadCardInfo();
+                    stop = true;
                 }
                 else {
                     //TestTest++;
