@@ -92,7 +92,7 @@ namespace Library.RFIDLib
                                 if (ret < 0)
                                 {
                                     mifare.ReselectCard();
-                                    Debug.WriteLine($"Error reading bloc: {block}");
+                                    Console.WriteLine($"Error reading bloc: {block}");
                                 }
                             }
                         }
@@ -106,13 +106,13 @@ namespace Library.RFIDLib
                         {
                             if (mifare.Data is object)
                             {
-                                Debug.WriteLine($"Bloc: {block}, Data: {BitConverter.ToString(mifare.Data)}");
+                                Console.WriteLine($"Bloc: {block}, Data: {BitConverter.ToString(mifare.Data)}");
                             }
                         }
                         else
                         {
                             mifare.ReselectCard();
-                            Debug.WriteLine($"Error reading bloc: {block}");
+                            Console.WriteLine($"Error reading bloc: {block}");
                         }
                         if (block % 4 == 3)
                         {
@@ -122,20 +122,20 @@ namespace Library.RFIDLib
                                 for (byte j = 3; j > 0; j--)
                                 {
                                     var access = mifare.BlockAccess((byte)(block - j), mifare.Data);
-                                    Debug.WriteLine($"Bloc: {block - j}, Access: {access}");
+                                    Console.WriteLine($"Bloc: {block - j}, Access: {access}");
                                 }
                                 var sector = mifare.SectorTailerAccess(block, mifare.Data);
-                                Debug.WriteLine($"Bloc: {block}, Access: {sector}");
+                                Console.WriteLine($"Bloc: {block}, Access: {sector}");
                             }
                             else
                             {
-                                Debug.WriteLine("Can't check any sector bloc");
+                                Console.WriteLine("Can't check any sector bloc");
                             }
                         }
                     }
                     else
                     {
-                        Debug.WriteLine($"Authentication error");
+                        Console.WriteLine($"Authentication error");
                     }
                 }
             }
