@@ -43,12 +43,13 @@ namespace Library.RFIDLib
                 byte[] buffer = new byte[2]; // Assuming a buffer of 10 bytes
                 return Mfrc522.IsCardPresent(buffer, false);
             }
-            else {
+            else
+            {
                 Console.WriteLine("RFID Not Initialized");
-               
+
                 return false;
             }
-            
+
         }
         public string ReadCardInfo()
         {
@@ -76,18 +77,20 @@ namespace Library.RFIDLib
                         ret = mifare.RunMifareCardCommand();
                         if (ret >= 0)
                         {
+
                             if (mifare.Data is object)
                             {
-                                Console.WriteLine($"Bloc: {block}, Data: {BitConverter.ToString(mifare.Data)}");
-                                Console.WriteLine(Encoding.UTF8.GetString(mifare.Data));
+                                var data = Encoding.UTF8.GetString(mifare.Data);
+                                if (data != null && data.Length > 0)
+                                    Console.WriteLine($"Bloc: {block}, Data: {Encoding.UTF8.GetString(mifare.Data)}");
+
                             }
                         }
                         else
                         {
                             mifare.ReselectCard();
-                            Console.WriteLine($"Error reading bloc: {block}");
                         }
-                       
+
                     }
                     else
                     {
