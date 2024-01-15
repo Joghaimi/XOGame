@@ -22,4 +22,8 @@ namespace Library
         clear =0 ,
         rightArrow
     }
+    public enum MCP23017 {
+        MCP2301720,
+        MCP2301721
+    }
 }
