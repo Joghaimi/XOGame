@@ -62,13 +62,13 @@ namespace Library.Media
             }
         }
         // For the external chip
-        public void JQ8400Init(string serialPort) {
-            this.SerialPort = new SerialPort(serialPort, 9600); // Replace "COM1" with your actual serial port name
-        }
-        public void JQ8400PlayAudio() { 
-        }
-        public void JQ8400PauseAudio()
-        {
-        }
+        //public void JQ8400Init(string serialPort) {
+        //    this.SerialPort = new SerialPort(serialPort, 9600); // Replace "COM1" with your actual serial port name
+        //}
+        //public void JQ8400PlayAudio() { 
+        //}
+        //public void JQ8400PauseAudio()
+        //{
+        //}
     }
 }
