@@ -10,10 +10,9 @@ namespace Library.Media
 {
     public class AudioPlayer
     {
-        SerialPort SerialPort;
         private Process audioProcess;
         string soundFilePath;
-        
+
         // For the PI
         public void PIStartAudio(SoundType soundType)
         {
@@ -27,8 +26,6 @@ namespace Library.Media
                 default:
                     break;
             }
-
-
             if (audioProcess == null)
             {
                 audioProcess = new Process();
@@ -61,14 +58,5 @@ namespace Library.Media
                 Console.WriteLine("No audio is currently playing.");
             }
         }
-        // For the external chip
-        //public void JQ8400Init(string serialPort) {
-        //    this.SerialPort = new SerialPort(serialPort, 9600); // Replace "COM1" with your actual serial port name
-        //}
-        //public void JQ8400PlayAudio() { 
-        //}
-        //public void JQ8400PauseAudio()
-        //{
-        //}
     }
 }

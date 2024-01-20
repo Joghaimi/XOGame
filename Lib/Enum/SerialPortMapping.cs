@@ -13,6 +13,7 @@ namespace Library.Enum
             { "Serial0", "/dev/ttyS0" },
             { "Serial2", "/dev/ttyAMA2" },
             { "SerialTest", "COM2" },
+            { "SerialTest2", "COM2_I" },
         };
     }
 }

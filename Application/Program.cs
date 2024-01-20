@@ -22,8 +22,21 @@ using Library.Display;
 using Library.Enum;
 using Library;
 using System.Numerics;
+using Library.Modbus;
+
+// Test Mobus 
+
+//var modbus = new ModbusLib();
+//modbus.Init(SerialPortMapping.PortMap["SerialTest"]);
+//while (true)
+//{
+//    modbus.WriteSingleRegister(1, 4001, 2);
+//    Thread.Sleep(1000);
+//}
+
+
 // mcp23017
-Console.WriteLine("Hello World!");
+//Console.WriteLine("Hello World!");
 //var displayControl = new DisplayController();
 //displayControl.Init(SerialPortMapping.PortMap["Serial2"]);
 

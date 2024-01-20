@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Iot.Device.Bindings" Version="3.1.0" />
     <PackageReference Include="NAudio" Version="2.2.1" />
+    <PackageReference Include="NModbus4" Version="2.1.0" />
     <PackageReference Include="System.Device.Gpio" Version="3.1.0" />
   </ItemGroup>
 
