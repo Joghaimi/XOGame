@@ -9,16 +9,18 @@ namespace Library.GPIOLib
     using System.Device.Gpio;
     public class GPIOController
     {
-        GpioController _controller ;
+        GpioController _controller;
         public GPIOController()
         {
             _controller = new GpioController();
         }
-        public void Setup(int pin , PinMode mode ) { 
+        public void Setup(int pin, PinMode mode)
+        {
             _controller.OpenPin(pin, mode);
         }
-        public void Write(int pin , bool value) {
-            if(value)
+        public void Write(int pin, bool value)
+        {
+            if (value)
                 _controller.Write(pin, PinValue.High);
             else
                 _controller.Write(pin, PinValue.High);
@@ -26,7 +28,7 @@ namespace Library.GPIOLib
         }
         public bool Read(int pin)
         {
-          return _controller.Read(pin)== PinValue.High ?true:false;
+            return _controller.Read(pin) == PinValue.High ? true : false;
         }
     }
 }

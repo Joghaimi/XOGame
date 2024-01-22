@@ -1,56 +1,105 @@
-﻿using Library.GPIOLib;
+﻿using Library;
+using Library.Enum;
+using Library.GPIOLib;
+using Library.Media;
+using Library.RGBLib;
+using System.Device.Gpio;
 
 namespace FortRoom.Services
 {
     public class MainService
     {
-        MCP23Controller _MCP23Controller;
+
+        private GPIOController _controller;
+        public bool isTheirAreSomeOneInTheRoom = false;
+        private CancellationTokenSource _cts;
+        private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
+        private int PIRPin1 = 26;
+        private int PIRPin2 = 19;
+        private int PIRPin3 = 13;
+        private int PIRPin4 = 6;
+
+        private int PressureMatPin = 7;
+
+        RGBButton RGBButton1, RGBButton2, RGBButton3, RGBButton4, RGBButton5, RGBButton6, RGBButton7, RGBButton8;
+        RGBLight _RGBLight;
+        JQ8400AudioModule _AudioControl;
+
 
 
 
         //public bool isTheirAreSomeOneInTheRoom = false;
         //private CancellationTokenSource _cts;
         //private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
-        //private int PIRPin1 = 26;
-        //private int PIRPin2 = 19;
-        //private int PIRPin3 = 13;
-        //private int PIRPin4 = 6;
+
         //private int LightSwitch = 6;
         //private int DoorRelay = 6;
-        //private GPIOController _controller;
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _MCP23Controller = new MCP23Controller();
+            _controller = new GPIOController();
+            _RGBLight = new RGBLight();
+            _AudioControl = new JQ8400AudioModule(SerialPortMapping.PortMap["Serial2"]);
+            _RGBLight.init();
             // Init the Pin's
-            //_controller.Setup(PIRPin1, PinMode.InputPullDown);
-            //_controller.Setup(PIRPin3, PinMode.InputPullDown);
-            //_controller.Setup(PIRPin4, PinMode.InputPullDown);
-            //_controller.Setup(PIRPin2, PinMode.InputPullDown);
-            //_cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            //Task.Run(() => RunService(_cts.Token));
+            _controller.Setup(PIRPin1, PinMode.InputPullDown);
+            _controller.Setup(PIRPin3, PinMode.InputPullDown);
+            _controller.Setup(PIRPin4, PinMode.InputPullDown);
+            _controller.Setup(PIRPin2, PinMode.InputPullDown);
+            _controller.Setup(PressureMatPin, PinMode.InputPullDown);
+            _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            //while (!cancellationToken.IsCancellationRequested)
-            //{
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                PIR1 = _controller.Read(PIRPin1);
+                PIR2 = _controller.Read(PIRPin2);
+                PIR3 = _controller.Read(PIRPin3);
+                PIR4 = _controller.Read(PIRPin4);
+                Console.WriteLine($"PIR Status PIR1:{PIR1} PIR2:{PIR2} PIR3:{PIR3} PIR4:{PIR4}");
+                VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
+                bool DoneOneTimeFlage = false;
+                if (VariableControlService.IsTheGameStarted)
+                {
+                    if (DoneOneTimeFlage)
+                    {
+                        // Turn the Light Green
+                        _RGBLight.TurnColorOn(RGBColor.Green);
+                        _AudioControl.PlayAudio((int)SoundType.Start);
+                        DoneOneTimeFlage = true;
+                    }
+                    else
+                    {
+                        if (_controller.Read(PressureMatPin))
+                        {
+                            VariableControlService.TimeOfPressureHit++;
+                        }
 
-            //    PIR1 = _controller.Read(PIRPin1);
-            //    PIR2 = _controller.Read(PIRPin2);
-            //    PIR3 = _controller.Read(PIRPin3);
-            //    PIR4 = _controller.Read(PIRPin4);
-            //    Console.WriteLine($"PIR Status PIR1:{PIR1} PIR2:{PIR2} PIR3{PIR3} PIR4:{PIR4}");
-            //    bool isAnyOfRIPSensorActive = PIR1 || PIR2 || PIR3 || PIR4 || isTheirAreSomeOneInTheRoom;
-            //    if (isAnyOfRIPSensorActive && !isTheirAreSomeOneInTheRoom)
-            //    {
-            //        // Turn the Light on 
 
-            //        // rise a flag 
-            //        isTheirAreSomeOneInTheRoom = true;
-            //    }
-            //    await Task.Delay(TimeSpan.FromMilliseconds(1000), cancellationToken);
-            //}
+
+
+
+                    }
+
+
+
+                }
+
+
+
+                //// One Time Thing!
+                //if (isAnyOfRIPSensorActive && !isTheirAreSomeOneInTheRoom)
+                //{
+                //    // Turn the Light on 
+
+                //    // rise a flag 
+                //    isTheirAreSomeOneInTheRoom = true;
+                //}
+                await Task.Delay(TimeSpan.FromMilliseconds(1000), cancellationToken);
+            }
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
