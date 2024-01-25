@@ -7,7 +7,7 @@ using System.Device.Gpio;
 
 namespace FortRoom.Services
 {
-    public class MainService
+    public class MainService : IHostedService, IDisposable
     {
 
         private GPIOController _controller;
@@ -19,34 +19,22 @@ namespace FortRoom.Services
         private int PIRPin3 = 13;
         private int PIRPin4 = 6;
 
-        private int PressureMatPin = 7;
-
-        RGBButton RGBButton1, RGBButton2, RGBButton3, RGBButton4, RGBButton5, RGBButton6, RGBButton7, RGBButton8;
-        RGBLight _RGBLight;
-        JQ8400AudioModule _AudioControl;
 
 
 
-
-        //public bool isTheirAreSomeOneInTheRoom = false;
-        //private CancellationTokenSource _cts;
-        //private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
-
-        //private int LightSwitch = 6;
-        //private int DoorRelay = 6;
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _controller = new GPIOController();
-            _RGBLight = new RGBLight();
-            _AudioControl = new JQ8400AudioModule(SerialPortMapping.PortMap["Serial2"]);
-            _RGBLight.init();
+            RGBLight.init();
+            JQ8400AudioModule.init(SerialPortMapping.PortMap["Serial2"]);
+
             // Init the Pin's
             _controller.Setup(PIRPin1, PinMode.InputPullDown);
             _controller.Setup(PIRPin3, PinMode.InputPullDown);
             _controller.Setup(PIRPin4, PinMode.InputPullDown);
             _controller.Setup(PIRPin2, PinMode.InputPullDown);
-            _controller.Setup(PressureMatPin, PinMode.InputPullDown);
+
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
@@ -67,18 +55,13 @@ namespace FortRoom.Services
                     if (DoneOneTimeFlage)
                     {
                         // Turn the Light Green
-                        _RGBLight.TurnColorOn(RGBColor.Green);
-                        _AudioControl.PlayAudio((int)SoundType.Start);
+                        RGBLight.TurnColorOn(RGBColor.Green);
+                        JQ8400AudioModule.PlayAudio((int)SoundType.Start);
                         DoneOneTimeFlage = true;
                     }
                     else
                     {
-                        if (_controller.Read(PressureMatPin))
-                        {
-                            VariableControlService.TimeOfPressureHit++;
-                        }
-
-
+                        // Activate RBG 
 
 
 
@@ -98,7 +81,9 @@ namespace FortRoom.Services
                 //    // rise a flag 
                 //    isTheirAreSomeOneInTheRoom = true;
                 //}
-                await Task.Delay(TimeSpan.FromMilliseconds(1000), cancellationToken);
+                // Sleep for a short duration to avoid excessive checking
+                Thread.Sleep(10);
+                //await Task.Delay(TimeSpan.FromMilliseconds(1000), cancellationToken);
             }
         }
 

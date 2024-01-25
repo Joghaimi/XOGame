@@ -1,57 +1,71 @@
-﻿using Library.GPIOLib;
+﻿using Library;
+using Library.GPIOLib;
+using Library.Media;
+using Library.RGBLib;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
+using System.Device.Gpio;
+using System.Diagnostics;
+using System.Numerics;
 
 namespace FortRoom.Services
 {
     public class PressureMatService : IHostedService, IDisposable
     {
-        MCP23Controller _MCP23Controller;
+        private int PressureMatPin = 7;
+        private GPIOController _controller;
+        private CancellationTokenSource _cts;
 
-
-
-        //public bool isTheirAreSomeOneInTheRoom = false;
-        //private CancellationTokenSource _cts;
-        //private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
-        //private int PIRPin1 = 26;
-        //private int PIRPin2 = 19;
-        //private int PIRPin3 = 13;
-        //private int PIRPin4 = 6;
-        //private int LightSwitch = 6;
-        //private int DoorRelay = 6;
-        //private GPIOController _controller;
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _MCP23Controller = new MCP23Controller();
-            // Init the Pin's
-            //_controller.Setup(PIRPin1, PinMode.InputPullDown);
-            //_controller.Setup(PIRPin3, PinMode.InputPullDown);
-            //_controller.Setup(PIRPin4, PinMode.InputPullDown);
-            //_controller.Setup(PIRPin2, PinMode.InputPullDown);
-            //_cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            //Task.Run(() => RunService(_cts.Token));
+            _controller = new GPIOController();
+            _controller.Setup(PressureMatPin, PinMode.InputPullDown);
+
+            _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            //while (!cancellationToken.IsCancellationRequested)
-            //{
+            bool currentValue = false;
+            bool previousValue = false;
+            bool scoreJustDecreased = false;
+            Stopwatch timer = new Stopwatch();
 
-            //    PIR1 = _controller.Read(PIRPin1);
-            //    PIR2 = _controller.Read(PIRPin2);
-            //    PIR3 = _controller.Read(PIRPin3);
-            //    PIR4 = _controller.Read(PIRPin4);
-            //    Console.WriteLine($"PIR Status PIR1:{PIR1} PIR2:{PIR2} PIR3{PIR3} PIR4:{PIR4}");
-            //    bool isAnyOfRIPSensorActive = PIR1 || PIR2 || PIR3 || PIR4 || isTheirAreSomeOneInTheRoom;
-            //    if (isAnyOfRIPSensorActive && !isTheirAreSomeOneInTheRoom)
-            //    {
-            //        // Turn the Light on 
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                if (VariableControlService.IsTheGameStarted)
+                {
+                    currentValue = _controller.Read(PressureMatPin);
+                    if (currentValue && !previousValue)
+                    {
 
-            //        // rise a flag 
-            //        isTheirAreSomeOneInTheRoom = true;
-            //    }
-            //    await Task.Delay(TimeSpan.FromMilliseconds(1000), cancellationToken);
-            //}
+                        VariableControlService.TimeOfPressureHit++;
+                        JQ8400AudioModule.PlayAudio((int)SoundType.Beeb);
+                        RGBLight.TurnColorOn(RGBColor.Red);
+                        scoreJustDecreased=true;
+                        timer.Restart();
+                    }
+                    previousValue = currentValue;
+                    if (scoreJustDecreased && timer.ElapsedMilliseconds >= 1000) {
+
+                        scoreJustDecreased =false; 
+                        JQ8400AudioModule.PlayAudio((int)SoundType.Start);
+                        RGBLight.TurnColorOn(RGBColor.Green);
+                        timer.Restart();
+
+
+                    }
+
+
+
+
+
+                }
+                // Sleep for a short duration to avoid excessive checking
+                Thread.Sleep(10);
+            }
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

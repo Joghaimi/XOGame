@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Library.RGBLib
 {
-    public class RGBLight
+    public static class RGBLight
     {
-        public void init()
+        public static void init()
         {
         }
-        public void TurnColorOn(RGBColor selectedColor) { }
+        public static void TurnColorOn(RGBColor selectedColor) { }
     }
 }

@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace Library.Media
 {
-    public class JQ8400AudioModule
+    public static class JQ8400AudioModule
     {
-        private SerialPort serialPort;
+        private static SerialPort serialPort;
 
-        public JQ8400AudioModule(string portName)
+        public static void init (string portName)
         {
             serialPort = new SerialPort(portName, 9600);  // Adjust baud rate as per the module's specs
             serialPort.Open();
         }
-        public void PlayAudio(int trackNumber)
+        public static void PlayAudio(int trackNumber)
         {
             int totalSize = 6;
             int currentFileNumber = CurrentFileNumber();
@@ -38,14 +38,14 @@ namespace Library.Media
             Console.WriteLine($"Playing audio file {trackNumber}");
         }
 
-        public void StopPlayback()
+        public static void StopPlayback()
         {
             byte[] command = { 0xAA, 0x04, 0x00, 0xAE };
             serialPort.Write(command, 0, command.Length);
         }
 
         //Inquiry of current file number (0D) :->AA 0D 00 B7 
-        public int CurrentFileNumber()
+        public static int CurrentFileNumber()
         {
             byte[] command = { 0xAA, 0x0D, 0x00, 0xB7 };
             serialPort.Write(command, 0, command.Length);
@@ -59,19 +59,19 @@ namespace Library.Media
             }
             return 0;
         }
-        public void NextAudio()
+        public static void NextAudio()
         {
             byte[] command = { 0xAA, 0x06, 0x00, 0xB0 };
             serialPort.Write(command, 0, command.Length);
             Thread.Sleep(100);
         }
-        public void PlayAudio()
+        public static void PlayAudio()
         {
             byte[] command = { 0xAA, 0x02, 0x00, 0xAC };
             serialPort.Write(command, 0, command.Length);
         }
 
-        public void Close()
+        public static void Close()
         {
             serialPort.Close();
         }
