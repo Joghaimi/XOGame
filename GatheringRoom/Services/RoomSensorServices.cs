@@ -11,22 +11,17 @@ namespace GatheringRoom.Services
         public bool isTheirAreSomeOneInTheRoom = false;
         private CancellationTokenSource _cts;
         private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
-        private int PIRPin1 = 26;
-        private int PIRPin2 = 19;
-        private int PIRPin3 = 13;
-        private int PIRPin4 = 6;
-        private int LightSwitch = 6;
-        private int DoorRelay = 6;
+
         private GPIOController _controller;
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _controller = new GPIOController();
             // Init the Pin's
-            _controller.Setup(PIRPin1, PinMode.InputPullDown);
-            _controller.Setup(PIRPin3, PinMode.InputPullDown);
-            _controller.Setup(PIRPin4, PinMode.InputPullDown);
-            _controller.Setup(PIRPin2, PinMode.InputPullDown);
+            _controller.Setup(VariableControlService.PIRPin1, PinMode.InputPullDown);
+            _controller.Setup(VariableControlService.PIRPin3, PinMode.InputPullDown);
+            _controller.Setup(VariableControlService.PIRPin4, PinMode.InputPullDown);
+            _controller.Setup(VariableControlService.PIRPin2, PinMode.InputPullDown);
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
@@ -36,10 +31,10 @@ namespace GatheringRoom.Services
             while (!cancellationToken.IsCancellationRequested)
             {
 
-                PIR1 = _controller.Read(PIRPin1);
-                PIR2 = _controller.Read(PIRPin2);
-                PIR3 = _controller.Read(PIRPin3);
-                PIR4 = _controller.Read(PIRPin4);
+                PIR1 = _controller.Read(VariableControlService.PIRPin1);
+                PIR2 = _controller.Read(VariableControlService.PIRPin2);
+                PIR3 = _controller.Read(VariableControlService.PIRPin3);
+                PIR4 = _controller.Read(VariableControlService.PIRPin4);
                 //Console.WriteLine($"PIR Status PIR1:{PIR1} PIR2:{PIR2} PIR3{PIR3} PIR4:{PIR4}");
                 bool isAnyOfRIPSensorActive = PIR1 || PIR2 || PIR3 || PIR4 || isTheirAreSomeOneInTheRoom;
                 if (isAnyOfRIPSensorActive && !isTheirAreSomeOneInTheRoom)
