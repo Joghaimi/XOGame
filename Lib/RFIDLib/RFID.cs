@@ -60,10 +60,15 @@ namespace Library.RFIDLib
             {
                 var mifare = new MifareCard(Mfrc522!, 0);
                 mifare.SerialNumber = card.NfcId;
+                Console.WriteLine(mifare.SerialNumber);
+
+
+
+                // Tested Before 
                 mifare.Capacity = MifareCardCapacity.Mifare1K;
                 mifare.KeyA = MifareCard.DefaultKeyA.ToArray();
                 mifare.KeyB = MifareCard.DefaultKeyB.ToArray();
-                // Reading Process 
+                //Reading Process
                 int ret;
                 for (byte block = 0; block < 64; block++)
                 {
@@ -97,6 +102,10 @@ namespace Library.RFIDLib
                         Console.WriteLine($"Authentication error");
                     }
                 }
+
+
+
+
             }
             return "";
         }

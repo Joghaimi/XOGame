@@ -22,7 +22,7 @@ namespace GatheringRoom.Services
             {
                 if (VariableControlService.IsTheGameStarted)
                 {
-                    Console.WriteLine("Game Started");
+                    //Console.WriteLine("Game Started");
                     // Your service logic goes here
                     // Check The RFID 
                     if (_rfidController.CheckCardExisting() && Teams.player.Count < 5 && !stop)
@@ -43,6 +43,10 @@ namespace GatheringRoom.Services
                         //}
                     }
                 }
+                else {
+
+                    Console.WriteLine("Waitting .. ");
+                } 
                 await Task.Delay(TimeSpan.FromMilliseconds(1000), cancellationToken);
             }
         }
