@@ -5,9 +5,8 @@ namespace GatheringRoom.Services
     public class RFIDService : IHostedService, IDisposable
     {
         private CancellationTokenSource _cts;
-        private RFID _rfidController =new();
+        private RFID _rfidController = new();
         int pinReset = 6;
-        int TestTest = 0;
         bool stop = false;
         public Task StartAsync(CancellationToken cancellationToken)
         {
@@ -21,25 +20,30 @@ namespace GatheringRoom.Services
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                // Your service logic goes here
-                // Check The RFID 
-                if (_rfidController.CheckCardExisting() && Teams.player.Count<5 && !stop)
+                if (VariableControlService.IsTheGameStarted)
                 {
-                    // Read Card Info .. 
-                    Console.WriteLine("Card Found .. ");
-                    _rfidController.ReadCardInfo();
-                    stop = true;
+                    Console.WriteLine("Game Started");
+                    // Your service logic goes here
+                    // Check The RFID 
+                    if (_rfidController.CheckCardExisting() && Teams.player.Count < 5 && !stop)
+                    {
+                        // Read Card Info .. 
+                        Console.WriteLine("Card Found .. ");
+                        _rfidController.ReadCardInfo();
+                        stop = true;
+                    }
+                    else
+                    {
+                        //TestTest++;
+                        //if (TestTest > 20)
+                        //{
+                        //    if(Teams.player.Count < 5)
+                        //    Teams.player.Add($"Ahmad {TestTest}");
+                        //    TestTest = 0;
+                        //}
+                    }
                 }
-                else {
-                    //TestTest++;
-                    //if (TestTest > 20)
-                    //{
-                    //    if(Teams.player.Count < 5)
-                    //    Teams.player.Add($"Ahmad {TestTest}");
-                    //    TestTest = 0;
-                    //}
-                }
-                await Task.Delay(TimeSpan.FromMilliseconds(500), cancellationToken); 
+                await Task.Delay(TimeSpan.FromMilliseconds(1000), cancellationToken);
             }
         }
 
