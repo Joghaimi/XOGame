@@ -11,7 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GatheringRoom", "GatheringR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DarkRoom", "DarkRoom\DarkRoom.csproj", "{BF9AD78C-6224-498E-AC75-7DC2ECF24B82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FortRoom", "FortRoom\FortRoom.csproj", "{6F93E5DC-C391-4A58-8AE0-E72E9059FE20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FortRoom", "FortRoom\FortRoom.csproj", "{6F93E5DC-C391-4A58-8AE0-E72E9059FE20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloorIsLava", "FloorIsLava\FloorIsLava.csproj", "{F6FCBDE1-5513-47C1-9686-55DAE8D70D39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShootingRoom", "ShootingRoom\ShootingRoom.csproj", "{F20D0D72-4D0E-43EA-856E-9A6A58CEA42E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{6F93E5DC-C391-4A58-8AE0-E72E9059FE20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F93E5DC-C391-4A58-8AE0-E72E9059FE20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F93E5DC-C391-4A58-8AE0-E72E9059FE20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6FCBDE1-5513-47C1-9686-55DAE8D70D39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6FCBDE1-5513-47C1-9686-55DAE8D70D39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6FCBDE1-5513-47C1-9686-55DAE8D70D39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6FCBDE1-5513-47C1-9686-55DAE8D70D39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F20D0D72-4D0E-43EA-856E-9A6A58CEA42E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F20D0D72-4D0E-43EA-856E-9A6A58CEA42E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F20D0D72-4D0E-43EA-856E-9A6A58CEA42E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F20D0D72-4D0E-43EA-856E-9A6A58CEA42E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
