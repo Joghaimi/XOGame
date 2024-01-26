@@ -29,11 +29,11 @@ namespace GatheringRoom.Services
                     {
                         // Read Card Info .. 
                         Console.WriteLine("Card Found .. ");
-                        var newPlayer =_rfidController.ReadCardInfo();
-                        if (newPlayer != "") {
+                        string newPlayer = _rfidController.ReadCardInfo();
+                        if (!string.IsNullOrEmpty(newPlayer) && !GatheringRoom.Teams.player.Any(item => item == newPlayer))
+                        {
                             GatheringRoom.Teams.player.Add(newPlayer);
                         }
-                        stop = true;
                     }
                     else
                     {
@@ -46,10 +46,11 @@ namespace GatheringRoom.Services
                         //}
                     }
                 }
-                else {
+                else
+                {
 
                     Console.WriteLine("Waitting .. ");
-                } 
+                }
                 await Task.Delay(TimeSpan.FromMilliseconds(1000), cancellationToken);
             }
         }
