@@ -25,7 +25,7 @@ namespace GatheringRoom.Controllers
             GatheringRoom.Teams.Name = TeamName;
             return Ok(GatheringRoom.Teams.Name);
         }
-        [HttpPost("GoToTheNextRoom")]
+        [HttpGet("GoToTheNextRoom")]
         public IActionResult NextRoom()
         {
             // Send Command To The Next Room // TO DO 
