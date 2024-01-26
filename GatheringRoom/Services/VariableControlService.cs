@@ -12,6 +12,7 @@
         public static int PIRPin2 = 19;
         public static int PIRPin3 = 13;
         public static int PIRPin4 = 6;
+
         public static int LightSwitch = 6;
         public static int DoorRelay = 6;
 
