@@ -49,6 +49,15 @@ namespace GatheringRoom.Services
                     // rise a flag 
                     isTheirAreSomeOneInTheRoom = true;
                 }
+
+                // IF Enable Going To The Next room 
+                if (VariableControlService.EnableGoingToTheNextRoom)
+                {
+                    Console.WriteLine("open The Door ....");
+                    VariableControlService.EnableGoingToTheNextRoom = false;
+                }
+
+
                 await Task.Delay(TimeSpan.FromMilliseconds(1000), cancellationToken);
             }
         }

@@ -34,7 +34,7 @@ namespace GatheringRoom.Controllers
             VariableControlService.IsTheGameStarted = false;
             GatheringRoom.Teams.Name = "";
             GatheringRoom.Teams.player = new List<string>();
-
+            VariableControlService.EnableGoingToTheNextRoom=true;
             return Ok(VariableControlService.IsTheGameStarted);
         }
         [HttpGet(Name = "getThePlayers")]
