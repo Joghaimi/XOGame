@@ -40,11 +40,13 @@ namespace GatheringRoom.Services
                 PIR2 = _controller.Read(PIRPin2);
                 PIR3 = _controller.Read(PIRPin3);
                 PIR4 = _controller.Read(PIRPin4);
-                Console.WriteLine($"PIR Status PIR1:{PIR1} PIR2:{PIR2} PIR3{PIR3} PIR4:{PIR4}");
+                //Console.WriteLine($"PIR Status PIR1:{PIR1} PIR2:{PIR2} PIR3{PIR3} PIR4:{PIR4}");
                 bool isAnyOfRIPSensorActive = PIR1 || PIR2 || PIR3 || PIR4 || isTheirAreSomeOneInTheRoom;
                 if (isAnyOfRIPSensorActive && !isTheirAreSomeOneInTheRoom)
                 {
+                    Console.WriteLine("Some One In The Room");
                     // Turn the Light on 
+                    Console.WriteLine("Switch Light On"); // To Do
 
                     // rise a flag 
                     isTheirAreSomeOneInTheRoom = true;
@@ -55,6 +57,7 @@ namespace GatheringRoom.Services
                 {
                     Console.WriteLine("open The Door ....");
                     VariableControlService.EnableGoingToTheNextRoom = false;
+                    isTheirAreSomeOneInTheRoom = false;
                 }
 
 
