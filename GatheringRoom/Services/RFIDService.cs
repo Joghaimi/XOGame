@@ -20,8 +20,9 @@ namespace GatheringRoom.Services
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                if (VariableControlService.IsTheGameStarted)
+                if (true)
                 {
+                    //VariableControlService.IsTheGameStarted
                     //Console.WriteLine("Game Started");
                     // Your service logic goes here
                     // Check The RFID 
