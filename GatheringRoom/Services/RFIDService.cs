@@ -29,7 +29,10 @@ namespace GatheringRoom.Services
                     {
                         // Read Card Info .. 
                         Console.WriteLine("Card Found .. ");
-                        _rfidController.ReadCardInfo();
+                        var newPlayer =_rfidController.ReadCardInfo();
+                        if (newPlayer != "") {
+                            GatheringRoom.Teams.player.Add(newPlayer);
+                        }
                         stop = true;
                     }
                     else

@@ -60,48 +60,51 @@ namespace Library.RFIDLib
             {
                 var mifare = new MifareCard(Mfrc522!, 0);
                 mifare.SerialNumber = card.NfcId;
-                Console.WriteLine(mifare.SerialNumber);
+                var data = BitConverter.ToString(mifare.SerialNumber);
+                return data;
 
 
+                //Console.WriteLine("mifare.SerialNumber");
+                //Console.WriteLine(mifare.SerialNumber);
 
-                // Tested Before 
-                mifare.Capacity = MifareCardCapacity.Mifare1K;
-                mifare.KeyA = MifareCard.DefaultKeyA.ToArray();
-                mifare.KeyB = MifareCard.DefaultKeyB.ToArray();
-                //Reading Process
-                int ret;
-                for (byte block = 0; block < 64; block++)
-                {
-                    mifare.BlockNumber = block;
-                    mifare.Command = MifareCardCommand.AuthenticationB;
-                    ret = mifare.RunMifareCardCommand();
-                    if (ret >= 0)
-                    {
-                        mifare.BlockNumber = block;
-                        mifare.Command = MifareCardCommand.Read16Bytes;
-                        ret = mifare.RunMifareCardCommand();
-                        if (ret >= 0)
-                        {
+                //// Tested Before 
+                //mifare.Capacity = MifareCardCapacity.Mifare1K;
+                //mifare.KeyA = MifareCard.DefaultKeyA.ToArray();
+                //mifare.KeyB = MifareCard.DefaultKeyB.ToArray();
+                ////Reading Process
+                //int ret;
+                //for (byte block = 0; block < 64; block++)
+                //{
+                //    mifare.BlockNumber = block;
+                //    mifare.Command = MifareCardCommand.AuthenticationB;
+                //    ret = mifare.RunMifareCardCommand();
+                //    if (ret >= 0)
+                //    {
+                //        mifare.BlockNumber = block;
+                //        mifare.Command = MifareCardCommand.Read16Bytes;
+                //        ret = mifare.RunMifareCardCommand();
+                //        if (ret >= 0)
+                //        {
 
-                            if (mifare.Data is object)
-                            {
-                                var data = Encoding.UTF8.GetString(mifare.Data);
-                                if (data != null && data.Length > 0)
-                                    Console.WriteLine($"Bloc: {block}, Data: {Encoding.UTF8.GetString(mifare.Data)}");
+                //            if (mifare.Data is object)
+                //            {
+                //                var data = Encoding.UTF8.GetString(mifare.Data);
+                //                if (data != null && data.Length > 0)
+                //                    Console.WriteLine($"Bloc: {block}, Data: {Encoding.UTF8.GetString(mifare.Data)}");
 
-                            }
-                        }
-                        else
-                        {
-                            mifare.ReselectCard();
-                        }
+                //            }
+                //        }
+                //        else
+                //        {
+                //            mifare.ReselectCard();
+                //        }
 
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Authentication error");
-                    }
-                }
+                //    }
+                //    else
+                //    {
+                //        Console.WriteLine($"Authentication error");
+                //    }
+                //}
 
 
 

@@ -14,6 +14,14 @@ builder.Services.AddHostedService<RFIDService>();
 
 var app = builder.Build();
 
+// Configure CORS
+app.UseCors(options =>
+{
+    options.AllowAnyOrigin()
+           .AllowAnyMethod()
+           .AllowAnyHeader();
+});
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
