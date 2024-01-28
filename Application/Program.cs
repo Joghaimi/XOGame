@@ -25,39 +25,72 @@ using System.Numerics;
 using Library.Modbus;
 using Iot.Device.Mcp3428;
 
-// Test MCP0 
+// Test MCP0 ==== The Main Board 
 
-MCP23Controller test = new MCP23Controller();
-test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 0, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 1, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 2, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 3, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 4, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 5, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 6, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 7, PinMode.Output);
+//MCP23Controller test = new MCP23Controller();
+//test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 0, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 1, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 2, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 3, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 4, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 5, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 6, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 7, PinMode.Output);
 
-while (true)
-{
-    //test.Write(MCP23017.MCP2301720, Port.PortB, 0, PinState.High);
-    for (int i = 0; i < 8; i++)
-    {
-        test.Write(MCP23017.MCP2301720, Port.PortB, i, PinState.High);
-        Console.WriteLine($"High {i}");
-        Thread.Sleep(1000);
-        //test.Write(MCP23017.MCP2301720, Port.PortB, i, PinState.Low);
-        //Console.WriteLine($"Low {i}");
-        //Thread.Sleep(6000);
-    }
+//while (true)
+//{
+//    //test.Write(MCP23017.MCP2301720, Port.PortB, 0, PinState.High);
+//    for (int i = 0; i < 8; i++)
+//    {
+//        test.Write(MCP23017.MCP2301720, Port.PortB, i, PinState.High);
+//        Console.WriteLine($"High {i}");
+//        Thread.Sleep(1000);
+//        //test.Write(MCP23017.MCP2301720, Port.PortB, i, PinState.Low);
+//        //Console.WriteLine($"Low {i}");
+//        //Thread.Sleep(6000);
+//    }
 
-    //for (int i = 8; i > 0; i--)
-    //{
-    //    test.Write(MCP23017.MCP2301720, Port.PortB, i, PinState.Low);
-    //    Console.WriteLine("Low");
-    //    Thread.Sleep(1000);
-    //}
+//    //for (int i = 8; i > 0; i--)
+//    //{
+//    //    test.Write(MCP23017.MCP2301720, Port.PortB, i, PinState.Low);
+//    //    Console.WriteLine("Low");
+//    //    Thread.Sleep(1000);
+//    //}
 
-}
+//}
+
+
+//================= Test the IO 
+GPIOController gpio = new GPIOController();
+
+gpio.Setup(4, PinMode.Output);
+gpio.Setup(17, PinMode.Output);
+gpio.Setup(27, PinMode.Output);
+gpio.Setup(22, PinMode.Output);
+gpio.Setup(23, PinMode.Output);
+gpio.Setup(24, PinMode.Output);
+
+gpio.Write(4, true);
+gpio.Write(17, true);
+gpio.Write(27, true);
+gpio.Write(22, true);
+gpio.Write(23, true);
+gpio.Write(24, true);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -277,22 +310,22 @@ while (true)
 //int pin = 27;
 //using var controller = new GpioController();
 //controller.OpenPin(pin, PinMode.Input);
-//var mode =controller.GetPinMode(pin);
+//var mode = controller.GetPinMode(pin);
 //bool ledOn = true;
 //Console.WriteLine($"Mode {mode}");
 //while (true)
 //{
-//    var value= controller.Read(pin);
+//    var value = controller.Read(pin);
 //    Console.WriteLine($"status {value}");
 
 
 
 //    //controller.Write(pin, ((ledOn) ? PinValue.High : PinValue.Low));
 //    Thread.Sleep(1000);
-//;
+//    ;
 //}
-
-
+//GPIOController gPIO =new GPIOController();
+//gPIO.
 
 //using IHost host = CreateHostBuilder(args).Build();
 
