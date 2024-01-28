@@ -62,7 +62,7 @@ using Iot.Device.Mcp3428;
 
 //================= Test the IO 
 GPIOController gpio = new GPIOController();
-
+Console.WriteLine("Turn Them On");
 gpio.Setup(4, PinMode.Output);
 gpio.Setup(17, PinMode.Output);
 gpio.Setup(27, PinMode.Output);
@@ -76,6 +76,11 @@ gpio.Write(27, true);
 gpio.Write(22, true);
 gpio.Write(23, true);
 gpio.Write(24, true);
+while (true)
+{
+    Console.WriteLine(".");
+    Thread.Sleep(1000);
+}
 
 
 
