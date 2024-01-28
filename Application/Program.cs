@@ -38,7 +38,7 @@ while (true)
         Console.WriteLine($"High {i}");
         Thread.Sleep(1000);
     }
-    for (int i = 8; i < 0; i++)
+    for (int i = 8; i > 0; i--)
     {
         test.Write(MCP23017.MCP2301720, Port.PortB, i, PinState.Low);
         Console.WriteLine("Low");
