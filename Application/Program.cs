@@ -23,6 +23,27 @@ using Library.Enum;
 using Library;
 using System.Numerics;
 using Library.Modbus;
+using Iot.Device.Mcp3428;
+
+// Test MCP0 
+
+MCP23Controller test = new MCP23Controller();
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 0, PinMode.Output);
+
+while (true)
+{
+    test.Write(MCP23017.MCP2301720, Port.PortB, 0, PinState.High);
+    Thread.Sleep(1000);
+    test.Write(MCP23017.MCP2301720, Port.PortB, 0, PinState.Low);
+    Thread.Sleep(1000);
+}
+
+
+
+
+
+
+
 
 // Test Mobus 
 

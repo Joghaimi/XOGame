@@ -7,5 +7,8 @@
         public static bool IsTheirAnyOneInTheRoom { get; set; } = false;
         public static int TimeOfPressureHit { get; set; } = 0;
         public static int ActiveButtonPressed { get; set; } = 0;
+
+        // Pin Numbers 
+
     }
 }
