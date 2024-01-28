@@ -89,12 +89,13 @@ namespace Library.GPIOLib
             switch (chip)
             {
                 case MCP23017.MCP2301720:
-                    byte currentValue = mcp23017x20.ReadByte(Register.GPIO, Port);
+                    //byte currentValue = mcp23017x20.ReadByte(Register.GPIO, Port);
                     //if (PinState == PinState.High)
                     //    currentValue |= (byte)(1 << PinNumber);
                     //else
                     //    currentValue &= (byte)~(1 << PinNumber);
-                    mcp23017x20.WriteByte(Register.GPIO, 0b11111111, Port);
+                    mcp23017x20.WriteByte(Register.GPIO, 0b00000001, Port);
+                    byte currentValue = mcp23017x20.ReadByte(Register.GPIO, Port);
                     Console.WriteLine(Convert.ToString(currentValue, 2).PadLeft(8, '0'));
                     break;
                 case MCP23017.MCP2301721:

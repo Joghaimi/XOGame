@@ -29,6 +29,13 @@ using Iot.Device.Mcp3428;
 
 MCP23Controller test = new MCP23Controller();
 test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 0, PinMode.Output);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 1, PinMode.Output);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 2, PinMode.Output);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 3, PinMode.Output);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 4, PinMode.Output);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 5, PinMode.Output);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 6, PinMode.Output);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 7, PinMode.Output);
 
 while (true)
 {
@@ -36,7 +43,7 @@ while (true)
     for (int i = 0; i < 8; i++)
     {
         //test.Write(MCP23017.MCP2301720, Port.PortB, i, PinState.High);
-        //Console.WriteLine($"High {i}");
+        Console.WriteLine($"High {i}");
         Thread.Sleep(3000);
         //test.Write(MCP23017.MCP2301720, Port.PortB, i, PinState.Low);
         //Console.WriteLine($"Low {i}");
