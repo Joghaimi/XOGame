@@ -20,11 +20,11 @@ namespace Library.GPIOLib
         public MCP23Controller()
         {
             var connectionSettingsx20 = new I2cConnectionSettings(1, 0x20);
-            var connectionSettingsx21 = new I2cConnectionSettings(1, 0x21);
+            //var connectionSettingsx21 = new I2cConnectionSettings(1, 0x21);
             var i2cDevicex20 = I2cDevice.Create(connectionSettingsx20);
-            var i2cDevicex21 = I2cDevice.Create(connectionSettingsx21);
+            //var i2cDevicex21 = I2cDevice.Create(connectionSettingsx21);
             mcp23017x20 = new Mcp23017(i2cDevicex20);
-            mcp23017x21 = new Mcp23017(i2cDevicex21);
+            //mcp23017x21 = new Mcp23017(i2cDevicex21);
         }
 
         public void PinModeSetup(MCP23017 chip, Port Port, int PinNumber, PinMode Mode)
