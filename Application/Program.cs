@@ -26,7 +26,7 @@ using Library.Modbus;
 using Iot.Device.Mcp3428;
 
 // Test MCP0 ==== The Main Board 
-
+// Output 
 //MCP23Controller test = new MCP23Controller();
 //test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 0, PinMode.Output);
 //test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 1, PinMode.Output);
@@ -59,28 +59,52 @@ using Iot.Device.Mcp3428;
 
 //}
 
+//=================== input 
+MCP23Controller test = new MCP23Controller();
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 0, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 1, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 2, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 3, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 4, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 5, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 6, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 7, PinMode.Input);
 
-//================= Test the IO 
-GPIOController gpio = new GPIOController();
-Console.WriteLine("Turn Them On");
-gpio.Setup(4, PinMode.Output);
-gpio.Setup(17, PinMode.Output);
-gpio.Setup(27, PinMode.Output);
-gpio.Setup(22, PinMode.Output);
-gpio.Setup(23, PinMode.Output);
-gpio.Setup(24, PinMode.Output);
-
-gpio.Write(4, true);
-gpio.Write(17, true);
-gpio.Write(27, true);
-gpio.Write(22, true);
-gpio.Write(23, true);
-gpio.Write(24, true);
 while (true)
 {
-    Console.WriteLine(".");
+    Console.Write("0b");
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 0));
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 1));
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 2));
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 3));
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 4));
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 5));
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 6));
+    Console.WriteLine(test.Read(MCP23017.MCP2301720, Port.PortA, 7));
+
     Thread.Sleep(1000);
 }
+//================= Test the IO 
+//GPIOController gpio = new GPIOController();
+//Console.WriteLine("Turn Them On");
+//gpio.Setup(4, PinMode.Output);
+//gpio.Setup(17, PinMode.Output);
+//gpio.Setup(27, PinMode.Output);
+//gpio.Setup(22, PinMode.Output);
+//gpio.Setup(23, PinMode.Output);
+//gpio.Setup(24, PinMode.Output);
+
+//gpio.Write(4, true);
+//gpio.Write(17, true);
+//gpio.Write(27, true);
+//gpio.Write(22, true);
+//gpio.Write(23, true);
+//gpio.Write(24, true);
+//while (true)
+//{
+//    Console.WriteLine(".");
+//    Thread.Sleep(1000);
+//}
 
 
 
