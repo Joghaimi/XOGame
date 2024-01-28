@@ -37,9 +37,9 @@ while (true)
         test.Write(MCP23017.MCP2301720, Port.PortB, i, PinState.High);
         Console.WriteLine($"High {i}");
         Thread.Sleep(3000);
-        test.Write(MCP23017.MCP2301720, Port.PortB, i, PinState.Low);
-        Console.WriteLine($"Low {i}");
-        Thread.Sleep(3000);
+        //test.Write(MCP23017.MCP2301720, Port.PortB, i, PinState.Low);
+        //Console.WriteLine($"Low {i}");
+        //Thread.Sleep(3000);
     }
 
     //for (int i = 8; i > 0; i--)
