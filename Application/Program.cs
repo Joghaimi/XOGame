@@ -32,12 +32,19 @@ test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 0, PinMode.Output);
 
 while (true)
 {
-    test.Write(MCP23017.MCP2301720, Port.PortB, 0, PinState.High);
-    Console.WriteLine("High");
-    Thread.Sleep(1000);
-    test.Write(MCP23017.MCP2301720, Port.PortB, 0, PinState.Low);
-    Console.WriteLine("Low");
-    Thread.Sleep(1000);
+    for (int i = 0; i < 8; i++)
+    {
+        test.Write(MCP23017.MCP2301720, Port.PortB, i, PinState.High);
+        Console.WriteLine($"High {i}");
+        Thread.Sleep(1000);
+    }
+    for (int i = 8; i < 0; i++)
+    {
+        test.Write(MCP23017.MCP2301720, Port.PortB, i, PinState.Low);
+        Console.WriteLine("Low");
+        Thread.Sleep(1000);
+    }
+
 }
 
 
