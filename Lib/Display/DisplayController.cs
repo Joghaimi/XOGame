@@ -21,6 +21,7 @@ namespace Library.Display
             if(isBusy)
                 return false;
             SerialPort.WriteLine($"{(int)DisplayNumber}{(int)command}");
+            Console.WriteLine($"{(int)DisplayNumber}{(int)command}");
             isBusy = true;
             string receivedData = SerialPort.ReadTo("\r");
             isBusy = false;

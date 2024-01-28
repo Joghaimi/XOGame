@@ -60,30 +60,30 @@ using Iot.Device.Mcp3428;
 //}
 
 //=================== input 
-MCP23Controller test = new MCP23Controller();
-test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 0, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 1, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 2, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 3, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 4, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 5, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 6, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 7, PinMode.Input);
+//MCP23Controller test = new MCP23Controller();
+//test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 0, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 1, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 2, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 3, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 4, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 5, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 6, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 7, PinMode.Input);
 
-while (true)
-{
-    Console.Write("0b");
-    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 0));
-    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 1));
-    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 2));
-    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 3));
-    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 4));
-    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 5));
-    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 6));
-    Console.WriteLine(test.Read(MCP23017.MCP2301720, Port.PortA, 7));
+//while (true)
+//{
+//    Console.Write("0b");
+//    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 0));
+//    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 1));
+//    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 2));
+//    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 3));
+//    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 4));
+//    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 5));
+//    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 6));
+//    Console.WriteLine(test.Read(MCP23017.MCP2301720, Port.PortA, 7));
 
-    Thread.Sleep(1000);
-}
+//    Thread.Sleep(1000);
+//}
 //================= Test the IO 
 //GPIOController gpio = new GPIOController();
 //Console.WriteLine("Turn Them On");
@@ -107,7 +107,7 @@ while (true)
 //}
 
 
-
+//======== Serial Port 
 
 
 
@@ -141,8 +141,8 @@ while (true)
 
 // mcp23017
 //Console.WriteLine("Hello World!");
-//var displayControl = new DisplayController();
-//displayControl.Init(SerialPortMapping.PortMap["Serial2"]);
+var displayControl = new DisplayController();
+displayControl.Init(SerialPortMapping.PortMap["Serial0"]);
 
 //var connectionSettingsx20 = new I2cConnectionSettings(1, 0x20);
 //var i2cDevicex20 = I2cDevice.Create(connectionSettingsx20);
@@ -154,31 +154,32 @@ while (true)
 //mcp23017x20.WriteByte(Register.IODIR, 0b0000_0000, Port.PortA);
 //mcp23017x20.WriteByte(Register.IODIR, 0b0000_0000, Port.PortB);
 
-//while (true) {
-//    ////mcp23017x20.WriteByte(Register.GPIO, 0b0000_0011, Port.PortA);
-//    //displayControl.SendCommand(Displays.first, DisplayCommand.rightArrow);
-//    //Thread.Sleep(1000);
-//    ////mcp23017x20.WriteByte(Register.GPIO, 0b0000_0000, Port.PortA);
-//    //displayControl.SendCommand(Displays.first, DisplayCommand.clear);
-//    //Thread.Sleep(1000);
-//    //displayControl.SendCommand(Displays.second, DisplayCommand.rightArrow);
-//    //Thread.Sleep(1000);
-//    //displayControl.SendCommand(Displays.second, DisplayCommand.clear);
-//    //Thread.Sleep(1000);
-//    //displayControl.SendCommand(Displays.third, DisplayCommand.rightArrow);
-//    //Thread.Sleep(1000);
-//    //displayControl.SendCommand(Displays.third, DisplayCommand.clear);
-//    //Thread.Sleep(1000);
-//    //displayControl.SendCommand(Displays.fourth, DisplayCommand.rightArrow);
-//    //Thread.Sleep(1000);
-//    //displayControl.SendCommand(Displays.fourth, DisplayCommand.clear);
-//    //Thread.Sleep(1000);
-//    mcp23017x20.WriteByte(Register.GPIO, 0b0000_0011, Port.PortA);
-//    Task.Delay(1000).Wait();
-//    mcp23017x20.WriteByte(Register.GPIO, 0b0000_0000, Port.PortA);
-//    Task.Delay(1000).Wait();
+while (true)
+{
+    ////mcp23017x20.WriteByte(Register.GPIO, 0b0000_0011, Port.PortA);
+    displayControl.SendCommand(Displays.first, DisplayCommand.rightArrow);
+    Thread.Sleep(1000);
+    ////mcp23017x20.WriteByte(Register.GPIO, 0b0000_0000, Port.PortA);
+    //displayControl.SendCommand(Displays.first, DisplayCommand.clear);
+    //Thread.Sleep(1000);
+    //displayControl.SendCommand(Displays.second, DisplayCommand.rightArrow);
+    //Thread.Sleep(1000);
+    //displayControl.SendCommand(Displays.second, DisplayCommand.clear);
+    //Thread.Sleep(1000);
+    //displayControl.SendCommand(Displays.third, DisplayCommand.rightArrow);
+    //Thread.Sleep(1000);
+    //displayControl.SendCommand(Displays.third, DisplayCommand.clear);
+    //Thread.Sleep(1000);
+    //displayControl.SendCommand(Displays.fourth, DisplayCommand.rightArrow);
+    //Thread.Sleep(1000);
+    //displayControl.SendCommand(Displays.fourth, DisplayCommand.clear);
+    //Thread.Sleep(1000);
+    //mcp23017x20.WriteByte(Register.GPIO, 0b0000_0011, Port.PortA);
+    //Task.Delay(1000).Wait();
+    //mcp23017x20.WriteByte(Register.GPIO, 0b0000_0000, Port.PortA);
+    //Task.Delay(1000).Wait();
 
-//}
+}
 
 
 
