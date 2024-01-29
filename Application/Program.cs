@@ -24,6 +24,17 @@ using Library;
 using System.Numerics;
 using Library.Modbus;
 using Iot.Device.Mcp3428;
+using Library.Media;
+
+
+// ===== Sound 
+JQ8400AudioModule.init(SerialPortMapping.PortMap["Serial2"]);
+while (true)
+{
+    JQ8400AudioModule.PlayAudio((int)SoundType.Start);
+    Thread.Sleep(1000);
+}
+
 
 // Test MCP0 ==== The Main Board 
 // Output 
