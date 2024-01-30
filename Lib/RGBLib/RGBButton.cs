@@ -28,10 +28,10 @@ namespace Library.RGBLib
             _RGBRPin = RPin;
             _RGBGPin = GPin;
             _RGBBPin = BPin;
-=            // Set Pinout
-            _MCP23Controller.PinModeSetup(_RGBRPin.Chip, _RGBRPin.port, _RGBRPin.PinNumber, PinMode.Input);
+            // Set Pinout
+            _MCP23Controller.PinModeSetup(_PushButtonPin.Chip, _PushButtonPin.port, _PushButtonPin.PinNumber, PinMode.Input);
             _MCP23Controller.PinModeSetup(_RGBGPin.Chip, _RGBGPin.port, _RGBGPin.PinNumber, PinMode.Output);
-            _MCP23Controller.PinModeSetup(_RGBBPin.Chip, _RGBBPin.port, _RGBBPin.PinNumber, PinMode.Output);
+            _MCP23Controller.PinModeSetup(_RGBRPin.Chip, _RGBRPin.port, _RGBRPin.PinNumber, PinMode.Output);
             _MCP23Controller.PinModeSetup(_RGBBPin.Chip, _RGBBPin.port, _RGBBPin.PinNumber, PinMode.Output);
         }
         public void TurnColorOn(RGBColor selectedColor)

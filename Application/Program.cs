@@ -31,10 +31,37 @@ using Library.RGBLib;
 // ==== 
 
 
-RGBPinMapping rGBPinMapping = new RGBPinMapping(0, MCP23017.MCP2301726, Port.PortB);
-RGBPinMapping gGBPinMapping = new RGBPinMapping(1, MCP23017.MCP2301726, Port.PortB);
-RGBPinMapping bGBPinMapping = new RGBPinMapping(2, MCP23017.MCP2301726, Port.PortB);
-RGBPinMapping ButtonGBPinMapping = new RGBPinMapping(4, MCP23017.MCP2301727, Port.PortB);
+RGBPinMapping rGBPinMapping =new RGBPinMapping
+{
+    PinNumber = 10, // Set the PinNumber property
+    Chip = MCP23017.MCP2301726, // Set the Chip property with the MCP23017 instance
+    port = Port.PortB
+};
+
+RGBPinMapping gGBPinMapping = new RGBPinMapping
+{
+    PinNumber = 1, // Set the PinNumber property
+    Chip = MCP23017.MCP2301726, // Set the Chip property with the MCP23017 instance
+    port = Port.PortB
+};
+RGBPinMapping bGBPinMapping = new RGBPinMapping
+{
+    PinNumber = 2, // Set the PinNumber property
+    Chip = MCP23017.MCP2301726, // Set the Chip property with the MCP23017 instance
+    port = Port.PortB
+};
+RGBPinMapping ButtonGBPinMapping = new RGBPinMapping
+{
+    PinNumber = 4, // Set the PinNumber property
+    Chip = MCP23017.MCP2301727, // Set the Chip property with the MCP23017 instance
+    port = Port.PortB
+};
+
+
+//    new RGBPinMapping(0, MCP23017.MCP2301726, Port.PortB);
+//RGBPinMapping gGBPinMapping = new RGBPinMapping(1, MCP23017.MCP2301726, Port.PortB);
+//RGBPinMapping bGBPinMapping = new RGBPinMapping(2, MCP23017.MCP2301726, Port.PortB);
+//RGBPinMapping ButtonGBPinMapping = new RGBPinMapping(4, MCP23017.MCP2301727, Port.PortB);
 
 
 RGBButton x = new RGBButton(rGBPinMapping, gGBPinMapping, bGBPinMapping, ButtonGBPinMapping);
