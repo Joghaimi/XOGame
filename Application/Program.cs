@@ -108,7 +108,7 @@ while (true)
         test.Write(MCP23017.MCP2301722, Port.PortB, i, PinState.High);
         Thread.Sleep(2000);
         Console.WriteLine($"LED #{7 - i} Low");
-        test.Write(MCP23017.MCP2301722, Port.PortB, 4, PinState.Low);
+        test.Write(MCP23017.MCP2301722, Port.PortB, i, PinState.Low);
         Thread.Sleep(2000);
     }
     Console.WriteLine("HIGH");
