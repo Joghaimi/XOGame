@@ -69,18 +69,18 @@ RGBButton x = new RGBButton(rGBPinMapping, gGBPinMapping, bGBPinMapping, ButtonG
 
 while (true) {
 
-    Console.WriteLine("RED Color");
-    x.TurnColorOn(RGBColor.Red);
+    Console.WriteLine(x.CurrentStatus());
+    //x.TurnColorOn(RGBColor.Red);
     Thread.Sleep(2000);
 
 
-    Console.WriteLine("RED Blue");
-    x.TurnColorOn(RGBColor.Blue);
-    Thread.Sleep(2000);
+    //Console.WriteLine("RED Blue");
+    //x.TurnColorOn(RGBColor.Blue);
+    //Thread.Sleep(2000);
 
-    Console.WriteLine("RED Green");
-    x.TurnColorOn(RGBColor.Green);
-    Thread.Sleep(2000);
+    //Console.WriteLine("RED Green");
+    //x.TurnColorOn(RGBColor.Green);
+    //Thread.Sleep(2000);
 
 }
 
