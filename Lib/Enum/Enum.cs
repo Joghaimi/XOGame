@@ -40,7 +40,13 @@ namespace Library
     public enum MCP23017
     {
         MCP2301720,
-        MCP2301721
+        MCP2301721,
+        MCP2301722,
+        MCP2301723,
+        MCP2301724,
+        MCP2301725,
+        MCP2301726,
+        MCP2301727,
     }
     public enum RGBColor
     {

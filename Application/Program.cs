@@ -27,13 +27,70 @@ using Iot.Device.Mcp3428;
 using Library.Media;
 
 
-// ===== Sound 
-JQ8400AudioModule.init(SerialPortMapping.PortMap["Serial2"]);
+// ====== U11 
+
+//=================== input 
+MCP23Controller test = new MCP23Controller(true);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 0, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 1, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 2, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 3, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 4, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 5, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 6, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortA, 7, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 0, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 1, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 2, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 3, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 4, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 5, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 6, PinMode.Input);
+test.PinModeSetup(MCP23017.MCP2301720, Port.PortB, 7, PinMode.Input);
 while (true)
 {
-    JQ8400AudioModule.PlayAudio((int)SoundType.Start);
+    Console.Write("Port A : 0b");
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 0) ? "1" : 0);
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 1) ? "1" : 0);
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 2) ? "1" : 0);
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 3) ? "1" : 0);
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 4) ? "1" : 0);
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 5) ? "1" : 0);
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortA, 6) ? "1" : 0);
+    Console.WriteLine(test.Read(MCP23017.MCP2301720, Port.PortA, 7));
+    Console.Write("Port B : 0b");
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortB, 0) ? "1" : 0);
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortB, 1) ? "1" : 0);
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortB, 2) ? "1" : 0);
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortB, 3) ? "1" : 0);
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortB, 4) ? "1" : 0);
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortB, 5) ? "1" : 0);
+    Console.Write(test.Read(MCP23017.MCP2301720, Port.PortB, 6) ? "1" : 0);
+    Console.WriteLine(test.Read(MCP23017.MCP2301720, Port.PortB, 7));
     Thread.Sleep(1000);
 }
+
+
+// ========================== U12
+
+
+
+
+
+
+
+
+
+
+
+
+// ===== Sound 
+//JQ8400AudioModule.init(SerialPortMapping.PortMap["Serial2"]);
+//while (true)
+//{
+//    JQ8400AudioModule.PlayAudio((int)SoundType.Start);
+//    Thread.Sleep(1000);
+//}
 
 
 // Test MCP0 ==== The Main Board 
