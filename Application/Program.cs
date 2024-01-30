@@ -25,70 +25,104 @@ using System.Numerics;
 using Library.Modbus;
 using Iot.Device.Mcp3428;
 using Library.Media;
+using Library.RGBLib;
+
+
+// ==== 
+
+
+RGBPinMapping rGBPinMapping = new RGBPinMapping(0, MCP23017.MCP2301726, Port.PortB);
+RGBPinMapping gGBPinMapping = new RGBPinMapping(1, MCP23017.MCP2301726, Port.PortB);
+RGBPinMapping bGBPinMapping = new RGBPinMapping(2, MCP23017.MCP2301726, Port.PortB);
+RGBPinMapping ButtonGBPinMapping = new RGBPinMapping(4, MCP23017.MCP2301727, Port.PortB);
+
+
+RGBButton x = new RGBButton(rGBPinMapping, gGBPinMapping, bGBPinMapping, ButtonGBPinMapping);
+
+
+while (true) {
+
+    Console.WriteLine("RED Color");
+    x.TurnColorOn(RGBColor.Red);
+    Thread.Sleep(2000);
+
+
+    Console.WriteLine("RED Blue");
+    x.TurnColorOn(RGBColor.Blue);
+    Thread.Sleep(2000);
+
+    Console.WriteLine("RED Green");
+    x.TurnColorOn(RGBColor.Green);
+    Thread.Sleep(2000);
+
+}
+
+
+
 
 
 // ====== U11 
 
 //=================== input 
-MCP23Controller test = new MCP23Controller(true);
-test.PinModeSetup(MCP23017.MCP2301721, Port.PortA, 0, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301721, Port.PortA, 1, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301721, Port.PortA, 2, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301721, Port.PortA, 3, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301721, Port.PortA, 4, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301721, Port.PortA, 5, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301721, Port.PortA, 6, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301721, Port.PortA, 7, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301721, Port.PortB, 0, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301721, Port.PortB, 1, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301721, Port.PortB, 2, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301721, Port.PortB, 3, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301721, Port.PortB, 4, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301721, Port.PortB, 5, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301721, Port.PortB, 6, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301721, Port.PortB, 7, PinMode.Input);
+//MCP23Controller test = new MCP23Controller(true);
+//test.PinModeSetup(MCP23017.MCP2301721, Port.PortA, 0, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301721, Port.PortA, 1, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301721, Port.PortA, 2, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301721, Port.PortA, 3, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301721, Port.PortA, 4, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301721, Port.PortA, 5, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301721, Port.PortA, 6, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301721, Port.PortA, 7, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301721, Port.PortB, 0, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301721, Port.PortB, 1, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301721, Port.PortB, 2, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301721, Port.PortB, 3, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301721, Port.PortB, 4, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301721, Port.PortB, 5, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301721, Port.PortB, 6, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301721, Port.PortB, 7, PinMode.Input);
 
-// U12
-test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 0, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 1, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 2, PinMode.Input);
-test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 3, PinMode.Input);
+//// U12
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 0, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 1, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 2, PinMode.Input);
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 3, PinMode.Input);
 
-test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 4, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 5, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 6, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 7, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 0, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 1, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 2, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 3, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 4, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 5, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 6, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 7, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 4, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 5, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 6, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 7, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 0, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 1, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 2, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 3, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 4, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 5, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 6, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 7, PinMode.Output);
 
-// U29  ---> 23
-test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 0, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 1, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 2, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 3, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 4, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 5, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 6, PinMode.Output);
-test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 7, PinMode.Output);
-// U22 
-while (true)
-{
-    for (int i = 0; i < 8; i++)
-    {
-        Console.WriteLine($"LED #{20 - i} High");
-        test.Write(MCP23017.MCP2301723, Port.PortB, i, PinState.High);
-        Thread.Sleep(2000);
-        Console.WriteLine($"LED #{20 - i} Low");
-        test.Write(MCP23017.MCP2301723, Port.PortB, i, PinState.Low);
-        Thread.Sleep(2000);
-    }
-}
+//// U29  ---> 23
+//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 0, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 1, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 2, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 3, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 4, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 5, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 6, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 7, PinMode.Output);
+//// U22 
+//while (true)
+//{
+//    for (int i = 0; i < 8; i++)
+//    {
+//        Console.WriteLine($"LED #{20 - i} High");
+//        test.Write(MCP23017.MCP2301723, Port.PortB, i, PinState.High);
+//        Thread.Sleep(2000);
+//        Console.WriteLine($"LED #{20 - i} Low");
+//        test.Write(MCP23017.MCP2301723, Port.PortB, i, PinState.Low);
+//        Thread.Sleep(2000);
+//    }
+//}
 
 // ==== U12
 //while (true)
