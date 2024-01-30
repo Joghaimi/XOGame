@@ -70,33 +70,35 @@ while (true)
 {
     //for (int i = 4; i < 8; i++)
     //{
+    
+    
+  
+
+    Console.WriteLine($"LED #11 High");
+    test.Write(MCP23017.MCP2301722, Port.PortA, 4, PinState.High);
+    Thread.Sleep(2000);
+    Console.WriteLine($"LED #11 Low");
+    test.Write(MCP23017.MCP2301722, Port.PortA, 4, PinState.Low);
+    Thread.Sleep(2000);
+    Console.WriteLine($"LED #10 High");
+    test.Write(MCP23017.MCP2301722, Port.PortA, 5, PinState.High);
+    Thread.Sleep(2000);
+    Console.WriteLine($"LED #10 Low");
+    test.Write(MCP23017.MCP2301722, Port.PortA, 5, PinState.Low);
+    Thread.Sleep(2000);
     Console.WriteLine($"LED #9 High");
-    test.Write(MCP23017.MCP2301722, Port.PortA, 7, PinState.High);
+    test.Write(MCP23017.MCP2301722, Port.PortA, 6, PinState.High);
     Thread.Sleep(2000);
     Console.WriteLine($"LED #9 Low");
+    test.Write(MCP23017.MCP2301722, Port.PortA, 6, PinState.Low);
+    Thread.Sleep(2000);
+    Console.WriteLine($"LED #8 High");
+    test.Write(MCP23017.MCP2301722, Port.PortA, 7, PinState.High);
+    Thread.Sleep(2000);
+    Console.WriteLine($"LED #8 Low");
     test.Write(MCP23017.MCP2301722, Port.PortA, 7, PinState.Low);
     Thread.Sleep(2000);
 
-    Console.WriteLine($"LED #10 High");
-    test.Write(MCP23017.MCP2301722, Port.PortA, 6, PinState.High);
-    Thread.Sleep(2000);
-    Console.WriteLine($"LED #10 Low");
-    test.Write(MCP23017.MCP2301722, Port.PortA, 6, PinState.Low);
-    Thread.Sleep(2000);
-
-    Console.WriteLine($"LED #11 High");
-    test.Write(MCP23017.MCP2301722, Port.PortA, 5, PinState.High);
-    Thread.Sleep(2000);
-    Console.WriteLine($"LED #11 Low");
-    test.Write(MCP23017.MCP2301722, Port.PortA, 5, PinState.Low);
-    Thread.Sleep(2000);
-
-    Console.WriteLine($"LED #12 High");
-    test.Write(MCP23017.MCP2301722, Port.PortA, 4, PinState.High);
-    Thread.Sleep(2000);
-    Console.WriteLine($"LED #12 Low");
-    test.Write(MCP23017.MCP2301722, Port.PortA, 4, PinState.Low);
-    Thread.Sleep(2000);
 
 
     //}
