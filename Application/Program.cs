@@ -33,7 +33,7 @@ using Library.RGBLib;
 
 RGBPinMapping rGBPinMapping =new RGBPinMapping
 {
-    PinNumber = 10, // Set the PinNumber property
+    PinNumber = 0, // Set the PinNumber property
     Chip = MCP23017.MCP2301726, // Set the Chip property with the MCP23017 instance
     port = Port.PortB
 };
