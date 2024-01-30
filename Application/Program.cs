@@ -65,6 +65,8 @@ while (true)
     Console.Write(test.Read(MCP23017.MCP2301721, Port.PortA, 5) ? "1" : 0);
     Console.Write(test.Read(MCP23017.MCP2301721, Port.PortA, 6) ? "1" : 0);
     Console.WriteLine(test.Read(MCP23017.MCP2301721, Port.PortA, 7) ? "1" : 0);
+    Thread.Sleep(100);
+
     Console.Write("Port B : 0b");
     Console.Write(test.Read(MCP23017.MCP2301721, Port.PortB, 0) ? "1" : 0);
     Console.Write(test.Read(MCP23017.MCP2301721, Port.PortB, 1) ? "1" : 0);
@@ -74,6 +76,8 @@ while (true)
     Console.Write(test.Read(MCP23017.MCP2301721, Port.PortB, 5) ? "1" : 0);
     Console.Write(test.Read(MCP23017.MCP2301721, Port.PortB, 6) ? "1" : 0);
     Console.WriteLine(test.Read(MCP23017.MCP2301721, Port.PortB, 7) ? "1" : 0);
+    Thread.Sleep(100);
+    Console.Write("0x22 : 0b");
     Console.Write(test.Read(MCP23017.MCP2301722, Port.PortB, 0) ? "1" : 0);
     Console.Write(test.Read(MCP23017.MCP2301722, Port.PortB, 1) ? "1" : 0);
     Console.Write(test.Read(MCP23017.MCP2301722, Port.PortB, 2) ? "1" : 0);
