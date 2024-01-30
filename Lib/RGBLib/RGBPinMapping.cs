@@ -12,6 +12,7 @@ namespace Library.RGBLib
         public int PinNumber { get; set; }
         public MCP23017 Chip { get; set; }
         public Port port { get; set; }
+        public RGBPinMapping() { }
         public RGBPinMapping(int pinNumber, MCP23017 chip, Port port)
         {
             PinNumber = pinNumber;
