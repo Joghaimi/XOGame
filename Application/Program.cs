@@ -80,7 +80,7 @@ while (true)
     Console.Write("0x22 : 0b");
     Console.Write(test.Read(MCP23017.MCP2301722, Port.PortA, 0) ? "1" : 0);
     Console.Write(test.Read(MCP23017.MCP2301722, Port.PortA, 1) ? "1" : 0);
-    Console.Write(test.Read(MCP23017.MCP2301722, Port.PortB, 2) ? "1" : 0);
+    Console.Write(test.Read(MCP23017.MCP2301722, Port.PortA, 2) ? "1" : 0);
     Console.WriteLine(test.Read(MCP23017.MCP2301722, Port.PortA, 3) ? "1" : 0);
     Console.WriteLine("================");
     Thread.Sleep(1000);
