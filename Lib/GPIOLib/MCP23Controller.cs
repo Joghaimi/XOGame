@@ -260,6 +260,7 @@ namespace Library.GPIOLib
                     else
                         currentValue7 &= (byte)~(1 << PinNumber);
                     mcp23017x26.WriteByte(Register.GPIO, currentValue7, Port);
+                    Console.WriteLine(Convert.ToString(currentValue7, 2).PadLeft(8, '0'));
                     break;
                 case MCP23017.MCP2301727:
                     byte currentValue8 = mcp23017x27.ReadByte(Register.GPIO, Port);
