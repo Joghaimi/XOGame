@@ -190,6 +190,7 @@ namespace Library.GPIOLib
                     throw new ArgumentException("Invalid Chip Selected");
             }
         }
+ 
         public void Write(MCP23017 chip, Port Port, int PinNumber, PinState PinState)
         {
             if (PinNumber < 0 || PinNumber > 15)
@@ -214,6 +215,8 @@ namespace Library.GPIOLib
                     else
                         currentValue2 &= (byte)~(1 << PinNumber);
                     mcp23017x21.WriteByte(Register.GPIO, currentValue2, Port);
+                    Console.WriteLine(Convert.ToString(currentValue2, 2).PadLeft(8, '0'));
+
                     break;
 
                 case MCP23017.MCP2301722:
@@ -223,6 +226,8 @@ namespace Library.GPIOLib
                     else
                         currentValue3 &= (byte)~(1 << PinNumber);
                     mcp23017x22.WriteByte(Register.GPIO, currentValue3, Port);
+                    Console.WriteLine(Convert.ToString(currentValue3, 2).PadLeft(8, '0'));
+
                     break;
                 case MCP23017.MCP2301723:
                     byte currentValue4 = mcp23017x23.ReadByte(Register.GPIO, Port);
