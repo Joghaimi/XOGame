@@ -12,7 +12,7 @@ namespace Library.RGBLib
 {
     public class RGBButton
     {
-        public static MCP23Controller _MCP23Controller = new MCP23Controller();
+        public static MCP23Controller _MCP23Controller = new MCP23Controller(true);
         public static bool IsMCP23ControllerInit = false;
         MCP23017 _Chip;
         Port _Port;
@@ -22,7 +22,7 @@ namespace Library.RGBLib
         {
             if (!IsMCP23ControllerInit)
             {
-                _MCP23Controller = new MCP23Controller();
+                _MCP23Controller = new MCP23Controller(true);
                 IsMCP23ControllerInit = true;
             }
             _Port = port;

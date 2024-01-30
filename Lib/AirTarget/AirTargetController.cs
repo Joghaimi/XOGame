@@ -20,7 +20,7 @@ namespace Library.AirTarget
         private MCP23017 _OutputIc;
         private Port _OutputPort;
         private int _OutputPin;
-        public static MCP23Controller _MCP23Controller = new MCP23Controller();
+        public static MCP23Controller _MCP23Controller = new MCP23Controller(true);
         public static bool IsMCP23ControllerInit = false;
         public static bool IsSelected = false;
 
@@ -34,7 +34,7 @@ namespace Library.AirTarget
             _OutputPin = outputPin;
             if (!IsMCP23ControllerInit)
             {
-                _MCP23Controller = new MCP23Controller();
+                _MCP23Controller = new MCP23Controller(true);
                 IsMCP23ControllerInit = true;
             }
 
