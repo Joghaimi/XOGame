@@ -30,7 +30,7 @@ using Library.Media;
 // ====== U11 
 
 //=================== input 
-MCP23Controller test = new MCP23Controller(true);
+MCP23Controller test = new MCP23Controller(false);
 test.PinModeSetup(MCP23017.MCP2301721, Port.PortA, 0, PinMode.Input);
 test.PinModeSetup(MCP23017.MCP2301721, Port.PortA, 1, PinMode.Input);
 test.PinModeSetup(MCP23017.MCP2301721, Port.PortA, 2, PinMode.Input);
