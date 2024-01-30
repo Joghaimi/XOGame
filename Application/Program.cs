@@ -54,38 +54,71 @@ test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 1, PinMode.Input);
 test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 2, PinMode.Input);
 test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 3, PinMode.Input);
 
-while (true)
-{
-    Console.Write("Port A : 0b");
-    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortA, 0) ? "1" : 0);
-    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortA, 1) ? "1" : 0);
-    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortA, 2) ? "1" : 0);
-    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortA, 3) ? "1" : 0);
-    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortA, 4) ? "1" : 0);
-    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortA, 5) ? "1" : 0);
-    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortA, 6) ? "1" : 0);
-    Console.WriteLine(test.Read(MCP23017.MCP2301721, Port.PortA, 7) ? "1" : 0);
-    Thread.Sleep(100);
+test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 4, PinMode.Output);
+test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 5, PinMode.Output);
+test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 6, PinMode.Output);
+test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 7, PinMode.Output);
+test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 0, PinMode.Output);
+test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 1, PinMode.Output);
+test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 2, PinMode.Output);
+test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 3, PinMode.Output);
+test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 4, PinMode.Output);
+test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 5, PinMode.Output);
+test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 6, PinMode.Output);
+test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 7, PinMode.Output);
 
-    Console.Write("Port B : 0b");
-    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortB, 0) ? "1" : 0);
-    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortB, 1) ? "1" : 0);
-    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortB, 2) ? "1" : 0);
-    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortB, 3) ? "1" : 0);
-    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortB, 4) ? "1" : 0);
-    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortB, 5) ? "1" : 0);
-    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortB, 6) ? "1" : 0);
-    Console.WriteLine(test.Read(MCP23017.MCP2301721, Port.PortB, 7) ? "1" : 0);
-    Thread.Sleep(100);
-    Console.Write("0x22 : 0b");
-    Console.Write(test.Read(MCP23017.MCP2301722, Port.PortA, 0) ? "1" : 0);
-    Console.Write(test.Read(MCP23017.MCP2301722, Port.PortA, 1) ? "1" : 0);
-    Console.Write(test.Read(MCP23017.MCP2301722, Port.PortA, 2) ? "1" : 0);
-    Console.WriteLine(test.Read(MCP23017.MCP2301722, Port.PortA, 3) ? "1" : 0);
-    Console.WriteLine("================");
-    Thread.Sleep(1000);
 
-}
+test.Write(MCP23017.MCP2301722, Port.PortA, 4, PinState.High);
+test.Write(MCP23017.MCP2301722, Port.PortA, 5, PinState.High);
+test.Write(MCP23017.MCP2301722, Port.PortA, 6, PinState.High);
+test.Write(MCP23017.MCP2301722, Port.PortA, 7, PinState.High);
+test.Write(MCP23017.MCP2301722, Port.PortA, 8, PinState.High);
+
+test.Write(MCP23017.MCP2301722, Port.PortB, 0, PinState.High);
+test.Write(MCP23017.MCP2301722, Port.PortB, 1, PinState.High);
+test.Write(MCP23017.MCP2301722, Port.PortB, 2, PinState.High);
+test.Write(MCP23017.MCP2301722, Port.PortB, 3, PinState.High);
+test.Write(MCP23017.MCP2301722, Port.PortB, 4, PinState.High);
+test.Write(MCP23017.MCP2301722, Port.PortB, 5, PinState.High);
+test.Write(MCP23017.MCP2301722, Port.PortB, 6, PinState.High);
+test.Write(MCP23017.MCP2301722, Port.PortB, 7, PinState.High);
+
+
+
+
+
+//while (true)
+//{
+//    Console.Write("Port A : 0b");
+//    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortA, 0) ? "1" : 0);
+//    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortA, 1) ? "1" : 0);
+//    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortA, 2) ? "1" : 0);
+//    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortA, 3) ? "1" : 0);
+//    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortA, 4) ? "1" : 0);
+//    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortA, 5) ? "1" : 0);
+//    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortA, 6) ? "1" : 0);
+//    Console.WriteLine(test.Read(MCP23017.MCP2301721, Port.PortA, 7) ? "1" : 0);
+//    Thread.Sleep(100);
+
+//    Console.Write("Port B : 0b");
+//    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortB, 0) ? "1" : 0);
+//    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortB, 1) ? "1" : 0);
+//    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortB, 2) ? "1" : 0);
+//    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortB, 3) ? "1" : 0);
+//    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortB, 4) ? "1" : 0);
+//    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortB, 5) ? "1" : 0);
+//    Console.Write(test.Read(MCP23017.MCP2301721, Port.PortB, 6) ? "1" : 0);
+//    Console.WriteLine(test.Read(MCP23017.MCP2301721, Port.PortB, 7) ? "1" : 0);
+//    Thread.Sleep(100);
+//    Console.Write("0x22 : 0b");
+//    Console.Write(test.Read(MCP23017.MCP2301722, Port.PortA, 0) ? "1" : 0);
+//    Console.Write(test.Read(MCP23017.MCP2301722, Port.PortA, 1) ? "1" : 0);
+//    Console.Write(test.Read(MCP23017.MCP2301722, Port.PortA, 2) ? "1" : 0);
+//    Console.WriteLine(test.Read(MCP23017.MCP2301722, Port.PortA, 3) ? "1" : 0);
+//    Console.WriteLine("================");
+//    Thread.Sleep(1000);
+
+//}
 
 
 // ========================== U12
