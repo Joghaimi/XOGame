@@ -36,29 +36,29 @@ namespace Library.GPIOLib
                 var i2cDevicex21 = I2cDevice.Create(connectionSettingsx21);
                 mcp23017x21 = new Mcp23017(i2cDevicex21);
 
-                var connectionSettingsx22 = new I2cConnectionSettings(1, 0x22);
-                var i2cDevicex22 = I2cDevice.Create(connectionSettingsx22);
-                mcp23017x22 = new Mcp23017(i2cDevicex22);
+                //var connectionSettingsx22 = new I2cConnectionSettings(1, 0x22);
+                //var i2cDevicex22 = I2cDevice.Create(connectionSettingsx22);
+                //mcp23017x22 = new Mcp23017(i2cDevicex22);
 
-                var connectionSettingsx23 = new I2cConnectionSettings(1, 0x23);
-                var i2cDevicex23 = I2cDevice.Create(connectionSettingsx23);
-                mcp23017x23 = new Mcp23017(i2cDevicex23);
+                //var connectionSettingsx23 = new I2cConnectionSettings(1, 0x23);
+                //var i2cDevicex23 = I2cDevice.Create(connectionSettingsx23);
+                //mcp23017x23 = new Mcp23017(i2cDevicex23);
 
-                var connectionSettingsx24 = new I2cConnectionSettings(1, 0x24);
-                var i2cDevicex24 = I2cDevice.Create(connectionSettingsx24);
-                mcp23017x24 = new Mcp23017(i2cDevicex24);
+                //var connectionSettingsx24 = new I2cConnectionSettings(1, 0x24);
+                //var i2cDevicex24 = I2cDevice.Create(connectionSettingsx24);
+                //mcp23017x24 = new Mcp23017(i2cDevicex24);
 
-                var connectionSettingsx25 = new I2cConnectionSettings(1, 0x25);
-                var i2cDevicex25 = I2cDevice.Create(connectionSettingsx25);
-                mcp23017x25 = new Mcp23017(i2cDevicex25);
+                //var connectionSettingsx25 = new I2cConnectionSettings(1, 0x25);
+                //var i2cDevicex25 = I2cDevice.Create(connectionSettingsx25);
+                //mcp23017x25 = new Mcp23017(i2cDevicex25);
 
-                var connectionSettingsx26 = new I2cConnectionSettings(1, 0x26);
-                var i2cDevicex26 = I2cDevice.Create(connectionSettingsx26);
-                mcp23017x26 = new Mcp23017(i2cDevicex26);
+                //var connectionSettingsx26 = new I2cConnectionSettings(1, 0x26);
+                //var i2cDevicex26 = I2cDevice.Create(connectionSettingsx26);
+                //mcp23017x26 = new Mcp23017(i2cDevicex26);
 
-                var connectionSettingsx27 = new I2cConnectionSettings(1, 0x27);
-                var i2cDevicex27 = I2cDevice.Create(connectionSettingsx27);
-                mcp23017x27 = new Mcp23017(i2cDevicex27);
+                //var connectionSettingsx27 = new I2cConnectionSettings(1, 0x27);
+                //var i2cDevicex27 = I2cDevice.Create(connectionSettingsx27);
+                //mcp23017x27 = new Mcp23017(i2cDevicex27);
 
             }
 
