@@ -31,31 +31,31 @@ using Library.RGBLib;
 // ==== 
 
 
-RGBPinMapping rGBPinMapping =new RGBPinMapping
-{
-    PinNumber = 0, // Set the PinNumber property
-    Chip = MCP23017.MCP2301726, // Set the Chip property with the MCP23017 instance
-    port = Port.PortB
-};
+//RGBPinMapping rGBPinMapping =new RGBPinMapping
+//{
+//    PinNumber = 0, // Set the PinNumber property
+//    Chip = MCP23017.MCP2301726, // Set the Chip property with the MCP23017 instance
+//    port = Port.PortB
+//};
 
-RGBPinMapping gGBPinMapping = new RGBPinMapping
-{
-    PinNumber = 1, // Set the PinNumber property
-    Chip = MCP23017.MCP2301726, // Set the Chip property with the MCP23017 instance
-    port = Port.PortB
-};
-RGBPinMapping bGBPinMapping = new RGBPinMapping
-{
-    PinNumber = 2, // Set the PinNumber property
-    Chip = MCP23017.MCP2301726, // Set the Chip property with the MCP23017 instance
-    port = Port.PortB
-};
-RGBPinMapping ButtonGBPinMapping = new RGBPinMapping
-{
-    PinNumber = 4, // Set the PinNumber property
-    Chip = MCP23017.MCP2301727, // Set the Chip property with the MCP23017 instance
-    port = Port.PortB
-};
+//RGBPinMapping gGBPinMapping = new RGBPinMapping
+//{
+//    PinNumber = 1, // Set the PinNumber property
+//    Chip = MCP23017.MCP2301726, // Set the Chip property with the MCP23017 instance
+//    port = Port.PortB
+//};
+//RGBPinMapping bGBPinMapping = new RGBPinMapping
+//{
+//    PinNumber = 2, // Set the PinNumber property
+//    Chip = MCP23017.MCP2301726, // Set the Chip property with the MCP23017 instance
+//    port = Port.PortB
+//};
+//RGBPinMapping ButtonGBPinMapping = new RGBPinMapping
+//{
+//    PinNumber = 4, // Set the PinNumber property
+//    Chip = MCP23017.MCP2301727, // Set the Chip property with the MCP23017 instance
+//    port = Port.PortB
+//};
 
 
 //    new RGBPinMapping(0, MCP23017.MCP2301726, Port.PortB);
@@ -64,25 +64,25 @@ RGBPinMapping ButtonGBPinMapping = new RGBPinMapping
 //RGBPinMapping ButtonGBPinMapping = new RGBPinMapping(4, MCP23017.MCP2301727, Port.PortB);
 
 
-RGBButton x = new RGBButton(rGBPinMapping, gGBPinMapping, bGBPinMapping, ButtonGBPinMapping);
+//RGBButton x = new RGBButton(rGBPinMapping, gGBPinMapping, bGBPinMapping, ButtonGBPinMapping);
 
 
-while (true) {
+//while (true) {
 
-    Console.WriteLine(x.CurrentStatus());
-    //x.TurnColorOn(RGBColor.Red);
-    Thread.Sleep(1000);
+//    Console.WriteLine(x.CurrentStatus());
+//    //x.TurnColorOn(RGBColor.Red);
+//    Thread.Sleep(1000);
 
 
-    //Console.WriteLine("RED Blue");
-    //x.TurnColorOn(RGBColor.Blue);
-    //Thread.Sleep(2000);
+//    //Console.WriteLine("RED Blue");
+//    //x.TurnColorOn(RGBColor.Blue);
+//    //Thread.Sleep(2000);
 
-    //Console.WriteLine("RED Green");
-    //x.TurnColorOn(RGBColor.Green);
-    //Thread.Sleep(2000);
+//    //Console.WriteLine("RED Green");
+//    //x.TurnColorOn(RGBColor.Green);
+//    //Thread.Sleep(2000);
 
-}
+//}
 
 
 
@@ -115,28 +115,28 @@ while (true) {
 //test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 2, PinMode.Input);
 //test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 3, PinMode.Input);
 
-//test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 4, PinMode.Output);
-//test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 5, PinMode.Output);
-//test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 6, PinMode.Output);
-//test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 7, PinMode.Output);
-//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 0, PinMode.Output);
-//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 1, PinMode.Output);
-//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 2, PinMode.Output);
-//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 3, PinMode.Output);
-//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 4, PinMode.Output);
-//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 5, PinMode.Output);
-//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 6, PinMode.Output);
-//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 7, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 4, PinMode.Output); LED #12
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 5, PinMode.Output); LED #11 
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 6, PinMode.Output); LED #10
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortA, 7, PinMode.Output); LED #09
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 0, PinMode.Output); Output 8
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 1, PinMode.Output); Output 7
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 2, PinMode.Output); Output 6
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 3, PinMode.Output); Output 5
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 4, PinMode.Output); Output 4
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 5, PinMode.Output); Output 3
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 6, PinMode.Output); Output 2
+//test.PinModeSetup(MCP23017.MCP2301722, Port.PortB, 7, PinMode.Output); Output 0
 
 //// U29  ---> 23
-//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 0, PinMode.Output);
-//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 1, PinMode.Output);
-//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 2, PinMode.Output);
-//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 3, PinMode.Output);
-//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 4, PinMode.Output);
-//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 5, PinMode.Output);
-//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 6, PinMode.Output);
-//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 7, PinMode.Output);
+//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 0, PinMode.Output); Output 20
+//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 1, PinMode.Output); Output 19
+//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 2, PinMode.Output); Output 18
+//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 3, PinMode.Output); Output 17
+//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 4, PinMode.Output); Output 16
+//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 5, PinMode.Output); Output 15
+//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 6, PinMode.Output); Output 14
+//test.PinModeSetup(MCP23017.MCP2301723, Port.PortB, 7, PinMode.Output); Output 13
 //// U22 
 //while (true)
 //{
@@ -378,19 +378,26 @@ while (true) {
 
 // Test Mobus 
 
-//var modbus = new ModbusLib();
-//modbus.Init(SerialPortMapping.PortMap["SerialTest"]);
-//while (true)
-//{
-//    modbus.WriteSingleRegister(1, 4001, 2);
-//    Thread.Sleep(1000);
-//}
+var modbus = new ModbusLib();
+modbus.Init(SerialPortMapping.PortMap["Serial0"]);
+while (true)
+{
+    //MotorStatus
+    //ModbusAddres
+    modbus.WriteSingleRegister(1, (int)ModbusAddres.startStop, (int)MotorStatus.Run);
+    modbus.WriteSingleRegister(1, (int)ModbusAddres.Speed, (int)MotorSpeed.Medium);
+    Thread.Sleep(1000);
+    modbus.WriteSingleRegister(1, (int)ModbusAddres.startStop, (int)MotorStatus.Reverse);
+    modbus.WriteSingleRegister(1, (int)ModbusAddres.Speed, (int)MotorSpeed.Slow);
+    Thread.Sleep(1000);
+
+}
 
 
 // mcp23017
 //Console.WriteLine("Hello World!");
-var displayControl = new DisplayController();
-displayControl.Init(SerialPortMapping.PortMap["Serial0"]);
+//var displayControl = new DisplayController();
+//displayControl.Init(SerialPortMapping.PortMap["Serial0"]);
 
 //var connectionSettingsx20 = new I2cConnectionSettings(1, 0x20);
 //var i2cDevicex20 = I2cDevice.Create(connectionSettingsx20);
@@ -402,32 +409,32 @@ displayControl.Init(SerialPortMapping.PortMap["Serial0"]);
 //mcp23017x20.WriteByte(Register.IODIR, 0b0000_0000, Port.PortA);
 //mcp23017x20.WriteByte(Register.IODIR, 0b0000_0000, Port.PortB);
 
-while (true)
-{
-    ////mcp23017x20.WriteByte(Register.GPIO, 0b0000_0011, Port.PortA);
-    displayControl.SendCommand(Displays.first, DisplayCommand.rightArrow);
-    Thread.Sleep(1000);
-    ////mcp23017x20.WriteByte(Register.GPIO, 0b0000_0000, Port.PortA);
-    //displayControl.SendCommand(Displays.first, DisplayCommand.clear);
-    //Thread.Sleep(1000);
-    //displayControl.SendCommand(Displays.second, DisplayCommand.rightArrow);
-    //Thread.Sleep(1000);
-    //displayControl.SendCommand(Displays.second, DisplayCommand.clear);
-    //Thread.Sleep(1000);
-    //displayControl.SendCommand(Displays.third, DisplayCommand.rightArrow);
-    //Thread.Sleep(1000);
-    //displayControl.SendCommand(Displays.third, DisplayCommand.clear);
-    //Thread.Sleep(1000);
-    //displayControl.SendCommand(Displays.fourth, DisplayCommand.rightArrow);
-    //Thread.Sleep(1000);
-    //displayControl.SendCommand(Displays.fourth, DisplayCommand.clear);
-    //Thread.Sleep(1000);
-    //mcp23017x20.WriteByte(Register.GPIO, 0b0000_0011, Port.PortA);
-    //Task.Delay(1000).Wait();
-    //mcp23017x20.WriteByte(Register.GPIO, 0b0000_0000, Port.PortA);
-    //Task.Delay(1000).Wait();
+//while (true)
+//{
+//    ////mcp23017x20.WriteByte(Register.GPIO, 0b0000_0011, Port.PortA);
+//    //displayControl.SendCommand(Displays.first, DisplayCommand.rightArrow);
+//    //Thread.Sleep(1000);
+//    ////mcp23017x20.WriteByte(Register.GPIO, 0b0000_0000, Port.PortA);
+//    //displayControl.SendCommand(Displays.first, DisplayCommand.clear);
+//    //Thread.Sleep(1000);
+//    //displayControl.SendCommand(Displays.second, DisplayCommand.rightArrow);
+//    //Thread.Sleep(1000);
+//    //displayControl.SendCommand(Displays.second, DisplayCommand.clear);
+//    //Thread.Sleep(1000);
+//    //displayControl.SendCommand(Displays.third, DisplayCommand.rightArrow);
+//    //Thread.Sleep(1000);
+//    //displayControl.SendCommand(Displays.third, DisplayCommand.clear);
+//    //Thread.Sleep(1000);
+//    //displayControl.SendCommand(Displays.fourth, DisplayCommand.rightArrow);
+//    //Thread.Sleep(1000);
+//    //displayControl.SendCommand(Displays.fourth, DisplayCommand.clear);
+//    //Thread.Sleep(1000);
+//    //mcp23017x20.WriteByte(Register.GPIO, 0b0000_0011, Port.PortA);
+//    //Task.Delay(1000).Wait();
+//    //mcp23017x20.WriteByte(Register.GPIO, 0b0000_0000, Port.PortA);
+//    //Task.Delay(1000).Wait();
 
-}
+//}
 
 
 

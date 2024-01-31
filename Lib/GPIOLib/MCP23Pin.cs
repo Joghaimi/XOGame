@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.RGBLib
+namespace Library.GPIOLib
 {
-    public class RGBPinMapping
+    public class MCP23Pin
     {
         public int PinNumber { get; set; }
         public MCP23017 Chip { get; set; }

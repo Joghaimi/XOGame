@@ -8,7 +8,7 @@ namespace Library
 {
     public enum SoundType
     {
-        Beeb=0,
+        Beeb = 0,
         Warning,
         Done,
         Bonus,
@@ -54,5 +54,22 @@ namespace Library
         Green,
         Blue,
         Off
+    }
+    public enum MotorStatus
+    {
+        Stop = 0,
+        Run = 2,
+        Reverse = 4,
+    }
+    public enum MotorSpeed
+    {
+        Slow = 200,
+        Medium = 400,
+        High = 600,
+    }
+    public enum ModbusAddres
+    {
+        Speed = 4,
+        startStop = 5
     }
 }
