@@ -40,7 +40,7 @@ namespace Library.Modbus
             {
                 // Write single register
                 master.WriteSingleRegister(slaveAddress, registerAddress, valueToWrite);
-                Console.WriteLine($"Wrote {valueToWrite} to register {registerAddress}");
+                //Console.WriteLine($"Wrote {valueToWrite} to register {registerAddress}");
             }
             catch (Exception ex)
             {

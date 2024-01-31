@@ -384,12 +384,14 @@ while (true)
 {
     //MotorStatus
     //ModbusAddres
+    Console.WriteLine("Start Motor Forward");
     modbus.WriteSingleRegister(1, (int)ModbusAddres.startStop, (int)MotorStatus.Run);
     modbus.WriteSingleRegister(1, (int)ModbusAddres.Speed, (int)MotorSpeed.Medium);
-    Thread.Sleep(1000);
+    Thread.Sleep(5000);
+    Console.WriteLine("Start Motor Reverse");
     modbus.WriteSingleRegister(1, (int)ModbusAddres.startStop, (int)MotorStatus.Reverse);
     modbus.WriteSingleRegister(1, (int)ModbusAddres.Speed, (int)MotorSpeed.Slow);
-    Thread.Sleep(1000);
+    Thread.Sleep(5000);
 
 }
 

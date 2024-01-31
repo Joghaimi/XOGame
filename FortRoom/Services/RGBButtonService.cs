@@ -65,11 +65,6 @@ namespace FortRoom.Services
                             timer.Reset();
                         }
                     }
-
-
-
-
-
                 }
                 // Sleep for a short duration to avoid excessive checking
                 Thread.Sleep(10);
