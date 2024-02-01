@@ -59,16 +59,15 @@ namespace FortRoom.Services
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                //RGBButtonList[0].TurnColorOn(RGBColor.Green);
-                //return;
+                
                 if (VariableControlService.IsTheGameStarted)
                 {
                     if (!activeButton && timerToStart.ElapsedMilliseconds > randomTime)
                     {
                         activeButton = true;
                         activeButtonIndox = random.Next(0, 11);
-                        //activeButtonIndox = 0;
                         Console.WriteLine($"Button {activeButtonIndox} Activated");
+                        JQ8400AudioModule.PlayAudio((int)SoundType.Beeb);
                         RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Green);
                         timer.Restart();
                         timerToStart.Restart();
@@ -89,6 +88,7 @@ namespace FortRoom.Services
                         if (isPreesed)
                         {
                             Console.WriteLine($"Button {activeButtonIndox} Pressed");
+                            JQ8400AudioModule.PlayAudio((int)SoundType.Bonus);
                             activeButton = false;
                             RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
                             VariableControlService.ActiveButtonPressed++;
