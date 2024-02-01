@@ -15,7 +15,10 @@ namespace FortRoom.Services
         Stopwatch GameStopWatch = new Stopwatch();
         bool IsTimerStarted = false;
         bool IsMotorOneStarted = false;
-        bool IsMotorOnePassMode1 = false;
+        bool IsMotorOneStartPeriod2 = false;
+        bool IsMotorOneStartPeriod3 = false;
+        int SlowPeriod = 3000;
+        int MeduimPeriod = 3000;
 
         //        var modbus = new ModbusLib();
         //        modbus.Init(SerialPortMapping.PortMap["Serial0"]);
@@ -63,13 +66,19 @@ namespace FortRoom.Services
                     if (!IsMotorOneStarted)
                     {
                         Modbus.WriteSingleRegister(1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
-                        // Start As Mode #1 
-                        Modbus.WriteSingleRegister(1, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);
+                        Modbus.WriteSingleRegister(1, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
                         IsMotorOneStarted = true;
                     }
-                    //if (IsMotorOneStarted && GameStopWatch.ElapsedMilliseconds > randomTime) { 
-
-                    //}
+                    if (!IsMotorOneStartPeriod2 && IsMotorOneStarted && GameStopWatch.ElapsedMilliseconds > SlowPeriod)
+                    {
+                        Modbus.WriteSingleRegister(1, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);
+                        IsMotorOneStartPeriod2 = true;
+                    }
+                    if (!IsMotorOneStartPeriod3 && IsMotorOneStarted && GameStopWatch.ElapsedMilliseconds > MeduimPeriod)
+                    {
+                        Modbus.WriteSingleRegister(1, (int)ModbusAddress.Speed, (int)MotorSpeed.High);
+                        IsMotorOneStartPeriod3 = true;
+                    }
                 }
 
                 Thread.Sleep(10);
