@@ -3,6 +3,7 @@ using Library.RGBLib;
 using Library;
 using System.Device.Gpio;
 using System.Diagnostics;
+using Library.PinMapping;
 
 namespace FortRoom.Services
 {
@@ -14,7 +15,20 @@ namespace FortRoom.Services
         public Task StartAsync(CancellationToken cancellationToken)
         {
             // TO DO Init The RGB Light .. 
-            //RGBButtonList.Add(new RGBButton());
+            RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1));
+            RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR2, RGBButtonPin.RGBG2, RGBButtonPin.RGBB2, RGBButtonPin.RGBPB2));
+            RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR3, RGBButtonPin.RGBG3, RGBButtonPin.RGBB3, RGBButtonPin.RGBPB3));
+            RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR4, RGBButtonPin.RGBG4, RGBButtonPin.RGBB4, RGBButtonPin.RGBPB4));
+            RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR5, RGBButtonPin.RGBG5, RGBButtonPin.RGBB5, RGBButtonPin.RGBPB5));
+            RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR6, RGBButtonPin.RGBG6, RGBButtonPin.RGBB6, RGBButtonPin.RGBPB6));
+            RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR7, RGBButtonPin.RGBG7, RGBButtonPin.RGBB7, RGBButtonPin.RGBPB7));
+            RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR8, RGBButtonPin.RGBG8, RGBButtonPin.RGBB8, RGBButtonPin.RGBPB8));
+            RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR9, RGBButtonPin.RGBG9, RGBButtonPin.RGBB9, RGBButtonPin.RGBPB9));
+            RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR10, RGBButtonPin.RGBG10, RGBButtonPin.RGBB10, RGBButtonPin.RGBPB10));
+            RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR11, RGBButtonPin.RGBG11, RGBButtonPin.RGBB11, RGBButtonPin.RGBPB11));
+            RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR12, RGBButtonPin.RGBG12, RGBButtonPin.RGBB12, RGBButtonPin.RGBPB12));
+
+
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
@@ -38,7 +52,8 @@ namespace FortRoom.Services
                     if (!activeButton && timerToStart.ElapsedMilliseconds > randomTime)
                     {
                         activeButton = true;
-                        activeButtonIndox = random.Next(0, 8);
+                        activeButtonIndox = random.Next(0, 11);
+                        Console.WriteLine($"Button {activeButtonIndox} Activated");
                         RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Green);
                         timer.Reset();
                         timerToStart.Reset();
@@ -47,6 +62,7 @@ namespace FortRoom.Services
                     if (activeButton & timer.ElapsedMilliseconds >= 10000)
                     {
                         RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
+                        Console.WriteLine($"Button {activeButtonIndox} Deactivated");
                         activeButtonIndox = -1;
                         activeButton = false;
                         timer.Reset();
@@ -57,6 +73,7 @@ namespace FortRoom.Services
                         bool isPreesed = RGBButtonList[activeButtonIndox].CurrentStatus();
                         if (isPreesed)
                         {
+                            Console.WriteLine($"Button {activeButtonIndox} Pressed");
                             activeButton = false;
                             RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
                             VariableControlService.ActiveButtonPressed++;

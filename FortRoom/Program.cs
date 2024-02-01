@@ -9,6 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHostedService<MainService>(); // The Main Flow .. 
+builder.Services.AddHostedService<ObstructionControlService>(); // The Main Flow .. 
 
 
 var app = builder.Build();

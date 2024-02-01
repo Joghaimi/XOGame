@@ -15,9 +15,9 @@ namespace Library.RGBLib
         public static MCP23Controller _MCP23Controller = new MCP23Controller(true);
         public static bool IsMCP23ControllerInit = false;
         RGBColor _CurrnetColor;
-        RGBPinMapping _PushButtonPin, _RGBRPin, _RGBGPin, _RGBBPin;
+        MCP23Pin _PushButtonPin, _RGBRPin, _RGBGPin, _RGBBPin;
         //public RGBButton(MCP23017 chip, int pushButtonPin, int rGBRPin, int rGBGPin, int rGBBPin, Port port)
-        public RGBButton(RGBPinMapping RPin, RGBPinMapping GPin, RGBPinMapping BPin, RGBPinMapping Button)
+        public RGBButton(MCP23Pin RPin, MCP23Pin GPin, MCP23Pin BPin, MCP23Pin Button)
         {
             if (!IsMCP23ControllerInit)
             {

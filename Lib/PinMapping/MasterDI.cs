@@ -58,5 +58,11 @@ namespace Library.PinMapping
             Chip = MCP23017.MCP2301720, // Set the Chip property with the MCP23017 instance
             port = Port.PortA
         };
+
+        // RIP Sensor 
+        public static int PIRPin1 = 26;
+        public static int PIRPin2 = 19;
+        public static int PIRPin3 = 13;
+        public static int PIRPin4 = 6;
     }
 }

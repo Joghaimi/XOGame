@@ -18,10 +18,6 @@ namespace ShootingRoom.Services
         private int PIRPin3 = 13;
         private int PIRPin4 = 6;
 
-
-
-
-
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _controller = new GPIOController();

@@ -33,14 +33,12 @@ namespace Library.Modbus
 
             }
         }
-        //public bool WriteRegister(int address , ) { }
         public void WriteSingleRegister(byte slaveAddress, ushort registerAddress, ushort valueToWrite)
         {
             try
             {
                 // Write single register
                 master.WriteSingleRegister(slaveAddress, registerAddress, valueToWrite);
-                //Console.WriteLine($"Wrote {valueToWrite} to register {registerAddress}");
             }
             catch (Exception ex)
             {

@@ -67,9 +67,17 @@ namespace Library
         Medium = 400,
         High = 600,
     }
-    public enum ModbusAddres
+    public enum ModbusAddress
     {
         Speed = 4,
         startStop = 5
     }
+    public enum ModbusSlave
+    {
+        Slave1 = 1,
+        Slave2 = 2,
+        Slave3 = 3,
+        Slave4 = 4,
+    }
+
 }
