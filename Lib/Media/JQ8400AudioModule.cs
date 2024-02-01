@@ -11,7 +11,7 @@ namespace Library.Media
     {
         private static SerialPort serialPort;
 
-        public static void init (string portName)
+        public static void init(string portName)
         {
             serialPort = new SerialPort(portName, 9600);  // Adjust baud rate as per the module's specs
             serialPort.Open();
@@ -20,6 +20,7 @@ namespace Library.Media
         {
             int totalSize = 18;
             int currentFileNumber = CurrentFileNumber();
+            Console.WriteLine($"the Currwnt File {currentFileNumber}");
             int theDifference = trackNumber - currentFileNumber;
             int numberOfClick = 0;
             // 5 -3 =>2
@@ -33,6 +34,9 @@ namespace Library.Media
                 NextAudio();
 
             PlayAudio();
+            Console.WriteLine($"the One That will be played  {currentFileNumber}");
+
+
             byte[] command = { 0xAA, 0x0C, 0x02, 0x00, 0x06, 0xBE };
             serialPort.Write(command, 0, command.Length);
             Console.WriteLine($"Playing audio file {trackNumber}");
