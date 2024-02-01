@@ -67,7 +67,7 @@ namespace FortRoom.Services
                     {
                         activeButton = true;
                         activeButtonIndox = random.Next(0, 11);
-                        activeButtonIndox = 0;
+                        //activeButtonIndox = 0;
                         Console.WriteLine($"Button {activeButtonIndox} Activated");
                         RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Green);
                         timer.Restart();
