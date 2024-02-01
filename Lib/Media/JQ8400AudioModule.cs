@@ -18,6 +18,7 @@ namespace Library.Media
         }
         public static void PlayAudio(int trackNumber)
         {
+            trackNumber = 1;
             //int totalSize = 18;
             //int currentFileNumber = CurrentFileNumber();
             //Console.WriteLine($"the Currwnt File {currentFileNumber}");
