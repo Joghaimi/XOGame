@@ -53,7 +53,7 @@ namespace FortRoom.Services
             Stopwatch timerToStart = new Stopwatch();
             int activeButtonIndox = -1;
             Random random = new Random();
-            int randomTime = random.Next(5000, 15000);
+            int randomTime = random.Next(1000, 3000);
             timerToStart.Start();
             timer.Start();
 
@@ -67,8 +67,8 @@ namespace FortRoom.Services
                         activeButtonIndox = random.Next(0, 11);
                         Console.WriteLine($"Button {activeButtonIndox} Activated");
                         RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Green);
-                        timer.Reset();
-                        timerToStart.Reset();
+                        timer.Restart();
+                        timerToStart.Restart();
                         randomTime = random.Next(5000, 15000);
                     }
                     if (activeButton & timer.ElapsedMilliseconds >= 10000)
@@ -77,8 +77,8 @@ namespace FortRoom.Services
                         Console.WriteLine($"Button {activeButtonIndox} Deactivated");
                         activeButtonIndox = -1;
                         activeButton = false;
-                        timer.Reset();
-                        timerToStart.Reset();
+                        timer.Restart();
+                        timerToStart.Restart();
                     }
                     if (activeButton && activeButtonIndox > -1)
                     {
@@ -90,8 +90,8 @@ namespace FortRoom.Services
                             RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
                             VariableControlService.ActiveButtonPressed++;
                             activeButtonIndox = -1;
-                            timerToStart.Reset();
-                            timer.Reset();
+                            timerToStart.Restart();
+                            timer.Restart();
                         }
                     }
                 }
