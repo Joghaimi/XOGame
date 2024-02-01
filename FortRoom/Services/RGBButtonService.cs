@@ -82,7 +82,7 @@ namespace FortRoom.Services
                     }
                     if (activeButton && activeButtonIndox > -1)
                     {
-                        bool isPreesed = RGBButtonList[activeButtonIndox].CurrentStatus();
+                        bool isPreesed = !RGBButtonList[activeButtonIndox].CurrentStatus();
                         if (isPreesed)
                         {
                             Console.WriteLine($"Button {activeButtonIndox} Pressed");
