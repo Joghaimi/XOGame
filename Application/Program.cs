@@ -74,7 +74,9 @@ while (true)
     Console.WriteLine(x.CurrentStatus());
     x.TurnColorOn(RGBColor.Red);
     Thread.Sleep(1000);
-
+    Console.WriteLine(y.CurrentStatus());
+    y.TurnColorOn(RGBColor.Red);
+    Thread.Sleep(1000);
 
     Console.WriteLine("RED Blue");
     x.TurnColorOn(RGBColor.Blue);
