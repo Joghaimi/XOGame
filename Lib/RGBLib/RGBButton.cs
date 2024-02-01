@@ -19,9 +19,10 @@ namespace Library.RGBLib
         //public RGBButton(MCP23017 chip, int pushButtonPin, int rGBRPin, int rGBGPin, int rGBBPin, Port port)
         public RGBButton(MCP23Pin RPin, MCP23Pin GPin, MCP23Pin BPin, MCP23Pin Button)
         {
+            _MCP23Controller = new MCP23Controller(true);
             if (!IsMCP23ControllerInit)
             {
-                _MCP23Controller = new MCP23Controller(true);
+                //_MCP23Controller = new MCP23Controller(true);
                 IsMCP23ControllerInit = true;
             }
             _PushButtonPin = Button;
