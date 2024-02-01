@@ -52,6 +52,8 @@ namespace Library.Media
 
             // Send the command to play the first audio track
             serialPort.Write(command, 0, command.Length);
+            PlayAudio();
+
         }
 
         public static void StopPlayback()
