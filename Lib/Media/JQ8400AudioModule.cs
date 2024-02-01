@@ -44,16 +44,51 @@ namespace Library.Media
             //int trackNumber = 1;
 
             // Convert the track number into high and low bytes
+            //byte highByte = (byte)((trackNumber >> 8) & 0xFF);
+            //byte lowByte = (byte)(trackNumber & 0xFF);
+
+            //// Construct the command
+            //byte[] command = { 0xAA, 0x07, 0x02, highByte, lowByte, 0xBB };
+
+            //// Send the command to play the first audio track
+            //serialPort.Write(command, 0, command.Length);
+            //PlayAudio();
+
+
+
+            // Convert the track number into high and low bytes
             byte highByte = (byte)((trackNumber >> 8) & 0xFF);
             byte lowByte = (byte)(trackNumber & 0xFF);
 
             // Construct the command
             byte[] command = { 0xAA, 0x07, 0x02, highByte, lowByte, 0xBB };
 
+            // Calculate the checksum
+            byte checksum = CalculateChecksum(command);
+
+            // Set the checksum in the command
+            command[command.Length - 1] = checksum;
+
             // Send the command to play the first audio track
             serialPort.Write(command, 0, command.Length);
-            PlayAudio();
 
+            Console.WriteLine($"Playing the first audio track (Track Number: {trackNumber})");
+
+        }
+        public static byte CalculateChecksum(byte[] data)
+        {
+            int sum = 0;
+
+            // Exclude the start byte (0xAA) and end byte (0xBB)
+            for (int i = 1; i < data.Length - 1; i++)
+            {
+                sum += data[i];
+            }
+
+            // Take the least significant 8 bits
+            byte checksum = (byte)(sum & 0xFF);
+
+            return checksum;
         }
 
         public static void StopPlayback()
