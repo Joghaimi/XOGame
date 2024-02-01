@@ -39,10 +39,19 @@ namespace Library.Media
 
             //byte[] command = { 0xAA, 0x0C, 0x02, 0x00, 0x06, 0xBE };
             //serialPort.Write(command, 0, command.Length);
-            byte[] command = { 0xAA, 0x07, 0x02, (byte)((trackNumber >> 8) & 0xFF), (byte)(trackNumber & 0xFF), 0xBB };
-            serialPort.Write(command, 0, command.Length);
+            //Console.WriteLine($"Playing audio file {trackNumber}");
+            // Assuming the first track number is 1
+            //int trackNumber = 1;
 
-            Console.WriteLine($"Playing audio file {trackNumber}");
+            // Convert the track number into high and low bytes
+            byte highByte = (byte)((trackNumber >> 8) & 0xFF);
+            byte lowByte = (byte)(trackNumber & 0xFF);
+
+            // Construct the command
+            byte[] command = { 0xAA, 0x07, 0x02, highByte, lowByte, 0xBB };
+
+            // Send the command to play the first audio track
+            serialPort.Write(command, 0, command.Length);
         }
 
         public static void StopPlayback()
