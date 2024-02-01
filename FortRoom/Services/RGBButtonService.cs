@@ -59,8 +59,8 @@ namespace FortRoom.Services
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                RGBButtonList[0].TurnColorOn(RGBColor.Green);
-                return;
+                //RGBButtonList[0].TurnColorOn(RGBColor.Green);
+                //return;
                 if (VariableControlService.IsTheGameStarted)
                 {
                     if (!activeButton && timerToStart.ElapsedMilliseconds > randomTime)
