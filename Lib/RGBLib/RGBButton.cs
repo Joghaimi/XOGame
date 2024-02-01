@@ -32,6 +32,7 @@ namespace Library.RGBLib
             _MCP23Controller.PinModeSetup(_RGBGPin.Chip, _RGBGPin.port, _RGBGPin.PinNumber, PinMode.Output);
             _MCP23Controller.PinModeSetup(_RGBRPin.Chip, _RGBRPin.port, _RGBRPin.PinNumber, PinMode.Output);
             _MCP23Controller.PinModeSetup(_RGBBPin.Chip, _RGBBPin.port, _RGBBPin.PinNumber, PinMode.Output);
+            this.TurnColorOn(RGBColor.Off);
         }
         public void TurnColorOn(RGBColor selectedColor)
         {
