@@ -18,7 +18,7 @@ namespace Library.Media
         }
         public static void PlayAudio(int trackNumber)
         {
-            int totalSize = 6;
+            int totalSize = 16;
             int currentFileNumber = CurrentFileNumber();
             int theDifference = trackNumber - currentFileNumber;
             int numberOfClick = 0;
