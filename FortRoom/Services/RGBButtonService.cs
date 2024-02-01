@@ -53,7 +53,7 @@ namespace FortRoom.Services
             Stopwatch timerToStart = new Stopwatch();
             int activeButtonIndox = -1;
             Random random = new Random();
-            int randomTime = random.Next(1000, 3000);
+            int randomTime = random.Next(10000, 30000);
             timerToStart.Start();
             timer.Start();
 
@@ -65,6 +65,7 @@ namespace FortRoom.Services
                     {
                         activeButton = true;
                         activeButtonIndox = random.Next(0, 11);
+                        activeButtonIndox = 0;
                         Console.WriteLine($"Button {activeButtonIndox} Activated");
                         RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Green);
                         timer.Restart();
