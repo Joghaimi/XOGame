@@ -65,6 +65,7 @@ MCP23Pin ButtonGBPinMapping = new MCP23Pin
 
 
 RGBButton x = new RGBButton(rGBPinMapping, gGBPinMapping, bGBPinMapping, ButtonGBPinMapping);
+RGBButton y = new RGBButton(rGBPinMapping, gGBPinMapping, bGBPinMapping, ButtonGBPinMapping);
 
 
 while (true)
