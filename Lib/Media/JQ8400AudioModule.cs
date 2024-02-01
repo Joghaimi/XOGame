@@ -18,27 +18,30 @@ namespace Library.Media
         }
         public static void PlayAudio(int trackNumber)
         {
-            int totalSize = 18;
-            int currentFileNumber = CurrentFileNumber();
-            Console.WriteLine($"the Currwnt File {currentFileNumber}");
-            int theDifference = trackNumber - currentFileNumber;
-            int numberOfClick = 0;
-            // 5 -3 =>2
-            // 3 -5 =>-2 -> 
-            // Total 6 suppose 
-            if (theDifference > 0)
-                numberOfClick = theDifference;
-            else
-                numberOfClick = (totalSize - currentFileNumber) + trackNumber;
-            for (int i = 0; i < numberOfClick; i++)
-                NextAudio();
+            //int totalSize = 18;
+            //int currentFileNumber = CurrentFileNumber();
+            //Console.WriteLine($"the Currwnt File {currentFileNumber}");
+            //int theDifference = trackNumber - currentFileNumber;
+            //int numberOfClick = 0;
+            //// 5 -3 =>2
+            //// 3 -5 =>-2 -> 
+            //// Total 6 suppose 
+            //if (theDifference > 0)
+            //    numberOfClick = theDifference;
+            //else
+            //    numberOfClick = (totalSize - currentFileNumber) + trackNumber;
+            //for (int i = 0; i < numberOfClick; i++)
+            //    NextAudio();
 
-            PlayAudio();
-            Console.WriteLine($"the One That will be played  {currentFileNumber}");
+            //PlayAudio();
+            //Console.WriteLine($"the One That will be played  {currentFileNumber}");
 
 
-            byte[] command = { 0xAA, 0x0C, 0x02, 0x00, 0x06, 0xBE };
+            //byte[] command = { 0xAA, 0x0C, 0x02, 0x00, 0x06, 0xBE };
+            //serialPort.Write(command, 0, command.Length);
+            byte[] command = { 0xAA, 0x07, 0x02, (byte)((trackNumber >> 8) & 0xFF), (byte)(trackNumber & 0xFF), 0xBB };
             serialPort.Write(command, 0, command.Length);
+
             Console.WriteLine($"Playing audio file {trackNumber}");
         }
 
