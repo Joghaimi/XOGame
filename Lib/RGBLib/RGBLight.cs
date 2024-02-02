@@ -35,10 +35,36 @@ namespace Library.RGBLib
         }
         public static void SetColor(RGBColor selectedColor)
         {
+            uint blue = 0;
+            uint green = 0;
+            uint red = 0;
 
+            switch (selectedColor)
+            {
+                case RGBColor.Red:
+                    blue = 0;
+                    green = 0;
+                    red = 255;
+                    break;
+                case RGBColor.Green:
+                    blue = 0;
+                    green = 255;
+                    red = 0;
+                    break;
+                case RGBColor.Blue:
+                    blue = 255;
+                    green = 0;
+                    red = 0;
+                    break;
+                case RGBColor.Off:
+                    blue = 0;
+                    green = 0;
+                    red = 0;
+                    break;
+            }
             ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = "python3"; ;
-            start.Arguments = @"/home/pi/XOGame/RGBLight.py 1 2";
+            start.Arguments = $@"/home/pi/XOGame/RGBLight.py {CLKPin} {DataPin} {red} {green} {blue}";
             start.UseShellExecute = false;
             start.RedirectStandardOutput = true;
             using (Process process = Process.Start(start))

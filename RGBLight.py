@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import time
+import sys
 
 class RGBDriver:
     def __init__(self, clk, data):
@@ -60,24 +61,19 @@ class RGBDriver:
     def cleanup(self):
         GPIO.cleanup()
 
-
-# Example usage
 if __name__ == "__main__":
-    arg1 = globals().get("arg1", None)
-    arg2 = globals().get("arg2", None)
+    if len(sys.argv) != 6:
+        print("Usage: python script.py clk_pin data_pin red green blue")
+        sys.exit(1)
 
-    rgb_driver = RGBDriver(clk=20, data=21)
+    clk_pin = int(sys.argv[1])
+    data_pin = int(sys.argv[2])
+    red = int(sys.argv[3])
+    green = int(sys.argv[4])
+    blue = int(sys.argv[5])
+
+    rgb_driver = RGBDriver(clk=clk_pin, data=data_pin)
     rgb_driver.begin()
-    rgb_driver.set_color(red=0, green=100, blue=0)  # Set color to red
-    #time.sleep(2)
+    rgb_driver.set_color(red=red, green=green, blue=blue)
     rgb_driver.end()
-    #rgb_driver.cleanup()
-    print(arg1)
-    print(arg2)
-
-
-
-
-
-
-
+    rgb_driver.cleanup()
