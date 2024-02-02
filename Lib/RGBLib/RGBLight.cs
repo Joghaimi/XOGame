@@ -100,12 +100,12 @@ namespace Library.RGBLib
         private static void ClkRise()
         {
             _controller.Write(CLKPin, false);
-            //Thread.Sleep(20);
+            Thread.Sleep(1);
             //Thread.sleepM
-            Sleep(20);
+            //Sleep(20);
             _controller.Write(CLKPin, true);
-            //Thread.Sleep(20);
-            Sleep(20);
+            Thread.Sleep(1);
+            //Sleep(20);
         }
         private static uint TakeAntiCode(uint dat)
         {
