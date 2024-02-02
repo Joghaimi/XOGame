@@ -107,9 +107,9 @@ namespace Library.RGBLib
             //Thread.Sleep(0);
             //Thread.sleepM
             //Sleep(20);
-            DelayLib.DelayMicroseconds(20, true);
+            DelayLib.DelayMicroseconds(20, false);
             _controller.Write(CLKPin, true);
-            DelayLib.DelayMicroseconds(20, true);
+            DelayLib.DelayMicroseconds(20, false);
             //Sleep(20);
         }
         private static uint TakeAntiCode(uint dat)
