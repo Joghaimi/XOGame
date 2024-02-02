@@ -42,7 +42,7 @@ namespace FortRoom.Services
                     {
 
                         VariableControlService.TimeOfPressureHit++;
-                        JQ8400AudioModule.PlayAudio((int)SoundType.Beeb);
+                        JQ8400AudioModule.PlayAudio((int)SoundType.Descend);
                         RGBLight.SetColor(RGBColor.Red);
                         scoreJustDecreased = true;
                         timer.Restart();
