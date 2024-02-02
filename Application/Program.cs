@@ -54,23 +54,28 @@ using NAudio.Wave;
 
 Console.WriteLine(  "Started ... ");
 RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
+RGBLight.BeginTransition();
+RGBLight.SetColor(RGBColor.Red);
+RGBLight.EndTransition();
 while (true)
 {
-    Console.WriteLine("Red");
-    RGBLight.BeginTransition();
-    RGBLight.SetColor(RGBColor.Red);
-    RGBLight.EndTransition();
+    Thread.Sleep(3000);
 
-    Thread.Sleep(3000);
-    Console.WriteLine("Green");
+    //Console.WriteLine("Red");
+    //RGBLight.BeginTransition();
+    //RGBLight.SetColor(RGBColor.Red);
+    //RGBLight.EndTransition();
 
-    RGBLight.SetColor(RGBColor.Green);
-    Thread.Sleep(3000);
-    Console.WriteLine("Blue");
-    RGBLight.SetColor(RGBColor.Blue);
-    Thread.Sleep(3000);
-    RGBLight.SetColor(RGBColor.Off);
-    Thread.Sleep(3000);
+    //Thread.Sleep(3000);
+    //Console.WriteLine("Green");
+
+    //RGBLight.SetColor(RGBColor.Green);
+    //Thread.Sleep(3000);
+    //Console.WriteLine("Blue");
+    //RGBLight.SetColor(RGBColor.Blue);
+    //Thread.Sleep(3000);
+    //RGBLight.SetColor(RGBColor.Off);
+    //Thread.Sleep(3000);
 }
 
 
