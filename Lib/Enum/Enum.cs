@@ -8,23 +8,25 @@ namespace Library
 {
     public enum SoundType
     {
-        Beeb = 1,
+        Ticking = 1,
         Button,
-        Warning,
         Done,
         Bonus,
         Finish,
         Start,
         Start2,
         LaserScan,
+        LevelWin,
         MarioJump,
-        Complete,
-        Descend,
+        MissionCompleted,
         Descend2,
+        Descend,
         GameOver,
+        GameScoreTally,
         WinSquare,
+        Winner2,
         Winner1,
-        Winner2
+
     }
     public enum Displays
     {

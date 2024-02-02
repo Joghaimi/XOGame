@@ -78,7 +78,7 @@ namespace FortRoom.Services
                         activeButton = true;
                         activeButtonIndox = random.Next(0, 11);
                         Console.WriteLine($"Button {activeButtonIndox} Activated");
-                        JQ8400AudioModule.PlayAudio((int)SoundType.Beeb);
+                        JQ8400AudioModule.PlayAudio((int)SoundType.Button);
                         RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Green);
                         timer.Restart();
                         timerToStart.Restart();
