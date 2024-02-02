@@ -13,50 +13,38 @@ namespace Library.AirTarget
 {
     public class AirTargetController
     {
-        // input infra Red 
-        private MCP23017 _InputIc;
-        private int _InputPin;
-        private Port _InputPort;
-        private MCP23017 _OutputIc;
-        private Port _OutputPort;
-        private int _OutputPin;
         public static MCP23Controller _MCP23Controller = new MCP23Controller(true);
         public static bool IsMCP23ControllerInit = false;
         public static bool IsSelected = false;
-
-        public AirTargetController(MCP23017 inputIc, int inputPin, Port inputPort, MCP23017 outputIc, Port outputPort, int outputPin)
+        MCP23Pin _LightPin, _InputPin;
+        public AirTargetController(MCP23Pin LightPin, MCP23Pin InputPin)
         {
-            _InputIc = inputIc;
-            _InputPin = inputPin;
-            _InputPort = inputPort;
-            _OutputIc = outputIc;
-            _OutputPort = outputPort;
-            _OutputPin = outputPin;
+            _LightPin = LightPin;
+            _InputPin = InputPin;
             if (!IsMCP23ControllerInit)
             {
                 _MCP23Controller = new MCP23Controller(true);
                 IsMCP23ControllerInit = true;
             }
+            _MCP23Controller.PinModeSetup(_InputPin.Chip, _InputPin.port, _InputPin.PinNumber, PinMode.Input);
+            _MCP23Controller.PinModeSetup(_LightPin.Chip, _LightPin.port, _LightPin.PinNumber, PinMode.Output);
 
-            // Set Pinout
-            _MCP23Controller.PinModeSetup(_InputIc, _InputPort, _InputPin, PinMode.Input);
-            _MCP23Controller.PinModeSetup(_OutputIc, _OutputPort, _OutputPin, PinMode.Output);
         }
         public void Select(bool Selected)
         {
             IsSelected = Selected;
             if (IsSelected)
             {
-                _MCP23Controller.Write(_OutputIc, _OutputPort, _OutputPin, PinState.High);
+                _MCP23Controller.Write(_LightPin.Chip, _LightPin.port, _LightPin.PinNumber, PinState.High);
             }
             else
             {
-                _MCP23Controller.Write(_OutputIc, _OutputPort, _OutputPin, PinState.Low);
+                _MCP23Controller.Write(_LightPin.Chip, _LightPin.port, _LightPin.PinNumber, PinState.Low);
             }
         }
         public bool Status()
         {
-            return _MCP23Controller.Read(_InputIc, _InputPort, _InputPin); 
+            return _MCP23Controller.Read(_InputPin.Chip, _InputPin.port, _InputPin.PinNumber);
         }
 
     }

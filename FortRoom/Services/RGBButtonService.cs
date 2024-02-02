@@ -10,8 +10,17 @@ namespace FortRoom.Services
     public class RGBButtonService : IHostedService, IDisposable
     {
         List<RGBButton> RGBButtonList = new List<RGBButton>();
-        private CancellationTokenSource _cts;
+        private CancellationTokenSource _cts, _cts2;
+        bool IsTimerStarted = false;
+        Stopwatch GameStopWatch = new Stopwatch();
+        int SlowPeriod = 3000;
+        int MediumPeriod = 3000;
 
+        int slowChangeTime = 1000;
+        int mediumChangeTime = 700;
+        int highChangeTime = 500;
+
+        int changingSpeed = 1000;
         public Task StartAsync(CancellationToken cancellationToken)
         {
             // TO DO Init The RGB Light .. 
@@ -43,7 +52,9 @@ namespace FortRoom.Services
 
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            Task.Run(() => RunService(_cts.Token));
+            _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            Task task1 = Task.Run(() => RunService(_cts.Token));
+            Task task2 = Task.Run(() => TimingService(_cts2.Token));
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
@@ -73,7 +84,7 @@ namespace FortRoom.Services
                         timerToStart.Restart();
                         randomTime = random.Next(5000, 15000);
                     }
-                    if (activeButton & timer.ElapsedMilliseconds >= 10000)
+                    if (activeButton & timer.ElapsedMilliseconds >= changingSpeed)
                     {
                         RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
                         Console.WriteLine($"Button {activeButtonIndox} Deactivated");
@@ -102,7 +113,29 @@ namespace FortRoom.Services
                 Thread.Sleep(10);
             }
         }
-
+        private async Task TimingService(CancellationToken cancellationToken)
+        {
+            if (VariableControlService.IsTheGameStarted)
+            {
+                if (!IsTimerStarted)
+                {
+                    GameStopWatch.Start();
+                    IsTimerStarted = true;
+                }
+            }
+            while (true)
+            {
+                if (GameStopWatch.ElapsedMilliseconds > SlowPeriod && GameStopWatch.ElapsedMilliseconds < MediumPeriod)
+                {
+                    changingSpeed = mediumChangeTime;
+                }
+                else if (GameStopWatch.ElapsedMilliseconds > MediumPeriod)
+                {
+                    changingSpeed = highChangeTime;
+                }
+                Thread.Sleep(10);
+            }
+        }
         public Task StopAsync(CancellationToken cancellationToken)
         {
             //_cts.Cancel();

@@ -143,10 +143,10 @@ namespace FortRoom.Services
                     Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
                     IsMotorFourStarted = true;
                 }
-                if (!IsMotorFourStartPeriod2 && IsMotorFourStarted && GameStopWatch.ElapsedMilliseconds > (SlowPeriod + MotorFourDiffPeriod))
+                if (!IsMotorFourStartPeriod3 && IsMotorFourStarted && GameStopWatch.ElapsedMilliseconds > (SlowPeriod + MotorFourDiffPeriod))
                 {
                     Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);
-                    IsMotorFourStartPeriod2 = true;
+                    IsMotorFourStartPeriod3 = true;
                 }
                 if (!IsMotorTwoStartPeriod3 && IsMotorFourStarted && GameStopWatch.ElapsedMilliseconds > (MediumPeriod + MotorFourDiffPeriod))
                 {
