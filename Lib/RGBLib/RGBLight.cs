@@ -26,11 +26,10 @@ namespace Library.RGBLib
         }
         public static void SetColor(RGBColor selectedColor)
         {
-            BeginTransition();
-            byte blue = 0;
-            byte green = 0;
-            byte red = 0;
-            int dx = 0;
+            uint blue = 0;
+            uint green = 0;
+            uint red = 0;
+            uint dx = 0;
 
             switch (selectedColor)
             {
@@ -56,13 +55,15 @@ namespace Library.RGBLib
                     break;
 
             }
+            Console.WriteLine($"Colot {selectedColor.ToString()} R:{red} G:{green} B:{blue}");
+            BeginTransition();
 
-            dx |= (int)0x03 << 30;
-            dx |= (int)TakeAntiCode(blue) << 28;
-            dx |= (int)TakeAntiCode(green) << 26;
-            dx |= (int)TakeAntiCode(red) << 24;
-            dx |= (int)blue << 16;
-            dx |= (int)green << 8;
+            dx |= (uint)0x03 << 30;
+            dx |= TakeAntiCode(blue) << 28;
+            dx |= TakeAntiCode(green) << 26;
+            dx |= TakeAntiCode(red) << 24;
+            dx |= blue << 16;
+            dx |= green << 8;
             dx |= red;
             DatSend(dx);
             EndTransition();
@@ -70,21 +71,11 @@ namespace Library.RGBLib
 
 
         }
-        public static void DatSend(int dx)
+        public static void DatSend(uint dx)
         {
-            byte i;
-
-            for (i = 0; i < 32; i++)
+            for (int i = 0; i < 32; i++)
             {
-                if ((dx & 0x80000000) != 0)
-                {
-                    _controller.Write(DataPin, true);
-                }
-                else
-                {
-                    _controller.Write(DataPin, false);
-                }
-
+                _controller.Write(DataPin, (dx & 0x80000000) != 0 ? true : false);
                 dx <<= 1;
                 ClkRise();
             }
@@ -116,9 +107,9 @@ namespace Library.RGBLib
             _controller.Write(CLKPin, true);
             Thread.Sleep(20);
         }
-        private static byte TakeAntiCode(byte dat)
+        private static uint TakeAntiCode(uint dat)
         {
-            byte tmp = 0;
+            uint tmp = 0;
             if ((dat & 0x80) == 0)
                 tmp |= 0x02;
 
