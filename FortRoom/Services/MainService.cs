@@ -48,7 +48,7 @@ namespace FortRoom.Services
                     if (!DoneOneTimeFlage)
                     {
                         // Turn the Light Green
-                        RGBLight.SetColor(RGBColor.Green);
+                        //RGBLight.SetColor(RGBColor.Green);
                         //JQ8400AudioModule.PlayAudio((int)SoundType.Beeb);
                         DoneOneTimeFlage = true;
                     }
