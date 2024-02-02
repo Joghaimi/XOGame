@@ -8,6 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnitsNet;
+using System.Device.I2c;
+using System.Device;
+using Iot.Device.Common;
+using Library.Delay;
 
 namespace Library.RGBLib
 {
@@ -103,8 +107,9 @@ namespace Library.RGBLib
             Thread.Sleep(0);
             //Thread.sleepM
             //Sleep(20);
+            DelayLib.DelayMicroseconds(20, true);
             _controller.Write(CLKPin, true);
-            Thread.Sleep(0);
+            DelayLib.DelayMicroseconds(20, true);
             //Sleep(20);
         }
         private static uint TakeAntiCode(uint dat)
