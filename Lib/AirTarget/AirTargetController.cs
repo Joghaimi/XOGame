@@ -13,7 +13,6 @@ namespace Library.AirTarget
 {
     public class AirTargetController
     {
-        public static MCP23Controller _MCP23Controller = new MCP23Controller(true);
         public static bool IsMCP23ControllerInit = false;
         public static bool IsSelected = false;
         MCP23Pin _LightPin, _InputPin;
@@ -21,13 +20,9 @@ namespace Library.AirTarget
         {
             _LightPin = LightPin;
             _InputPin = InputPin;
-            if (!IsMCP23ControllerInit)
-            {
-                _MCP23Controller = new MCP23Controller(true);
-                IsMCP23ControllerInit = true;
-            }
-            _MCP23Controller.PinModeSetup(_InputPin.Chip, _InputPin.port, _InputPin.PinNumber, PinMode.Input);
-            _MCP23Controller.PinModeSetup(_LightPin.Chip, _LightPin.port, _LightPin.PinNumber, PinMode.Output);
+
+            MCP23Controller.PinModeSetup(_InputPin.Chip, _InputPin.port, _InputPin.PinNumber, PinMode.Input);
+            MCP23Controller.PinModeSetup(_LightPin.Chip, _LightPin.port, _LightPin.PinNumber, PinMode.Output);
 
         }
         public void Select(bool Selected)
@@ -35,16 +30,16 @@ namespace Library.AirTarget
             IsSelected = Selected;
             if (IsSelected)
             {
-                _MCP23Controller.Write(_LightPin.Chip, _LightPin.port, _LightPin.PinNumber, PinState.High);
+                MCP23Controller.Write(_LightPin.Chip, _LightPin.port, _LightPin.PinNumber, PinState.High);
             }
             else
             {
-                _MCP23Controller.Write(_LightPin.Chip, _LightPin.port, _LightPin.PinNumber, PinState.Low);
+                MCP23Controller.Write(_LightPin.Chip, _LightPin.port, _LightPin.PinNumber, PinState.Low);
             }
         }
         public bool Status()
         {
-            return _MCP23Controller.Read(_InputPin.Chip, _InputPin.port, _InputPin.PinNumber);
+            return MCP23Controller.Read(_InputPin.Chip, _InputPin.port, _InputPin.PinNumber);
         }
 
     }

@@ -14,13 +14,11 @@ namespace FortRoom.Services
     public class PressureMatService : IHostedService, IDisposable
     {
         private CancellationTokenSource _cts;
-        public static MCP23Controller _MCP23Controller = new MCP23Controller(true);
 
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _MCP23Controller = new MCP23Controller(true);
-            _MCP23Controller.PinModeSetup(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber, PinMode.Input);
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
@@ -37,7 +35,7 @@ namespace FortRoom.Services
             {
                 if (VariableControlService.IsTheGameStarted)
                 {
-                    currentValue = !_MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
+                    currentValue = !MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
                     if (currentValue && !scoreJustDecreased)
                     {
 

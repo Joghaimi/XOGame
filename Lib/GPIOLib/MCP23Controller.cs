@@ -11,26 +11,26 @@ using System.Threading.Tasks;
 
 namespace Library.GPIOLib
 {
-    public class MCP23Controller
+    public static class MCP23Controller
     {
 
-        Mcp23017 mcp23017x20;
-        Mcp23017 mcp23017x21;
-        Mcp23017 mcp23017x22;
-        Mcp23017 mcp23017x23;
-        Mcp23017 mcp23017x24;
-        Mcp23017 mcp23017x25;
-        Mcp23017 mcp23017x26;
-        Mcp23017 mcp23017x27;
-        bool isItHat = false;
-        public MCP23Controller(bool isItHat)
+        public static Mcp23017 mcp23017x20;
+        public static Mcp23017 mcp23017x21;
+        public static Mcp23017 mcp23017x22;
+        public static Mcp23017 mcp23017x23;
+        public static Mcp23017 mcp23017x24;
+        public static Mcp23017 mcp23017x25;
+        public static Mcp23017 mcp23017x26;
+        public static Mcp23017 mcp23017x27;
+        public static bool _isItHat = false;
+        public static void Init(bool isItHat)
         {
-            this.isItHat = isItHat;
+            _isItHat = isItHat;
             var connectionSettingsx20 = new I2cConnectionSettings(1, 0x20);
             var i2cDevicex20 = I2cDevice.Create(connectionSettingsx20);
             mcp23017x20 = new Mcp23017(i2cDevicex20);
 
-            if (this.isItHat)
+            if (_isItHat)
             {
                 var connectionSettingsx21 = new I2cConnectionSettings(1, 0x21);
                 var i2cDevicex21 = I2cDevice.Create(connectionSettingsx21);
@@ -67,7 +67,7 @@ namespace Library.GPIOLib
 
         }
 
-        public void PinModeSetup(MCP23017 chip, Port Port, int PinNumber, PinMode Mode)
+        public static void PinModeSetup(MCP23017 chip, Port Port, int PinNumber, PinMode Mode)
         {
 
             switch (chip)
@@ -157,7 +157,7 @@ namespace Library.GPIOLib
             //    }
             //}
         }
-        public bool Read(MCP23017 chip, Port Port, int PinNumber)
+        public static bool Read(MCP23017 chip, Port Port, int PinNumber)
         {
 
             switch (chip)
@@ -190,8 +190,8 @@ namespace Library.GPIOLib
                     throw new ArgumentException("Invalid Chip Selected");
             }
         }
- 
-        public void Write(MCP23017 chip, Port Port, int PinNumber, PinState PinState)
+
+        public static void Write(MCP23017 chip, Port Port, int PinNumber, PinState PinState)
         {
             if (PinNumber < 0 || PinNumber > 15)
             {

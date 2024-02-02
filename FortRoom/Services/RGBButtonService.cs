@@ -105,9 +105,9 @@ namespace FortRoom.Services
                             RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
                             RGBLight.SetColor(RGBColor.Green);
                             VariableControlService.ActiveButtonPressed++;
-                            activeButtonIndox = -1;
                             Console.WriteLine($"Button {activeButtonIndox} Pressed");
                             Console.WriteLine($"Current Score {VariableControlService.ActiveButtonPressed}");
+                            activeButtonIndox = -1;
                             timerToStart.Restart();
                             timer.Restart();
                         }
