@@ -26,6 +26,7 @@ namespace Library.RGBLib
         }
         public static void SetColor(RGBColor selectedColor)
         {
+            BeginTransition();
             byte blue = 0;
             byte green = 0;
             byte red = 0;
@@ -64,6 +65,7 @@ namespace Library.RGBLib
             dx |= (int)green << 8;
             dx |= red;
             DatSend(dx);
+            EndTransition();
 
 
 

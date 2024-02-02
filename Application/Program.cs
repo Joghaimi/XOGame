@@ -26,6 +26,22 @@ using Library.Modbus;
 using Iot.Device.Mcp3428;
 using Library.Media;
 using Library.RGBLib;
+using Library.PinMapping;
+
+// === RGB Strip
+RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
+while (true) {
+    RGBLight.SetColor(RGBColor.Red);
+    Thread.Sleep(3000);
+    RGBLight.SetColor(RGBColor.Green);
+    Thread.Sleep(3000);
+    RGBLight.SetColor(RGBColor.Blue);
+    Thread.Sleep(3000);
+    RGBLight.SetColor(RGBColor.Off);
+    Thread.Sleep(3000);
+}
+
+
 // === Test check sum 
 //PlayAudio(0x8);
 //Console.WriteLine(((byte)8 + 0xB3).ToString("X2"));
