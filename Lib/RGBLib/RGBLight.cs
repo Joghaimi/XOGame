@@ -104,7 +104,7 @@ namespace Library.RGBLib
         private static void ClkRise()
         {
             _controller.Write(CLKPin, false);
-            Thread.Sleep(0);
+            //Thread.Sleep(0);
             //Thread.sleepM
             //Sleep(20);
             DelayLib.DelayMicroseconds(20, true);
