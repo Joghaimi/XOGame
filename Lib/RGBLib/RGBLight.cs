@@ -28,9 +28,9 @@ namespace Library.RGBLib
         {
             CLKPin = _clkPin;
             DataPin = _dataPin;
-            _controller = new GPIOController();
-            _controller.Setup(CLKPin, PinMode.Output);
-            _controller.Setup(DataPin, PinMode.Output);
+            //_controller = new GPIOController();
+            //_controller.Setup(CLKPin, PinMode.Output);
+            //_controller.Setup(DataPin, PinMode.Output);
 
         }
         public static void SetColor(RGBColor selectedColor)
