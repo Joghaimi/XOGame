@@ -38,8 +38,8 @@ namespace FortRoom.Services
             {
                 if (VariableControlService.IsTheGameStarted)
                 {
-                    currentValue = _MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
-                    if (currentValue && !previousValue &&!scoreJustDecreased)
+                    currentValue = !_MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
+                    if (!currentValue && previousValue &&!scoreJustDecreased)
                     {
 
                         VariableControlService.TimeOfPressureHit++;
