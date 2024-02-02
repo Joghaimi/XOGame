@@ -35,11 +35,27 @@ namespace Library.RGBLib
         }
         public static void SetColor(RGBColor selectedColor)
         {
-            ScriptEngine engine = Python.CreateEngine();
-            var scope = engine.CreateScope();
-            scope.SetVariable("arg1", "said");
 
-            engine.ExecuteFile(@"/home/pi/XOGame/RGBLight.py" ,scope);
+            ProcessStartInfo start = new ProcessStartInfo();
+            start.FileName = "python3"; ;
+            start.Arguments = @"/home/pi/XOGame/RGBLight.py";
+            start.UseShellExecute = false;
+            start.RedirectStandardOutput = true;
+            using (Process process = Process.Start(start))
+            {
+                using (StreamReader reader = process.StandardOutput)
+                {
+                    string result = reader.ReadToEnd();
+                    Console.Write(result);
+                }
+            }
+
+
+            //ScriptEngine engine = Python.CreateEngine();
+            //var scope = engine.CreateScope();
+            //scope.SetVariable("arg1", "said");
+
+            //engine.ExecuteFile(@"/home/pi/XOGame/RGBLight.py", scope);
             //Runtime.PythonDLL = "python310.dll";
             //PythonEngine.Initialize();
 
