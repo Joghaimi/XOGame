@@ -38,6 +38,7 @@ while (true)
 {
     for (byte i = 0; i < 10; i++)
         RGBLight.SetColorHSL(i, hue, 1, (float)0.5);
+    Thread.Sleep(100);
     if (up)
         hue += (float)0.025;
     else
