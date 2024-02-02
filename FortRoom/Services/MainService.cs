@@ -49,7 +49,7 @@ namespace FortRoom.Services
                     {
                         // Turn the Light Green
                         RGBLight.SetColor(RGBColor.Green);
-                        //JQ8400AudioModule.PlayAudio((int)SoundType.Start);
+                        JQ8400AudioModule.PlayAudio((int)SoundType.Beeb);
                         DoneOneTimeFlage = true;
                     }
                 }
