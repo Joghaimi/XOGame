@@ -53,7 +53,7 @@ using NAudio.Wave;
 
 
 Console.WriteLine(  "Started ... ");
-RGBLight.Init(MasterOutputPin.Data, MasterOutputPin.Clk);
+RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
 while (true)
 {
     Console.WriteLine("Red");
