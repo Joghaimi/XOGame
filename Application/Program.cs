@@ -26,8 +26,45 @@ using Library.Modbus;
 using Iot.Device.Mcp3428;
 using Library.Media;
 using Library.RGBLib;
+// === Test check sum 
+//PlayAudio(0x8);
+//Console.WriteLine(((byte)8 + 0xB3).ToString("X2"));
+
+//void PlayAudio(int trackNumber)
+//{
+//    byte[] command = { 0xAA, 0x07, 0x02, 0x00, (byte)trackNumber, (byte)(trackNumber + 0xB3) };
+//    Console.WriteLine((byte)(trackNumber + 0xB3));
+//}
+//byte[] command = { 0xAA, 0x04, 0x00, 0xAE };
+//Console.WriteLine(CalculateChecksum(command));
 
 
+
+//byte CalculateChecksum(byte[] data)
+//{
+
+
+//    // Calculate the checksum which forms the end byte
+//    byte MP3_CHECKSUM = data + command + requestLength;
+
+//    for (uint8_t x = 0; x < requestLength; x++)
+//    {
+//        MP3_CHECKSUM += (uint8_t)requestBuffer[x];
+//    }
+
+//    int sum = 0;
+
+//    // Exclude the start byte (0xAA) and end byte (0xBB)
+//    for (int i = 1; i < data.Length - 1; i++)
+//    {
+//        sum += data[i];
+//    }
+
+//    // Take the least significant 8 bits
+//    byte checksum = (byte)(sum & 0xFF);
+
+//    return checksum;
+//}
 // ==== 
 
 
@@ -361,6 +398,22 @@ using Library.RGBLib;
 
 //======== Serial Port 
 
+//        var modbus = new ModbusLib();
+//        modbus.Init(SerialPortMapping.PortMap["Serial0"]);
+//while (true)
+//{
+//    //MotorStatus
+//    //ModbusAddres
+//    Console.WriteLine("Start Motor Forward");
+//    modbus.WriteSingleRegister(1, (int) ModbusAddress.startStop, (int) MotorStatus.Run);
+//        modbus.WriteSingleRegister(1, (int) ModbusAddress.Speed, (int) MotorSpeed.Medium);
+//        Thread.Sleep(5000);
+//    Console.WriteLine("Start Motor Reverse");
+//    modbus.WriteSingleRegister(1, (int) ModbusAddress.startStop, (int) MotorStatus.Reverse);
+//        modbus.WriteSingleRegister(1, (int) ModbusAddress.Speed, (int) MotorSpeed.Slow);
+//        Thread.Sleep(5000);
+
+//}
 
 
 
@@ -382,22 +435,22 @@ using Library.RGBLib;
 
 // Test Mobus 
 
-var modbus = new ModbusLib();
-modbus.Init(SerialPortMapping.PortMap["Serial0"]);
-while (true)
-{
-    //MotorStatus
-    //ModbusAddres
-    Console.WriteLine("Start Motor Forward");
-    modbus.WriteSingleRegister(1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
-    modbus.WriteSingleRegister(1, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);
-    Thread.Sleep(5000);
-    Console.WriteLine("Start Motor Reverse");
-    modbus.WriteSingleRegister(1, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
-    modbus.WriteSingleRegister(1, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);
-    Thread.Sleep(5000);
+//var modbus = new ModbusLib();
+//modbus.Init(SerialPortMapping.PortMap["Serial0"]);
+//while (true)
+//{
+//    //MotorStatus
+//    //ModbusAddres
+//    Console.WriteLine("Start Motor Forward");
+//    modbus.WriteSingleRegister(1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+//    modbus.WriteSingleRegister(1, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);
+//    Thread.Sleep(5000);
+//    Console.WriteLine("Start Motor Reverse");
+//    modbus.WriteSingleRegister(1, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
+//    modbus.WriteSingleRegister(1, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);
+//    Thread.Sleep(5000);
 
-}
+//}
 
 
 // mcp23017

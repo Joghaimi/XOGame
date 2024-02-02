@@ -58,5 +58,9 @@ namespace Library.PinMapping
             Chip = MCP23017.MCP2301720, // Set the Chip property with the MCP23017 instance
             port = Port.PortB
         };
+
+        public static int Clk  = 20;
+        public static int Data = 21;
+
     }
 }

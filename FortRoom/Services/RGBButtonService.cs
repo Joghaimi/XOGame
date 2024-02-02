@@ -59,7 +59,7 @@ namespace FortRoom.Services
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                
+
                 if (VariableControlService.IsTheGameStarted)
                 {
                     if (!activeButton && timerToStart.ElapsedMilliseconds > randomTime)
@@ -84,8 +84,8 @@ namespace FortRoom.Services
                     }
                     if (activeButton && activeButtonIndox > -1)
                     {
-                        bool isPreesed = !RGBButtonList[activeButtonIndox].CurrentStatus();
-                        if (isPreesed)
+                        bool isPressed = !RGBButtonList[activeButtonIndox].CurrentStatus();
+                        if (isPressed)
                         {
                             Console.WriteLine($"Button {activeButtonIndox} Pressed");
                             JQ8400AudioModule.PlayAudio((int)SoundType.Bonus);

@@ -1,6 +1,4 @@
-﻿using Library.GPIOLib;
-
-namespace ShootingRoom.Services
+﻿namespace ShootingRoom.Services
 {
     public static class VariableControlService
     {

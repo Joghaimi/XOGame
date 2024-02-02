@@ -18,19 +18,16 @@ namespace FortRoom.Services
         public bool isTheirAreSomeOneInTheRoom = false;
         private CancellationTokenSource _cts;
         private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
-
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _controller = new GPIOController();
-            RGBLight.init();
+            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
             JQ8400AudioModule.init(SerialPort.Serial2);
-
             // Init the Pin's
             _controller.Setup(MasterDI.PIRPin1, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin2, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin3, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
-
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
@@ -48,38 +45,16 @@ namespace FortRoom.Services
                 bool DoneOneTimeFlage = false;
                 if (VariableControlService.IsTheGameStarted)
                 {
-                    if (DoneOneTimeFlage)
+                    if (!DoneOneTimeFlage)
                     {
                         // Turn the Light Green
-                        RGBLight.TurnColorOn(RGBColor.Green);
+                        RGBLight.SetColor(RGBColor.Green);
                         JQ8400AudioModule.PlayAudio((int)SoundType.Start);
                         DoneOneTimeFlage = true;
                     }
-                    else
-                    {
-                        // Activate RBG 
-
-
-
-                    }
-
-
-
                 }
 
-
-
-                //// One Time Thing!
-                //if (isAnyOfRIPSensorActive && !isTheirAreSomeOneInTheRoom)
-                //{
-                //    // Turn the Light on 
-
-                //    // rise a flag 
-                //    isTheirAreSomeOneInTheRoom = true;
-                //}
-                // Sleep for a short duration to avoid excessive checking
                 Thread.Sleep(10);
-                //await Task.Delay(TimeSpan.FromMilliseconds(1000), cancellationToken);
             }
         }
 

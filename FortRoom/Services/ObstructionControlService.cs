@@ -18,24 +18,24 @@ namespace FortRoom.Services
         bool IsMotorOneStartPeriod2 = false;
         bool IsMotorOneStartPeriod3 = false;
         int SlowPeriod = 3000;
-        int MeduimPeriod = 3000;
+        int MediumPeriod = 3000;
 
-        //        var modbus = new ModbusLib();
-        //        modbus.Init(SerialPortMapping.PortMap["Serial0"]);
-        //while (true)
-        //{
-        //    //MotorStatus
-        //    //ModbusAddres
-        //    Console.WriteLine("Start Motor Forward");
-        //    modbus.WriteSingleRegister(1, (int) ModbusAddress.startStop, (int) MotorStatus.Run);
-        //        modbus.WriteSingleRegister(1, (int) ModbusAddress.Speed, (int) MotorSpeed.Medium);
-        //        Thread.Sleep(5000);
-        //    Console.WriteLine("Start Motor Reverse");
-        //    modbus.WriteSingleRegister(1, (int) ModbusAddress.startStop, (int) MotorStatus.Reverse);
-        //        modbus.WriteSingleRegister(1, (int) ModbusAddress.Speed, (int) MotorSpeed.Slow);
-        //        Thread.Sleep(5000);
 
-        //}
+        bool IsMotorTwoStarted = false;
+        bool IsMotorTwoStartPeriod2 = false;
+        bool IsMotorTwoStartPeriod3 = false;
+        int MotorTwoDiffPeriod = 1000;
+
+        bool IsMotorThreeStarted = false;
+        bool IsMotorThreeStartPeriod2 = false;
+        bool IsMotorThreeStartPeriod3 = false;
+        int MotorThreeDiffPeriod = 2000;
+
+
+        bool IsMotorFourStarted = false;
+        bool IsMotorFourStartPeriod2 = false;
+        bool IsMotorFourStartPeriod3 = false;
+        int MotorFourDiffPeriod = 3000;
 
         private CancellationTokenSource _cts1, _cts2, _cts3, _cts4, _cts5;
 
@@ -65,18 +65,18 @@ namespace FortRoom.Services
                 {
                     if (!IsMotorOneStarted)
                     {
-                        Modbus.WriteSingleRegister(1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
-                        Modbus.WriteSingleRegister(1, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
+                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
                         IsMotorOneStarted = true;
                     }
                     if (!IsMotorOneStartPeriod2 && IsMotorOneStarted && GameStopWatch.ElapsedMilliseconds > SlowPeriod)
                     {
-                        Modbus.WriteSingleRegister(1, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);
+                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);
                         IsMotorOneStartPeriod2 = true;
                     }
-                    if (!IsMotorOneStartPeriod3 && IsMotorOneStarted && GameStopWatch.ElapsedMilliseconds > MeduimPeriod)
+                    if (!IsMotorOneStartPeriod3 && IsMotorOneStarted && GameStopWatch.ElapsedMilliseconds > MediumPeriod)
                     {
-                        Modbus.WriteSingleRegister(1, (int)ModbusAddress.Speed, (int)MotorSpeed.High);
+                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.High);
                         IsMotorOneStartPeriod3 = true;
                     }
                 }
@@ -88,34 +88,75 @@ namespace FortRoom.Services
 
         private async Task RunService2(CancellationToken cancellationToken)
         {
-            if (VariableControlService.IsTheGameStarted)
+            if (VariableControlService.IsTheGameStarted && IsTimerStarted)
             {
-
-
-                // Your logic for service 2
+                if (!IsMotorTwoStarted)
+                {
+                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
+                    IsMotorTwoStarted = true;
+                }
+                if (!IsMotorTwoStartPeriod2 && IsMotorTwoStarted && GameStopWatch.ElapsedMilliseconds > (SlowPeriod + MotorTwoDiffPeriod))
+                {
+                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);
+                    IsMotorTwoStartPeriod2 = true;
+                }
+                if (!IsMotorTwoStartPeriod3 && IsMotorTwoStarted && GameStopWatch.ElapsedMilliseconds > (MediumPeriod + MotorTwoDiffPeriod))
+                {
+                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.High);
+                    IsMotorTwoStartPeriod3 = true;
+                }
 
             }
         }
 
         private async Task RunService3(CancellationToken cancellationToken)
         {
-            if (VariableControlService.IsTheGameStarted)
+            if (VariableControlService.IsTheGameStarted && IsTimerStarted)
             {
-
-                // Your logic for service 3
-
+                if (!IsMotorThreeStarted)
+                {
+                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
+                    IsMotorThreeStarted = true;
+                }
+                if (!IsMotorThreeStartPeriod2 && IsMotorThreeStarted && GameStopWatch.ElapsedMilliseconds > (SlowPeriod + MotorThreeDiffPeriod))
+                {
+                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);
+                    IsMotorThreeStartPeriod2 = true;
+                }
+                if (!IsMotorThreeStartPeriod3 && IsMotorThreeStarted && GameStopWatch.ElapsedMilliseconds > (MediumPeriod + MotorThreeDiffPeriod))
+                {
+                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, (int)MotorSpeed.High);
+                    IsMotorThreeStartPeriod3 = true;
+                }
             }
         }
 
         private async Task RunService4(CancellationToken cancellationToken)
         {
-            if (VariableControlService.IsTheGameStarted)
+            if (VariableControlService.IsTheGameStarted && IsTimerStarted)
             {
-
-                // Your logic for service 1
+                if (!IsMotorFourStarted)
+                {
+                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
+                    IsMotorFourStarted = true;
+                }
+                if (!IsMotorFourStartPeriod2 && IsMotorFourStarted && GameStopWatch.ElapsedMilliseconds > (SlowPeriod + MotorFourDiffPeriod))
+                {
+                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);
+                    IsMotorFourStartPeriod2 = true;
+                }
+                if (!IsMotorTwoStartPeriod3 && IsMotorFourStarted && GameStopWatch.ElapsedMilliseconds > (MediumPeriod + MotorFourDiffPeriod))
+                {
+                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, (int)MotorSpeed.High);
+                    IsMotorTwoStartPeriod3 = true;
+                }
 
             }
         }
+
         private async Task TimingService(CancellationToken cancellationToken)
         {
             if (VariableControlService.IsTheGameStarted)
@@ -125,9 +166,6 @@ namespace FortRoom.Services
                     GameStopWatch.Start();
                     IsTimerStarted = true;
                 }
-
-                // Your logic for service 1
-
             }
         }
 

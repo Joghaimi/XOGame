@@ -43,25 +43,20 @@ namespace FortRoom.Services
 
                         VariableControlService.TimeOfPressureHit++;
                         JQ8400AudioModule.PlayAudio((int)SoundType.Beeb);
-                        RGBLight.TurnColorOn(RGBColor.Red);
-                        scoreJustDecreased=true;
+                        RGBLight.SetColor(RGBColor.Red);
+                        scoreJustDecreased = true;
                         timer.Restart();
+                        Console.WriteLine($"Pressure Mate Pressed {VariableControlService.TimeOfPressureHit}");
                     }
                     previousValue = currentValue;
-                    if (scoreJustDecreased && timer.ElapsedMilliseconds >= 1000) {
+                    if (scoreJustDecreased && timer.ElapsedMilliseconds >= 1000)
+                    {
 
-                        scoreJustDecreased =false; 
+                        scoreJustDecreased = false;
                         JQ8400AudioModule.PlayAudio((int)SoundType.Start);
-                        RGBLight.TurnColorOn(RGBColor.Green);
+                        RGBLight.SetColor(RGBColor.Green);
                         timer.Restart();
-
-
                     }
-
-
-
-
-
                 }
                 // Sleep for a short duration to avoid excessive checking
                 Thread.Sleep(10);
