@@ -3,9 +3,11 @@ using Library.PinMapping;
 using System;
 using System.Collections.Generic;
 using System.Device.Gpio;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnitsNet;
 
 namespace Library.RGBLib
 {
@@ -98,9 +100,12 @@ namespace Library.RGBLib
         private static void ClkRise()
         {
             _controller.Write(CLKPin, false);
-            Thread.Sleep(20);
+            //Thread.Sleep(20);
+            //Thread.sleepM
+            Sleep(20);
             _controller.Write(CLKPin, true);
-            Thread.Sleep(20);
+            //Thread.Sleep(20);
+            Sleep(20);
         }
         private static uint TakeAntiCode(uint dat)
         {
@@ -111,6 +116,21 @@ namespace Library.RGBLib
             if ((dat & 0x40) == 0)
                 tmp |= 0x01;
             return tmp;
+        }
+        public static void Sleep(int microseconds)
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            while (stopwatch.ElapsedMicroseconds() < microseconds)
+            {
+                // Busy waiting
+            }
+        }
+        // Extension method to get elapsed microseconds
+        public static long ElapsedMicroseconds(this Stopwatch stopwatch)
+        {
+            return stopwatch.ElapsedTicks * 1_000_000 / Stopwatch.Frequency;
         }
     }
 }
