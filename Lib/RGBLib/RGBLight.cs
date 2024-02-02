@@ -32,6 +32,7 @@ namespace Library.RGBLib
         }
         public static void SetColor(RGBColor selectedColor)
         {
+            return;
             uint blue = 0;
             uint green = 0;
             uint red = 0;
