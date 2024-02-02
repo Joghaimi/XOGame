@@ -64,7 +64,7 @@ namespace Library.RGBLib
             start.Arguments = $@"/home/pi/XOGame/RGBLight.py {CLKPin} {DataPin} {red} {green} {blue}";
             start.UseShellExecute = false;
             start.RedirectStandardOutput = true;
-            Process process = Process.Start(start)
+            Process process = Process.Start(start);
             //using (Process process = Process.Start(start))
             //{
             //    //using (StreamReader reader = process.StandardOutput)

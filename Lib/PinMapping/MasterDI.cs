@@ -64,5 +64,6 @@ namespace Library.PinMapping
         public static int PIRPin2 = 19;
         public static int PIRPin3 = 13;
         public static int PIRPin4 = 6;
+
     }
 }

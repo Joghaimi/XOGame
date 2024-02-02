@@ -1,6 +1,7 @@
 ﻿using Library;
 using Library.GPIOLib;
 using Library.Media;
+using Library.PinMapping;
 using Library.RGBLib;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
@@ -13,14 +14,14 @@ namespace FortRoom.Services
     public class PressureMatService : IHostedService, IDisposable
     {
         private int PressureMatPin = 7;
-        private GPIOController _controller;
         private CancellationTokenSource _cts;
+        public static MCP23Controller _MCP23Controller = new MCP23Controller(true);
 
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _controller = new GPIOController();
-            _controller.Setup(PressureMatPin, PinMode.InputPullDown);
+            _MCP23Controller = new MCP23Controller(true);
+            _MCP23Controller.PinModeSetup(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber, PinMode.Input);
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
@@ -37,8 +38,8 @@ namespace FortRoom.Services
             {
                 if (VariableControlService.IsTheGameStarted)
                 {
-                    currentValue = _controller.Read(PressureMatPin);
-                    if (currentValue && !previousValue)
+                    currentValue = _MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
+                    if (currentValue && !previousValue &&!scoreJustDecreased)
                     {
 
                         VariableControlService.TimeOfPressureHit++;
