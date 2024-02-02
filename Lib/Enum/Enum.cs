@@ -8,7 +8,7 @@ namespace Library
 {
     public enum SoundType
     {
-        Beeb = 0,
+        Beeb = 1,
         Warning,
         Done,
         Bonus,
