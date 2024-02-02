@@ -55,7 +55,7 @@ namespace Library.RGBLib
                     break;
 
             }
-            Console.WriteLine($"Colot {selectedColor.ToString()} R:{red} G:{green} B:{blue}");
+            Console.WriteLine($"Color {selectedColor.ToString()} R:{red} G:{green} B:{blue}");
             BeginTransition();
 
             dx |= (uint)0x03 << 30;
