@@ -29,12 +29,16 @@ using Library.RGBLib;
 using Library.PinMapping;
 
 // === RGB Strip
-RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
+RGBLight.Init(MasterOutputPin.Data, MasterOutputPin.Clk);
 while (true) {
+    Console.WriteLine("Red");
     RGBLight.SetColor(RGBColor.Red);
     Thread.Sleep(3000);
+    Console.WriteLine("Green");
+
     RGBLight.SetColor(RGBColor.Green);
     Thread.Sleep(3000);
+    Console.WriteLine("Blue");
     RGBLight.SetColor(RGBColor.Blue);
     Thread.Sleep(3000);
     RGBLight.SetColor(RGBColor.Off);
