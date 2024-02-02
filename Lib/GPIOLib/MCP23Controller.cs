@@ -206,7 +206,7 @@ namespace Library.GPIOLib
                     else
                         currentValue &= (byte)~(1 << PinNumber);
                     mcp23017x20.WriteByte(Register.GPIO, currentValue, Port);
-                    Console.WriteLine(Convert.ToString(currentValue, 2).PadLeft(8, '0'));
+                    //Console.WriteLine(Convert.ToString(currentValue, 2).PadLeft(8, '0'));
                     break;
                 case MCP23017.MCP2301721:
                     byte currentValue2 = mcp23017x21.ReadByte(Register.GPIO, Port);
@@ -215,7 +215,7 @@ namespace Library.GPIOLib
                     else
                         currentValue2 &= (byte)~(1 << PinNumber);
                     mcp23017x21.WriteByte(Register.GPIO, currentValue2, Port);
-                    Console.WriteLine(Convert.ToString(currentValue2, 2).PadLeft(8, '0'));
+                    //Console.WriteLine(Convert.ToString(currentValue2, 2).PadLeft(8, '0'));
 
                     break;
 
@@ -226,7 +226,7 @@ namespace Library.GPIOLib
                     else
                         currentValue3 &= (byte)~(1 << PinNumber);
                     mcp23017x22.WriteByte(Register.GPIO, currentValue3, Port);
-                    Console.WriteLine(Convert.ToString(currentValue3, 2).PadLeft(8, '0'));
+                    //Console.WriteLine(Convert.ToString(currentValue3, 2).PadLeft(8, '0'));
 
                     break;
                 case MCP23017.MCP2301723:
@@ -260,7 +260,7 @@ namespace Library.GPIOLib
                     else
                         currentValue7 &= (byte)~(1 << PinNumber);
                     mcp23017x26.WriteByte(Register.GPIO, currentValue7, Port);
-                    Console.WriteLine(Convert.ToString(currentValue7, 2).PadLeft(8, '0'));
+                    //Console.WriteLine(Convert.ToString(currentValue7, 2).PadLeft(8, '0'));
                     break;
                 case MCP23017.MCP2301727:
                     byte currentValue8 = mcp23017x27.ReadByte(Register.GPIO, Port);

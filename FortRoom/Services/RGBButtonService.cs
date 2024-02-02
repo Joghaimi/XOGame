@@ -100,13 +100,14 @@ namespace FortRoom.Services
                         bool isPressed = !RGBButtonList[activeButtonIndox].CurrentStatus();
                         if (isPressed)
                         {
-                            Console.WriteLine($"Button {activeButtonIndox} Pressed");
                             JQ8400AudioModule.PlayAudio((int)SoundType.Bonus);
                             activeButton = false;
                             RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
                             RGBLight.SetColor(RGBColor.Green);
                             VariableControlService.ActiveButtonPressed++;
                             activeButtonIndox = -1;
+                            Console.WriteLine($"Button {activeButtonIndox} Pressed");
+                            Console.WriteLine($"Current Score {VariableControlService.ActiveButtonPressed}");
                             timerToStart.Restart();
                             timer.Restart();
                         }
