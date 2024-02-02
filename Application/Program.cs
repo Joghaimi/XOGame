@@ -30,44 +30,48 @@ using Library.PinMapping;
 using NAudio.Wave;
 
 // === RGB Strip
-float hue = 00;
-bool up = true;
+//float hue = 00;
+//bool up = true;
 
-RGBLight.Init((byte)MasterOutputPin.Clk, (byte)MasterOutputPin.Data, 5);
+//RGBLight.Init((byte)MasterOutputPin.Clk, (byte)MasterOutputPin.Data, 5);
+//while (true)
+//{
+//    for (byte i = 0; i < 10; i++)
+//        RGBLight.SetColorHSL(i, hue, 1, (float)0.5);
+//    Thread.Sleep(100);
+//    if (up)
+//        hue += (float)0.025;
+//    else
+//        hue -= (float)0.025;
+
+//    if (hue >= 1.0 && up)
+//        up = false;
+//    else if (hue <= 0.0 && !up)
+//        up = true;
+
+//}
+
+
+
+RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
 while (true)
 {
-    for (byte i = 0; i < 10; i++)
-        RGBLight.SetColorHSL(i, hue, 1, (float)0.5);
-    Thread.Sleep(100);
-    if (up)
-        hue += (float)0.025;
-    else
-        hue -= (float)0.025;
+    Console.WriteLine("Red");
+    RGBLight.BeginTransition();
+    RGBLight.SetColor(RGBColor.Red);
+    RGBLight.EndTransition();
 
-    if (hue >= 1.0 && up)
-        up = false;
-    else if (hue <= 0.0 && !up)
-        up = true;
+    Thread.Sleep(3000);
+    Console.WriteLine("Green");
 
+    RGBLight.SetColor(RGBColor.Green);
+    Thread.Sleep(3000);
+    Console.WriteLine("Blue");
+    RGBLight.SetColor(RGBColor.Blue);
+    Thread.Sleep(3000);
+    RGBLight.SetColor(RGBColor.Off);
+    Thread.Sleep(3000);
 }
-
-
-
-//RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
-//while (true) {
-//    Console.WriteLine("Red");
-//    RGBLight.SetColor(RGBColor.Red);
-//    Thread.Sleep(3000);
-//    Console.WriteLine("Green");
-
-//    RGBLight.SetColor(RGBColor.Green);
-//    Thread.Sleep(3000);
-//    Console.WriteLine("Blue");
-//    RGBLight.SetColor(RGBColor.Blue);
-//    Thread.Sleep(3000);
-//    RGBLight.SetColor(RGBColor.Off);
-//    Thread.Sleep(3000);
-//}
 
 
 // === Test check sum 
