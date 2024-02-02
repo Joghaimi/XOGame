@@ -13,7 +13,6 @@ namespace FortRoom.Services
 {
     public class PressureMatService : IHostedService, IDisposable
     {
-        private int PressureMatPin = 7;
         private CancellationTokenSource _cts;
         public static MCP23Controller _MCP23Controller = new MCP23Controller(true);
 
@@ -39,7 +38,7 @@ namespace FortRoom.Services
                 if (VariableControlService.IsTheGameStarted)
                 {
                     currentValue = !_MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
-                    if (!currentValue && previousValue &&!scoreJustDecreased)
+                    if (!currentValue && !scoreJustDecreased)
                     {
 
                         VariableControlService.TimeOfPressureHit++;
@@ -49,7 +48,7 @@ namespace FortRoom.Services
                         timer.Restart();
                         Console.WriteLine($"Pressure Mate Pressed {VariableControlService.TimeOfPressureHit}");
                     }
-                    previousValue = currentValue;
+                    //previousValue = currentValue;
                     if (scoreJustDecreased && timer.ElapsedMilliseconds >= 1000)
                     {
 
