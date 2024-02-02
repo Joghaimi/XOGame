@@ -12,6 +12,9 @@ using System.Device.I2c;
 using System.Device;
 using Iot.Device.Common;
 using Library.Delay;
+using System;
+using IronPython.Hosting;
+using Microsoft.Scripting.Hosting;
 
 namespace Library.RGBLib
 {
@@ -32,44 +35,68 @@ namespace Library.RGBLib
         }
         public static void SetColor(RGBColor selectedColor)
         {
-            uint blue = 0;
-            uint green = 0;
-            uint red = 0;
-            uint dx = 0;
+            ScriptEngine engine = Python.CreateEngine();
+            engine.ExecuteFile(@"/home/pi/XOGame/RGBLight.py");
+            //Runtime.PythonDLL = "python310.dll";
+            //PythonEngine.Initialize();
 
-            switch (selectedColor)
-            {
-                case RGBColor.Red:
-                    blue = 0;
-                    green = 0;
-                    red = 255;
-                    break;
-                case RGBColor.Green:
-                    blue = 0;
-                    green = 255;
-                    red = 0;
-                    break;
-                case RGBColor.Blue:
-                    blue = 255;
-                    green = 0;
-                    red = 0;
-                    break;
-                case RGBColor.Off:
-                    blue = 0;
-                    green = 0;
-                    red = 0;
-                    break;
+            //using (Py.GIL())  // Acquire the Python GIL (Global Interpreter Lock)
+            //{
+            //    //    dynamic rgbDriver = Py.Import("RGBLight");
+            //    //    dynamic rgbInstance = rgbDriver.RGBDriver(clk: CLKPin, data: DataPin);
+            //    //    rgbInstance.cleanup();
+            //    //    //try
+            //    //    //{
+            //    //    //    rgbInstance.begin();
+            //    //    //    rgbInstance.set_color(red: 255, green: 0, blue: 0);  // Set color to red
+            //    //    //    System.Threading.Thread.Sleep(2000);
+            //    //    //    rgbInstance.end();
+            //    //    //}
+            //    //    //finally
+            //    //    //{
+            //    //    //    rgbInstance.cleanup();
+            //    //    //}
+            //}
 
-            }
-            Console.WriteLine($"Color {selectedColor.ToString()} R:{red} G:{green} B:{blue}");
-            dx |= (uint)0x03 << 30;
-            dx |= TakeAntiCode(blue) << 28;
-            dx |= TakeAntiCode(green) << 26;
-            dx |= TakeAntiCode(red) << 24;
-            dx |= blue << 16;
-            dx |= green << 8;
-            dx |= red;
-            DatSend(dx);
+
+            //uint blue = 0;
+            //uint green = 0;
+            //uint red = 0;
+            //uint dx = 0;
+
+            //switch (selectedColor)
+            //{
+            //    case RGBColor.Red:
+            //        blue = 0;
+            //        green = 0;
+            //        red = 255;
+            //        break;
+            //    case RGBColor.Green:
+            //        blue = 0;
+            //        green = 255;
+            //        red = 0;
+            //        break;
+            //    case RGBColor.Blue:
+            //        blue = 255;
+            //        green = 0;
+            //        red = 0;
+            //        break;
+            //    case RGBColor.Off:
+            //        blue = 0;
+            //        green = 0;
+            //        red = 0;
+            //        break;
+
+            //}
+            //Console.WriteLine($"Color {selectedColor.ToString()} R:{red} G:{green} B:{blue}");
+            //dx |= (uint)0x03 << 30;
+            //dx |= TakeAntiCode(blue) << 28;
+            //dx |= TakeAntiCode(green) << 26;
+            //dx |= TakeAntiCode(red) << 24;
+            //dx |= blue << 16;
+            //dx |= green << 8;
+            //dx |= red;
+            //DatSend(dx);
 
         }
         public static void DatSend(uint dx)

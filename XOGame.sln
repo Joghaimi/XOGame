@@ -13,9 +13,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DarkRoom", "DarkRoom\DarkRo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FortRoom", "FortRoom\FortRoom.csproj", "{6F93E5DC-C391-4A58-8AE0-E72E9059FE20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloorIsLava", "FloorIsLava\FloorIsLava.csproj", "{F6FCBDE1-5513-47C1-9686-55DAE8D70D39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FloorIsLava", "FloorIsLava\FloorIsLava.csproj", "{F6FCBDE1-5513-47C1-9686-55DAE8D70D39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShootingRoom", "ShootingRoom\ShootingRoom.csproj", "{F20D0D72-4D0E-43EA-856E-9A6A58CEA42E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShootingRoom", "ShootingRoom\ShootingRoom.csproj", "{F20D0D72-4D0E-43EA-856E-9A6A58CEA42E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0E9C5F6F-14F7-43C6-B13C-2C3302C95BC3}"
+	ProjectSection(SolutionItems) = preProject
+		RGBLight.py = RGBLight.py
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

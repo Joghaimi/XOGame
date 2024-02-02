@@ -53,10 +53,10 @@ using NAudio.Wave;
 
 
 Console.WriteLine(  "Started ... ");
-RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
-RGBLight.BeginTransition();
+//RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
+//RGBLight.BeginTransition();
 RGBLight.SetColor(RGBColor.Red);
-RGBLight.EndTransition();
+//RGBLight.EndTransition();
 while (true)
 {
     Thread.Sleep(3000);
