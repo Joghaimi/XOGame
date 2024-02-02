@@ -18,10 +18,10 @@ namespace Library.Media
         {
             switch (soundType)
             {
-                case SoundType.Beeb:
+                case SoundType.Start:
                     soundFilePath = "file bath";
                     break;
-                case SoundType.Warning:
+                case SoundType.Start2:
                     break;
                 default:
                     break;
