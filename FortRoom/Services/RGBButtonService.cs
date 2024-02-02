@@ -84,7 +84,7 @@ namespace FortRoom.Services
                         timerToStart.Restart();
                         randomTime = random.Next(5000, 15000);
                     }
-                    if (activeButton & timer.ElapsedMilliseconds >= changingSpeed)
+                    if (activeButton & timer.ElapsedMilliseconds >= 5000)//changingSpeed)
                     {
                         RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
                         Console.WriteLine($"Button {activeButtonIndox} Deactivated");
