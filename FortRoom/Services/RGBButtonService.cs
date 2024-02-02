@@ -13,12 +13,12 @@ namespace FortRoom.Services
         private CancellationTokenSource _cts, _cts2;
         bool IsTimerStarted = false;
         Stopwatch GameStopWatch = new Stopwatch();
-        int SlowPeriod = 3000;
-        int MediumPeriod = 3000;
+        int SlowPeriod = 10000;
+        int MediumPeriod = 15000;
 
         int slowChangeTime = 5000;
-        int mediumChangeTime = 700;
-        int highChangeTime = 500;
+        int mediumChangeTime = 3000;
+        int highChangeTime = 1000;
 
         int changingSpeed = 5000;
         public Task StartAsync(CancellationToken cancellationToken)
@@ -77,7 +77,6 @@ namespace FortRoom.Services
                     {
                         activeButton = true;
                         activeButtonIndox = random.Next(0, 11);
-                        activeButtonIndox = 3;
                         Console.WriteLine($"Button {activeButtonIndox} Activated");
                         JQ8400AudioModule.PlayAudio((int)SoundType.Button);
                         RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Green);
@@ -85,7 +84,7 @@ namespace FortRoom.Services
                         timerToStart.Restart();
                         randomTime = random.Next(5000, 15000);
                     }
-                    if (activeButton & timer.ElapsedMilliseconds >= 5000)//changingSpeed)
+                    if (activeButton & timer.ElapsedMilliseconds >= changingSpeed)
                     {
                         RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
                         Console.WriteLine($"Button {activeButtonIndox} Deactivated");
