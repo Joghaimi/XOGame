@@ -68,7 +68,7 @@ if __name__ == "__main__":
 
     rgb_driver = RGBDriver(clk=20, data=21)
     rgb_driver.begin()
-    rgb_driver.set_color(red=100, green=0, blue=0)  # Set color to red
+    rgb_driver.set_color(red=0, green=100, blue=0)  # Set color to red
     #time.sleep(2)
     rgb_driver.end()
     #rgb_driver.cleanup()
