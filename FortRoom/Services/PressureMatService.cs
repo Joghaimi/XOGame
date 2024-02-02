@@ -47,9 +47,8 @@ namespace FortRoom.Services
                         Console.WriteLine($"Pressure Mate Pressed {VariableControlService.TimeOfPressureHit}");
                     }
                     //previousValue = currentValue;
-                    if (scoreJustDecreased && timer.ElapsedMilliseconds >= 1000)
+                    if (scoreJustDecreased && timer.ElapsedMilliseconds >= 3000)
                     {
-
                         scoreJustDecreased = false;
                         JQ8400AudioModule.PlayAudio((int)SoundType.Start);
                         RGBLight.SetColor(RGBColor.Green);
