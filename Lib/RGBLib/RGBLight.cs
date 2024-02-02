@@ -105,7 +105,7 @@ namespace Library.RGBLib
         {
             for (byte i = 0; i < 32; i++)
             {
-                _controller.Write(DataPin, true);
+                _controller.Write(DataPin, false);
                 ClkRise();
             }
         }
