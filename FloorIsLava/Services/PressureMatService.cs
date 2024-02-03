@@ -1,6 +1,7 @@
 ﻿using Library;
 using Library.GPIOLib;
 using Library.Media;
+using Library.PinMapping;
 using Library.RGBLib;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
@@ -12,15 +13,12 @@ namespace FloorIsLava.Services
 {
     public class PressureMatService : IHostedService, IDisposable
     {
-        private int PressureMatPin = 7;
-        private GPIOController _controller;
         private CancellationTokenSource _cts;
 
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _controller = new GPIOController();
-            _controller.Setup(PressureMatPin, PinMode.InputPullDown);
+            MCP23Controller.PinModeSetup(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber, PinMode.Input);
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
@@ -37,31 +35,25 @@ namespace FloorIsLava.Services
             {
                 if (VariableControlService.IsTheGameStarted)
                 {
-                    currentValue = _controller.Read(PressureMatPin);
-                    if (currentValue && !previousValue)
+                    currentValue = !MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
+                    if (currentValue && !scoreJustDecreased)
                     {
 
                         VariableControlService.TimeOfPressureHit++;
-                        JQ8400AudioModule.PlayAudio((int)SoundType.Beeb);
-                        RGBLight.TurnColorOn(RGBColor.Red);
-                        scoreJustDecreased=true;
+                        JQ8400AudioModule.PlayAudio((int)SoundType.Descend);
+                        RGBLight.SetColor(RGBColor.Red);
+                        scoreJustDecreased = true;
                         timer.Restart();
+                        Console.WriteLine($"Pressure Mate Pressed {VariableControlService.TimeOfPressureHit}");
                     }
-                    previousValue = currentValue;
-                    if (scoreJustDecreased && timer.ElapsedMilliseconds >= 1000) {
-
-                        scoreJustDecreased =false; 
+                    //previousValue = currentValue;
+                    if (scoreJustDecreased && timer.ElapsedMilliseconds >= 3000)
+                    {
+                        scoreJustDecreased = false;
                         JQ8400AudioModule.PlayAudio((int)SoundType.Start);
-                        RGBLight.TurnColorOn(RGBColor.Green);
+                        RGBLight.SetColor(RGBColor.Green);
                         timer.Restart();
-
-
                     }
-
-
-
-
-
                 }
                 // Sleep for a short duration to avoid excessive checking
                 Thread.Sleep(10);

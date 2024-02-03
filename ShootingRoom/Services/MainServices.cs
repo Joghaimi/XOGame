@@ -41,7 +41,7 @@ namespace ShootingRoom.Services
                 PIR2 = _controller.Read(MasterDI.PIRPin2);
                 PIR3 = _controller.Read(MasterDI.PIRPin3);
                 PIR4 = _controller.Read(MasterDI.PIRPin4);
-                Console.WriteLine($"PIR Status PIR1:{PIR1} PIR2:{PIR2} PIR3:{PIR3} PIR4:{PIR4}");
+                //Console.WriteLine($"PIR Status PIR1:{PIR1} PIR2:{PIR2} PIR3:{PIR3} PIR4:{PIR4}");
                 VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
                 bool DoneOneTimeFlage = false;
                 if (VariableControlService.IsTheGameStarted)
@@ -50,7 +50,7 @@ namespace ShootingRoom.Services
                     {
                         // Turn the Light Green
                         RGBLight.SetColor(RGBColor.Green);
-                        JQ8400AudioModule.PlayAudio((int)SoundType.Start);
+                        //JQ8400AudioModule.PlayAudio((int)SoundType.Start);
                         DoneOneTimeFlage = true;
                     }
                 }

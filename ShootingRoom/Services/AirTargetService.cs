@@ -38,6 +38,7 @@ namespace ShootingRoom.Services
             AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR10, RGBButtonPin.RGBPB10));
             AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR11, RGBButtonPin.RGBPB11));
             AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, RGBButtonPin.RGBPB12));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, RGBButtonPin.RGBPB12));
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);

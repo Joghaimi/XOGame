@@ -10,24 +10,26 @@ namespace Library.Display
     public class DisplayController
     {
         SerialPort SerialPort;
-        public bool isBusy=false;
-        public void Init(string SerialPort)
+        public bool isBusy = false;
+        public DisplayController(string SerialPort)
         {
             this.SerialPort = new SerialPort(SerialPort, 9600); // Replace "COM1" with your actual serial port name
             if (!this.SerialPort.IsOpen)
                 this.SerialPort.Open();
         }
-        public bool SendCommand(Displays DisplayNumber  , DisplayCommand command) {
-            if(isBusy)
+        public bool SendCommand(Displays DisplayNumber, DisplayCommand command)
+        {
+            if (isBusy)
                 return false;
             SerialPort.WriteLine($"{(int)DisplayNumber}{(int)command}");
             Console.WriteLine($"{(int)DisplayNumber}{(int)command}");
             isBusy = true;
             string receivedData = SerialPort.ReadTo("\r");
             isBusy = false;
-            return receivedData =="received";
+            return receivedData == "received";
         }
-        public bool TurnOffAllDisplay() { 
+        public bool TurnOffAllDisplay()
+        {
             return false;
         }
     }

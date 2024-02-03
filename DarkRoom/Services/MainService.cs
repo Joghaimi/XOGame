@@ -1,13 +1,11 @@
-﻿using Library;
-using Library.Enum;
-using Library.GPIOLib;
+﻿using Library.GPIOLib;
 using Library.Media;
 using Library.PinMapping;
 using Library.RGBLib;
 using Microsoft.VisualBasic;
 using System.Device.Gpio;
 
-namespace FloorIsLava.Services
+namespace DarkRoom.Services
 {
     public class MainService : IHostedService, IDisposable
     {
@@ -67,4 +65,5 @@ namespace FloorIsLava.Services
             //_cts.Dispose();
         }
     }
+
 }
