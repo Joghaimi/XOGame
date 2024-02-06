@@ -27,5 +27,11 @@ namespace FortRoom.Controllers
             VariableControlService.IsTheGameStarted = startGame;
             return Ok(VariableControlService.IsTheGameStarted);
         }
+        [HttpPost("ReceiveScore")]
+        public IActionResult ReceiveScore(Team TeamScore)
+        {
+            VariableControlService.TeamScore = TeamScore;
+            return Ok();
+        }
     }
 }

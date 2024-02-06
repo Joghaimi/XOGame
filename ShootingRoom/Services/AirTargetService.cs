@@ -26,19 +26,26 @@ namespace ShootingRoom.Services
         public Task StartAsync(CancellationToken cancellationToken)
         {
             // TO DO Init The RGB Light .. 
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR1, RGBButtonPin.RGBPB1));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR2, RGBButtonPin.RGBPB2));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR3, RGBButtonPin.RGBPB3));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR4, RGBButtonPin.RGBPB4));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR5, RGBButtonPin.RGBPB5));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR6, RGBButtonPin.RGBPB6));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR7, RGBButtonPin.RGBPB7));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR8, RGBButtonPin.RGBPB8));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR9, RGBButtonPin.RGBPB9));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR10, RGBButtonPin.RGBPB10));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR11, RGBButtonPin.RGBPB11));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, RGBButtonPin.RGBPB12));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, RGBButtonPin.RGBPB12));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR1, HatInputPin.IR1));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR2, HatInputPin.IR2));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR3, HatInputPin.IR3));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR4, HatInputPin.IR4));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR5, HatInputPin.IR5));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR6, HatInputPin.IR6));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR7, HatInputPin.IR7));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR8, HatInputPin.IR8));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR9, HatInputPin.IR9));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR10, HatInputPin.IR10));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR11, HatInputPin.IR11));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, HatInputPin.IR12));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, HatInputPin.IR13));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, HatInputPin.IR14));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, HatInputPin.IR15));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, HatInputPin.IR16));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, HatInputPin.IR17));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, HatInputPin.IR18));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, HatInputPin.IR19));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, HatInputPin.IR20));
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);

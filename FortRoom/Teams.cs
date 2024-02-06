@@ -1,4 +1,4 @@
-namespace GatheringRoom
+﻿namespace FortRoom
 {
     //public static class Teams
     //{
@@ -10,14 +10,6 @@ namespace GatheringRoom
     //    public static int DarkRoomScore { get; set; }
     //    public static int FloorIsLavaRoomScore { get; set; }
     //}
-    //public class Player
-    //{
-    //    public string Id { get; set; }
-    //    public string FirstName { get; set; }
-    //    public string SecoundName { get; set; }
-    //}
-    //public static bool TeamIsSignedIn = false;
-
     public class Player
     {
         public string Id { get; set; }
