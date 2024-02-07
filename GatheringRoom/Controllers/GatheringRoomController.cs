@@ -7,7 +7,7 @@ using System.Text;
 
 namespace GatheringRoom.Controllers
 {
-    [EnableCors("AllowAll")]
+    //[EnableCors("AllowAll")]
     [ApiController]
     [Route("[controller]")]
     public class GatheringRoomController : ControllerBase
