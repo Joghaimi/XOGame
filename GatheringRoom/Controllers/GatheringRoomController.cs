@@ -31,6 +31,8 @@ namespace GatheringRoom.Controllers
         [HttpGet("GoToTheNextRoom")]
         public async Task<IActionResult> NextRoom()
         {
+            Console.WriteLine("Request Next Room");
+
             string jsonData = JsonConvert.SerializeObject(VariableControlService.TeamScore);
             using var client = new HttpClient();
             var request = new HttpRequestMessage
@@ -39,6 +41,8 @@ namespace GatheringRoom.Controllers
                 RequestUri = new Uri(VariableControlService.NextRoomURL),
                 Content = new StringContent(jsonData, Encoding.UTF8, "application/json")
             };
+            Console.WriteLine("Request Next Room Sent .. ");
+
             HttpResponseMessage response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
