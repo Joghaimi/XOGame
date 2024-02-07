@@ -1,4 +1,5 @@
 using GatheringRoom.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Security.Cryptography.Xml;
@@ -6,6 +7,7 @@ using System.Text;
 
 namespace GatheringRoom.Controllers
 {
+    [EnableCors("AllowAll")]
     [ApiController]
     [Route("[controller]")]
     public class GatheringRoomController : ControllerBase
