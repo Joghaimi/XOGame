@@ -13,27 +13,27 @@ builder.Services.AddSwaggerGen();
 //builder.Services.AddHostedService<RoomSensorServices>();
 
 
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowAll",
-//        policy =>
-//        {
-//            policy.AllowAnyOrigin()
-//                   .AllowAnyMethod()
-//                   .AllowAnyHeader();
-//        });
-//});
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
 var app = builder.Build();
 
 // Configure CORS
 //app.UseCors("AllowAll");
 // Configure CORS
-app.UseCors(policy =>
-{
-    policy.AllowAnyOrigin()
-          .AllowAnyMethod()
-          .AllowAnyHeader();
-});
+//app.UseCors(policy =>
+//{
+//    policy.AllowAnyOrigin()
+//          .AllowAnyMethod()
+//          .AllowAnyHeader();
+//});
 
 
 // Configure the HTTP request pipeline.
@@ -48,5 +48,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseCors("AllowAll");
 
 app.Run();
