@@ -30,6 +30,7 @@ namespace FortRoom.Controllers
         [HttpPost("ReceiveScore")]
         public IActionResult ReceiveScore(Team TeamScore)
         {
+            Console.WriteLine("Recived ..");
             VariableControlService.TeamScore = TeamScore;
             return Ok();
         }
