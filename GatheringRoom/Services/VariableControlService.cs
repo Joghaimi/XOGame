@@ -23,7 +23,7 @@
         public static int TimeOfGetTheTarget { get; set; } = 0;
         public static int ActiveButtonPressed { get; set; } = 0;
         public static Team TeamScore { get; set; } = new Team();
-        public static string NextRoomURL { get; set; } = "http://fort.local:5000/api/FortRoom/ReceiveScore";
+        public static string NextRoomURL { get; set; } = "192.168.1.19:5000/api/FortRoom/ReceiveScore";
 
     }
 }
