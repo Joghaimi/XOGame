@@ -64,9 +64,10 @@ namespace GatheringRoom.Controllers
             VariableControlService.EnableGoingToTheNextRoom = true;
             return Ok(VariableControlService.IsTheGameStarted);
         }
-        [HttpGet(Name = "getThePlayers")]
+        [HttpGet("getThePlayers")]
         public IActionResult Get()
         {
+            Console.WriteLine("Ahmad SAid ...");
             return base.Ok(VariableControlService.TeamScore.player);
         }
 
