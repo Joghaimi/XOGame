@@ -2,6 +2,7 @@ using GatheringRoom.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net;
 using System.Security.Cryptography.Xml;
 using System.Text;
 
@@ -35,14 +36,21 @@ namespace GatheringRoom.Controllers
         {
             Console.WriteLine("Request Next Room");
 
+
+
             string jsonData = JsonConvert.SerializeObject(VariableControlService.TeamScore);
             using var client = new HttpClient();
+
+            // Bypass SSL certificate validation
+            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
                 RequestUri = new Uri(VariableControlService.NextRoomURL),
                 Content = new StringContent(jsonData, Encoding.UTF8, "application/json")
             };
+
             Console.WriteLine("Request Next Room Sent .. ");
 
             HttpResponseMessage response = await client.SendAsync(request);
@@ -56,6 +64,7 @@ namespace GatheringRoom.Controllers
             {
                 Console.WriteLine($"POST request failed. Status Code: {response.StatusCode}");
             }
+
 
             // Empty the Variable 
             VariableControlService.IsTheGameStarted = false;
