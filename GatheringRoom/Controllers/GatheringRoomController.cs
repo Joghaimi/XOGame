@@ -42,7 +42,7 @@ namespace GatheringRoom.Controllers
             using var client = new HttpClient();
 
             // Bypass SSL certificate validation
-            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
 
             var request = new HttpRequestMessage
             {
