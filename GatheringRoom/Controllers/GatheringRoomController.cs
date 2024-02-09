@@ -46,9 +46,9 @@ namespace GatheringRoom.Controllers
 
             var request = new HttpRequestMessage
             {
-                Method = HttpMethod.Post,
-                RequestUri = new Uri(VariableControlService.NextRoomURL),
-                Content = new StringContent(jsonData, Encoding.UTF8, "application/json")
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("http://iplantjo.com/api/Farm/GetAllFarm"),
+                //Content = new StringContent(jsonData, Encoding.UTF8, "application/json")
             };
 
             Console.WriteLine("Request Next Room Sent .. ");
@@ -56,6 +56,7 @@ namespace GatheringRoom.Controllers
             HttpResponseMessage response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
+                Console.WriteLine("Success ...");
                 // Read the response content as a string
                 string responseContent = await response.Content.ReadAsStringAsync();
                 Console.WriteLine(responseContent);
