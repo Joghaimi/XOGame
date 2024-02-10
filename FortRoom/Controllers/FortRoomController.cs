@@ -10,7 +10,7 @@ namespace FortRoom.Controllers
     [ApiController]
     public class FortRoomController : ControllerBase
     {
-        [HttpGet(Name = "IsOccupied")]
+        [HttpGet("IsOccupied")]
         public IActionResult Get()
         {
             //return Enumerable.Range(1, 5).Select(index => new WeatherForecast
@@ -21,7 +21,7 @@ namespace FortRoom.Controllers
             //})
             //.ToArray();
 
-            return Ok("");
+            return Ok("Naaah");
         }
         [HttpPost("StartStopGame")]
         public IActionResult StartGame(bool startGame)
