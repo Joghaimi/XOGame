@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FortRoom.Controllers
 {
-    [EnableCors("AllowAll")]
+    //[EnableCors("AllowAll")]
     [Route("api/[controller]")]
     [ApiController]
     public class FortRoomController : ControllerBase
