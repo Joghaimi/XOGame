@@ -35,33 +35,33 @@ namespace GatheringRoom.Controllers
         [HttpGet("GoToTheNextRoom")]
         public async Task<IActionResult> NextRoom()
         {
-            Console.WriteLine("Request Next Room");
-            string jsonData = JsonConvert.SerializeObject(VariableControlService.TeamScore);
-            using var client = new HttpClient();
+            //Console.WriteLine("Request Next Room");
+            //string jsonData = JsonConvert.SerializeObject(VariableControlService.TeamScore);
+            //using var client = new HttpClient();
 
-            // Bypass SSL certificate validation
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+            //// Bypass SSL certificate validation
+            ////ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
 
-            var request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Post,
-                RequestUri = new Uri(VariableControlService.NextRoomURL),
-            };
+            //var request = new HttpRequestMessage
+            //{
+            //    Method = HttpMethod.Post,
+            //    RequestUri = new Uri(VariableControlService.NextRoomURL),
+            //};
 
-            Console.WriteLine("Request Next Room Sent .. ");
+            //Console.WriteLine("Request Next Room Sent .. ");
 
-            HttpResponseMessage response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
-            {
-                Console.WriteLine("Success ...");
-                // Read the response content as a string
-                string responseContent = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(responseContent);
-            }
-            else
-            {
-                Console.WriteLine($"POST request failed. Status Code: {response.StatusCode}");
-            }
+            //HttpResponseMessage response = await client.SendAsync(request);
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    Console.WriteLine("Success ...");
+            //    // Read the response content as a string
+            //    string responseContent = await response.Content.ReadAsStringAsync();
+            //    Console.WriteLine(responseContent);
+            //}
+            //else
+            //{
+            //    Console.WriteLine($"POST request failed. Status Code: {response.StatusCode}");
+            //}
             // Empty the Variable 
             VariableControlService.IsTheGameStarted = false;
             VariableControlService.TeamScore.Name = "";
