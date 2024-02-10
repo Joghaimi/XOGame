@@ -20,7 +20,7 @@ namespace FortRoom.Controllers
             //    Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             //})
             //.ToArray();
-
+            Console.WriteLine("Hmmm...");
             return Ok(true);
         }
         [HttpPost("StartStopGame")]
