@@ -21,7 +21,7 @@ namespace FortRoom.Controllers
             //})
             //.ToArray();
 
-            return Ok("Naaah");
+            return Ok(true);
         }
         [HttpPost("StartStopGame")]
         public IActionResult StartGame(bool startGame)
