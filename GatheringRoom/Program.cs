@@ -1,5 +1,6 @@
 using GatheringRoom.Services;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,36 +10,20 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
     builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
 }));
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddLogging(builder=> builder.AddConsole());
 //builder.Services.AddHostedService<RFIDService>();
 //builder.Services.AddHostedService<RoomSensorServices>();
 
 
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowAll",
-//        policy =>
-//        {
-//            policy.AllowAnyOrigin()
-//                   .AllowAnyMethod()
-//                   .AllowAnyHeader();
-//        });
-//});
-
 var app = builder.Build();
-app.UseCors("corsapp");
+// Add logging configuration
 
-// Configure CORS
-//app.UseCors("AllowAll");
-// Configure CORS
-//app.UseCors(policy =>
-//{
-//    policy.AllowAnyOrigin()
-//          .AllowAnyMethod()
-//          .AllowAnyHeader();
-//});
+app.UseCors("corsapp");
+// Add logging configuration
+
+
 
 
 // Configure the HTTP request pipeline.

@@ -29,15 +29,14 @@ namespace GatheringRoom.Controllers
         public IActionResult TeamNaming(string TeamName)
         {
             VariableControlService.TeamScore.Name = TeamName;
+            _logger.LogInformation("Team Namming");
+            _logger.LogCritical("Are Youe Testing Me ? ");
             return Ok(VariableControlService.TeamScore.Name);
         }
         [HttpGet("GoToTheNextRoom")]
         public async Task<IActionResult> NextRoom()
         {
             Console.WriteLine("Request Next Room");
-
-
-
             string jsonData = JsonConvert.SerializeObject(VariableControlService.TeamScore);
             using var client = new HttpClient();
 
@@ -47,7 +46,8 @@ namespace GatheringRoom.Controllers
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("http://iplantjo.com/api/Farm/GetAllFarm"),
+                RequestUri = new Uri(VariableControlService.NextRoomURL),
+                //RequestUri = new Uri("http://iplantjo.com/api/Farm/GetAllFarm"),
                 //Content = new StringContent(jsonData, Encoding.UTF8, "application/json")
             };
 
