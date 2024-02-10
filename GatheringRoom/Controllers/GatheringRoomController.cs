@@ -45,7 +45,7 @@ namespace GatheringRoom.Controllers
 
             var request = new HttpRequestMessage
             {
-                Method = HttpMethod.Get,
+                Method = HttpMethod.Post,
                 RequestUri = new Uri(VariableControlService.NextRoomURL),
                 //RequestUri = new Uri("http://iplantjo.com/api/Farm/GetAllFarm"),
                 //Content = new StringContent(jsonData, Encoding.UTF8, "application/json")
