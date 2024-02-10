@@ -1,7 +1,10 @@
 using FortRoom.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+{
+    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+}));
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -13,19 +16,11 @@ builder.Services.AddSwaggerGen();
 //builder.Services.AddHostedService<PressureMatService>(); // The Main Flow .. 
 //builder.Services.AddHostedService<ObstructionControlService>(); // The Main Flow .. 
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll",
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
-        });
-});
+// Add services to the container.
+
 var app = builder.Build();
 // Configure CORS
-app.UseCors("AllowAll");
+app.UseCors("corsapp");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
