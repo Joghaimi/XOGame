@@ -8,7 +8,6 @@ using System.Text;
 
 namespace GatheringRoom.Controllers
 {
-    //[EnableCors("AllowAll")]
     [ApiController]
     [Route("[controller]")]
     public class GatheringRoomController : ControllerBase
@@ -29,8 +28,8 @@ namespace GatheringRoom.Controllers
         public IActionResult TeamNaming(string TeamName)
         {
             VariableControlService.TeamScore.Name = TeamName;
-            _logger.LogInformation("Team Namming");
-            _logger.LogCritical("Are Youe Testing Me ? ");
+            _logger.LogInformation("Team Naming");
+            _logger.LogCritical("Are You Testing Me ? ");
             return Ok(VariableControlService.TeamScore.Name);
         }
         [HttpGet("GoToTheNextRoom")]
@@ -45,10 +44,8 @@ namespace GatheringRoom.Controllers
 
             var request = new HttpRequestMessage
             {
-                Method = HttpMethod.Get,
+                Method = HttpMethod.Post,
                 RequestUri = new Uri(VariableControlService.NextRoomURL),
-                //RequestUri = new Uri("http://iplantjo.com/api/Farm/GetAllFarm"),
-                //Content = new StringContent(jsonData, Encoding.UTF8, "application/json")
             };
 
             Console.WriteLine("Request Next Room Sent .. ");
@@ -65,8 +62,6 @@ namespace GatheringRoom.Controllers
             {
                 Console.WriteLine($"POST request failed. Status Code: {response.StatusCode}");
             }
-
-
             // Empty the Variable 
             VariableControlService.IsTheGameStarted = false;
             VariableControlService.TeamScore.Name = "";

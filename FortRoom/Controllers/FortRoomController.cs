@@ -13,16 +13,15 @@ namespace FortRoom.Controllers
         [HttpGet("IsOccupied")]
         public IActionResult Get()
         {
-            //return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            //{
-            //    Date = DateTime.Now.AddDays(index),
-            //    TemperatureC = Random.Shared.Next(-20, 55),
-            //    Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            //})
-            //.ToArray();
-            Console.WriteLine("Hmmm...");
-            return Ok(true);
+            return Ok(VariableControlService.IsOccupied);
         }
+        [HttpGet("SetAsOccupied")]
+        public IActionResult SetAsOccupied(bool IsOccupied)
+        {
+            VariableControlService.IsOccupied = IsOccupied;
+            return Ok(VariableControlService.IsOccupied);
+        }
+
         [HttpPost("StartStopGame")]
         public IActionResult StartGame(bool startGame)
         {
