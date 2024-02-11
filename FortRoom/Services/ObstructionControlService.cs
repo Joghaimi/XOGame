@@ -53,6 +53,15 @@ namespace FortRoom.Services
             Task task3 = Task.Run(() => RunService3(_cts3.Token));
             Task task4 = Task.Run(() => RunService4(_cts4.Token));
             Task task5 = Task.Run(() => TimingService(_cts5.Token));
+
+
+            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+
+
+
             return Task.WhenAll(task1, task2, task3, task4, task5);
         }
 
@@ -65,7 +74,6 @@ namespace FortRoom.Services
                 {
                     if (!IsMotorOneStarted)
                     {
-                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
                         Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
                         IsMotorOneStarted = true;
                     }
@@ -92,7 +100,6 @@ namespace FortRoom.Services
             {
                 if (!IsMotorTwoStarted)
                 {
-                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
                     Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
                     IsMotorTwoStarted = true;
                 }
@@ -116,7 +123,6 @@ namespace FortRoom.Services
             {
                 if (!IsMotorThreeStarted)
                 {
-                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
                     Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
                     IsMotorThreeStarted = true;
                 }
@@ -139,7 +145,6 @@ namespace FortRoom.Services
             {
                 if (!IsMotorFourStarted)
                 {
-                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
                     Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
                     IsMotorFourStarted = true;
                 }
