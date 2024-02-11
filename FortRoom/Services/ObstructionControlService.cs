@@ -17,8 +17,8 @@ namespace FortRoom.Services
         bool IsMotorOneStarted = false;
         bool IsMotorOneStartPeriod2 = false;
         bool IsMotorOneStartPeriod3 = false;
-        int SlowPeriod = 3000;
-        int MediumPeriod = 3000;
+        int SlowPeriod = 5000;
+        int MediumPeriod = 10000;
 
 
         bool IsMotorTwoStarted = false;
