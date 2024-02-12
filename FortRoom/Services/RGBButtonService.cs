@@ -80,7 +80,8 @@ namespace FortRoom.Services
                         activeButtonIndox = random.Next(0, 12);
                         Console.WriteLine($"Button {activeButtonIndox} Activated");
                         RGBLight.SetColor(RGBColor.Off);
-                        JQ8400AudioModule.PlayAudio((int)SoundType.Button);
+                        AudioPlayer.PIStartAudio(SoundType.Button);
+                        //JQ8400AudioModule.PlayAudio((int)SoundType.Button);
                         RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Green);
                         timer.Restart();
                         timerToStart.Restart();
@@ -100,7 +101,9 @@ namespace FortRoom.Services
                         bool isPressed = !RGBButtonList[activeButtonIndox].CurrentStatus();
                         if (isPressed)
                         {
-                            JQ8400AudioModule.PlayAudio((int)SoundType.Bonus);
+                            AudioPlayer.PIStartAudio(SoundType.Bonus);
+
+                            //JQ8400AudioModule.PlayAudio((int)SoundType.Bonus);
                             activeButton = false;
                             RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
                             RGBLight.SetColor(RGBColor.Green);

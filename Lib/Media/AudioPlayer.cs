@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Iot.Device.Max7219;
+using Mono.Unix.Native;
+using NAudio.SoundFont;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Ports;
@@ -10,18 +13,53 @@ namespace Library.Media
 {
     public class AudioPlayer
     {
-        private Process audioProcess;
-        string soundFilePath;
+        private static Process audioProcess;
+        public static string soundFilePath;
 
         // For the PI
-        public void PIStartAudio(SoundType soundType)
+        public static void PIStartAudio(SoundType soundType)
         {
+
             switch (soundType)
             {
+                case SoundType.Ticking:
+                    soundFilePath = "/XOGame/audio";
+                    break;
+                case SoundType.Button:
+                    soundFilePath = "/XOGame/audio/Button.mp3";
+                    break;
+                case SoundType.Done:
+                    break;
+                case SoundType.Bonus:
+                    soundFilePath = "/XOGame/audio/GameBonus.mp3";
+                    break;
+                case SoundType.Finish:
+                    break;
                 case SoundType.Start:
-                    soundFilePath = "file bath";
                     break;
                 case SoundType.Start2:
+                    break;
+                case SoundType.LaserScan:
+                    break;
+                case SoundType.LevelWin:
+                    break;
+                case SoundType.MarioJump:
+                    break;
+                case SoundType.MissionCompleted:
+                    break;
+                case SoundType.Descend2:
+                    break;
+                case SoundType.Descend:
+                    break;
+                case SoundType.GameOver:
+                    break;
+                case SoundType.GameScoreTally:
+                    break;
+                case SoundType.WinSquare:
+                    break;
+                case SoundType.Winner2:
+                    break;
+                case SoundType.Winner1:
                     break;
                 default:
                     break;
