@@ -29,7 +29,7 @@ namespace Library.Media
             audioProcess.StartInfo.RedirectStandardOutput = true;
             audioProcess.StartInfo.RedirectStandardError = true;
             audioProcess.Start();
-            audioProcess.Kill();
+            //audioProcess.Kill();
             Console.WriteLine("Audio playback started.");
             // Allow some time for playback before returning
         }
@@ -52,7 +52,7 @@ namespace Library.Media
             Console.WriteLine(soundFilePath);
             audioProcess = new Process();
             audioProcess.StartInfo.FileName = "/bin/bash";
-            audioProcess.StartInfo.Arguments = $"cvlc -R --vout none {soundFilePath}";
+            audioProcess.StartInfo.Arguments = $"cvlc -R --vout none {soundFilePath}  --volume=20";
             audioProcess.StartInfo.UseShellExecute = false;
             audioProcess.StartInfo.RedirectStandardOutput = false;
             audioProcess.StartInfo.RedirectStandardError = false;
