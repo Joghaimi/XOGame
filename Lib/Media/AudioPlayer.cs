@@ -20,18 +20,19 @@ namespace Library.Media
         public static void PIStartAudio(SoundType soundType)
         {
 
+
             switch (soundType)
             {
                 case SoundType.Ticking:
-                    soundFilePath = "/XOGame/audio";
+                    soundFilePath = "/home/pi/XOGame/audio";
                     break;
                 case SoundType.Button:
-                    soundFilePath = "/XOGame/audio/Button.mp3";
+                    soundFilePath = "/home/pi/XOGame/audio/Button.mp3";
                     break;
                 case SoundType.Done:
                     break;
                 case SoundType.Bonus:
-                    soundFilePath = "/XOGame/audio/GameBonus.mp3";
+                    soundFilePath = "/home/pi/XOGame/audio/GameBonus.mp3";
                     break;
                 case SoundType.Finish:
                     break;
@@ -64,23 +65,18 @@ namespace Library.Media
                 default:
                     break;
             }
-            if (audioProcess == null)
-            {
-                audioProcess = new Process();
-                audioProcess.StartInfo.FileName = "aplay";
-                audioProcess.StartInfo.Arguments = soundFilePath;
-                audioProcess.StartInfo.UseShellExecute = false;
-                audioProcess.StartInfo.RedirectStandardOutput = true;
-                audioProcess.StartInfo.RedirectStandardError = true;
-                audioProcess.Start();
-                Console.WriteLine("Audio playback started.");
-                // Allow some time for playback before returning
-                Thread.Sleep(5000);
-            }
-            else
-            {
-                Console.WriteLine("Audio is already playing.");
-            }
+
+            audioProcess = new Process();
+            audioProcess.StartInfo.FileName = " cvlc --vout none ";
+            audioProcess.StartInfo.Arguments = soundFilePath;
+            audioProcess.StartInfo.UseShellExecute = false;
+            audioProcess.StartInfo.RedirectStandardOutput = false;
+            audioProcess.StartInfo.RedirectStandardError = false;
+            audioProcess.Start();
+            Console.WriteLine("Audio playback started.");
+            // Allow some time for playback before returning
+            Thread.Sleep(5000);
+
         }
         public void PIStopAudio()
         {
