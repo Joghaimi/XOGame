@@ -68,8 +68,8 @@ namespace Library.Media
             Console.WriteLine(soundFilePath);
 
             audioProcess = new Process();
-            audioProcess.StartInfo.FileName = " cvlc --vout none ";
-            audioProcess.StartInfo.Arguments = soundFilePath;
+            audioProcess.StartInfo.FileName = "/bin/bash";
+            audioProcess.StartInfo.Arguments = $"cvlc --vout none {soundFilePath}";
             audioProcess.StartInfo.UseShellExecute = false;
             audioProcess.StartInfo.RedirectStandardOutput = true;
             audioProcess.StartInfo.RedirectStandardError = true;
