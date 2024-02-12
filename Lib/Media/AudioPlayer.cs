@@ -19,7 +19,7 @@ namespace Library.Media
         // For the PI
         public static void PIStartAudio(SoundType soundType)
         {
-
+            Console.WriteLine(soundType.ToString());
 
             switch (soundType)
             {
@@ -65,13 +65,14 @@ namespace Library.Media
                 default:
                     break;
             }
+            Console.WriteLine(soundFilePath);
 
             audioProcess = new Process();
             audioProcess.StartInfo.FileName = " cvlc --vout none ";
             audioProcess.StartInfo.Arguments = soundFilePath;
             audioProcess.StartInfo.UseShellExecute = false;
-            audioProcess.StartInfo.RedirectStandardOutput = false;
-            audioProcess.StartInfo.RedirectStandardError = false;
+            audioProcess.StartInfo.RedirectStandardOutput = true;
+            audioProcess.StartInfo.RedirectStandardError = true;
             audioProcess.Start();
             Console.WriteLine("Audio playback started.");
             // Allow some time for playback before returning
