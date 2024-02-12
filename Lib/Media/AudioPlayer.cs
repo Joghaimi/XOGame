@@ -71,13 +71,11 @@ namespace Library.Media
             audioProcess.StartInfo.FileName = "/bin/bash";
             audioProcess.StartInfo.Arguments = $"cvlc --vout none {soundFilePath}";
             audioProcess.StartInfo.UseShellExecute = false;
-            audioProcess.StartInfo.RedirectStandardOutput = true;
-            audioProcess.StartInfo.RedirectStandardError = true;
+            audioProcess.StartInfo.RedirectStandardOutput = false;
+            audioProcess.StartInfo.RedirectStandardError = false;
             audioProcess.Start();
             Console.WriteLine("Audio playback started.");
             // Allow some time for playback before returning
-            Thread.Sleep(5000);
-
         }
         public void PIStopAudio()
         {
