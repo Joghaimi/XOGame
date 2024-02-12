@@ -26,6 +26,7 @@ namespace Library
         WinSquare,
         Winner2,
         Winner1,
+        Background
 
     }
     public enum Displays

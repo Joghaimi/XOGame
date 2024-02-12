@@ -23,6 +23,8 @@ namespace FortRoom.Services
         int changingSpeed = 5000;
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            AudioPlayer.PIBackgroundSound(SoundType.Background);
+
             // TO DO Init The RGB Light .. 
             Console.WriteLine("RGB 1");
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1));

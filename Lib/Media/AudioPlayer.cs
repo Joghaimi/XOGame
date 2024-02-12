@@ -20,6 +20,50 @@ namespace Library.Media
         public static void PIStartAudio(SoundType soundType)
         {
             Console.WriteLine(soundType.ToString());
+            soundFilePath = PISoundPath(soundType);
+            Console.WriteLine(soundFilePath);
+            audioProcess = new Process();
+            audioProcess.StartInfo.FileName = "/bin/bash";
+            audioProcess.StartInfo.Arguments = $"cvlc --vout none {soundFilePath}";
+            audioProcess.StartInfo.UseShellExecute = false;
+            audioProcess.StartInfo.RedirectStandardOutput = true;
+            audioProcess.StartInfo.RedirectStandardError = true;
+            audioProcess.Start();
+            audioProcess.Kill();
+            Console.WriteLine("Audio playback started.");
+            // Allow some time for playback before returning
+        }
+        public void PIStopAudio()
+        {
+            if (audioProcess != null && !audioProcess.HasExited)
+            {
+                audioProcess.Kill();
+                audioProcess.WaitForExit();
+                Console.WriteLine("Audio playback stopped.");
+            }
+            else
+            {
+                Console.WriteLine("No audio is currently playing.");
+            }
+        }
+        public static void PIBackgroundSound(SoundType soundType)
+        {
+            soundFilePath = PISoundPath(soundType);
+            Console.WriteLine(soundFilePath);
+            audioProcess = new Process();
+            audioProcess.StartInfo.FileName = "/bin/bash";
+            audioProcess.StartInfo.Arguments = $"cvlc -R --vout none {soundFilePath}";
+            audioProcess.StartInfo.UseShellExecute = false;
+            audioProcess.StartInfo.RedirectStandardOutput = false;
+            audioProcess.StartInfo.RedirectStandardError = false;
+            audioProcess.Start();
+            Console.WriteLine("Audio playback started.");
+
+
+        }
+        private static string PISoundPath(SoundType soundType)
+        {
+            string soundFilePath = "";
 
             switch (soundType)
             {
@@ -62,34 +106,16 @@ namespace Library.Media
                     break;
                 case SoundType.Winner1:
                     break;
+                case SoundType.Background:
+                    soundFilePath = "/home/pi/XOGame/audio/Background.mp3";
+
+                    break;
                 default:
                     break;
             }
-            Console.WriteLine(soundFilePath);
+            return soundFilePath;
 
-            audioProcess = new Process();
-            audioProcess.StartInfo.FileName = "/bin/bash";
-            audioProcess.StartInfo.Arguments = $"cvlc --vout none {soundFilePath}";
-            audioProcess.StartInfo.UseShellExecute = false;
-            audioProcess.StartInfo.RedirectStandardOutput = false;
-            audioProcess.StartInfo.RedirectStandardError = false;
-            audioProcess.Start();
-            Console.WriteLine("Audio playback started.");
-            // Allow some time for playback before returning
-        }
-        public void PIStopAudio()
-        {
-            if (audioProcess != null && !audioProcess.HasExited)
-            {
-                audioProcess.Kill();
-                audioProcess.WaitForExit();
 
-                Console.WriteLine("Audio playback stopped.");
-            }
-            else
-            {
-                Console.WriteLine("No audio is currently playing.");
-            }
         }
     }
 }
