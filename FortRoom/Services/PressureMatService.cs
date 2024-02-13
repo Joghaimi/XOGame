@@ -33,31 +33,34 @@ namespace FortRoom.Services
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                if (VariableControlService.IsTheGameStarted)
-                {
-                    currentValue = MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
-                    Console.WriteLine($"Pressure Mate Pressed {currentValue}");
+                currentValue = MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
+                Console.WriteLine($"Pressure Mate Pressed {currentValue}");
 
-                    if (currentValue && !scoreJustDecreased)
-                    {
+                //if (VariableControlService.IsTheGameStarted)
+                //{
+                //    currentValue = MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
+                //    Console.WriteLine($"Pressure Mate Pressed {currentValue}");
 
-                        VariableControlService.TimeOfPressureHit++;
-                        JQ8400AudioModule.PlayAudio((int)SoundType.Descend);
-                        RGBLight.SetColor(RGBColor.Red);
-                        scoreJustDecreased = true;
-                        timer.Restart();
-                        Console.WriteLine($"Pressure Mate Pressed {VariableControlService.TimeOfPressureHit}");
-                    }
-                    //previousValue = currentValue;
-                    if (scoreJustDecreased && timer.ElapsedMilliseconds >= 3000)
-                    {
-                        scoreJustDecreased = false;
-                        JQ8400AudioModule.PlayAudio((int)SoundType.Start);
-                        RGBLight.SetColor(RGBColor.Green);
-                        timer.Restart();
-                    }
-                }
-                // Sleep for a short duration to avoid excessive checking
+                //    if (currentValue && !scoreJustDecreased)
+                //    {
+
+                //        VariableControlService.TimeOfPressureHit++;
+                //        JQ8400AudioModule.PlayAudio((int)SoundType.Descend);
+                //        RGBLight.SetColor(RGBColor.Red);
+                //        scoreJustDecreased = true;
+                //        timer.Restart();
+                //        Console.WriteLine($"Pressure Mate Pressed {VariableControlService.TimeOfPressureHit}");
+                //    }
+                //    //previousValue = currentValue;
+                //    if (scoreJustDecreased && timer.ElapsedMilliseconds >= 3000)
+                //    {
+                //        scoreJustDecreased = false;
+                //        JQ8400AudioModule.PlayAudio((int)SoundType.Start);
+                //        RGBLight.SetColor(RGBColor.Green);
+                //        timer.Restart();
+                //    }
+                //}
+                //// Sleep for a short duration to avoid excessive checking
                 Thread.Sleep(1000);
             }
         }
