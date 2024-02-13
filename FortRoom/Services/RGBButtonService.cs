@@ -79,7 +79,7 @@ namespace FortRoom.Services
                     {
 
                         activeButton = true;
-                        activeButtonIndox = random.Next(0, 12);
+                        activeButtonIndox = random.Next(0, 10);
                         Console.WriteLine($"Button {activeButtonIndox} Activated");
                         RGBLight.SetColor(RGBColor.Off);
                         AudioPlayer.PIStartAudio(SoundType.Button);
