@@ -36,6 +36,8 @@ namespace FortRoom.Services
                 if (VariableControlService.IsTheGameStarted)
                 {
                     currentValue = MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
+                    Console.WriteLine($"Pressure Mate Pressed {currentValue}");
+
                     if (currentValue && !scoreJustDecreased)
                     {
 
@@ -56,7 +58,7 @@ namespace FortRoom.Services
                     }
                 }
                 // Sleep for a short duration to avoid excessive checking
-                Thread.Sleep(10);
+                Thread.Sleep(1000);
             }
         }
 
