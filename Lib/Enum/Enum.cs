@@ -68,8 +68,8 @@ namespace Library
     public enum MotorSpeed
     {
         Slow = 1000,
-        Medium = 2000,
-        High = 3000,
+        Medium = 1000,
+        High = 1000,
     }
     public enum ModbusAddress
     {
