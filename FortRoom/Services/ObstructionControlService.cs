@@ -43,27 +43,27 @@ namespace FortRoom.Services
         {
             Modbus.Init(SerialPort.Serial);
             _cts1 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            _cts4 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            _cts5 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            //_cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            //_cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            //_cts4 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            //_cts5 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
             Task task1 = Task.Run(() => RunService1(_cts1.Token));
-            Task task2 = Task.Run(() => RunService2(_cts2.Token));
-            Task task3 = Task.Run(() => RunService3(_cts3.Token));
-            Task task4 = Task.Run(() => RunService4(_cts4.Token));
-            Task task5 = Task.Run(() => TimingService(_cts5.Token));
+            //Task task2 = Task.Run(() => RunService2(_cts2.Token));
+            //Task task3 = Task.Run(() => RunService3(_cts3.Token));
+            //Task task4 = Task.Run(() => RunService4(_cts4.Token));
+            //Task task5 = Task.Run(() => TimingService(_cts5.Token));
 
-            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
+            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
 
-            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
-            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
-            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
-            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
+            ////Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
+            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
 
+            return Task.CompletedTask;
 
-
-            return Task.WhenAll(task1, task2, task3, task4, task5);
+            //return Task.WhenAll(task1, task2, task3, task4, task5);
         }
 
 
@@ -71,7 +71,7 @@ namespace FortRoom.Services
         {
             while (true)
             {
-                if (VariableControlService.IsTheGameStarted && IsTimerStarted)
+                if (VariableControlService.IsTheGameStarted)
                 {
 
                     Console.WriteLine($"Motor 1 Started freq Slow");
@@ -82,11 +82,11 @@ namespace FortRoom.Services
                     Console.WriteLine($"Motor 2 Started freq Slow");
                     Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
                     Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
-                    Thread.Sleep(500);
+                    //Thread.Sleep(500);
                     //Console.WriteLine($"Motor 3 Started freq Slow");
                     //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
                     //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
-                    //Thread.Sleep(500);
+                    Thread.Sleep(500);
                     Console.WriteLine($"Motor 4 Started freq Slow");
                     Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
                     Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
@@ -260,6 +260,7 @@ namespace FortRoom.Services
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
+            Console.WriteLine("Closed ..");
             _cts1?.Cancel();
             _cts2?.Cancel();
             _cts3?.Cancel();
@@ -268,6 +269,8 @@ namespace FortRoom.Services
         }
         public void Dispose()
         {
+            Console.WriteLine("Closed2 ..");
+
             _cts1?.Dispose();
             _cts2?.Dispose();
             _cts3?.Dispose();
