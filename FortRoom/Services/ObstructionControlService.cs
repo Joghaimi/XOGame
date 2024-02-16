@@ -51,7 +51,7 @@ namespace FortRoom.Services
             Task task1 = Task.Run(() => RunService1(_cts1.Token));
             Task task2 = Task.Run(() => RunService2(_cts2.Token));
             Task task3 = Task.Run(() => RunService3(_cts3.Token));
-            Task task4 = Task.Run(() => RunService4(_cts4.Token));
+            //Task task4 = Task.Run(() => RunService4(_cts4.Token));
             Task task5 = Task.Run(() => TimingService(_cts5.Token));
 
 
