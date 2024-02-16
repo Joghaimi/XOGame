@@ -77,6 +77,8 @@ namespace FortRoom.Services
                     {
                         Console.WriteLine($"Motor 1 Started freq Slow");
                         Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
+                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+
                         Thread.Sleep(300);
                         IsMotorOneStarted = true;
                     }
@@ -84,6 +86,8 @@ namespace FortRoom.Services
                     {
                         Console.WriteLine($"Motor 1 Started freq Medium");
                         Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);
+                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+
                         Thread.Sleep(300);
                         IsMotorOneStartPeriod2 = true;
                     }
@@ -91,6 +95,7 @@ namespace FortRoom.Services
                     {
                         Console.WriteLine($"Motor 1 Started freq High");
                         Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.High);
+                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
                         Thread.Sleep(300);
                         IsMotorOneStartPeriod3 = true;
                     }
