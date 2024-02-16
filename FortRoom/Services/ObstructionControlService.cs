@@ -73,32 +73,50 @@ namespace FortRoom.Services
             {
                 if (VariableControlService.IsTheGameStarted && IsTimerStarted)
                 {
-                    if (!IsMotorOneStarted)
-                    {
-                        Console.WriteLine($"Motor 1 Started freq Slow");
-                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
-                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
 
-                        Thread.Sleep(300);
-                        IsMotorOneStarted = true;
-                    }
-                    if (!IsMotorOneStartPeriod2 && IsMotorOneStarted && GameStopWatch.ElapsedMilliseconds > SlowPeriod)
-                    {
-                        Console.WriteLine($"Motor 1 Started freq Medium");
-                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);
-                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+                    Console.WriteLine($"Motor 1 Started freq Slow");
+                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
+                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
 
-                        Thread.Sleep(300);
-                        IsMotorOneStartPeriod2 = true;
-                    }
-                    if (!IsMotorOneStartPeriod3 && IsMotorOneStarted && GameStopWatch.ElapsedMilliseconds > MediumPeriod)
-                    {
-                        Console.WriteLine($"Motor 1 Started freq High");
-                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.High);
-                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
-                        Thread.Sleep(300);
-                        IsMotorOneStartPeriod3 = true;
-                    }
+                    Thread.Sleep(5000);
+
+                    Console.WriteLine($"Motor 1 Started freq Medium");
+                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);
+                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+
+                    Thread.Sleep(8000);
+                    Console.WriteLine($"Motor 1 Started freq High");
+                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.High);
+                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+                    Thread.Sleep(5000);
+                    VariableControlService.IsTheGameStarted = false;
+                    //if (!IsMotorOneStarted)
+                    //{
+                    //    Console.WriteLine($"Motor 1 Started freq Slow");
+                    //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
+                    //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+
+                    //    Thread.Sleep(300);
+                    //    IsMotorOneStarted = true;
+                    //}
+                    //if (!IsMotorOneStartPeriod2 && IsMotorOneStarted && GameStopWatch.ElapsedMilliseconds > SlowPeriod)
+                    //{
+                    //    Console.WriteLine($"Motor 1 Started freq Medium");
+                    //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);
+                    //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+
+                    //    Thread.Sleep(300);
+                    //    IsMotorOneStartPeriod2 = true;
+                    //}
+                    //if (!IsMotorOneStartPeriod3 && IsMotorOneStarted && GameStopWatch.ElapsedMilliseconds > MediumPeriod)
+                    //{
+                    //    Console.WriteLine($"Motor 1 Started freq High");
+                    //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.High);
+                    //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+                    //    Thread.Sleep(300);
+                    //    IsMotorOneStartPeriod3 = true;
+                    //}
+
                 }
 
                 Thread.Sleep(10);
