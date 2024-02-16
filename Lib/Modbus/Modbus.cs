@@ -38,6 +38,8 @@ namespace Library.Modbus
             try
             {
                 // Write single register
+                Console.WriteLine($"Write To {slaveAddress} at register {registerAddress} value {valueToWrite} ");
+
                 master.WriteSingleRegister(slaveAddress, registerAddress, valueToWrite);
             }
             catch (Exception ex)
