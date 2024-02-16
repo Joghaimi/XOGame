@@ -51,7 +51,7 @@ namespace FortRoom.Services
             Task task1 = Task.Run(() => RunService1(_cts1.Token));
             Task task2 = Task.Run(() => RunService2(_cts2.Token));
             Task task3 = Task.Run(() => RunService3(_cts3.Token));
-            //Task task4 = Task.Run(() => RunService4(_cts4.Token));
+            Task task4 = Task.Run(() => RunService4(_cts4.Token));
             Task task5 = Task.Run(() => TimingService(_cts5.Token));
 
 
@@ -96,70 +96,83 @@ namespace FortRoom.Services
 
         private async Task RunService2(CancellationToken cancellationToken)
         {
-            if (VariableControlService.IsTheGameStarted && IsTimerStarted)
+            while (true)
             {
-                if (!IsMotorTwoStarted)
+                if (VariableControlService.IsTheGameStarted && IsTimerStarted)
                 {
-                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
-                    IsMotorTwoStarted = true;
-                }
-                if (!IsMotorTwoStartPeriod2 && IsMotorTwoStarted && GameStopWatch.ElapsedMilliseconds > (SlowPeriod + MotorTwoDiffPeriod))
-                {
-                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);
-                    IsMotorTwoStartPeriod2 = true;
-                }
-                if (!IsMotorTwoStartPeriod3 && IsMotorTwoStarted && GameStopWatch.ElapsedMilliseconds > (MediumPeriod + MotorTwoDiffPeriod))
-                {
-                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.High);
-                    IsMotorTwoStartPeriod3 = true;
-                }
+                    if (!IsMotorTwoStarted)
+                    {
+                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
+                        IsMotorTwoStarted = true;
+                    }
+                    if (!IsMotorTwoStartPeriod2 && IsMotorTwoStarted && GameStopWatch.ElapsedMilliseconds > (SlowPeriod + MotorTwoDiffPeriod))
+                    {
+                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);
+                        IsMotorTwoStartPeriod2 = true;
+                    }
+                    if (!IsMotorTwoStartPeriod3 && IsMotorTwoStarted && GameStopWatch.ElapsedMilliseconds > (MediumPeriod + MotorTwoDiffPeriod))
+                    {
+                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.High);
+                        IsMotorTwoStartPeriod3 = true;
+                    }
 
+                }
             }
+
         }
 
         private async Task RunService3(CancellationToken cancellationToken)
         {
-            if (VariableControlService.IsTheGameStarted && IsTimerStarted)
-            {
-                if (!IsMotorThreeStarted)
-                {
-                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
-                    IsMotorThreeStarted = true;
-                }
-                if (!IsMotorThreeStartPeriod2 && IsMotorThreeStarted && GameStopWatch.ElapsedMilliseconds > (SlowPeriod + MotorThreeDiffPeriod))
-                {
-                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);
-                    IsMotorThreeStartPeriod2 = true;
-                }
-                if (!IsMotorThreeStartPeriod3 && IsMotorThreeStarted && GameStopWatch.ElapsedMilliseconds > (MediumPeriod + MotorThreeDiffPeriod))
-                {
-                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, (int)MotorSpeed.High);
-                    IsMotorThreeStartPeriod3 = true;
-                }
-            }
+            //while (true) {
+
+            //if (VariableControlService.IsTheGameStarted && IsTimerStarted)
+            //{
+            //    if (!IsMotorThreeStarted)
+            //    {
+            //        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
+            //        IsMotorThreeStarted = true;
+            //    }
+            //    if (!IsMotorThreeStartPeriod2 && IsMotorThreeStarted && GameStopWatch.ElapsedMilliseconds > (SlowPeriod + MotorThreeDiffPeriod))
+            //    {
+            //        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);
+            //        IsMotorThreeStartPeriod2 = true;
+            //    }
+            //    if (!IsMotorThreeStartPeriod3 && IsMotorThreeStarted && GameStopWatch.ElapsedMilliseconds > (MediumPeriod + MotorThreeDiffPeriod))
+            //    {
+            //        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, (int)MotorSpeed.High);
+            //        IsMotorThreeStartPeriod3 = true;
+            //    }
+            //}
+            //}
+
         }
 
         private async Task RunService4(CancellationToken cancellationToken)
         {
-            if (VariableControlService.IsTheGameStarted && IsTimerStarted)
+            while (true)
             {
-                if (!IsMotorFourStarted)
+                if (VariableControlService.IsTheGameStarted && IsTimerStarted)
                 {
-                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
-                    IsMotorFourStarted = true;
-                }
-                if (!IsMotorFourStartPeriod2 && IsMotorFourStarted && GameStopWatch.ElapsedMilliseconds > (SlowPeriod + MotorFourDiffPeriod))
-                {
-                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);
-                    IsMotorFourStartPeriod2 = true;
-                }
-                if (!IsMotorFourStartPeriod3 && IsMotorFourStarted && GameStopWatch.ElapsedMilliseconds > (MediumPeriod + MotorFourDiffPeriod))
-                {
-                    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, (int)MotorSpeed.High);
-                    IsMotorFourStartPeriod3 = true;
+                    if (!IsMotorFourStarted)
+                    {
+                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
+                        IsMotorFourStarted = true;
+                    }
+                    if (!IsMotorFourStartPeriod2 && IsMotorFourStarted && GameStopWatch.ElapsedMilliseconds > (SlowPeriod + MotorFourDiffPeriod))
+                    {
+                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);
+                        IsMotorFourStartPeriod2 = true;
+                    }
+                    if (!IsMotorFourStartPeriod3 && IsMotorFourStarted && GameStopWatch.ElapsedMilliseconds > (MediumPeriod + MotorFourDiffPeriod))
+                    {
+                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, (int)MotorSpeed.High);
+                        IsMotorFourStartPeriod3 = true;
+                    }
+
                 }
 
             }
+
         }
 
         private async Task TimingService(CancellationToken cancellationToken)
