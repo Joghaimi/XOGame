@@ -7,16 +7,16 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 }));
 // Add services to the container.
 
-//builder.Services.AddControllers();
+builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 builder.Services.AddLogging(builder => builder.AddConsole());
 
 builder.Services.AddHostedService<MainService>(); // The Main Flow .. 
-builder.Services.AddHostedService<RGBButtonService>(); // The Main Flow .. 
+//builder.Services.AddHostedService<RGBButtonService>(); // The Main Flow .. 
 //builder.Services.AddHostedService<PressureMatService>(); // The Main Flow .. 
-//builder.Services.AddHostedService<ObstructionControlService>(); // The Main Flow .. 
+builder.Services.AddHostedService<ObstructionControlService>(); // The Main Flow .. 
 
 // Add services to the container.
 
@@ -25,16 +25,16 @@ var app = builder.Build();
 app.UseCors("corsapp");
 
 // Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
-//app.UseAuthorization();
+app.UseAuthorization();
 
-//app.MapControllers();
+app.MapControllers();
 
 app.Run();
