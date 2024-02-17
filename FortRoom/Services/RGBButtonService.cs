@@ -65,11 +65,18 @@ namespace FortRoom.Services
             timerToStart.Start();
             timer.Start();
             _logger.LogWarning("Started .... ");
+            foreach (var item in RGBButtonList)
+            {
+                item.TurnColorOn(RGBColor.Green);
+            }
             while (!cancellationToken.IsCancellationRequested)
             {
                 foreach (var item in RGBButtonList)
                 {
-                    item.TurnColorOn(RGBColor.Green);
+                    if (!item.CurrentStatus())
+                    {
+                        item.TurnColorOn(RGBColor.Off);
+                    }
                 }
 
                 //if (VariableControlService.IsTheGameStarted)
