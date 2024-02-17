@@ -33,7 +33,7 @@ namespace Library.Media
             Console.WriteLine("Audio playback started.");
             // Allow some time for playback before returning
         }
-        public void PIStopAudio()
+        public static void PIStopAudio()
         {
             if (audioProcess != null && !audioProcess.HasExited)
             {

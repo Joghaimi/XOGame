@@ -150,11 +150,13 @@ namespace FortRoom.Services
         }
         public void Stopped()
         {
+            _logger.LogInformation("Stop RGB Button Service");
             foreach (var item in RGBButtonList)
             {
                 item.TurnColorOn(RGBColor.Off);
             }
-            _logger.LogInformation("Stop RGB Button Service");
+            _logger.LogInformation("Stop Background Audio");
+            AudioPlayer.PIStopAudio();
         }
     }
 }
