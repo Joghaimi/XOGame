@@ -74,8 +74,8 @@ namespace FortRoom.Services
                     {
 
                         activeButton = true;
-                        activeButtonIndox = random.Next(0, 10);
-                        _logger.LogTrace($"Button {activeButtonIndox} Activated");
+                        activeButtonIndox = random.Next(0, RGBButtonList.Count -1);
+                        _logger.LogWarning($"Button {activeButtonIndox} Activated");
                         RGBLight.SetColor(RGBColor.Off);
                         AudioPlayer.PIStartAudio(SoundType.Button);
                         //JQ8400AudioModule.PlayAudio((int)SoundType.Button);
@@ -87,7 +87,7 @@ namespace FortRoom.Services
                     if (activeButton & timer.ElapsedMilliseconds >= 5000)//changingSpeed)
                     {
                         RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
-                        _logger.LogTrace($"Button {activeButtonIndox} Deactivated");
+                        _logger.LogWarning($"Button {activeButtonIndox} Deactivated");
                         activeButtonIndox = -1;
                         activeButton = false;
                         timer.Restart();
