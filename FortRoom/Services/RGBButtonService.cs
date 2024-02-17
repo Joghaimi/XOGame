@@ -34,7 +34,7 @@ namespace FortRoom.Services
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _appLifetime.ApplicationStopping.Register(Stopped);
-            _logger.LogInformation("Start RGBButtonService");
+            _logger.LogWarning("Start RGBButtonService");
             AudioPlayer.PIBackgroundSound(SoundType.Background);
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR5, RGBButtonPin.RGBG5, RGBButtonPin.RGBB5, RGBButtonPin.RGBPB5));
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR6, RGBButtonPin.RGBG6, RGBButtonPin.RGBB6, RGBButtonPin.RGBPB6));
@@ -64,7 +64,7 @@ namespace FortRoom.Services
             int randomTime = random.Next(1000, 5000);
             timerToStart.Start();
             timer.Start();
-            _logger.LogTrace("Started .... ");
+            _logger.LogWarning("Started .... ");
             while (!cancellationToken.IsCancellationRequested)
             {
 
@@ -75,7 +75,7 @@ namespace FortRoom.Services
 
                         activeButton = true;
                         activeButtonIndox = random.Next(0, RGBButtonList.Count -1);
-                        _logger.LogTrace($"Button {activeButtonIndox} Activated");
+                        _logger.LogWarning($"Button {activeButtonIndox} Activated");
                         RGBLight.SetColor(RGBColor.Off);
                         AudioPlayer.PIStartAudio(SoundType.Button);
                         //JQ8400AudioModule.PlayAudio((int)SoundType.Button);
@@ -87,7 +87,7 @@ namespace FortRoom.Services
                     if (activeButton & timer.ElapsedMilliseconds >= 5000)//changingSpeed)
                     {
                         RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
-                        _logger.LogTrace($"Button {activeButtonIndox} Deactivated");
+                        _logger.LogWarning($"Button {activeButtonIndox} Deactivated");
                         activeButtonIndox = -1;
                         activeButton = false;
                         timer.Restart();
@@ -104,8 +104,8 @@ namespace FortRoom.Services
                             RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
                             RGBLight.SetColor(RGBColor.Green);
                             VariableControlService.ActiveButtonPressed++;
-                            _logger.LogTrace($"Button {activeButtonIndox} Pressed");
-                            _logger.LogTrace($"Current Score {VariableControlService.ActiveButtonPressed}");
+                            _logger.LogWarning($"Button {activeButtonIndox} Pressed");
+                            _logger.LogWarning($"Current Score {VariableControlService.ActiveButtonPressed}");
                             activeButtonIndox = -1;
                             timerToStart.Restart();
                             timer.Restart();
