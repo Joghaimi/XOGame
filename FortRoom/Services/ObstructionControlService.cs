@@ -296,10 +296,19 @@ namespace FortRoom.Services
         {
             _logger.LogInformation("Stop The Service");
             Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
+            Thread.Sleep(500);
             Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
+            Thread.Sleep(500);
+
             Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
+            Thread.Sleep(500);
+
             Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
+            Thread.Sleep(500);
+
             Modbus.ReleasePort();
+            _logger.LogInformation("Port Released");
+
         }
 
 
