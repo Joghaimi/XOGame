@@ -10,6 +10,9 @@ namespace FortRoom.Services
     public class RGBButtonService : IHostedService, IDisposable
     {
         List<RGBButton> RGBButtonList = new List<RGBButton>();
+        private readonly ILogger<ObstructionControlService> _logger;
+        private readonly IHostApplicationLifetime _appLifetime;
+
         private CancellationTokenSource _cts, _cts2;
         bool IsTimerStarted = false;
         Stopwatch GameStopWatch = new Stopwatch();
@@ -21,31 +24,27 @@ namespace FortRoom.Services
         int highChangeTime = 1000;
 
         int changingSpeed = 5000;
+
+        public RGBButtonService(ILogger<ObstructionControlService> logger, IHostApplicationLifetime appLifetime)
+        {
+            _appLifetime = appLifetime;
+            _logger = logger;
+        }
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            _appLifetime.ApplicationStopping.Register(Stopped);
+            _logger.LogInformation("Start RGBButtonService");
             AudioPlayer.PIBackgroundSound(SoundType.Background);
-            // 5 6 9 10 11 12 13 14 15 16
-            // 9 10 11 12 5 13 14 15 16 6
-            // TO DO Init The RGB Light .. 
-            Console.WriteLine("RGB 5");
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR5, RGBButtonPin.RGBG5, RGBButtonPin.RGBB5, RGBButtonPin.RGBPB5));
-            Console.WriteLine("RGB 6");
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR6, RGBButtonPin.RGBG6, RGBButtonPin.RGBB6, RGBButtonPin.RGBPB6));
-            Console.WriteLine("RGB 9");
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR9, RGBButtonPin.RGBG9, RGBButtonPin.RGBB9, RGBButtonPin.RGBPB9));
-            Console.WriteLine("RGB 10");
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR10, RGBButtonPin.RGBG10, RGBButtonPin.RGBB10, RGBButtonPin.RGBPB10));
-            Console.WriteLine("RGB 11");
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR11, RGBButtonPin.RGBG11, RGBButtonPin.RGBB11, RGBButtonPin.RGBPB11));
-            Console.WriteLine("RGB 12");
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR12, RGBButtonPin.RGBG12, RGBButtonPin.RGBB12, RGBButtonPin.RGBPB12));
-            Console.WriteLine("RGB 13");
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR13, RGBButtonPin.RGBG13, RGBButtonPin.RGBB13, RGBButtonPin.RGBPB13));
-            Console.WriteLine("RGB 14");
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR14, RGBButtonPin.RGBG14, RGBButtonPin.RGBB14, RGBButtonPin.RGBPB14));
-            Console.WriteLine("RGB 15");
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR15, RGBButtonPin.RGBG15, RGBButtonPin.RGBB15, RGBButtonPin.RGBPB15));
-            Console.WriteLine("RGB 16");
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR16, RGBButtonPin.RGBG16, RGBButtonPin.RGBB16, RGBButtonPin.RGBPB16));
 
 
@@ -65,7 +64,7 @@ namespace FortRoom.Services
             int randomTime = random.Next(1000, 5000);
             timerToStart.Start();
             timer.Start();
-            Console.WriteLine("Started .... ");
+            _logger.LogTrace("Started .... ");
             while (!cancellationToken.IsCancellationRequested)
             {
 
@@ -76,7 +75,7 @@ namespace FortRoom.Services
 
                         activeButton = true;
                         activeButtonIndox = random.Next(0, 10);
-                        Console.WriteLine($"Button {activeButtonIndox} Activated");
+                        _logger.LogTrace($"Button {activeButtonIndox} Activated");
                         RGBLight.SetColor(RGBColor.Off);
                         AudioPlayer.PIStartAudio(SoundType.Button);
                         //JQ8400AudioModule.PlayAudio((int)SoundType.Button);
@@ -88,7 +87,7 @@ namespace FortRoom.Services
                     if (activeButton & timer.ElapsedMilliseconds >= 5000)//changingSpeed)
                     {
                         RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
-                        Console.WriteLine($"Button {activeButtonIndox} Deactivated");
+                        _logger.LogTrace($"Button {activeButtonIndox} Deactivated");
                         activeButtonIndox = -1;
                         activeButton = false;
                         timer.Restart();
@@ -100,14 +99,13 @@ namespace FortRoom.Services
                         if (isPressed)
                         {
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
-
                             //JQ8400AudioModule.PlayAudio((int)SoundType.Bonus);
                             activeButton = false;
                             RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
                             RGBLight.SetColor(RGBColor.Green);
                             VariableControlService.ActiveButtonPressed++;
-                            Console.WriteLine($"Button {activeButtonIndox} Pressed");
-                            Console.WriteLine($"Current Score {VariableControlService.ActiveButtonPressed}");
+                            _logger.LogTrace($"Button {activeButtonIndox} Pressed");
+                            _logger.LogTrace($"Current Score {VariableControlService.ActiveButtonPressed}");
                             activeButtonIndox = -1;
                             timerToStart.Restart();
                             timer.Restart();
@@ -149,6 +147,14 @@ namespace FortRoom.Services
         public void Dispose()
         {
             //_cts.Dispose();
+        }
+        public void Stopped()
+        {
+            foreach (var item in RGBButtonList)
+            {
+                item.TurnColorOn(RGBColor.Off);
+            }
+            _logger.LogInformation("Stop RGB Button Service");
         }
     }
 }

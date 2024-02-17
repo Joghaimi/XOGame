@@ -14,7 +14,11 @@ namespace FortRoom.Services
     public class PressureMatService : IHostedService, IDisposable
     {
         private CancellationTokenSource _cts;
-
+        private readonly ILogger<ObstructionControlService> _logger;
+        public PressureMatService(ILogger<ObstructionControlService> logger)
+        {
+            _logger = logger;
+        }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
@@ -47,7 +51,7 @@ namespace FortRoom.Services
                         RGBLight.SetColor(RGBColor.Red);
                         scoreJustDecreased = true;
                         timer.Restart();
-                        Console.WriteLine($"Pressure Mate Pressed {VariableControlService.TimeOfPressureHit}");
+                        _logger.LogTrace($"Pressure Mate Pressed {VariableControlService.TimeOfPressureHit}");
                     }
                     //previousValue = currentValue;
                     if (scoreJustDecreased && timer.ElapsedMilliseconds >= 3000)
