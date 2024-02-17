@@ -17,52 +17,30 @@ namespace GatheringRoom.Controllers
         {
             _logger = logger;
         }
-
         [HttpPost("StartStopGame")]
         public IActionResult StartGame(bool startGame)
         {
+            _logger.LogTrace($"Game New Status :{startGame}");
             VariableControlService.IsTheGameStarted = startGame;
             return Ok(VariableControlService.IsTheGameStarted);
         }
         [HttpPost("TeamNaming")]
         public IActionResult TeamNaming(string TeamName)
         {
+            if (TeamName == "" || TeamName is null)
+            {
+                _logger.LogWarning($"Team Name cant be Empty or null");
+                return BadRequest("Team Name can't be Empty or null");
+
+            }
+            _logger.LogTrace($"Team New Name :{TeamName}");
             VariableControlService.TeamScore.Name = TeamName;
-            _logger.LogInformation("Team Naming");
-            _logger.LogCritical("Are You Testing Me ? ");
             return Ok(VariableControlService.TeamScore.Name);
         }
         [HttpGet("GoToTheNextRoom")]
         public async Task<IActionResult> NextRoom()
         {
-            //Console.WriteLine("Request Next Room");
-            //string jsonData = JsonConvert.SerializeObject(VariableControlService.TeamScore);
-            //using var client = new HttpClient();
-
-            //// Bypass SSL certificate validation
-            ////ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-
-            //var request = new HttpRequestMessage
-            //{
-            //    Method = HttpMethod.Post,
-            //    RequestUri = new Uri(VariableControlService.NextRoomURL),
-            //};
-
-            //Console.WriteLine("Request Next Room Sent .. ");
-
-            //HttpResponseMessage response = await client.SendAsync(request);
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    Console.WriteLine("Success ...");
-            //    // Read the response content as a string
-            //    string responseContent = await response.Content.ReadAsStringAsync();
-            //    Console.WriteLine(responseContent);
-            //}
-            //else
-            //{
-            //    Console.WriteLine($"POST request failed. Status Code: {response.StatusCode}");
-            //}
-            // Empty the Variable 
+            _logger.LogTrace("The Team Mover To the Next room , Reset this Room");
             VariableControlService.IsTheGameStarted = false;
             VariableControlService.TeamScore.Name = "";
             VariableControlService.TeamScore.player.Clear();
@@ -72,7 +50,7 @@ namespace GatheringRoom.Controllers
         [HttpGet("getThePlayers")]
         public IActionResult Get()
         {
-            Console.WriteLine("Ahmad SAid ...");
+            _logger.LogTrace("Get Player Team");
             return base.Ok(VariableControlService.TeamScore.player);
         }
 

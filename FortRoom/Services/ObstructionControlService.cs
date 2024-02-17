@@ -11,8 +11,10 @@ namespace FortRoom.Services
 {
     public class ObstructionControlService : IHostedService, IDisposable
     {
-        ModbusLib Modbus = new ModbusLib();
-        Stopwatch GameStopWatch = new Stopwatch();
+        private readonly IHostApplicationLifetime _appLifetime;
+        private ModbusLib Modbus = new ModbusLib();
+        private Stopwatch GameStopWatch = new Stopwatch();
+
         bool IsTimerStarted = false;
         bool IsMotorOneStarted = false;
         bool IsMotorOneStartPeriod2 = false;
@@ -37,11 +39,15 @@ namespace FortRoom.Services
         bool IsMotorFourStartPeriod3 = false;
         int MotorFourDiffPeriod = 3000;
 
+        public ObstructionControlService(IHostApplicationLifetime appLifetime)
+        {
+            _appLifetime = appLifetime;
+        }
         private CancellationTokenSource _cts1, _cts2, _cts3, _cts4, _cts5;
-
         public Task StartAsync(CancellationToken cancellationToken)
         {
             Modbus.Init(SerialPort.Serial);
+            _appLifetime.ApplicationStopping.Register(Stopped);
             _cts1 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             //_cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             //_cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -77,7 +83,7 @@ namespace FortRoom.Services
                     Console.WriteLine($"Motor 1 Started freq Slow");
                     Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
                     Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
-                    
+
                     Thread.Sleep(500);
                     Console.WriteLine($"Motor 2 Started freq Slow");
                     Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
@@ -90,7 +96,7 @@ namespace FortRoom.Services
                     Console.WriteLine($"Motor 4 Started freq Slow");
                     Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
                     Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
-                    
+
                     Thread.Sleep(5000);
 
                     Console.WriteLine($"Motor 1 Started freq Meduim");
@@ -269,12 +275,16 @@ namespace FortRoom.Services
         }
         public void Dispose()
         {
-            Console.WriteLine("Closed2 ..");
-
             _cts1?.Dispose();
             _cts2?.Dispose();
             _cts3?.Dispose();
             _cts4?.Dispose();
         }
+        public void Stopped()
+        {
+            Modbus.ReleasePort();
+        }
+
+
     }
 }

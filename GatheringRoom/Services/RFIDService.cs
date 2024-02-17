@@ -1,4 +1,6 @@
-﻿using Library.RFIDLib;
+﻿using GatheringRoom.Controllers;
+using Library.RFIDLib;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 
@@ -6,12 +8,19 @@ namespace GatheringRoom.Services
 {
     public class RFIDService : IHostedService, IDisposable
     {
+        private readonly ILogger<GatheringRoomController> _logger;
         private CancellationTokenSource _cts;
         private RFID _rfidController = new();
         int pinReset = 6;
         bool stop = false;
+        public RFIDService(ILogger<GatheringRoomController> logger)
+        {
+            _logger = logger;
+        }
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Start RFID Service");
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _rfidController.Init(pinReset);
             Task.Run(() => RunService(_cts.Token));
@@ -22,15 +31,14 @@ namespace GatheringRoom.Services
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                // Check The RFID 
                 if (_rfidController.CheckCardExisting() && VariableControlService.TeamScore.player.Count < 5 && !stop)
                 {
-                    // Read Card Info .. 
-                    Console.WriteLine("Card Found .. ");
+                    _logger.LogTrace("New Card Found");
                     string newPlayerId = _rfidController.ReadCardInfo();
-                    if (!string.IsNullOrEmpty(newPlayerId) && !VariableControlService.TeamScore.player.Any(item => item.Id == newPlayerId))
+                    bool isInTeam = VariableControlService.TeamScore.player.Any(item => item.Id == newPlayerId);
+                    bool hasId = !string.IsNullOrEmpty(newPlayerId);
+                    if (hasId && !isInTeam)
                     {
-                        // Refit .. 
                         using (HttpClient httpClient = new HttpClient())
                         {
                             string apiUrl = "https://thcyle7652.execute-api.us-east-1.amazonaws.com/default/myservice-dev-hello";
@@ -39,7 +47,6 @@ namespace GatheringRoom.Services
                             HttpResponseMessage response = await httpClient.PostAsync(apiUrl, content);
                             if (response.IsSuccessStatusCode)
                             {
-                                // Read the response content as a string
                                 string responseContent = await response.Content.ReadAsStringAsync();
                                 List<Person> people = JsonConvert.DeserializeObject<List<Person>>(responseContent);
                                 if (people.Count > 0)
@@ -51,43 +58,32 @@ namespace GatheringRoom.Services
                                         LastName = people[0].lastname
                                     };
                                     VariableControlService.TeamScore.player.Add(player);
-
                                 }
-                                Console.WriteLine($"POST request successful. Response: {people[0].firstname} {people[0].lastname}");
-                                Console.WriteLine(responseContent);
+                                _logger.LogError($"POST request successful {responseContent}. Response: {people[0].firstname} {people[0].lastname}");
                             }
                             else
-                            {
-                                Console.WriteLine($"POST request failed. Status Code: {response.StatusCode}");
-                            }
+                                _logger.LogError($"POST request failed. Status Code: {response.StatusCode}");
                         }
-
-
-
-
-
-
-
                     }
+                    else
+                        _logger.LogWarning($"Player is Exist :{isInTeam} or id is null {!hasId} ");
                 }
                 else
-                {
-
-                }
+                    _logger.LogWarning("Can't Have More Than 5 Member in a team");
                 await Task.Delay(TimeSpan.FromMilliseconds(1000), cancellationToken);
             }
         }
-
         public Task StopAsync(CancellationToken cancellationToken)
         {
+            _logger.LogInformation("RFID Service Stopped");
             _cts.Cancel();
             return Task.CompletedTask;
         }
         public void Dispose()
         {
+            _logger.LogInformation("RFID Service Disposed");
             _cts.Dispose();
         }
-
     }
 }
 

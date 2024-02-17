@@ -12,19 +12,11 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddLogging(builder=> builder.AddConsole());
-//builder.Services.AddHostedService<RFIDService>();
+builder.Services.AddLogging(builder => builder.AddConsole());
+builder.Services.AddHostedService<RFIDService>();
 //builder.Services.AddHostedService<RoomSensorServices>();
-
-
 var app = builder.Build();
-// Add logging configuration
-
 app.UseCors("corsapp");
-// Add logging configuration
-
-
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

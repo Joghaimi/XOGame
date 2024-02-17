@@ -11,9 +11,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddHostedService<MainService>(); // The Main Flow .. 
-builder.Services.AddHostedService<RGBButtonService>(); // The Main Flow .. 
-builder.Services.AddHostedService<PressureMatService>(); // The Main Flow .. 
+//builder.Services.AddHostedService<MainService>(); // The Main Flow .. 
+//builder.Services.AddHostedService<RGBButtonService>(); // The Main Flow .. 
+//builder.Services.AddHostedService<PressureMatService>(); // The Main Flow .. 
 builder.Services.AddHostedService<ObstructionControlService>(); // The Main Flow .. 
 
 // Add services to the container.

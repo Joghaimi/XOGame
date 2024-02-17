@@ -12,12 +12,14 @@ using Iot.Device.Rfid;
 using Iot.Device.Card.Mifare;
 using System.Diagnostics;
 using Iot.Device.Nmea0183;
+using Microsoft.Extensions.Logging;
 
 namespace Library.RFIDLib
 {
     public class RFID
     {
         private MfRc522 Mfrc522; // Declare the MfRc522 field
+        private static readonly ILogger _logger = LoggerFactory.Create(builder => { builder.AddConsole(); }).CreateLogger<RFID>();
         public bool Init(int RSTPin)
         {
             try
@@ -27,90 +29,62 @@ namespace Library.RFIDLib
                 Connection.ClockFrequency = 10_000_000;
                 SpiDevice spi = SpiDevice.Create(Connection);
                 Mfrc522 = new(spi, RSTPin, GPIOController, false);
-                Console.WriteLine("RFID reader found!");
+                _logger.LogInformation("RFID Initialization Success");
                 return true;
             }
             catch
             {
-                Console.WriteLine("RFID Not Initialized");
+                _logger.LogError("RFID Initialization Faild");
                 return false;
             }
         }
         public bool CheckCardExisting()
         {
-            if (Mfrc522 != null)
+            try
             {
-                byte[] buffer = new byte[2]; // Assuming a buffer of 10 bytes
-                return Mfrc522.IsCardPresent(buffer, false);
+                if (Mfrc522 != null)
+                {
+                    byte[] buffer = new byte[2]; // Assuming a buffer of 10 bytes
+                    return Mfrc522.IsCardPresent(buffer, false);
+                }
+                else
+                {
+                    _logger.LogError("RFID Not Initialized");
+                    return false;
+                }
             }
-            else
+            catch
             {
-                Console.WriteLine("RFID Not Initialized");
-
+                _logger.LogError("CheckCardExisting Error");
                 return false;
             }
 
         }
         public string ReadCardInfo()
         {
-            if (Mfrc522 == null) Console.WriteLine("RFID Not Initialized ..");
-            Data106kbpsTypeA card;
-            bool isExist = Mfrc522.ListenToCardIso14443TypeA(out card, TimeSpan.FromSeconds(0.5));
-            if (isExist)
+            try
             {
-                var mifare = new MifareCard(Mfrc522!, 0);
-                mifare.SerialNumber = card.NfcId;
-                var data = BitConverter.ToString(mifare.SerialNumber);
-                return data;
-
-
-                //Console.WriteLine("mifare.SerialNumber");
-                //Console.WriteLine(mifare.SerialNumber);
-
-                //// Tested Before 
-                //mifare.Capacity = MifareCardCapacity.Mifare1K;
-                //mifare.KeyA = MifareCard.DefaultKeyA.ToArray();
-                //mifare.KeyB = MifareCard.DefaultKeyB.ToArray();
-                ////Reading Process
-                //int ret;
-                //for (byte block = 0; block < 64; block++)
-                //{
-                //    mifare.BlockNumber = block;
-                //    mifare.Command = MifareCardCommand.AuthenticationB;
-                //    ret = mifare.RunMifareCardCommand();
-                //    if (ret >= 0)
-                //    {
-                //        mifare.BlockNumber = block;
-                //        mifare.Command = MifareCardCommand.Read16Bytes;
-                //        ret = mifare.RunMifareCardCommand();
-                //        if (ret >= 0)
-                //        {
-
-                //            if (mifare.Data is object)
-                //            {
-                //                var data = Encoding.UTF8.GetString(mifare.Data);
-                //                if (data != null && data.Length > 0)
-                //                    Console.WriteLine($"Bloc: {block}, Data: {Encoding.UTF8.GetString(mifare.Data)}");
-
-                //            }
-                //        }
-                //        else
-                //        {
-                //            mifare.ReselectCard();
-                //        }
-
-                //    }
-                //    else
-                //    {
-                //        Console.WriteLine($"Authentication error");
-                //    }
-                //}
-
-
-
-
+                if (Mfrc522 == null) _logger.LogError("RFID Not Initialized");
+                Data106kbpsTypeA card;
+                bool isExist = Mfrc522.ListenToCardIso14443TypeA(out card, TimeSpan.FromSeconds(0.5));
+                if (isExist)
+                {
+                    var mifare = new MifareCard(Mfrc522!, 0);
+                    mifare.SerialNumber = card.NfcId;
+                    var data = BitConverter.ToString(mifare.SerialNumber);
+                    return data;
+                }
+                else
+                {
+                    _logger.LogError("Card Not Detected");
+                    return "";
+                }
             }
-            return "";
+            catch
+            {
+                _logger.LogError("ReadCardInfo Error");
+                return "";
+            }
         }
     }
 }
