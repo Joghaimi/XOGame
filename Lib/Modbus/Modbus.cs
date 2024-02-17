@@ -53,7 +53,9 @@ namespace Library.Modbus
         {
             try
             {
+                master.Dispose();
                 port.Close();
+                port.Dispose();
                 _logger.LogInformation("Release Modbus Port");
             }
             catch (Exception ex)

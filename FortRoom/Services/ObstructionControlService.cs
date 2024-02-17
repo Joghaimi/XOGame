@@ -278,7 +278,6 @@ namespace FortRoom.Services
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            Console.WriteLine("Closed ..");
             _cts1?.Cancel();
             _cts2?.Cancel();
             _cts3?.Cancel();
