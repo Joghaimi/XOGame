@@ -14,7 +14,7 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 builder.Services.AddLogging(builder => builder.AddConsole());
 
 //builder.Services.AddHostedService<MainService>(); // The Main Flow .. 
-//builder.Services.AddHostedService<RGBButtonService>(); // The Main Flow .. 
+builder.Services.AddHostedService<RGBButtonService>(); // The Main Flow .. 
 //builder.Services.AddHostedService<PressureMatService>(); // The Main Flow .. 
 builder.Services.AddHostedService<ObstructionControlService>(); // The Main Flow .. 
 
