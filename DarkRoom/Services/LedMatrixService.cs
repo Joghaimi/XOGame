@@ -54,6 +54,8 @@ namespace DarkRoom.Services
             Console.WriteLine("Started .... ");
             while (!cancellationToken.IsCancellationRequested)
             {
+
+                //display.SendCommand();
                 if (VariableControlService.IsTheGameStarted)
                 {
                     if (!activeButton && timerToStart.ElapsedMilliseconds > randomTime)

@@ -25,6 +25,11 @@ namespace FortRoom.Services
 
         int changingSpeed = 5000;
 
+
+
+        int currentPeriod = 30000;
+        bool colorSelected = false;
+
         public RGBButtonService(ILogger<ObstructionControlService> logger, IHostApplicationLifetime appLifetime)
         {
             _appLifetime = appLifetime;
@@ -49,83 +54,127 @@ namespace FortRoom.Services
 
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            //_cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task task1 = Task.Run(() => RunService(_cts.Token));
             Task task2 = Task.Run(() => TimingService(_cts2.Token));
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            bool activeButton = false;
-            Stopwatch timer = new Stopwatch();
-            Stopwatch timerToStart = new Stopwatch();
-            int activeButtonIndox = -1;
             Random random = new Random();
-            int randomTime = random.Next(1000, 5000);
-            timerToStart.Start();
-            timer.Start();
-            _logger.LogWarning("Started .... ");
-            foreach (var item in RGBButtonList)
+            while (true)
             {
-                item.TurnColorOn(RGBColor.Green);
-            }
-            while (!cancellationToken.IsCancellationRequested)
-            {
+                RGBColor selectedColor = (RGBColor)random.Next(0, 3);
                 foreach (var item in RGBButtonList)
                 {
-                    if (!item.CurrentStatus())
-                    {
-                        item.TurnColorOn(RGBColor.Off);
-                    }
+                    item.TurnColorOn(selectedColor);
                 }
+                while (GameStopWatch.ElapsedMilliseconds < currentPeriod)
+                {
+                    foreach (var item in RGBButtonList)
+                    {
+                        if (item.CurrentStatus())
+                        {
+                            item.TurnColorOn(RGBColor.Off);
+                            VariableControlService.ActiveButtonPressed++;
+                            AudioPlayer.PIStartAudio(SoundType.Bonus);
+                        }
+                    }
+                    Thread.Sleep(10);
+                }
+                if (currentPeriod > 10)
+                    currentPeriod -= 5;
+                foreach (var item in RGBButtonList)
+                {
+                    item.TurnColorOn(RGBColor.Off);
+                }
+                GameStopWatch.Restart();
 
-                //if (VariableControlService.IsTheGameStarted)
-                //{
-                //    if (!activeButton && timerToStart.ElapsedMilliseconds > randomTime)
-                //    {
 
-                //        activeButton = true;
-                //        activeButtonIndox = random.Next(0, RGBButtonList.Count -1);
-                //        _logger.LogWarning($"Button {activeButtonIndox} Activated");
-                //        RGBLight.SetColor(RGBColor.Off);
-                //        AudioPlayer.PIStartAudio(SoundType.Button);
-                //        //JQ8400AudioModule.PlayAudio((int)SoundType.Button);
-                //        RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Green);
-                //        timer.Restart();
-                //        timerToStart.Restart();
-                //        randomTime = random.Next(1000, 5000);
-                //    }
-                //    if (activeButton & timer.ElapsedMilliseconds >= 5000)//changingSpeed)
-                //    {
-                //        RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
-                //        _logger.LogWarning($"Button {activeButtonIndox} Deactivated");
-                //        activeButtonIndox = -1;
-                //        activeButton = false;
-                //        timer.Restart();
-                //        timerToStart.Restart();
-                //    }
-                //    if (activeButton && activeButtonIndox > -1)
-                //    {
-                //        bool isPressed = !RGBButtonList[activeButtonIndox].CurrentStatus();
-                //        if (isPressed)
-                //        {
-                //            AudioPlayer.PIStartAudio(SoundType.Bonus);
-                //            //JQ8400AudioModule.PlayAudio((int)SoundType.Bonus);
-                //            activeButton = false;
-                //            RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
-                //            RGBLight.SetColor(RGBColor.Green);
-                //            VariableControlService.ActiveButtonPressed++;
-                //            _logger.LogWarning($"Button {activeButtonIndox} Pressed");
-                //            _logger.LogWarning($"Current Score {VariableControlService.ActiveButtonPressed}");
-                //            activeButtonIndox = -1;
-                //            timerToStart.Restart();
-                //            timer.Restart();
-                //        }
-                //    }
-                //}
-                //// Sleep for a short duration to avoid excessive checking
-                Thread.Sleep(10);
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //bool activeButton = false;
+            //Stopwatch timer = new Stopwatch();
+            //Stopwatch timerToStart = new Stopwatch();
+            //int activeButtonIndox = -1;
+            //int randomTime = random.Next(1000, 5000);
+            //timerToStart.Start();
+            //timer.Start();
+            //_logger.LogWarning("Started .... ");
+            //foreach (var item in RGBButtonList)
+            //{
+            //    item.TurnColorOn(RGBColor.Green);
+            //}
+            //while (!cancellationToken.IsCancellationRequested)
+            //{
+            //    foreach (var item in RGBButtonList)
+            //    {
+            //        if (!item.CurrentStatus())
+            //        {
+            //            item.TurnColorOn(RGBColor.Off);
+            //        }
+            //    }
+
+            //    //if (VariableControlService.IsTheGameStarted)
+            //    //{
+            //    //    if (!activeButton && timerToStart.ElapsedMilliseconds > randomTime)
+            //    //    {
+
+            //    //        activeButton = true;
+            //    //        activeButtonIndox = random.Next(0, RGBButtonList.Count -1);
+            //    //        _logger.LogWarning($"Button {activeButtonIndox} Activated");
+            //    //        RGBLight.SetColor(RGBColor.Off);
+            //    //        AudioPlayer.PIStartAudio(SoundType.Button);
+            //    //        //JQ8400AudioModule.PlayAudio((int)SoundType.Button);
+            //    //        RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Green);
+            //    //        timer.Restart();
+            //    //        timerToStart.Restart();
+            //    //        randomTime = random.Next(1000, 5000);
+            //    //    }
+            //    //    if (activeButton & timer.ElapsedMilliseconds >= 5000)//changingSpeed)
+            //    //    {
+            //    //        RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
+            //    //        _logger.LogWarning($"Button {activeButtonIndox} Deactivated");
+            //    //        activeButtonIndox = -1;
+            //    //        activeButton = false;
+            //    //        timer.Restart();
+            //    //        timerToStart.Restart();
+            //    //    }
+            //    //    if (activeButton && activeButtonIndox > -1)
+            //    //    {
+            //    //        bool isPressed = !RGBButtonList[activeButtonIndox].CurrentStatus();
+            //    //        if (isPressed)
+            //    //        {
+            //    //            AudioPlayer.PIStartAudio(SoundType.Bonus);
+            //    //            //JQ8400AudioModule.PlayAudio((int)SoundType.Bonus);
+            //    //            activeButton = false;
+            //    //            RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
+            //    //            RGBLight.SetColor(RGBColor.Green);
+            //    //            VariableControlService.ActiveButtonPressed++;
+            //    //            _logger.LogWarning($"Button {activeButtonIndox} Pressed");
+            //    //            _logger.LogWarning($"Current Score {VariableControlService.ActiveButtonPressed}");
+            //    //            activeButtonIndox = -1;
+            //    //            timerToStart.Restart();
+            //    //            timer.Restart();
+            //    //        }
+            //    //    }
+            //    //}
+            //    //// Sleep for a short duration to avoid excessive checking
+            //    Thread.Sleep(10);
+            //}
+
         }
         private async Task TimingService(CancellationToken cancellationToken)
         {
@@ -137,18 +186,7 @@ namespace FortRoom.Services
                     IsTimerStarted = true;
                 }
             }
-            while (true)
-            {
-                if (GameStopWatch.ElapsedMilliseconds > SlowPeriod && GameStopWatch.ElapsedMilliseconds < MediumPeriod)
-                {
-                    changingSpeed = mediumChangeTime;
-                }
-                else if (GameStopWatch.ElapsedMilliseconds > MediumPeriod)
-                {
-                    changingSpeed = highChangeTime;
-                }
-                Thread.Sleep(10);
-            }
+
         }
         public Task StopAsync(CancellationToken cancellationToken)
         {

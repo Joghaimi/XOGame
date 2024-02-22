@@ -34,7 +34,8 @@ namespace Library
         first = 1,
         second,
         third,
-        fourth
+        fourth,
+        fifth,
     }
     public enum DisplayCommand
     {
