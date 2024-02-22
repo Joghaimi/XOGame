@@ -82,15 +82,17 @@ namespace FortRoom.Services
                     {
                         if (!item.CurrentStatus() && item.CurrentColor() == selectedColor)
                         {
+                            
                             MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.High);
-
                             RGBLight.SetColor(RGBColor.Green);
-                            numberOfClieckedButton++;
-                            item.TurnColorOn(RGBColor.Off);
-                            VariableControlService.ActiveButtonPressed++;
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
-                            Console.WriteLine($"Score {VariableControlService.ActiveButtonPressed} numberOfPressed now {numberOfClieckedButton}");
+                            item.TurnColorOn(RGBColor.Off);
                             RGBLight.TurnRGBOffAfter1Sec();
+
+
+                            numberOfClieckedButton++;
+                            VariableControlService.ActiveButtonPressed++;
+                            Console.WriteLine($"Score {VariableControlService.ActiveButtonPressed} numberOfPressed now {numberOfClieckedButton}");
                         }
                     }
                     if (numberOfClieckedButton == RGBButtonList.Count())

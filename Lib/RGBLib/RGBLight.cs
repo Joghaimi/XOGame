@@ -82,8 +82,8 @@ namespace Library.RGBLib
             await Task.Run(() =>
             {
                 Thread.Sleep(5000);
-                SetColor(RGBColor.Off);
                 MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
+                SetColor(RGBColor.Off);
             });
         }
         public static void DatSend(uint dx)
