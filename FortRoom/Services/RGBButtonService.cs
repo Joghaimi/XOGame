@@ -65,6 +65,7 @@ namespace FortRoom.Services
             while (true)
             {
                 RGBColor selectedColor = (RGBColor)random.Next(0, 3);
+                AudioPlayer.PIStartAudio(SoundType.Button);
                 foreach (var item in RGBButtonList)
                 {
                     item.TurnColorOn(selectedColor);
@@ -73,7 +74,7 @@ namespace FortRoom.Services
                 {
                     foreach (var item in RGBButtonList)
                     {
-                        if (item.CurrentStatus())
+                        if (!item.CurrentStatus() && item.CurrentColor() == selectedColor)
                         {
                             item.TurnColorOn(RGBColor.Off);
                             VariableControlService.ActiveButtonPressed++;
@@ -89,8 +90,6 @@ namespace FortRoom.Services
                     item.TurnColorOn(RGBColor.Off);
                 }
                 GameStopWatch.Restart();
-
-
             }
 
 
