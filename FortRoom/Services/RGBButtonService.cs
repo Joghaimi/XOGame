@@ -82,7 +82,7 @@ namespace FortRoom.Services
                     {
                         if (!item.CurrentStatus() && item.CurrentColor() == selectedColor)
                         {
-                            MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
+                            MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.High);
 
                             RGBLight.SetColor(RGBColor.Green);
                             numberOfClieckedButton++;
@@ -216,6 +216,7 @@ namespace FortRoom.Services
         }
         public void Stopped()
         {
+            MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.High);
             _logger.LogInformation("Stop RGB Button Service");
             foreach (var item in RGBButtonList)
             {

@@ -83,7 +83,7 @@ namespace Library.RGBLib
             {
                 Thread.Sleep(2000);
                 SetColor(RGBColor.Off);
-                MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.High);
+                MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
             });
         }
         public static void DatSend(uint dx)
