@@ -393,7 +393,7 @@ namespace Library.PinMapping
         };
         public static MCP23Pin RGBPB15 = new MCP23Pin
         {
-            PinNumber = 4, // Set the PinNumber property
+            PinNumber = 2, // Set the PinNumber property
             Chip = MCP23017.MCP2301727, // Set the Chip property with the MCP23017 instance
             port = Port.PortA
         };
