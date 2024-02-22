@@ -30,6 +30,9 @@ namespace FortRoom.Services
         int currentPeriod = 30000;
         bool colorSelected = false;
 
+        int CurrentColor = 0;
+
+
         public RGBButtonService(ILogger<ObstructionControlService> logger, IHostApplicationLifetime appLifetime)
         {
             _appLifetime = appLifetime;
@@ -64,7 +67,7 @@ namespace FortRoom.Services
             Random random = new Random();
             while (true)
             {
-                RGBColor selectedColor = (RGBColor)random.Next(0, 3);
+                RGBColor selectedColor = (RGBColor)CurrentColor;
                 AudioPlayer.PIStartAudio(SoundType.Button);
                 byte numberOfClieckedButton = 0;
                 foreach (var item in RGBButtonList)
@@ -97,6 +100,8 @@ namespace FortRoom.Services
                 {
                     item.TurnColorOn(RGBColor.Off);
                 }
+                if (CurrentColor < 5)
+                    CurrentColor++;
                 GameStopWatch.Restart();
             }
 
