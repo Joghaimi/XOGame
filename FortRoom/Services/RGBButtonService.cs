@@ -77,6 +77,7 @@ namespace FortRoom.Services
                     {
                         if (!item.CurrentStatus() && item.CurrentColor() == selectedColor)
                         {
+                            RGBLight.SetColor(RGBColor.Green);
                             numberOfClieckedButton++;
                             item.TurnColorOn(RGBColor.Off);
                             VariableControlService.ActiveButtonPressed++;
