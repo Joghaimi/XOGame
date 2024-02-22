@@ -66,6 +66,7 @@ namespace FortRoom.Services
             {
                 RGBColor selectedColor = (RGBColor)random.Next(0, 3);
                 AudioPlayer.PIStartAudio(SoundType.Button);
+                byte numberOfClieckedButton = 0;
                 foreach (var item in RGBButtonList)
                 {
                     item.TurnColorOn(selectedColor);
@@ -76,10 +77,15 @@ namespace FortRoom.Services
                     {
                         if (!item.CurrentStatus() && item.CurrentColor() == selectedColor)
                         {
+                            numberOfClieckedButton++;
                             item.TurnColorOn(RGBColor.Off);
                             VariableControlService.ActiveButtonPressed++;
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                         }
+                    }
+                    if (numberOfClieckedButton == RGBButtonList.Count())
+                    {
+                        break;
                     }
                     Thread.Sleep(10);
                 }
