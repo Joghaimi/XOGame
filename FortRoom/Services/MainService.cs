@@ -1,4 +1,5 @@
-﻿using Library;
+﻿using Iot.Device.Mcp3428;
+using Library;
 using Library.Enum;
 using Library.GPIOLib;
 using Library.Media;
@@ -29,6 +30,8 @@ namespace FortRoom.Services
             _controller.Setup(MasterDI.PIRPin2, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin3, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
+
+            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinMode.Output);
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
@@ -43,6 +46,9 @@ namespace FortRoom.Services
                 PIR4 = _controller.Read(MasterDI.PIRPin4);
                 //Console.WriteLine($"PIR Status PIR1:{PIR1} PIR2:{PIR2} PIR3:{PIR3} PIR4:{PIR4}");
                 VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
+                MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.High);
+
+
                 bool DoneOneTimeFlage = false;
                 if (VariableControlService.IsTheGameStarted)
                 {

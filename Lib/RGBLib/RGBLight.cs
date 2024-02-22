@@ -15,6 +15,7 @@ using Library.Delay;
 using System;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
+using Iot.Device.Mcp3428;
 
 namespace Library.RGBLib
 {
@@ -82,6 +83,7 @@ namespace Library.RGBLib
             {
                 Thread.Sleep(2000);
                 SetColor(RGBColor.Off);
+                MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.High);
             });
         }
         public static void DatSend(uint dx)

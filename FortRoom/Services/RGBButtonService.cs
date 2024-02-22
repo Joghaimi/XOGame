@@ -4,6 +4,8 @@ using Library;
 using System.Device.Gpio;
 using System.Diagnostics;
 using Library.PinMapping;
+using Library.GPIOLib;
+using Iot.Device.Mcp3428;
 
 namespace FortRoom.Services
 {
@@ -80,6 +82,8 @@ namespace FortRoom.Services
                     {
                         if (!item.CurrentStatus() && item.CurrentColor() == selectedColor)
                         {
+                            MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
+
                             RGBLight.SetColor(RGBColor.Green);
                             numberOfClieckedButton++;
                             item.TurnColorOn(RGBColor.Off);
