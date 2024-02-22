@@ -67,6 +67,7 @@ namespace Library.RGBLib
                     break;
             }
         }
+
         public RGBColor CurrentColor()
         {
             return _CurrnetColor;

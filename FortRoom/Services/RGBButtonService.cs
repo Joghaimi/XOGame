@@ -86,6 +86,7 @@ namespace FortRoom.Services
                             VariableControlService.ActiveButtonPressed++;
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             Console.WriteLine($"Score {VariableControlService.ActiveButtonPressed} numberOfPressed now {numberOfClieckedButton}");
+                            RGBLight.TurnRGBOffAfter1Sec();
                         }
                     }
                     if (numberOfClieckedButton == RGBButtonList.Count())

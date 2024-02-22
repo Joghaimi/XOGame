@@ -75,6 +75,15 @@ namespace Library.RGBLib
             //}
 
         }
+
+        public static async Task TurnRGBOffAfter1Sec()
+        {
+            await Task.Run(() =>
+            {
+                Thread.Sleep(2000);
+                SetColor(RGBColor.Off);
+            });
+        }
         public static void DatSend(uint dx)
         {
             for (int i = 0; i < 32; i++)
