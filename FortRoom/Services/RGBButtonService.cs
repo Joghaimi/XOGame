@@ -218,7 +218,7 @@ namespace FortRoom.Services
         }
         public void Stopped()
         {
-            MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.High);
+            MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
             _logger.LogInformation("Stop RGB Button Service");
             foreach (var item in RGBButtonList)
             {
