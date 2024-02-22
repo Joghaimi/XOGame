@@ -107,7 +107,7 @@ namespace Library.Media
                 case SoundType.Winner1:
                     break;
                 case SoundType.Background:
-                    soundFilePath = "/home/fort/XOGame/audio/Background.mp3";
+                    soundFilePath = "/home/fort/XOGame/audio/Background.wav";
 
                     break;
                 default:
