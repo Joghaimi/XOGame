@@ -81,7 +81,7 @@ namespace Library.RGBLib
         {
             await Task.Run(() =>
             {
-                
+                Thread.Sleep(2000);
                 Console.WriteLine("Turn green RGB off");
                 SetColor(RGBColor.Off);
                 Thread.Sleep(3000);
