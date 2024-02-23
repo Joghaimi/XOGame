@@ -50,7 +50,10 @@ namespace FortRoom.Services
                         VariableControlService.TimeOfPressureHit++;
                         
                         MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
-                        JQ8400AudioModule.PlayAudio((int)SoundType.Descend);
+
+                        AudioPlayer.PIStartAudio(SoundType.Bonus);
+
+                        //JQ8400AudioModule.PlayAudio((int)SoundType.Descend);
                         RGBLight.SetColor(RGBColor.Red);
                         RGBLight.TurnRGBOffAfter1Sec();
 
