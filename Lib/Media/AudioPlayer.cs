@@ -40,7 +40,7 @@ namespace Library.Media
                     audioBessy = false;
                 }
                 else {
-                    Console.WriteLine("Audio Bussy");
+                    Console.WriteLine($"Audio Bussy {soundType.ToString()}");
                 
                 }
 
@@ -115,6 +115,7 @@ namespace Library.Media
                 case SoundType.Descend2:
                     break;
                 case SoundType.Descend:
+                    soundFilePath = "/home/fort/XOGame/audio/GameBonus.mp3";
                     break;
                 case SoundType.GameOver:
                     break;

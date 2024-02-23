@@ -47,7 +47,7 @@ namespace FortRoom.Services
                         {
                             VariableControlService.TimeOfPressureHit++;
                             MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
-                            AudioPlayer.PIStartAudio(SoundType.Bonus);
+                            AudioPlayer.PIStartAudio(SoundType.Descend);
                             RGBLight.SetColor(RGBColor.Red);
                             RGBLight.TurnRGBOffAfter1Sec();
                             scoreJustDecreased = true;
