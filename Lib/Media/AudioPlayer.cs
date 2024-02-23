@@ -15,26 +15,35 @@ namespace Library.Media
     {
         private static Process audioProcess;
         public static string soundFilePath;
+        private static bool audioBessy = false;
 
         // For the PI
         public static void PIStartAudio(SoundType soundType)
         {
             try
             {
+                if (!audioBessy)
+                {
+                    audioBessy = true;
+                    soundFilePath = PISoundPath(soundType);
+                    audioProcess = new Process();
+                    audioProcess.StartInfo.FileName = "/bin/bash";
+                    audioProcess.StartInfo.Arguments = $"cvlc --vout none {soundFilePath}";
+                    audioProcess.StartInfo.UseShellExecute = false;
+                    audioProcess.StartInfo.RedirectStandardOutput = true;
+                    audioProcess.StartInfo.RedirectStandardError = true;
+                    audioProcess.Start();
+                    using (StreamReader reader = audioProcess.StandardOutput)
+                    {
+                        string result = reader.ReadToEnd();
+                    }
+                    audioBessy = false;
+                }
+                else {
+                    Console.WriteLine("Audio Bussy");
+                
+                }
 
-                //Console.WriteLine(soundType.ToString());
-                soundFilePath = PISoundPath(soundType);
-                //Console.WriteLine(soundFilePath);
-                audioProcess = new Process();
-                audioProcess.StartInfo.FileName = "/bin/bash";
-                audioProcess.StartInfo.Arguments = $"cvlc --vout none {soundFilePath}";
-                audioProcess.StartInfo.UseShellExecute = false;
-                audioProcess.StartInfo.RedirectStandardOutput = true;
-                audioProcess.StartInfo.RedirectStandardError = true;
-                audioProcess.Start();
-                //audioProcess.Kill();
-                //Console.WriteLine("Audio playback started.");
-                // Allow some time for playback before returning
 
             }
             catch (Exception ex)
