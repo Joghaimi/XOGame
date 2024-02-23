@@ -22,9 +22,9 @@ namespace Library.Media
             try
             {
 
-                Console.WriteLine(soundType.ToString());
+                //Console.WriteLine(soundType.ToString());
                 soundFilePath = PISoundPath(soundType);
-                Console.WriteLine(soundFilePath);
+                //Console.WriteLine(soundFilePath);
                 audioProcess = new Process();
                 audioProcess.StartInfo.FileName = "/bin/bash";
                 audioProcess.StartInfo.Arguments = $"cvlc --vout none {soundFilePath}";
@@ -33,7 +33,7 @@ namespace Library.Media
                 audioProcess.StartInfo.RedirectStandardError = true;
                 audioProcess.Start();
                 //audioProcess.Kill();
-                Console.WriteLine("Audio playback started.");
+                //Console.WriteLine("Audio playback started.");
                 // Allow some time for playback before returning
 
             }

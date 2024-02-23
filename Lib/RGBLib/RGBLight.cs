@@ -24,7 +24,8 @@ namespace Library.RGBLib
         private static int CLKPin = 0;
         private static int DataPin = 0;
         private static GPIOController _controller;
-
+        private static bool rgbLightBussy = false;
+        private static bool rgbWaitBussy = false;
         public static void Init(int _clkPin, int _dataPin)
         {
             CLKPin = _clkPin;
@@ -33,50 +34,76 @@ namespace Library.RGBLib
         }
         public static async void SetColor(RGBColor selectedColor)
         {
-            uint blue = 0;
-            uint green = 0;
-            uint red = 0;
-
-            switch (selectedColor)
+            if (!rgbLightBussy)
             {
-                case RGBColor.Red:
-                    blue = 0;
-                    green = 0;
-                    red = 255;
-                    break;
-                case RGBColor.Green:
-                    blue = 0;
-                    green = 255;
-                    red = 0;
-                    break;
-                case RGBColor.Blue:
-                    blue = 255;
-                    green = 0;
-                    red = 0;
-                    break;
-                case RGBColor.Off:
-                    blue = 0;
-                    green = 0;
-                    red = 0;
-                    break;
+                rgbLightBussy = true;
+                uint blue = 0;
+                uint green = 0;
+                uint red = 0;
+
+                switch (selectedColor)
+                {
+                    case RGBColor.Red:
+                        blue = 0;
+                        green = 0;
+                        red = 255;
+                        break;
+                    case RGBColor.Green:
+                        blue = 0;
+                        green = 255;
+                        red = 0;
+                        break;
+                    case RGBColor.Blue:
+                        blue = 255;
+                        green = 0;
+                        red = 0;
+                        break;
+                    case RGBColor.Off:
+                        blue = 0;
+                        green = 0;
+                        red = 0;
+                        break;
+                }
+                ProcessStartInfo start = new ProcessStartInfo();
+                start.FileName = "python3"; ;
+                start.Arguments = $@"/home/fort/XOGame/RGBLight.py {CLKPin} {DataPin} {red} {green} {blue}";
+                start.UseShellExecute = false;
+                start.RedirectStandardOutput = true;
+                Process process = Process.Start(start);
+                using (StreamReader reader = process.StandardOutput)
+                {
+                    string result = reader.ReadToEnd();
+                    Console.Write(result);
+                }
+                rgbLightBussy = false;
             }
-            ProcessStartInfo start = new ProcessStartInfo();
-            start.FileName = "python3"; ;
-            start.Arguments = $@"/home/fort/XOGame/RGBLight.py {CLKPin} {DataPin} {red} {green} {blue}";
-            start.UseShellExecute = false;
-            start.RedirectStandardOutput = true;
-            Process process = Process.Start(start);
-         
+            else
+            {
+                Console.WriteLine(" RGB Light Bussy");
+            }
+
         }
 
         public static async Task TurnRGBOffAfter1Sec()
         {
-            Task.Run(async () =>
-           {
-               await Task.Delay(1000);
-               SetColor(RGBColor.Off);
-               MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
-           });
+            if (!rgbWaitBussy)
+            {
+                rgbWaitBussy = true;
+                Task.Run(async () =>
+                {
+                    await Task.Delay(1000);
+                    SetColor(RGBColor.Off);
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
+                });
+                rgbWaitBussy = false;
+            }
+            else
+            {
+                Console.WriteLine("rgb Wait Bussy");
+
+            }
+
+
         }
         public static void DatSend(uint dx)
         {
