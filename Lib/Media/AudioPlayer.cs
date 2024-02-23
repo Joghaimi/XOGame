@@ -22,27 +22,27 @@ namespace Library.Media
         {
             try
             {
-                if (true)
-                {
-                    audioBessy = true;
-                    soundFilePath = PISoundPath(soundType);
-                    audioProcess = new Process();
-                    audioProcess.StartInfo.FileName = "/bin/bash";
-                    audioProcess.StartInfo.Arguments = $"cvlc --vout none {soundFilePath}";
-                    audioProcess.StartInfo.UseShellExecute = false;
-                    audioProcess.StartInfo.RedirectStandardOutput = true;
-                    audioProcess.StartInfo.RedirectStandardError = true;
-                    audioProcess.Start();
-                    //using (StreamReader reader = audioProcess.StandardOutput)
-                    //{
-                    //    string result = reader.ReadToEnd();
-                    //}
-                    audioBessy = false;
-                }
-                else {
-                    Console.WriteLine($"Audio Bussy {soundType.ToString()}");
-                
-                }
+                //if (true)
+                //{
+                //audioBessy = true;
+                soundFilePath = PISoundPath(soundType);
+                audioProcess = new Process();
+                audioProcess.StartInfo.FileName = "/bin/bash";
+                audioProcess.StartInfo.Arguments = $"cvlc --vout none {soundFilePath}";
+                audioProcess.StartInfo.UseShellExecute = false;
+                audioProcess.StartInfo.RedirectStandardOutput = true;
+                audioProcess.StartInfo.RedirectStandardError = true;
+                audioProcess.Start();
+                //using (StreamReader reader = audioProcess.StandardOutput)
+                //{
+                //    string result = reader.ReadToEnd();
+                //}
+                //    audioBessy = false;
+                //}
+                //else {
+                //    Console.WriteLine($"Audio Bussy {soundType.ToString()}");
+
+                //}
 
 
             }

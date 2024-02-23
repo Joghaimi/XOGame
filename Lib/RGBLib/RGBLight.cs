@@ -34,74 +34,74 @@ namespace Library.RGBLib
         }
         public static async void SetColor(RGBColor selectedColor)
         {
-            if (!rgbLightBussy)
-            {
-                rgbLightBussy = true;
-                uint blue = 0;
-                uint green = 0;
-                uint red = 0;
+            //if (!rgbLightBussy)
+            //{
+            rgbLightBussy = true;
+            uint blue = 0;
+            uint green = 0;
+            uint red = 0;
 
-                switch (selectedColor)
-                {
-                    case RGBColor.Red:
-                        blue = 0;
-                        green = 0;
-                        red = 255;
-                        break;
-                    case RGBColor.Green:
-                        blue = 0;
-                        green = 255;
-                        red = 0;
-                        break;
-                    case RGBColor.Blue:
-                        blue = 255;
-                        green = 0;
-                        red = 0;
-                        break;
-                    case RGBColor.Off:
-                        blue = 0;
-                        green = 0;
-                        red = 0;
-                        break;
-                }
-                ProcessStartInfo start = new ProcessStartInfo();
-                start.FileName = "python3"; ;
-                start.Arguments = $@"/home/fort/XOGame/RGBLight.py {CLKPin} {DataPin} {red} {green} {blue}";
-                start.UseShellExecute = false;
-                start.RedirectStandardOutput = true;
-                Process process = Process.Start(start);
-                using (StreamReader reader = process.StandardOutput)
-                {
-                    string result = reader.ReadToEnd();
-                    Console.Write(result);
-                }
-                rgbLightBussy = false;
-            }
-            else
+            switch (selectedColor)
             {
-                Console.WriteLine(" RGB Light Bussy");
+                case RGBColor.Red:
+                    blue = 0;
+                    green = 0;
+                    red = 255;
+                    break;
+                case RGBColor.Green:
+                    blue = 0;
+                    green = 255;
+                    red = 0;
+                    break;
+                case RGBColor.Blue:
+                    blue = 255;
+                    green = 0;
+                    red = 0;
+                    break;
+                case RGBColor.Off:
+                    blue = 0;
+                    green = 0;
+                    red = 0;
+                    break;
             }
+            ProcessStartInfo start = new ProcessStartInfo();
+            start.FileName = "python3"; ;
+            start.Arguments = $@"/home/fort/XOGame/RGBLight.py {CLKPin} {DataPin} {red} {green} {blue}";
+            start.UseShellExecute = false;
+            start.RedirectStandardOutput = true;
+            Process process = Process.Start(start);
+            using (StreamReader reader = process.StandardOutput)
+            {
+                string result = reader.ReadToEnd();
+                Console.Write(result);
+            }
+            rgbLightBussy = false;
+            //}
+            //else
+            //{
+            //    Console.WriteLine(" RGB Light Bussy");
+            //}
 
         }
 
         public static async Task TurnRGBOffAfter1Sec()
         {
-            if (!rgbWaitBussy)
+            //if (!rgbWaitBussy)
+            //{
+            //    rgbWaitBussy = true;
+            Task.Run(async () =>
             {
-                rgbWaitBussy = true;
-                Task.Run(async () =>
-                {
-                    await Task.Delay(1000);
-                    SetColor(RGBColor.Off);
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
-                });
-                rgbWaitBussy = false;
-            }
-            else
-            {
-                Console.WriteLine("rgb Wait Bussy");
+                await Task.Delay(1000);
+                SetColor(RGBColor.Off);
+                MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
+            });
+            rgbWaitBussy = false;
+            //}
+            //else
+            //{
+            //    Console.WriteLine("rgb Wait Bussy");
 
-            }
+            //}
 
 
         }
