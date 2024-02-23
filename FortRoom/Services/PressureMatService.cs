@@ -64,7 +64,7 @@ namespace FortRoom.Services
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError($"Error ex");
+                    Console.WriteLine($"Error {ex.Message}");
                 }
                 Thread.Sleep(10);
             }
