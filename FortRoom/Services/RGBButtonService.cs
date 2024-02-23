@@ -69,6 +69,7 @@ namespace FortRoom.Services
             Random random = new Random();
             while (true)
             {
+                //dnsm,
                
                 Console.WriteLine($"Green {GameStopWatch.ElapsedMilliseconds}");
                 RGBLight.SetColor(RGBColor.Green);
