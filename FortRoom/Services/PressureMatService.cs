@@ -38,27 +38,33 @@ namespace FortRoom.Services
 
             while (!cancellationToken.IsCancellationRequested)
             {
-
-                if (VariableControlService.IsTheGameStarted)
+                try
                 {
-                    currentValue = MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
-                    if (!currentValue && !scoreJustDecreased)
+                    if (VariableControlService.IsTheGameStarted)
                     {
-                        VariableControlService.TimeOfPressureHit++;
-                        MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
-                        AudioPlayer.PIStartAudio(SoundType.Bonus);
-                        RGBLight.SetColor(RGBColor.Red);
-                        RGBLight.TurnRGBOffAfter1Sec();
-                        scoreJustDecreased = true;
-                        timer.Restart();
-                        Console.WriteLine($"Pressure Mate Pressed {VariableControlService.TimeOfPressureHit}");
+                        currentValue = MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
+                        if (!currentValue && !scoreJustDecreased)
+                        {
+                            VariableControlService.TimeOfPressureHit++;
+                            MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
+                            AudioPlayer.PIStartAudio(SoundType.Bonus);
+                            RGBLight.SetColor(RGBColor.Red);
+                            RGBLight.TurnRGBOffAfter1Sec();
+                            scoreJustDecreased = true;
+                            timer.Restart();
+                            Console.WriteLine($"Pressure Mate Pressed {VariableControlService.TimeOfPressureHit}");
+                        }
+                        //previousValue = currentValue;
+                        if (scoreJustDecreased && timer.ElapsedMilliseconds >= 3000)
+                        {
+                            scoreJustDecreased = false;
+                            timer.Restart();
+                        }
                     }
-                    //previousValue = currentValue;
-                    if (scoreJustDecreased && timer.ElapsedMilliseconds >= 3000)
-                    {
-                        scoreJustDecreased = false;
-                        timer.Restart();
-                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Error ex");
                 }
                 Thread.Sleep(10);
             }

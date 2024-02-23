@@ -19,19 +19,30 @@ namespace Library.Media
         // For the PI
         public static void PIStartAudio(SoundType soundType)
         {
-            Console.WriteLine(soundType.ToString());
-            soundFilePath = PISoundPath(soundType);
-            Console.WriteLine(soundFilePath);
-            audioProcess = new Process();
-            audioProcess.StartInfo.FileName = "/bin/bash";
-            audioProcess.StartInfo.Arguments = $"cvlc --vout none {soundFilePath}";
-            audioProcess.StartInfo.UseShellExecute = false;
-            audioProcess.StartInfo.RedirectStandardOutput = true;
-            audioProcess.StartInfo.RedirectStandardError = true;
-            audioProcess.Start();
-            //audioProcess.Kill();
-            Console.WriteLine("Audio playback started.");
-            // Allow some time for playback before returning
+            try
+            {
+
+                Console.WriteLine(soundType.ToString());
+                soundFilePath = PISoundPath(soundType);
+                Console.WriteLine(soundFilePath);
+                audioProcess = new Process();
+                audioProcess.StartInfo.FileName = "/bin/bash";
+                audioProcess.StartInfo.Arguments = $"cvlc --vout none {soundFilePath}";
+                audioProcess.StartInfo.UseShellExecute = false;
+                audioProcess.StartInfo.RedirectStandardOutput = true;
+                audioProcess.StartInfo.RedirectStandardError = true;
+                audioProcess.Start();
+                //audioProcess.Kill();
+                Console.WriteLine("Audio playback started.");
+                // Allow some time for playback before returning
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+            }
+
         }
         public static void PIStopAudio()
         {
