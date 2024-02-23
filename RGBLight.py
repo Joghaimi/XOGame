@@ -56,7 +56,8 @@ class RGBDriver:
         dx |= green << 8
         dx |= red
 
-        self.dat_send(dx)
+        self.dat_send(dx) #First strip
+        self.dat_send(dx) #secound Strip
 
     def cleanup(self):
         GPIO.cleanup()

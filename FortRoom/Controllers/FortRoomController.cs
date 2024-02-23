@@ -12,6 +12,7 @@ namespace FortRoom.Controllers
         [HttpGet("IsOccupied")]
         public IActionResult Get()
         {
+
             return Ok(VariableControlService.IsOccupied);
         }
         [HttpGet("SetAsOccupied")]

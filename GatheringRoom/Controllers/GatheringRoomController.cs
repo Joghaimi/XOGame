@@ -53,8 +53,5 @@ namespace GatheringRoom.Controllers
             _logger.LogTrace("Get Player Team");
             return base.Ok(VariableControlService.TeamScore.player);
         }
-
-
-
     }
 }
