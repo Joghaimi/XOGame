@@ -59,7 +59,7 @@ namespace FortRoom.Services
 
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            //_cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task task1 = Task.Run(() => RunService(_cts.Token));
             Task task2 = Task.Run(() => TimingService(_cts2.Token));
             return Task.CompletedTask;
@@ -69,13 +69,29 @@ namespace FortRoom.Services
             Random random = new Random();
             while (true)
             {
-
+               
+                Console.WriteLine($"Green {GameStopWatch.ElapsedMilliseconds}");
                 RGBLight.SetColor(RGBColor.Green);
-                MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.High);
-                Thread.Sleep(2000);
+                Console.WriteLine($"Green End {GameStopWatch.ElapsedMilliseconds}");
+                Thread.Sleep(3000);
+                
+                Console.WriteLine($"Blue {GameStopWatch.ElapsedMilliseconds}");
+                RGBLight.SetColor(RGBColor.Blue);
+                Console.WriteLine($"Blue End {GameStopWatch.ElapsedMilliseconds}");
+                Thread.Sleep(3000);
+                
+                Console.WriteLine($"Off {GameStopWatch.ElapsedMilliseconds}");
                 RGBLight.SetColor(RGBColor.Off);
-                MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
-                Thread.Sleep(2000);
+                Console.WriteLine($"Off End {GameStopWatch.ElapsedMilliseconds}");
+                Thread.Sleep(3000);
+
+
+
+                //MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.High);
+                //Thread.Sleep(2000);
+                //RGBLight.SetColor(RGBColor.Off);
+                //MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
+                //Thread.Sleep(2000);
 
 
 
@@ -93,7 +109,7 @@ namespace FortRoom.Services
                 //    {
                 //        if (!item.CurrentStatus() && item.CurrentColor() == selectedColor)
                 //        {
-                            
+
                 //            MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.High);
                 //            RGBLight.SetColor(RGBColor.Green);
                 //            AudioPlayer.PIStartAudio(SoundType.Bonus);

@@ -33,42 +33,39 @@ namespace Library.RGBLib
         }
         public static async void SetColor(RGBColor selectedColor)
         {
-            Task.Run(async () =>
-            {
-                uint blue = 0;
-                uint green = 0;
-                uint red = 0;
+            uint blue = 0;
+            uint green = 0;
+            uint red = 0;
 
-                switch (selectedColor)
-                {
-                    case RGBColor.Red:
-                        blue = 0;
-                        green = 0;
-                        red = 255;
-                        break;
-                    case RGBColor.Green:
-                        blue = 0;
-                        green = 255;
-                        red = 0;
-                        break;
-                    case RGBColor.Blue:
-                        blue = 255;
-                        green = 0;
-                        red = 0;
-                        break;
-                    case RGBColor.Off:
-                        blue = 0;
-                        green = 0;
-                        red = 0;
-                        break;
-                }
-                ProcessStartInfo start = new ProcessStartInfo();
-                start.FileName = "python3"; ;
-                start.Arguments = $@"/home/fort/XOGame/RGBLight.py {CLKPin} {DataPin} {red} {green} {blue}";
-                start.UseShellExecute = false;
-                start.RedirectStandardOutput = true;
-                Process process = Process.Start(start);
-            });
+            switch (selectedColor)
+            {
+                case RGBColor.Red:
+                    blue = 0;
+                    green = 0;
+                    red = 255;
+                    break;
+                case RGBColor.Green:
+                    blue = 0;
+                    green = 255;
+                    red = 0;
+                    break;
+                case RGBColor.Blue:
+                    blue = 255;
+                    green = 0;
+                    red = 0;
+                    break;
+                case RGBColor.Off:
+                    blue = 0;
+                    green = 0;
+                    red = 0;
+                    break;
+            }
+            ProcessStartInfo start = new ProcessStartInfo();
+            start.FileName = "python3"; ;
+            start.Arguments = $@"/home/fort/XOGame/RGBLight.py {CLKPin} {DataPin} {red} {green} {blue}";
+            start.UseShellExecute = false;
+            start.RedirectStandardOutput = true;
+            Process process = Process.Start(start);
             //using (Process process = Process.Start(start))
             //{
             //    //using (StreamReader reader = process.StandardOutput)
@@ -82,15 +79,15 @@ namespace Library.RGBLib
 
         public static async Task TurnRGBOffAfter1Sec()
         {
-            Task.Run(async () =>
-           {
-               await Task.Delay(2000);
-               Console.WriteLine("Turn green RGB off");
-               SetColor(RGBColor.Off);
-               //await Task.Delay(3000);
-               Console.WriteLine("Turn Light on");
-               MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
-           });
+            await Task.Run(async () =>
+            {
+                await Task.Delay(2000);
+                Console.WriteLine("Turn green RGB off");
+                SetColor(RGBColor.Off);
+                //await Task.Delay(3000);
+                Console.WriteLine("Turn Light on");
+                MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
+            });
         }
         public static void DatSend(uint dx)
         {
