@@ -135,7 +135,7 @@ namespace FortRoom.Services
                         Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
                         Thread.Sleep(500);
                         Console.WriteLine($"Motor 4 Started freq Meduim");
-                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed,2000);  // Start As Mode #1 
+                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, 2000);  // Start As Mode #1 
 
                         VariableControlService.IsTheGameStarted = false;
                         //if (!IsMotorOneStarted)
