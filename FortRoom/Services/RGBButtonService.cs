@@ -87,15 +87,17 @@ namespace FortRoom.Services
                 //Thread.Sleep(3000);
 
 
-                Console.WriteLine($"White On {GameStopWatch.ElapsedMilliseconds}");
-
-                MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.High);
-                Thread.Sleep(2000);
-                //RGBLight.SetColor(RGBColor.Off);
                 Console.WriteLine($"White Off {GameStopWatch.ElapsedMilliseconds}");
 
+                MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.High);
+                Thread.Sleep(4000);
+                //RGBLight.SetColor(RGBColor.Off);
+                Console.WriteLine($"White On {GameStopWatch.ElapsedMilliseconds}");
+
                 MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
-                Thread.Sleep(2000);
+                Thread.Sleep(4000);
+                Console.WriteLine($"============================");
+
 
 
 
