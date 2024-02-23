@@ -38,6 +38,7 @@ namespace FortRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
+            MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
             while (!cancellationToken.IsCancellationRequested)
             {
                 PIR1 = _controller.Read(MasterDI.PIRPin1);
