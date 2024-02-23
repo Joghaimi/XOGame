@@ -88,13 +88,13 @@ namespace FortRoom.Services
 
 
                 Console.WriteLine($"White ON {GameStopWatch.ElapsedMilliseconds}");
-                MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.High);
+                MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
                 RGBButtonList[0].TurnColorOn(RGBColor.Off);
                 Thread.Sleep(4000);
                 //RGBLight.SetColor(RGBColor.Off);
                 Console.WriteLine($"White OFF {GameStopWatch.ElapsedMilliseconds}");
                 RGBButtonList[0].TurnColorOn(RGBColor.Green);
-                MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
+                MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
                 Thread.Sleep(4000);
                 Console.WriteLine($"============================");
 
@@ -254,7 +254,7 @@ namespace FortRoom.Services
         }
         public void Stopped()
         {
-            MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
+            MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
             _logger.LogInformation("Stop RGB Button Service");
             foreach (var item in RGBButtonList)
             {
