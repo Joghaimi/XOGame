@@ -87,65 +87,65 @@ namespace FortRoom.Services
                 //Thread.Sleep(3000);
 
 
-                Console.WriteLine($"White ON {GameStopWatch.ElapsedMilliseconds}");
-                MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
-                RGBButtonList[0].TurnColorOn(RGBColor.Off);
-                Thread.Sleep(4000);
-                //RGBLight.SetColor(RGBColor.Off);
-                Console.WriteLine($"White OFF {GameStopWatch.ElapsedMilliseconds}");
-                RGBButtonList[0].TurnColorOn(RGBColor.Green);
-                MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
-                Thread.Sleep(4000);
-                Console.WriteLine($"============================");
+                //Console.WriteLine($"White ON {GameStopWatch.ElapsedMilliseconds}");
+                //MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
+                //RGBButtonList[0].TurnColorOn(RGBColor.Off);
+                //Thread.Sleep(4000);
+                ////RGBLight.SetColor(RGBColor.Off);
+                //Console.WriteLine($"White OFF {GameStopWatch.ElapsedMilliseconds}");
+                //RGBButtonList[0].TurnColorOn(RGBColor.Green);
+                //MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
+                //Thread.Sleep(4000);
+                //Console.WriteLine($"============================");
 
 
 
 
 
-                //RGBColor selectedColor = (RGBColor)CurrentColor;
-                //AudioPlayer.PIStartAudio(SoundType.Button);
-                //byte numberOfClieckedButton = 0;
-                //foreach (var item in RGBButtonList)
-                //{
-                //    item.TurnColorOn(selectedColor);
-                //}
-                //while (GameStopWatch.ElapsedMilliseconds < currentPeriod)
-                //{
-                //    foreach (var item in RGBButtonList)
-                //    {
-                //        if (!item.CurrentStatus() && item.CurrentColor() == selectedColor)
-                //        {
+                RGBColor selectedColor = (RGBColor)CurrentColor;
+                AudioPlayer.PIStartAudio(SoundType.Button);
+                byte numberOfClieckedButton = 0;
+                foreach (var item in RGBButtonList)
+                {
+                    item.TurnColorOn(selectedColor);
+                }
+                while (GameStopWatch.ElapsedMilliseconds < currentPeriod)
+                {
+                    foreach (var item in RGBButtonList)
+                    {
+                        if (!item.CurrentStatus() && item.CurrentColor() == selectedColor)
+                        {
 
-                //            MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.High);
-                //            RGBLight.SetColor(RGBColor.Green);
-                //            AudioPlayer.PIStartAudio(SoundType.Bonus);
-                //            item.TurnColorOn(RGBColor.Off);
-                //            Thread.Sleep(2000);
-                //            MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
-                //            RGBLight.SetColor(RGBColor.Off);
-                //            //RGBLight.TurnRGBOffAfter1Sec();
+                            MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
+                            RGBLight.SetColor(RGBColor.Green);
+                            AudioPlayer.PIStartAudio(SoundType.Bonus);
+                            item.TurnColorOn(RGBColor.Off);
+                            //Thread.Sleep(2000);
+                            //MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
+                            //RGBLight.SetColor(RGBColor.Off);
+                            RGBLight.TurnRGBOffAfter1Sec();
 
 
-                //            numberOfClieckedButton++;
-                //            VariableControlService.ActiveButtonPressed++;
-                //            Console.WriteLine($"Score {VariableControlService.ActiveButtonPressed} numberOfPressed now {numberOfClieckedButton}");
-                //        }
-                //    }
-                //    if (numberOfClieckedButton == RGBButtonList.Count())
-                //    {
-                //        break;
-                //    }
-                //    Thread.Sleep(10);
-                //}
-                //if (currentPeriod > 10)
-                //    currentPeriod -= 5;
-                //foreach (var item in RGBButtonList)
-                //{
-                //    item.TurnColorOn(RGBColor.Off);
-                //}
-                //if (CurrentColor < 5)
-                //    CurrentColor++;
-                //GameStopWatch.Restart();
+                            numberOfClieckedButton++;
+                            VariableControlService.ActiveButtonPressed++;
+                            Console.WriteLine($"Score {VariableControlService.ActiveButtonPressed} numberOfPressed now {numberOfClieckedButton}");
+                        }
+                    }
+                    if (numberOfClieckedButton == RGBButtonList.Count())
+                    {
+                        break;
+                    }
+                    Thread.Sleep(10);
+                }
+                if (currentPeriod > 10)
+                    currentPeriod -= 5;
+                foreach (var item in RGBButtonList)
+                {
+                    item.TurnColorOn(RGBColor.Off);
+                }
+                if (CurrentColor < 5)
+                    CurrentColor++;
+                GameStopWatch.Restart();
             }
 
 
