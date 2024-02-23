@@ -66,7 +66,7 @@ namespace FortRoom.Services
                     if (scoreJustDecreased && timer.ElapsedMilliseconds >= 3000)
                     {
                         scoreJustDecreased = false;
-                        JQ8400AudioModule.PlayAudio((int)SoundType.Start);
+                        //JQ8400AudioModule.PlayAudio((int)SoundType.Start);
                         //RGBLight.SetColor(RGBColor.Green);
                         timer.Restart();
                     }
