@@ -79,13 +79,12 @@ namespace Library.RGBLib
 
         public static async Task TurnRGBOffAfter1Sec()
         {
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
-                Task.Delay(2000);
-
+                await Task.Delay(2000);
                 Console.WriteLine("Turn green RGB off");
                 SetColor(RGBColor.Off);
-                Task.Delay(3000);
+                await Task.Delay(3000);
                 Console.WriteLine("Turn Light on");
                 MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
             });

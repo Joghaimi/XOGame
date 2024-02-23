@@ -87,6 +87,7 @@ namespace FortRoom.Services
                             RGBLight.SetColor(RGBColor.Green);
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             item.TurnColorOn(RGBColor.Off);
+                            
                             RGBLight.TurnRGBOffAfter1Sec();
 
 
