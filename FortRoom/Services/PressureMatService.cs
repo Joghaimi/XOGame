@@ -1,4 +1,5 @@
-﻿using Library;
+﻿using Iot.Device.Mcp3428;
+using Library;
 using Library.GPIOLib;
 using Library.Media;
 using Library.PinMapping;
