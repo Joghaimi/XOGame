@@ -116,7 +116,7 @@ namespace FortRoom.Services
                         if (!item.CurrentStatus() && item.CurrentColor() == selectedColor)
                         {
 
-                            MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
+                            MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
                             RGBLight.SetColor(RGBColor.Green);
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             item.TurnColorOn(RGBColor.Off);

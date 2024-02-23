@@ -81,12 +81,12 @@ namespace Library.RGBLib
         {
             await Task.Run(async () =>
             {
-                await Task.Delay(5000);
+                await Task.Delay(2000);
                 Console.WriteLine("Turn green RGB off");
                 SetColor(RGBColor.Off);
                 //await Task.Delay(3000);
                 Console.WriteLine("Turn Light on");
-                MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
+                MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
             });
         }
         public static void DatSend(uint dx)
