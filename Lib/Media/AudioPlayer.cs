@@ -60,7 +60,7 @@ namespace Library.Media
         public static void PIBackgroundSound(SoundType soundType)
         {
             soundFilePath = PISoundPath(soundType);
-            Console.WriteLine(soundFilePath);
+            //Console.WriteLine(soundFilePath);
             audioProcess = new Process();
             audioProcess.StartInfo.FileName = "/bin/bash";
             audioProcess.StartInfo.Arguments = $"cvlc -R --gain +0.5 --vout none {soundFilePath}";
