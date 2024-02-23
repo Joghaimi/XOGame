@@ -41,14 +41,18 @@ namespace FortRoom.Services
                 if (VariableControlService.IsTheGameStarted)
                 {
                     currentValue = MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
-                    //Console.WriteLine($"Pressure Mate Pressed {currentValue}");
+      
 
                     if (!currentValue && !scoreJustDecreased)
                     {
 
                         VariableControlService.TimeOfPressureHit++;
+                        
+                        MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
                         JQ8400AudioModule.PlayAudio((int)SoundType.Descend);
                         RGBLight.SetColor(RGBColor.Red);
+                        RGBLight.TurnRGBOffAfter1Sec();
+
                         scoreJustDecreased = true;
                         timer.Restart();
                         _logger.LogTrace($"Pressure Mate Pressed {VariableControlService.TimeOfPressureHit}");
@@ -58,7 +62,7 @@ namespace FortRoom.Services
                     {
                         scoreJustDecreased = false;
                         JQ8400AudioModule.PlayAudio((int)SoundType.Start);
-                        RGBLight.SetColor(RGBColor.Green);
+                        //RGBLight.SetColor(RGBColor.Green);
                         timer.Restart();
                     }
                 }
