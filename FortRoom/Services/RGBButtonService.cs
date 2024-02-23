@@ -70,29 +70,32 @@ namespace FortRoom.Services
             while (true)
             {
                 //dnsm,
-               
-                Console.WriteLine($"Green {GameStopWatch.ElapsedMilliseconds}");
-                RGBLight.SetColor(RGBColor.Green);
-                Console.WriteLine($"Green End {GameStopWatch.ElapsedMilliseconds}");
-                Thread.Sleep(3000);
-                
-                Console.WriteLine($"Blue {GameStopWatch.ElapsedMilliseconds}");
-                RGBLight.SetColor(RGBColor.Blue);
-                Console.WriteLine($"Blue End {GameStopWatch.ElapsedMilliseconds}");
-                Thread.Sleep(3000);
-                
-                Console.WriteLine($"Off {GameStopWatch.ElapsedMilliseconds}");
-                RGBLight.SetColor(RGBColor.Off);
-                Console.WriteLine($"Off End {GameStopWatch.ElapsedMilliseconds}");
-                Thread.Sleep(3000);
 
+                //Console.WriteLine($"Green {GameStopWatch.ElapsedMilliseconds}");
+                //RGBLight.SetColor(RGBColor.Green);
+                //Console.WriteLine($"Green End {GameStopWatch.ElapsedMilliseconds}");
+                //Thread.Sleep(3000);
 
+                //Console.WriteLine($"Blue {GameStopWatch.ElapsedMilliseconds}");
+                //RGBLight.SetColor(RGBColor.Blue);
+                //Console.WriteLine($"Blue End {GameStopWatch.ElapsedMilliseconds}");
+                //Thread.Sleep(3000);
 
-                //MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.High);
-                //Thread.Sleep(2000);
+                //Console.WriteLine($"Off {GameStopWatch.ElapsedMilliseconds}");
                 //RGBLight.SetColor(RGBColor.Off);
-                //MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
-                //Thread.Sleep(2000);
+                //Console.WriteLine($"Off End {GameStopWatch.ElapsedMilliseconds}");
+                //Thread.Sleep(3000);
+
+
+                Console.WriteLine($"White On {GameStopWatch.ElapsedMilliseconds}");
+
+                MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.High);
+                Thread.Sleep(2000);
+                //RGBLight.SetColor(RGBColor.Off);
+                Console.WriteLine($"White Off {GameStopWatch.ElapsedMilliseconds}");
+
+                MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
+                Thread.Sleep(2000);
 
 
 
