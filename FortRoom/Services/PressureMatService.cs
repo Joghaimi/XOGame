@@ -56,7 +56,8 @@ namespace FortRoom.Services
 
                         scoreJustDecreased = true;
                         timer.Restart();
-                        _logger.LogTrace($"Pressure Mate Pressed {VariableControlService.TimeOfPressureHit}");
+                        //Console.WriteLine();
+                        Console.WriteLine($"Pressure Mate Pressed {VariableControlService.TimeOfPressureHit}");
                     }
                     //previousValue = currentValue;
                     if (scoreJustDecreased && timer.ElapsedMilliseconds >= 3000)
