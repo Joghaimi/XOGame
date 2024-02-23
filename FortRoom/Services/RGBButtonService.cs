@@ -87,8 +87,10 @@ namespace FortRoom.Services
                             RGBLight.SetColor(RGBColor.Green);
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             item.TurnColorOn(RGBColor.Off);
-                            
-                            RGBLight.TurnRGBOffAfter1Sec();
+                            Thread.Sleep(2000);
+                            MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
+                            RGBLight.SetColor(RGBColor.Off);
+                            //RGBLight.TurnRGBOffAfter1Sec();
 
 
                             numberOfClieckedButton++;
