@@ -33,10 +33,10 @@ namespace Library.Media
                     audioProcess.StartInfo.RedirectStandardOutput = true;
                     audioProcess.StartInfo.RedirectStandardError = true;
                     audioProcess.Start();
-                    using (StreamReader reader = audioProcess.StandardOutput)
-                    {
-                        string result = reader.ReadToEnd();
-                    }
+                    //using (StreamReader reader = audioProcess.StandardOutput)
+                    //{
+                    //    string result = reader.ReadToEnd();
+                    //}
                     audioBessy = false;
                 }
                 else {
