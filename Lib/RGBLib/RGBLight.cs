@@ -84,7 +84,7 @@ namespace Library.RGBLib
                 await Task.Delay(2000);
                 Console.WriteLine("Turn green RGB off");
                 SetColor(RGBColor.Off);
-                await Task.Delay(3000);
+                //await Task.Delay(3000);
                 Console.WriteLine("Turn Light on");
                 MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
             });
