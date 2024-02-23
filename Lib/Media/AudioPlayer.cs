@@ -22,7 +22,7 @@ namespace Library.Media
         {
             try
             {
-                if (!audioBessy)
+                if (true)
                 {
                     audioBessy = true;
                     soundFilePath = PISoundPath(soundType);
