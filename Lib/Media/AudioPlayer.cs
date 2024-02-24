@@ -15,7 +15,7 @@ namespace Library.Media
     {
         private static Process audioProcess;
         public static string soundFilePath;
-        private static Process audioProcesss
+        //private static Process audioProcesss
 
         // For the PI
         public static void PIStartAudio(SoundType soundType)
