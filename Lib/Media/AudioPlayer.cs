@@ -13,31 +13,26 @@ namespace Library.Media
 {
     public class AudioPlayer
     {
-        private static Process audioProcess = new Process();
+        private static Process audioProcess;
         public static string soundFilePath;
-
+        private static Process audioProcesss
 
         // For the PI
         public static void PIStartAudio(SoundType soundType)
         {
             try
             {
-                //if (audioProcess != null && !audioProcess.HasExited)
+                //if (true)
                 //{
-                //    audioProcess.Kill();
-                //    audioProcess.WaitForExit(); // Wait for the process to exit
-                //    audioProcess.Dispose();
-                //}
-                var newAudioProcess = new Process();
-
+                //audioBessy = true;
                 soundFilePath = PISoundPath(soundType);
-                newAudioProcess = new Process();
-                newAudioProcess.StartInfo.FileName = "/bin/bash";
-                newAudioProcess.StartInfo.Arguments = $"cvlc --vout none {soundFilePath}";
-                newAudioProcess.StartInfo.UseShellExecute = false;
-                newAudioProcess.StartInfo.RedirectStandardOutput = false;
-                newAudioProcess.StartInfo.RedirectStandardError = false;
-                newAudioProcess.Start();
+                audioProcess = new Process();
+                audioProcess.StartInfo.FileName = "/bin/bash";
+                audioProcess.StartInfo.Arguments = $"cvlc --vout none {soundFilePath}";
+                audioProcess.StartInfo.UseShellExecute = false;
+                audioProcess.StartInfo.RedirectStandardOutput = false;
+                audioProcess.StartInfo.RedirectStandardError = false;
+                audioProcess.Start();
             }
             catch (Exception ex)
             {
@@ -63,13 +58,13 @@ namespace Library.Media
         {
             soundFilePath = PISoundPath(soundType);
             //Console.WriteLine(soundFilePath);
-            var newAudioProcess = new Process();
-            newAudioProcess.StartInfo.FileName = "/bin/bash";
-            newAudioProcess.StartInfo.Arguments = $"cvlc -R --gain +0.5 --vout none {soundFilePath}";
-            newAudioProcess.StartInfo.UseShellExecute = false;
-            newAudioProcess.StartInfo.RedirectStandardOutput = false;
-            newAudioProcess.StartInfo.RedirectStandardError = false;
-            newAudioProcess.Start();
+            audioProcess = new Process();
+            audioProcess.StartInfo.FileName = "/bin/bash";
+            audioProcess.StartInfo.Arguments = $"cvlc -R --gain +0.5 --vout none {soundFilePath}";
+            audioProcess.StartInfo.UseShellExecute = false;
+            audioProcess.StartInfo.RedirectStandardOutput = false;
+            audioProcess.StartInfo.RedirectStandardError = false;
+            audioProcess.Start();
             Console.WriteLine("Audio playback started.");
 
 
