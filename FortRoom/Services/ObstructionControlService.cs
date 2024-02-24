@@ -77,7 +77,7 @@ namespace FortRoom.Services
                         Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
                         Thread.Sleep(500);
                         Console.WriteLine($"Motor 3 Started freq Slow");
-                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
+                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, 1000);  // Start As Mode #1 
                         Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
                         Thread.Sleep(500);
                         Console.WriteLine($"Motor 4 Started freq Slow");
@@ -96,11 +96,11 @@ namespace FortRoom.Services
                         Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
                         Thread.Sleep(500);
                         Console.WriteLine($"Motor 3 Started freq Meduim");
-                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);  // Start As Mode #1 
+                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, 3000);  // Start As Mode #1 
                         Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
                         Thread.Sleep(500);
                         Console.WriteLine($"Motor 4 Started freq Meduim");
-                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, /*(int)MotorSpeed.Medium*/ 2000);  // Start As Mode #1 
+                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, /*(int)MotorSpeed.Medium*/ 3000);  // Start As Mode #1 
 
                         Thread.Sleep(8000);
                         Console.WriteLine($"Motor 1 Started freq Heigh");
@@ -113,11 +113,11 @@ namespace FortRoom.Services
                         Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
                         Thread.Sleep(500);
                         Console.WriteLine($"Motor 3 Started freq Meduim");
-                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);  // Start As Mode #1 
+                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, 3000);  // Start As Mode #1 
                         Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
                         Thread.Sleep(500);
                         Console.WriteLine($"Motor 4 Started freq Meduim");
-                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, 2000);  // Start As Mode #1 
+                        Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, 4000);  // Start As Mode #1 
 
                         //VariableControlService.IsTheGameStarted = false;
                     }
