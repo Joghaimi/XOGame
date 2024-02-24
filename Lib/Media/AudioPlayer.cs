@@ -26,7 +26,7 @@ namespace Library.Media
                 //{
                 //audioBessy = true;
                 soundFilePath = PISoundPath(soundType);
-                audioProcess = new Process();
+                Process audioProcess = new Process();
                 audioProcess.StartInfo.FileName = "/bin/bash";
                 audioProcess.StartInfo.Arguments = $"cvlc --vout none {soundFilePath}";
                 audioProcess.StartInfo.UseShellExecute = false;
