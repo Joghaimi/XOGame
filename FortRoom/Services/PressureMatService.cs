@@ -47,7 +47,7 @@ namespace FortRoom.Services
                         {
                             VariableControlService.TimeOfPressureHit++;
                             MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
-                            AudioPlayer.PIStartAudio(SoundType.Descend);
+                            //AudioPlayer.PIStartAudio(SoundType.Descend);
                             RGBLight.SetColor(RGBColor.Red);
                             RGBLight.TurnRGBOffAfter1Sec();
                             scoreJustDecreased = true;
@@ -66,18 +66,19 @@ namespace FortRoom.Services
                 {
                     Console.WriteLine($"Error {ex.Message}");
                 }
-                Thread.Sleep(10);
+                Console.Write($"_{currentValue}");
+                Thread.Sleep(100);
             }
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            //_cts.Cancel();
+            _cts.Cancel();
             return Task.CompletedTask;
         }
         public void Dispose()
         {
-            //_cts.Dispose();
+            _cts.Dispose();
         }
     }
 }
