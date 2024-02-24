@@ -72,16 +72,13 @@ namespace FortRoom.Services
                 AudioPlayer.PIStartAudio(SoundType.Button);
                 byte numberOfClieckedButton = 0;
                 foreach (var item in RGBButtonList)
-                {
                     item.TurnColorOn(selectedColor);
-                }
                 while (GameStopWatch.ElapsedMilliseconds < currentPeriod)
                 {
                     foreach (var item in RGBButtonList)
                     {
                         if (!item.CurrentStatus() && item.CurrentColor() == selectedColor)
                         {
-
                             MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
                             RGBLight.SetColor(RGBColor.Green);
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
@@ -93,9 +90,7 @@ namespace FortRoom.Services
                         }
                     }
                     if (numberOfClieckedButton == RGBButtonList.Count())
-                    {
                         break;
-                    }
                     Thread.Sleep(10);
                 }
                 if (currentPeriod > 10)
@@ -105,7 +100,7 @@ namespace FortRoom.Services
                 {
                     item.TurnColorOn(RGBColor.Off);
                 }
-                if (CurrentColor < 5)
+                if (CurrentColor < 4)
                     CurrentColor++;
                 else
                     CurrentColor = 0;
