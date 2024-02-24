@@ -14,23 +14,14 @@ namespace FortRoom.Services
         List<RGBButton> RGBButtonList = new List<RGBButton>();
         private readonly ILogger<ObstructionControlService> _logger;
         private readonly IHostApplicationLifetime _appLifetime;
-
+        Stopwatch GameStopWatch = new Stopwatch();
         private CancellationTokenSource _cts, _cts2;
         bool IsTimerStarted = false;
-        Stopwatch GameStopWatch = new Stopwatch();
-        int SlowPeriod = 10000;
-        int MediumPeriod = 15000;
-
-        int slowChangeTime = 5000;
-        int mediumChangeTime = 3000;
-        int highChangeTime = 1000;
-
-        int changingSpeed = 5000;
+        int Score = 0;
 
 
 
         int currentPeriod = 30000;
-        bool colorSelected = false;
 
         int CurrentColor = 0;
 
@@ -57,11 +48,11 @@ namespace FortRoom.Services
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR15, RGBButtonPin.RGBG15, RGBButtonPin.RGBB15, RGBButtonPin.RGBPB15));
             //RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR16, RGBButtonPin.RGBG16, RGBButtonPin.RGBB16, RGBButtonPin.RGBPB16));
 
-
+            GameStopWatch.Start();
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            //_cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task task1 = Task.Run(() => RunService(_cts.Token));
-            Task task2 = Task.Run(() => TimingService(_cts2.Token));
+            //Task task2 = Task.Run(() => TimingService(_cts2.Token));
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
@@ -70,14 +61,16 @@ namespace FortRoom.Services
             {
                 RGBColor selectedColor = (RGBColor)CurrentColor;
                 AudioPlayer.PIStartAudio(SoundType.Button);
+                TurnRGBButtonWithColor(selectedColor);
                 byte numberOfClieckedButton = 0;
-                foreach (var item in RGBButtonList)
-                    item.TurnColorOn(selectedColor);
-                while (GameStopWatch.ElapsedMilliseconds < currentPeriod)
+                GameStopWatch.Restart();
+                Console.WriteLine("New Round ================");
+                while (GameStopWatch.ElapsedMilliseconds < 30000)
                 {
                     foreach (var item in RGBButtonList)
                     {
-                        if (!item.CurrentStatus() && item.CurrentColor() == selectedColor)
+                        bool itemSelected = !item.CurrentStatus() && item.CurrentColor() == selectedColor;
+                        if (itemSelected)
                         {
                             MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
                             RGBLight.SetColor(RGBColor.Green);
@@ -93,24 +86,12 @@ namespace FortRoom.Services
                         break;
                     Thread.Sleep(10);
                 }
-                //if (currentPeriod > 10)
-                //    currentPeriod -= 5;
-
-                foreach (var item in RGBButtonList)
-                {
-                    item.TurnColorOn(RGBColor.Off);
-                }
+                TurnRGBButtonWithColor(RGBColor.Off);
                 if (CurrentColor < 4)
                     CurrentColor++;
                 else
                     CurrentColor = 0;
-                Console.Write("*");
-                GameStopWatch.Restart();
-                Thread.Sleep(10);
             }
-
-
-
         }
         private async Task TimingService(CancellationToken cancellationToken)
         {
@@ -139,6 +120,13 @@ namespace FortRoom.Services
             }
             _logger.LogInformation("Stop Background Audio");
             AudioPlayer.PIStopAudio();
+        }
+
+
+        public void TurnRGBButtonWithColor(RGBColor color)
+        {
+            foreach (var item in RGBButtonList)
+                item.TurnColorOn(color);
         }
     }
 }
