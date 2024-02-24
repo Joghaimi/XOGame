@@ -61,7 +61,7 @@ namespace FortRoom.Services
 
         private async Task RunService1(CancellationToken cancellationToken)
         {
-            while (false)
+            while (true)
             {
                 if (VariableControlService.IsTheGameStarted)
                 {
@@ -143,11 +143,11 @@ namespace FortRoom.Services
         }
         public void Dispose()
         {
-            //_cts1?.Dispose();
+            _cts1?.Dispose();
         }
         public void Stopped()
         {
-            Console.WriteLine("Stop The Service");
+            _logger.LogInformation("Stop The Service");
             Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
             Thread.Sleep(500);
             Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
@@ -159,7 +159,7 @@ namespace FortRoom.Services
             Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
             Thread.Sleep(500);
             Modbus.ReleasePort();
-            Console.WriteLine("Port Released");
+            _logger.LogInformation("Port Released");
         }
 
 
