@@ -89,13 +89,13 @@ namespace Library.RGBLib
             //if (!rgbWaitBussy)
             //{
             //    rgbWaitBussy = true;
-            Task.Run(async () =>
-            {
-                await Task.Delay(1000);
-                SetColor(RGBColor.Off);
-                MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
-            });
-            rgbWaitBussy = false;
+            //Task.Run(async () =>
+            //{
+            //    await Task.Delay(1000);
+            //    SetColor(RGBColor.Off);
+            //    MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
+            //});
+            //rgbWaitBussy = false;
             //}
             //else
             //{
