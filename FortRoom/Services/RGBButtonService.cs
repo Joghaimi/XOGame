@@ -93,8 +93,8 @@ namespace FortRoom.Services
                         break;
                     Thread.Sleep(10);
                 }
-                if (currentPeriod > 10)
-                    currentPeriod -= 5;
+                //if (currentPeriod > 10)
+                //    currentPeriod -= 5;
 
                 foreach (var item in RGBButtonList)
                 {
@@ -110,85 +110,6 @@ namespace FortRoom.Services
             }
 
 
-
-
-
-
-
-
-
-
-
-
-
-            //bool activeButton = false;
-            //Stopwatch timer = new Stopwatch();
-            //Stopwatch timerToStart = new Stopwatch();
-            //int activeButtonIndox = -1;
-            //int randomTime = random.Next(1000, 5000);
-            //timerToStart.Start();
-            //timer.Start();
-            //_logger.LogWarning("Started .... ");
-            //foreach (var item in RGBButtonList)
-            //{
-            //    item.TurnColorOn(RGBColor.Green);
-            //}
-            //while (!cancellationToken.IsCancellationRequested)
-            //{
-            //    foreach (var item in RGBButtonList)
-            //    {
-            //        if (!item.CurrentStatus())
-            //        {
-            //            item.TurnColorOn(RGBColor.Off);
-            //        }
-            //    }
-
-            //    //if (VariableControlService.IsTheGameStarted)
-            //    //{
-            //    //    if (!activeButton && timerToStart.ElapsedMilliseconds > randomTime)
-            //    //    {
-
-            //    //        activeButton = true;
-            //    //        activeButtonIndox = random.Next(0, RGBButtonList.Count -1);
-            //    //        _logger.LogWarning($"Button {activeButtonIndox} Activated");
-            //    //        RGBLight.SetColor(RGBColor.Off);
-            //    //        AudioPlayer.PIStartAudio(SoundType.Button);
-            //    //        //JQ8400AudioModule.PlayAudio((int)SoundType.Button);
-            //    //        RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Green);
-            //    //        timer.Restart();
-            //    //        timerToStart.Restart();
-            //    //        randomTime = random.Next(1000, 5000);
-            //    //    }
-            //    //    if (activeButton & timer.ElapsedMilliseconds >= 5000)//changingSpeed)
-            //    //    {
-            //    //        RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
-            //    //        _logger.LogWarning($"Button {activeButtonIndox} Deactivated");
-            //    //        activeButtonIndox = -1;
-            //    //        activeButton = false;
-            //    //        timer.Restart();
-            //    //        timerToStart.Restart();
-            //    //    }
-            //    //    if (activeButton && activeButtonIndox > -1)
-            //    //    {
-            //    //        bool isPressed = !RGBButtonList[activeButtonIndox].CurrentStatus();
-            //    //        if (isPressed)
-            //    //        {
-            //    //            AudioPlayer.PIStartAudio(SoundType.Bonus);
-            //    //            //JQ8400AudioModule.PlayAudio((int)SoundType.Bonus);
-            //    //            activeButton = false;
-            //    //            RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
-            //    //            RGBLight.SetColor(RGBColor.Green);
-            //    //            VariableControlService.ActiveButtonPressed++;
-            //    //            _logger.LogWarning($"Button {activeButtonIndox} Pressed");
-            //    //            _logger.LogWarning($"Current Score {VariableControlService.ActiveButtonPressed}");
-            //    //            activeButtonIndox = -1;
-            //    //            timerToStart.Restart();
-            //    //            timer.Restart();
-            //    //        }
-            //    //    }
-            //    //}
-            //    //// Sleep for a short duration to avoid excessive checking
-            //}
 
         }
         private async Task TimingService(CancellationToken cancellationToken)
