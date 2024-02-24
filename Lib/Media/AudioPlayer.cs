@@ -22,21 +22,22 @@ namespace Library.Media
         {
             try
             {
-                if (audioProcess != null && !audioProcess.HasExited)
-                {
-                    audioProcess.Kill();
-                    audioProcess.WaitForExit(); // Wait for the process to exit
-                    audioProcess.Dispose();
-                }
+                //if (audioProcess != null && !audioProcess.HasExited)
+                //{
+                //    audioProcess.Kill();
+                //    audioProcess.WaitForExit(); // Wait for the process to exit
+                //    audioProcess.Dispose();
+                //}
+                var newAudioProcess = new Process();
 
                 soundFilePath = PISoundPath(soundType);
-                audioProcess = new Process();
-                audioProcess.StartInfo.FileName = "/bin/bash";
-                audioProcess.StartInfo.Arguments = $"cvlc --vout none {soundFilePath}";
-                audioProcess.StartInfo.UseShellExecute = false;
-                audioProcess.StartInfo.RedirectStandardOutput = false;
-                audioProcess.StartInfo.RedirectStandardError = false;
-                audioProcess.Start();
+                newAudioProcess = new Process();
+                newAudioProcess.StartInfo.FileName = "/bin/bash";
+                newAudioProcess.StartInfo.Arguments = $"cvlc --vout none {soundFilePath}";
+                newAudioProcess.StartInfo.UseShellExecute = false;
+                newAudioProcess.StartInfo.RedirectStandardOutput = false;
+                newAudioProcess.StartInfo.RedirectStandardError = false;
+                newAudioProcess.Start();
             }
             catch (Exception ex)
             {
