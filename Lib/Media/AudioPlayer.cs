@@ -30,8 +30,8 @@ namespace Library.Media
                 audioProcess.StartInfo.FileName = "/bin/bash";
                 audioProcess.StartInfo.Arguments = $"cvlc --vout none {soundFilePath}";
                 audioProcess.StartInfo.UseShellExecute = false;
-                audioProcess.StartInfo.RedirectStandardOutput = true;
-                audioProcess.StartInfo.RedirectStandardError = true;
+                audioProcess.StartInfo.RedirectStandardOutput = false;
+                audioProcess.StartInfo.RedirectStandardError = false;
                 audioProcess.Start();
                 //using (StreamReader reader = audioProcess.StandardOutput)
                 //{
