@@ -40,7 +40,7 @@ namespace FortRoom.Services
             {
                 try
                 {
-                    if (VariableControlService.IsTheGameStarted)
+                    if (true)
                     {
                         currentValue = MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
                         if (!currentValue && !scoreJustDecreased)
