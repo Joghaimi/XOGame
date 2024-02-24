@@ -66,8 +66,8 @@ namespace FortRoom.Services
                 {
                     Console.WriteLine($"Error {ex.Message}");
                 }
-                Console.Write($"_{currentValue}");
-                Thread.Sleep(100);
+                Console.Write($"Is Pressed {!currentValue} !scoreJustDecreased {!scoreJustDecreased} ==> {!currentValue && !scoreJustDecreased} Timer =====>{timer.ElapsedMilliseconds}");
+                Thread.Sleep(1000);
             }
         }
 
