@@ -149,6 +149,8 @@ namespace FortRoom.Services
                     CurrentColor=0;
 
                 GameStopWatch.Restart();
+                Thread.Sleep(10);
+
             }
 
 
@@ -230,7 +232,6 @@ namespace FortRoom.Services
             //    //    }
             //    //}
             //    //// Sleep for a short duration to avoid excessive checking
-            //    Thread.Sleep(10);
             //}
 
         }
