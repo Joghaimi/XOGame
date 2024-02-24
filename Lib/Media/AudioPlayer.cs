@@ -28,11 +28,12 @@ namespace Library.Media
                 soundFilePath = PISoundPath(soundType);
                 Process audioProcess = new Process();
                 audioProcess.StartInfo.FileName = "/bin/bash";
-                audioProcess.StartInfo.Arguments = $"cvlc --vout none {soundFilePath}";
+                audioProcess.StartInfo.Arguments = $"cvlc --vout none --play-and-exit {soundFilePath}";
                 audioProcess.StartInfo.UseShellExecute = false;
                 audioProcess.StartInfo.RedirectStandardOutput = false;
                 audioProcess.StartInfo.RedirectStandardError = false;
                 audioProcess.Start();
+
             }
             catch (Exception ex)
             {
