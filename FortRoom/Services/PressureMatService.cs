@@ -40,26 +40,24 @@ namespace FortRoom.Services
             {
                 try
                 {
-                    if (VariableControlService.IsTheGameStarted)
+
+                    currentValue = MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
+                    if (!currentValue && !scoreJustDecreased)
                     {
-                        currentValue = MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
-                        if (!currentValue && !scoreJustDecreased)
-                        {
-                            VariableControlService.TimeOfPressureHit++;
-                            MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
-                            //AudioPlayer.PIStartAudio(SoundType.Descend);
-                            RGBLight.SetColor(RGBColor.Red);
-                            RGBLight.TurnRGBOffAfter1Sec();
-                            scoreJustDecreased = true;
-                            timer.Restart();
-                            Console.WriteLine($"Pressure Mate Pressed {VariableControlService.TimeOfPressureHit}");
-                        }
-                        //previousValue = currentValue;
-                        if (scoreJustDecreased && timer.ElapsedMilliseconds >= 3000)
-                        {
-                            scoreJustDecreased = false;
-                            timer.Restart();
-                        }
+                        VariableControlService.TimeOfPressureHit++;
+                        MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
+                        //AudioPlayer.PIStartAudio(SoundType.Descend);
+                        RGBLight.SetColor(RGBColor.Red);
+                        RGBLight.TurnRGBOffAfter1Sec();
+                        scoreJustDecreased = true;
+                        timer.Restart();
+                        Console.WriteLine($"Pressure Mate Pressed {VariableControlService.TimeOfPressureHit}");
+                    }
+                    //previousValue = currentValue;
+                    if (scoreJustDecreased && timer.ElapsedMilliseconds >= 3000)
+                    {
+                        scoreJustDecreased = false;
+                        timer.Restart();
                     }
                 }
                 catch (Exception ex)
