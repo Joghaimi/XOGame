@@ -66,7 +66,7 @@ namespace FortRoom.Services
                 {
                     Console.WriteLine($"Error {ex.Message}");
                 }
-                Console.WriteLine($"Is Pressed {!currentValue} ScoredJust Decresed {scoreJustDecreased} Timer =====>{timer.ElapsedMilliseconds}");
+                Console.WriteLine($"Is Pressed {!currentValue} ScoredJust Decresed {scoreJustDecreased} Timer =====>{timer.ElapsedMilliseconds} isItMoreThan3 Sec {timer.ElapsedMilliseconds >= 3000}");
                 Thread.Sleep(500);
             }
         }
