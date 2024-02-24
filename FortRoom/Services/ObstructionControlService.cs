@@ -119,7 +119,7 @@ namespace FortRoom.Services
                         Console.WriteLine($"Motor 4 Started freq Meduim");
                         Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, 2000);  // Start As Mode #1 
 
-                        VariableControlService.IsTheGameStarted = false;
+                        //VariableControlService.IsTheGameStarted = false;
                     }
                     catch (Exception ex)
                     {
