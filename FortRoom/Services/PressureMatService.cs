@@ -40,7 +40,7 @@ namespace FortRoom.Services
             {
                 try
                 {
-                    if (true)
+                    if (VariableControlService.IsTheGameStarted)
                     {
                         currentValue = MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
                         if (!currentValue && !scoreJustDecreased)
@@ -66,7 +66,7 @@ namespace FortRoom.Services
                 {
                     Console.WriteLine($"Error {ex.Message}");
                 }
-                Console.WriteLine($"Is Pressed {!currentValue} ScoredJust Decresed {scoreJustDecreased} Timer =====>{timer.ElapsedMilliseconds} isItMoreThan3 Sec {timer.ElapsedMilliseconds >= 3000}");
+                Console.WriteLine($"Is Pressed {!currentValue} ScoredJust Decresed {scoreJustDecreased} Timer =====>{timer.ElapsedMilliseconds} isItMoreThan3 Sec {timer.ElapsedMilliseconds >= 3000} -- {VariableControlService.IsTheGameStarted}");
                 Thread.Sleep(500);
             }
         }
