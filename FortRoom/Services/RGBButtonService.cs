@@ -145,6 +145,9 @@ namespace FortRoom.Services
                 }
                 if (CurrentColor < 5)
                     CurrentColor++;
+                else
+                    CurrentColor=0;
+
                 GameStopWatch.Restart();
             }
 
