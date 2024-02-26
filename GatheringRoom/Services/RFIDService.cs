@@ -31,11 +31,15 @@ namespace GatheringRoom.Services
         {
             while (!cancellationToken.IsCancellationRequested)
             {
+                Console.Write(".");
                 if (_rfidController.CheckCardExisting())
                 {
                     if (VariableControlService.TeamScore.player.Count < 5 && !stop)
                     {
-                        string newPlayerId = _rfidController.ReadCardInfo();
+                        string newPlayerId = _rfidController.ReadCardInfo().Replace("-","");
+                        char [] charArray = newPlayerId.ToCharArray();
+                        Array.Reverse(charArray);
+                        newPlayerId = new string(charArray);
                         bool isInTeam = VariableControlService.TeamScore.player.Any(item => item.Id == newPlayerId);
                         bool hasId = !string.IsNullOrEmpty(newPlayerId);
                         _logger.LogDebug("New Card Found");
