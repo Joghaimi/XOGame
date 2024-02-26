@@ -33,7 +33,7 @@ namespace GatheringRoom.Services
             {
                 if (_rfidController.CheckCardExisting())
                 {
-                    if ( VariableControlService.TeamScore.player.Count > 5 && !stop)
+                    if ( VariableControlService.TeamScore.player.Count < 5 && !stop)
                     {
                         _logger.LogDebug("New Card Found");
                         string newPlayerId = _rfidController.ReadCardInfo();
@@ -73,7 +73,7 @@ namespace GatheringRoom.Services
                             _logger.LogWarning($"Player is Exist :{isInTeam} or id is null {!hasId} ");
                     }
                     else
-                        _logger.LogWarning("Can't Have More Than 5 Member in a team");
+                        _logger.LogWarning($"Can't Have More Than 5 Member in a team");
                 }
                 await Task.Delay(TimeSpan.FromMilliseconds(1000), cancellationToken);
             }
