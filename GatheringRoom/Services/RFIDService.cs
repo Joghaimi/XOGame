@@ -52,6 +52,8 @@ namespace GatheringRoom.Services
                                 StringContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
                                 _logger.LogDebug($"Send Request");
                                 HttpResponseMessage response = await httpClient.PostAsync(apiUrl, content);
+                                _logger.LogDebug($"response.IsSuccessStatusCode {response.IsSuccessStatusCode}");
+
                                 if (response.IsSuccessStatusCode)
                                 {
                                     string responseContent = await response.Content.ReadAsStringAsync();
@@ -65,6 +67,8 @@ namespace GatheringRoom.Services
                                             LastName = people[0].lastname
                                         };
                                         VariableControlService.TeamScore.player.Add(player);
+                                        _logger.LogDebug($"Player {people[0].firstname} {people[0].lastname}");
+
                                         Console.WriteLine(people[0].firstname);
                                         Console.WriteLine(people[0].lastname);
                                     }
