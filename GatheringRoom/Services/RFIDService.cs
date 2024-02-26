@@ -22,7 +22,7 @@ namespace GatheringRoom.Services
         {
             _logger.LogInformation("Start RFID Service");
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            //_rfidController.Init(pinReset);
+            _rfidController.Init(pinReset);
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
         }
