@@ -38,7 +38,7 @@ namespace GatheringRoom.Services
                     {
                         string newPlayerId = _rfidController.ReadCardInfo();
                         string[] originString = newPlayerId.Split("-");
-                        for (int j = originString.Length; j >= 0; j--)
+                        for (int j = (originString.Length - 1); j >= 0; j--)
                         {
                             newPlayerId += originString[j];
                         }
