@@ -29,45 +29,6 @@ namespace GatheringRoom.Services
 
         private async Task RunService(CancellationToken cancellationToken)
         {
-            _logger.LogDebug("New Card Found");
-            string newPlayerId = _rfidController.ReadCardInfo();
-            bool isInTeam = VariableControlService.TeamScore.player.Any(item => item.Id == newPlayerId);
-            bool hasId = !string.IsNullOrEmpty(newPlayerId);
-            if (hasId && !isInTeam)
-            {
-
-                using (HttpClient httpClient = new HttpClient())
-                {
-                    string apiUrl = "https://thcyle7652.execute-api.us-east-1.amazonaws.com/default/myservice-dev-hello";
-                    string jsonData = "{\"rfid\":\"" + newPlayerId + "\"}";
-
-                    StringContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
-                    HttpResponseMessage response = await httpClient.PostAsync(apiUrl, content);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        string responseContent = await response.Content.ReadAsStringAsync();
-                        List<Person> people = JsonConvert.DeserializeObject<List<Person>>(responseContent);
-                        if (people.Count > 0)
-                        {
-                            var player = new Player
-                            {
-                                Id = newPlayerId,
-                                FirstName = people[0].firstname,
-                                LastName = people[0].lastname
-                            };
-                            VariableControlService.TeamScore.player.Add(player);
-                            Console.WriteLine(people[0].firstname);
-                            Console.WriteLine(people[0].lastname);
-                        }
-                        _logger.LogError($"POST request successful {responseContent}. Response: {people[0].firstname} {people[0].lastname}");
-                    }
-                    else
-                        _logger.LogError($"POST request failed. Status Code: {response.StatusCode}");
-                }
-            }
-            else
-                _logger.LogWarning($"Player is Exist :{isInTeam} or id is null {!hasId} ");
-            return;
             while (!cancellationToken.IsCancellationRequested)
             {
                 if (_rfidController.CheckCardExisting())
@@ -83,7 +44,7 @@ namespace GatheringRoom.Services
                             using (HttpClient httpClient = new HttpClient())
                             {
                                 string apiUrl = "https://thcyle7652.execute-api.us-east-1.amazonaws.com/default/myservice-dev-hello";
-                                string jsonData = "{\"rfid\":" + newPlayerId + "}";
+                                string jsonData = "{\"rfid\":\"" + newPlayerId + "\"}";
                                 StringContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
                                 HttpResponseMessage response = await httpClient.PostAsync(apiUrl, content);
                                 if (response.IsSuccessStatusCode)
