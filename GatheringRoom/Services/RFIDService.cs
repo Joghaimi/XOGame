@@ -31,47 +31,50 @@ namespace GatheringRoom.Services
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                if (_rfidController.CheckCardExisting() && VariableControlService.TeamScore.player.Count > 5 && !stop)
+                if (_rfidController.CheckCardExisting())
                 {
-                    _logger.LogDebug("New Card Found");
-                    string newPlayerId = _rfidController.ReadCardInfo();
-                    bool isInTeam = VariableControlService.TeamScore.player.Any(item => item.Id == newPlayerId);
-                    bool hasId = !string.IsNullOrEmpty(newPlayerId);
-                    if (hasId && !isInTeam)
+                    if ( VariableControlService.TeamScore.player.Count > 5 && !stop)
                     {
-                        using (HttpClient httpClient = new HttpClient())
+                        _logger.LogDebug("New Card Found");
+                        string newPlayerId = _rfidController.ReadCardInfo();
+                        bool isInTeam = VariableControlService.TeamScore.player.Any(item => item.Id == newPlayerId);
+                        bool hasId = !string.IsNullOrEmpty(newPlayerId);
+                        if (hasId && !isInTeam)
                         {
-                            string apiUrl = "https://thcyle7652.execute-api.us-east-1.amazonaws.com/default/myservice-dev-hello";
-                            string jsonData = "{\"rfid\":" + newPlayerId + "}";
-                            StringContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
-                            HttpResponseMessage response = await httpClient.PostAsync(apiUrl, content);
-                            if (response.IsSuccessStatusCode)
+                            using (HttpClient httpClient = new HttpClient())
                             {
-                                string responseContent = await response.Content.ReadAsStringAsync();
-                                List<Person> people = JsonConvert.DeserializeObject<List<Person>>(responseContent);
-                                if (people.Count > 0)
+                                string apiUrl = "https://thcyle7652.execute-api.us-east-1.amazonaws.com/default/myservice-dev-hello";
+                                string jsonData = "{\"rfid\":" + newPlayerId + "}";
+                                StringContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
+                                HttpResponseMessage response = await httpClient.PostAsync(apiUrl, content);
+                                if (response.IsSuccessStatusCode)
                                 {
-                                    var player = new Player
+                                    string responseContent = await response.Content.ReadAsStringAsync();
+                                    List<Person> people = JsonConvert.DeserializeObject<List<Person>>(responseContent);
+                                    if (people.Count > 0)
                                     {
-                                        Id = newPlayerId,
-                                        FirstName = people[0].firstname,
-                                        LastName = people[0].lastname
-                                    };
-                                    VariableControlService.TeamScore.player.Add(player);
-                                    Console.WriteLine(people[0].firstname);
-                                    Console.WriteLine(people[0].lastname);
+                                        var player = new Player
+                                        {
+                                            Id = newPlayerId,
+                                            FirstName = people[0].firstname,
+                                            LastName = people[0].lastname
+                                        };
+                                        VariableControlService.TeamScore.player.Add(player);
+                                        Console.WriteLine(people[0].firstname);
+                                        Console.WriteLine(people[0].lastname);
+                                    }
+                                    _logger.LogError($"POST request successful {responseContent}. Response: {people[0].firstname} {people[0].lastname}");
                                 }
-                                _logger.LogError($"POST request successful {responseContent}. Response: {people[0].firstname} {people[0].lastname}");
+                                else
+                                    _logger.LogError($"POST request failed. Status Code: {response.StatusCode}");
                             }
-                            else
-                                _logger.LogError($"POST request failed. Status Code: {response.StatusCode}");
                         }
+                        else
+                            _logger.LogWarning($"Player is Exist :{isInTeam} or id is null {!hasId} ");
                     }
                     else
-                        _logger.LogWarning($"Player is Exist :{isInTeam} or id is null {!hasId} ");
+                        _logger.LogWarning("Can't Have More Than 5 Member in a team");
                 }
-                else
-                    _logger.LogWarning("Can't Have More Than 5 Member in a team");
                 await Task.Delay(TimeSpan.FromMilliseconds(1000), cancellationToken);
             }
         }
