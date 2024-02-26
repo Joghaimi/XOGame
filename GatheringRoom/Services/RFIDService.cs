@@ -35,10 +35,14 @@ namespace GatheringRoom.Services
                 {
                     if (VariableControlService.TeamScore.player.Count < 5 && !stop)
                     {
-                        _logger.LogDebug("New Card Found");
                         string newPlayerId = _rfidController.ReadCardInfo();
                         bool isInTeam = VariableControlService.TeamScore.player.Any(item => item.Id == newPlayerId);
                         bool hasId = !string.IsNullOrEmpty(newPlayerId);
+                        _logger.LogDebug("New Card Found");
+                        _logger.LogDebug($"PlayerId {newPlayerId}");
+                        _logger.LogDebug($"isInTeam {isInTeam}");
+                        _logger.LogDebug($"isInTeam {hasId}");
+
                         if (hasId && !isInTeam)
                         {
                             using (HttpClient httpClient = new HttpClient())
@@ -46,6 +50,7 @@ namespace GatheringRoom.Services
                                 string apiUrl = "https://thcyle7652.execute-api.us-east-1.amazonaws.com/default/myservice-dev-hello";
                                 string jsonData = "{\"rfid\":\"" + newPlayerId + "\"}";
                                 StringContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
+                                _logger.LogDebug($"Send Request");
                                 HttpResponseMessage response = await httpClient.PostAsync(apiUrl, content);
                                 if (response.IsSuccessStatusCode)
                                 {
