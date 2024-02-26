@@ -36,10 +36,14 @@ namespace GatheringRoom.Services
                 {
                     if (VariableControlService.TeamScore.player.Count < 5 && !stop)
                     {
-                        string newPlayerId = _rfidController.ReadCardInfo().Replace("-","");
-                        char [] charArray = newPlayerId.ToCharArray();
-                        Array.Reverse(charArray);
-                        newPlayerId = new string(charArray);
+                        string newPlayerId = _rfidController.ReadCardInfo();
+                        string[] originString = newPlayerId.Split("-");
+                        for (int j = originString.Length; j >= 0; j--)
+                        {
+                            newPlayerId += originString[j];
+                        }
+
+
                         bool isInTeam = VariableControlService.TeamScore.player.Any(item => item.Id == newPlayerId);
                         bool hasId = !string.IsNullOrEmpty(newPlayerId);
                         _logger.LogDebug("New Card Found");
