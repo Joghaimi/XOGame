@@ -31,8 +31,9 @@ namespace GatheringRoom.Services
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                if (_rfidController.CheckCardExisting() && VariableControlService.TeamScore.player.Count > 5 && !stop)
+                if (_rfidController.CheckCardExisting() )
                 {
+                    //&& VariableControlService.TeamScore.player.Count > 5 && !stop
                     Console.WriteLine("New Card Found");
 
                     _logger.LogWarning("New Card Found");
