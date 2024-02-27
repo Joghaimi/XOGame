@@ -40,9 +40,13 @@ namespace DivingRoom.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+
+
+
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
             //JQ8400AudioModule.init(SerialPort.Serial2);
             MCP23Controller.Init(true);
+            MCP23Controller.PinModeSetup(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber, PinMode.Output);
 
             _appLifetime.ApplicationStopping.Register(Stopped);
             _logger.LogWarning("Start RGBButtonService");
@@ -68,28 +72,29 @@ namespace DivingRoom.Services
         {
             while (true)
             {
+                Console.WriteLine($"value {MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber)}");
               
-                RGBColor selectedColor = (RGBColor)CurrentColor;
-                RGBLight.SetColor(selectedColor);
-                var PrimaryColor = RGBColorMapping.GetRGBColors(selectedColor);
-                AudioPlayer.PIStartAudio(SoundType.Button);
-                Console.WriteLine($"{PrimaryColor.Length} {selectedColor.ToString()}");
-                //while (GameStopWatch.ElapsedMilliseconds < 30000)
-                //{
-                    foreach (var item in RGBButtonList)
-                    {
-                        bool randomBoolean = random.Next(0, 2) == 0;
-                        if (randomBoolean)
-                        {
-                            int index = random.Next(0, PrimaryColor.Length);
-                            item.TurnColorOn(PrimaryColor[index]);
-                            Console.WriteLine($"{PrimaryColor[index]}");
-                        }
-                    }
-                //}
-                Thread.Sleep(10000);
+                //RGBColor selectedColor = (RGBColor)CurrentColor;
+                //RGBLight.SetColor(selectedColor);
+                //var PrimaryColor = RGBColorMapping.GetRGBColors(selectedColor);
+                //AudioPlayer.PIStartAudio(SoundType.Button);
+                //Console.WriteLine($"{PrimaryColor.Length} {selectedColor.ToString()}");
+                ////while (GameStopWatch.ElapsedMilliseconds < 30000)
+                ////{
+                //    foreach (var item in RGBButtonList)
+                //    {
+                //        bool randomBoolean = random.Next(0, 2) == 0;
+                //        if (randomBoolean)
+                //        {
+                //            int index = random.Next(0, PrimaryColor.Length);
+                //            item.TurnColorOn(PrimaryColor[index]);
+                //            Console.WriteLine($"{PrimaryColor[index]}");
+                //        }
+                //    }
+                ////}
+                Thread.Sleep(3000);
 
-                GameStopWatch.Restart();
+                //GameStopWatch.Restart();
 
                 //AudioPlayer.PIStartAudio(SoundType.Button);
                 //TurnRGBButtonWithColor(selectedColor);
