@@ -592,7 +592,7 @@ class ProgramEntry
         while (true)
         {
             Console.WriteLine(rfid.GetRFIDUID());
-            Thread.Sleep(3000);
+            Thread.Sleep(1000);
         }
         //GpioController gpioController = new GpioController();
         //int pinReset = 6;
