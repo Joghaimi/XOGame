@@ -18,6 +18,11 @@ namespace DivingRoom.Services
         Stopwatch GameStopWatch = new Stopwatch();
         private CancellationTokenSource _cts, _cts2;
         bool IsTimerStarted = false;
+        Random random = new Random();
+
+
+
+
         int Score = 0;
 
 
@@ -63,25 +68,28 @@ namespace DivingRoom.Services
         {
             while (true)
             {
-                foreach (var item in RGBButtonList)
+              
+                RGBColor selectedColor = (RGBColor)CurrentColor;
+                RGBLight.SetColor(selectedColor);
+                var PrimaryColor = RGBColorMapping.GetRGBColors(selectedColor);
+                AudioPlayer.PIStartAudio(SoundType.Button);
+                Console.WriteLine($"{PrimaryColor.Length} ");
+                while (GameStopWatch.ElapsedMilliseconds < 30000)
                 {
-                    item.TurnColorOn(RGBColor.Green);
-                    Thread.Sleep(1000);
+                    foreach (var item in RGBButtonList)
+                    {
+                        bool randomBoolean = random.Next(0, 2) == 0;
+                        if (randomBoolean)
+                        {
+                            int index = random.Next(0, PrimaryColor.Length);
+                            item.TurnColorOn(PrimaryColor[index]);
+                            Console.WriteLine($"{PrimaryColor[index]}");
+                        }
+                    }
                 }
-                //RGBColor selectedColor = (RGBColor)CurrentColor;
-                //RGBLight.SetColor(selectedColor);
-                //var PrimaryColor = RGBColorMapping.GetRGBColors(selectedColor);
-                //AudioPlayer.PIStartAudio(SoundType.Button);
-                //Console.WriteLine($"{PrimaryColor.Length} ");
-                //Thread.Sleep(10000);
-                //while (GameStopWatch.ElapsedMilliseconds < 30000)
-                //{
-                //    foreach (var item in RGBButtonList)
-                //    {
+                Thread.Sleep(10000);
 
-                //    }
-                //}
-                //GameStopWatch.Restart();
+                GameStopWatch.Restart();
 
                 //AudioPlayer.PIStartAudio(SoundType.Button);
                 //TurnRGBButtonWithColor(selectedColor);
