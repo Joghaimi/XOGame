@@ -587,13 +587,13 @@ class ProgramEntry
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Init Rfid ..");
-        RFIDSerial rfid = new RFIDSerial(SerialPort.Serial);
-        while (true)
-        {
-            Console.WriteLine(rfid.GetRFIDUID());
-            Thread.Sleep(1000);
-        }
+        //Console.WriteLine("Init Rfid ..");
+        //RFIDSerial rfid = new RFIDSerial(SerialPort.Serial);
+        //while (true)
+        //{
+        //    Console.WriteLine(rfid.GetRFIDUID());
+        //    Thread.Sleep(1000);
+        //}
         //GpioController gpioController = new GpioController();
         //int pinReset = 6;
 

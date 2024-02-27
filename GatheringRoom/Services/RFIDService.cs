@@ -1,4 +1,5 @@
 ﻿using GatheringRoom.Controllers;
+using Library.PinMapping;
 using Library.RFIDLib;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -11,6 +12,7 @@ namespace GatheringRoom.Services
         private readonly ILogger<GatheringRoomController> _logger;
         private CancellationTokenSource _cts;
         private RFID _rfidController = new();
+        RFIDSerial rfid = new RFIDSerial(SerialPort.Serial);
         int pinReset = 6;
         bool stop = false;
         public RFIDService(ILogger<GatheringRoomController> logger)
@@ -31,21 +33,25 @@ namespace GatheringRoom.Services
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                if (_rfidController.CheckCardExisting())
+                string playerId = rfid.GetRFIDUID();
+                Console.WriteLine(playerId);
+                if (playerId!="None")
                 {
+
                     if (VariableControlService.TeamScore.player.Count < 5 && !stop)
                     {
-                        string newPlayerId = _rfidController.ReadCardInfo();
-                        string[] originString = newPlayerId.Split("-");
-                        newPlayerId = "";
+                        //string newPlayerId = _rfidController.ReadCardInfo();
+
+                        string[] originString = playerId.Zip(playerId.Skip(1), (a, b) => $"{a}{b}").ToArray(); ;//newPlayerId.Split("-");
+                        playerId = "";
                         for (int j = (originString.Length - 1); j >= 0; j--)
                         {
-                            newPlayerId += originString[j];
+                            playerId += originString[j];
                         }
-                        bool isInTeam = VariableControlService.TeamScore.player.Any(item => item.Id == newPlayerId);
-                        bool hasId = !string.IsNullOrEmpty(newPlayerId);
+                        bool isInTeam = VariableControlService.TeamScore.player.Any(item => item.Id == playerId);
+                        bool hasId = !string.IsNullOrEmpty(playerId);
                         _logger.LogDebug("New Card Found");
-                        _logger.LogDebug($"PlayerId {newPlayerId}");
+                        _logger.LogDebug($"PlayerId {playerId}");
                         _logger.LogDebug($"isInTeam {isInTeam}");
                         _logger.LogDebug($"isInTeam {hasId}");
                         if (hasId && !isInTeam)
@@ -53,7 +59,7 @@ namespace GatheringRoom.Services
                             using (HttpClient httpClient = new HttpClient())
                             {
                                 string apiUrl = "https://thcyle7652.execute-api.us-east-1.amazonaws.com/default/myservice-dev-hello";
-                                string jsonData = "{\"rfid\":\"" + newPlayerId + "\"}";
+                                string jsonData = "{\"rfid\":\"" + playerId + "\"}";
                                 StringContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
                                 _logger.LogDebug($"Send Request");
                                 HttpResponseMessage response = await httpClient.PostAsync(apiUrl, content);
@@ -67,7 +73,7 @@ namespace GatheringRoom.Services
                                     {
                                         var player = new Player
                                         {
-                                            Id = newPlayerId,
+                                            Id = playerId,
                                             FirstName = people[0].firstname,
                                             LastName = people[0].lastname
                                         };

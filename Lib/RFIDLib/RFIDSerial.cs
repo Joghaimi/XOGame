@@ -22,7 +22,12 @@ namespace Library.RFIDLib
             SerialPort.WriteLine("RFID");
             Console.WriteLine($"Id Requested");
             string receivedData = SerialPort.ReadTo("\r");
-            return receivedData;
+            if (receivedData == "None")
+                return receivedData;
+            else
+            {
+               return receivedData.Replace("UID: ","");
+            }
         }
         public bool TurnOffAllDisplay()
         {
