@@ -67,8 +67,8 @@ namespace DivingRoom.Services
                 RGBLight.SetColor(selectedColor);
                 var PrimaryColor = RGBColorMapping.GetRGBColors(selectedColor);
                 AudioPlayer.PIStartAudio(SoundType.Button);
-                Console.WriteLine(PrimaryColor);
-                Thread.Sleep(3000);
+                Console.WriteLine(PrimaryColor.Length);
+                Thread.Sleep(30000);
                 //while (GameStopWatch.ElapsedMilliseconds < 30000)
                 //{
                 //    foreach (var item in RGBButtonList)
