@@ -34,27 +34,25 @@ namespace GatheringRoom.Services
             while (!cancellationToken.IsCancellationRequested)
             {
                 string playerId = rfid.GetRFIDUID();
-                Console.WriteLine("Test " + playerId + $"Test {playerId.Contains("None")}");
                 if (!playerId.Contains("None"))
                 {
 
                     if (VariableControlService.TeamScore.player.Count < 5 && !stop)
                     {
                         //string newPlayerId = _rfidController.ReadCardInfo();
-
                         string[] originString = playerId.Zip(playerId.Skip(1), (a, b) => $"{a}{b}").ToArray(); ;//newPlayerId.Split("-");
                         playerId = "";
+                        _logger.LogTrace($"PlayerId Before {playerId}");
+
                         for (int j = (originString.Length - 1); j >= 0; j--)
                         {
                             playerId += originString[j];
                         }
                         bool isInTeam = VariableControlService.TeamScore.player.Any(item => item.Id == playerId);
-                        bool hasId = !string.IsNullOrEmpty(playerId);
-                        _logger.LogDebug("New Card Found");
-                        _logger.LogDebug($"PlayerId {playerId}");
-                        _logger.LogDebug($"isInTeam {isInTeam}");
-                        _logger.LogDebug($"isInTeam {hasId}");
-                        if (hasId && !isInTeam)
+                        _logger.LogTrace("New Card Found");
+                        _logger.LogTrace($"PlayerId After {playerId}");
+                        _logger.LogTrace($"isInTeam {isInTeam}");
+                        if ( !isInTeam)
                         {
                             using (HttpClient httpClient = new HttpClient())
                             {
