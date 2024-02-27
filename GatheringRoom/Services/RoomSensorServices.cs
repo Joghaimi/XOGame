@@ -1,6 +1,10 @@
 ﻿using GatheringRoom.Controllers;
+using Iot.Device.Mcp3428;
+using Library;
 using Library.GPIOLib;
+using Library.PinMapping;
 using Library.RFIDLib;
+using Library.RGBLib;
 using Microsoft.AspNetCore.Mvc;
 using NAudio.SoundFont;
 using System.Device.Gpio;
@@ -20,6 +24,9 @@ namespace GatheringRoom.Services
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            MCP23Controller.Init(true);
+            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinMode.Output);
+            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
             _controller = new GPIOController();
             // Init the Pin's
             _controller.Setup(VariableControlService.PIRPin1, PinMode.InputPullDown);
@@ -43,10 +50,12 @@ namespace GatheringRoom.Services
                 if (isAnyOfRIPSensorActive && !isTheirAreSomeOneInTheRoom)
                 {
                     _logger.LogTrace("Some One In The Room");
-
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
+                    RGBLight.SetColor(RGBColor.Blue);
                     Console.WriteLine("Switch Light On"); // To Do
                     isTheirAreSomeOneInTheRoom = true;// rise a flag 
                 }
+
 
                 // IF Enable Going To The Next room 
                 if (VariableControlService.EnableGoingToTheNextRoom)
