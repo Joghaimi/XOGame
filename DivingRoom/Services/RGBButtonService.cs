@@ -46,7 +46,7 @@ namespace DivingRoom.Services
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
             //JQ8400AudioModule.init(SerialPort.Serial2);
             MCP23Controller.Init(true);
-            MCP23Controller.PinModeSetup(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber, PinMode.Output);
+            MCP23Controller.PinModeSetup(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber, PinMode.Input);
 
             _appLifetime.ApplicationStopping.Register(Stopped);
             _logger.LogWarning("Start RGBButtonService");
