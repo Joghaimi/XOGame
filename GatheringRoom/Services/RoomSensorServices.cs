@@ -65,6 +65,7 @@ namespace GatheringRoom.Services
                     MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
                     RGBLight.SetColor(RGBColor.Off);
                     Console.WriteLine("Switch Light Off"); // To Do
+                    isLightOn = false;
                 }
 
                 // IF Enable Going To The Next room 
