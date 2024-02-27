@@ -1,4 +1,6 @@
 ﻿using GatheringRoom.Controllers;
+using Library.Media;
+using Library;
 using Library.PinMapping;
 using Library.RFIDLib;
 using Microsoft.Extensions.Logging;
@@ -36,7 +38,7 @@ namespace GatheringRoom.Services
                 string playerId = rfid.GetRFIDUID();
                 if (!playerId.Contains("None"))
                 {
-
+                    AudioPlayer.PIStartAudio(SoundType.Descend);
                     if (VariableControlService.TeamScore.player.Count < 5 && !stop)
                     {
                         //string newPlayerId = _rfidController.ReadCardInfo();

@@ -82,6 +82,7 @@ namespace GatheringRoom.Services
         public Task StopAsync(CancellationToken cancellationToken)
         {
             MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
+            RGBLight.SetColor(RGBColor.Off);
             _logger.LogInformation("RoomSensorServices Stopped");
             _cts.Cancel();
             return Task.CompletedTask;

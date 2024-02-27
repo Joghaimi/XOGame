@@ -77,15 +77,15 @@ namespace Library.Media
             switch (soundType)
             {
                 case SoundType.Ticking:
-                    soundFilePath = "/home/fort/XOGame/audio";
+                    soundFilePath = "/home/gathering/XOGame/audio";
                     break;
                 case SoundType.Button:
-                    soundFilePath = "/home/fort/XOGame/audio/Button.mp3";
+                    soundFilePath = "/home/gathering/XOGame/audio/Button.mp3";
                     break;
                 case SoundType.Done:
                     break;
                 case SoundType.Bonus:
-                    soundFilePath = "/home/fort/XOGame/audio/GameBonus.mp3";
+                    soundFilePath = "/home/gathering/XOGame/audio/GameBonus.mp3";
                     break;
                 case SoundType.Finish:
                     break;
@@ -104,7 +104,7 @@ namespace Library.Media
                 case SoundType.Descend2:
                     break;
                 case SoundType.Descend:
-                    soundFilePath = "/home/fort/XOGame/audio/GameBonus.mp3";
+                    soundFilePath = "/home/gathering/XOGame/audio/GameBonus.mp3";
                     break;
                 case SoundType.GameOver:
                     break;
@@ -117,7 +117,7 @@ namespace Library.Media
                 case SoundType.Winner1:
                     break;
                 case SoundType.Background:
-                    soundFilePath = "/home/fort/XOGame/audio/Background.wav";
+                    soundFilePath = "/home/gathering/XOGame/audio/Background.wav";
 
                     break;
                 default:
