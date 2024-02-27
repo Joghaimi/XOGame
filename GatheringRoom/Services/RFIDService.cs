@@ -34,7 +34,7 @@ namespace GatheringRoom.Services
             while (!cancellationToken.IsCancellationRequested)
             {
                 string playerId = rfid.GetRFIDUID();
-                Console.WriteLine("Test "  +playerId +" Test" + playerId != "None");
+                Console.WriteLine("Test " + playerId + $"Test {playerId !="None"}");
                 if (playerId != "None")
                 {
 
