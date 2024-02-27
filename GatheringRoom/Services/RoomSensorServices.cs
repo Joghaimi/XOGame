@@ -49,22 +49,23 @@ namespace GatheringRoom.Services
                 PIR3 = _controller.Read(VariableControlService.PIRPin3);
                 PIR4 = _controller.Read(VariableControlService.PIRPin4);
                 bool isAnyOfRIPSensorActive = PIR1 || PIR2 || PIR3 || PIR4;// || isTheirAreSomeOneInTheRoom;
-                Console.WriteLine($"PIR1 {PIR1} PIR2 {PIR2} PIR3 {PIR3} PIR4 {PIR4}");
-                //if (isAnyOfRIPSensorActive && !isLightOn)
-                //{
-                //    _logger.LogTrace("Some One In The Room");
-                //    MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
-                //    RGBLight.SetColor(RGBColor.Blue);
-                //    Console.WriteLine("Switch Light On"); // To Do
-                //    isTheirAreSomeOneInTheRoom = true;// rise a flag 
-                //    isLightOn = true;
-                //}
-                //else if(!isAnyOfRIPSensorActive && isLightOn) {
-                //    _logger.LogTrace("No One In The Room");
-                //    MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
-                //    RGBLight.SetColor(RGBColor.Off);
-                //    Console.WriteLine("Switch Light Off"); // To Do
-                //}
+                //Console.WriteLine($"PIR1 {PIR1} PIR2 {PIR2} PIR3 {PIR3} PIR4 {PIR4}");
+                if (isAnyOfRIPSensorActive && !isLightOn)
+                {
+                    _logger.LogTrace("Some One In The Room");
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
+                    RGBLight.SetColor(RGBColor.Blue);
+                    Console.WriteLine("Switch Light On"); // To Do
+                    isTheirAreSomeOneInTheRoom = true;// rise a flag 
+                    isLightOn = true;
+                }
+                else if (!isAnyOfRIPSensorActive && isLightOn)
+                {
+                    _logger.LogTrace("No One In The Room");
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
+                    RGBLight.SetColor(RGBColor.Off);
+                    Console.WriteLine("Switch Light Off"); // To Do
+                }
 
                 // IF Enable Going To The Next room 
                 if (VariableControlService.EnableGoingToTheNextRoom)
@@ -73,7 +74,7 @@ namespace GatheringRoom.Services
                     VariableControlService.EnableGoingToTheNextRoom = false;
                     isTheirAreSomeOneInTheRoom = false;
                 }
-                await Task.Delay(TimeSpan.FromMilliseconds(100), cancellationToken);
+                await Task.Delay(TimeSpan.FromMilliseconds(500), cancellationToken);
             }
         }
 
