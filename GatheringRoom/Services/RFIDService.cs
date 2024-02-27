@@ -34,8 +34,8 @@ namespace GatheringRoom.Services
             while (!cancellationToken.IsCancellationRequested)
             {
                 string playerId = rfid.GetRFIDUID();
-                Console.WriteLine(playerId);
-                if (playerId!="None")
+                Console.WriteLine("Test "  +playerId +"Test");
+                if (playerId != "%None%")
                 {
 
                     if (VariableControlService.TeamScore.player.Count < 5 && !stop)
