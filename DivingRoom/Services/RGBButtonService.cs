@@ -74,8 +74,8 @@ namespace DivingRoom.Services
                 var PrimaryColor = RGBColorMapping.GetRGBColors(selectedColor);
                 AudioPlayer.PIStartAudio(SoundType.Button);
                 Console.WriteLine($"{PrimaryColor.Length} {selectedColor.ToString()}");
-                while (GameStopWatch.ElapsedMilliseconds < 30000)
-                {
+                //while (GameStopWatch.ElapsedMilliseconds < 30000)
+                //{
                     foreach (var item in RGBButtonList)
                     {
                         bool randomBoolean = random.Next(0, 2) == 0;
@@ -86,7 +86,7 @@ namespace DivingRoom.Services
                             Console.WriteLine($"{PrimaryColor[index]}");
                         }
                     }
-                }
+                //}
                 Thread.Sleep(10000);
 
                 GameStopWatch.Restart();
