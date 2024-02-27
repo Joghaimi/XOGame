@@ -24,6 +24,8 @@ namespace GatheringRoom.Services
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
+
             MCP23Controller.Init(true);
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinMode.Output);
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
