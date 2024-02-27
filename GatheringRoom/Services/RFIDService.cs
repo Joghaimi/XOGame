@@ -40,7 +40,7 @@ namespace GatheringRoom.Services
                     if (VariableControlService.TeamScore.player.Count < 5 && !stop)
                     {
                         //string newPlayerId = _rfidController.ReadCardInfo();
-                        string[] originString = playerId.Zip(playerId.Skip(1), (a, b) => $"{a}{b}").ToArray(); ;//newPlayerId.Split("-");
+                        string[] originString = Enumerable.Range(0, playerId.Length / 2).Select(i => playerId.Substring(i * 2, 2)).ToArray(); ;//newPlayerId.Split("-");
                         playerId = "";
                         _logger.LogTrace($"PlayerId Before {playerId}");
 
