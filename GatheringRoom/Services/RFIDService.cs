@@ -85,7 +85,7 @@ namespace GatheringRoom.Services
                             }
                         }
                         else
-                            _logger.LogWarning($"Player is Exist :{isInTeam} or id is null {!hasId} ");
+                            _logger.LogWarning($"Player is Exist :{isInTeam}");
                     }
                     else
                         _logger.LogWarning($"Can't Have More Than 5 Member in a team");
