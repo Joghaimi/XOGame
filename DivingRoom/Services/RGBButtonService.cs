@@ -35,6 +35,10 @@ namespace DivingRoom.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
+            //JQ8400AudioModule.init(SerialPort.Serial2);
+            MCP23Controller.Init(true);
+
             _appLifetime.ApplicationStopping.Register(Stopped);
             _logger.LogWarning("Start RGBButtonService");
             //AudioPlayer.PIBackgroundSound(SoundType.Background);
