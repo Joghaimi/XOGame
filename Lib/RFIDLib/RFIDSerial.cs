@@ -22,6 +22,7 @@ namespace Library.RFIDLib
             SerialPort.WriteLine("RFID");
             string receivedData = SerialPort.ReadTo("\r");
             receivedData = receivedData.Replace( @"\t|\n|\r", "");
+            receivedData = receivedData.Substring(1, receivedData.Length - 1);
             if (receivedData == "None")
                 return receivedData;
             else
