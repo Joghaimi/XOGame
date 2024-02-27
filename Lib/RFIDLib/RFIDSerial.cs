@@ -21,7 +21,7 @@ namespace Library.RFIDLib
         {
             SerialPort.WriteLine("RFID");
             string receivedData = SerialPort.ReadTo("\r");
-            receivedData = receivedData.Replace(@"\t|\n|\r", "");
+            receivedData = receivedData.Replace("\n", "");
             return receivedData.Replace("UID: ", "");
         }
         public bool TurnOffAllDisplay()
