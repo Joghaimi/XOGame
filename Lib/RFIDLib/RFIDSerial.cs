@@ -20,8 +20,8 @@ namespace Library.RFIDLib
         public string GetRFIDUID()
         {
             SerialPort.WriteLine("RFID");
-            Console.WriteLine($"Id Requested");
             string receivedData = SerialPort.ReadTo("\r");
+            receivedData = receivedData.Replace( @"\t|\n|\r", "");
             if (receivedData == "None")
                 return receivedData;
             else
