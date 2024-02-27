@@ -33,7 +33,7 @@ namespace GatheringRoom.Services
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _logger.LogInformation("RoomSensorServices Started");
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
-            MCP23Controller.Init(true);
+            MCP23Controller.Init(false);
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port,
                 MasterOutputPin.OUTPUT6.PinNumber, PinMode.Output);
             Task.Run(() => RunService(_cts.Token));
