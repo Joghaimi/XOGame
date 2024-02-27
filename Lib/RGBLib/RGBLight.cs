@@ -34,8 +34,6 @@ namespace Library.RGBLib
         }
         public static async void SetColor(RGBColor selectedColor)
         {
-            //if (!rgbLightBussy)
-            //{
             rgbLightBussy = true;
             uint blue = 0;
             uint green = 0;
@@ -58,15 +56,41 @@ namespace Library.RGBLib
                     green = 0;
                     red = 0;
                     break;
+                case RGBColor.Yellow:
+                    red = 255;
+                    green = 255;
+                    blue = 0;
+                    break;
+                case RGBColor.Magenta:
+                    red = 255;
+                    green = 0;
+                    blue = 255;
+                    break;
+                case RGBColor.Cyan:
+                    red = 0;
+                    green = 255;
+                    blue = 255;
+                    break;
+                case RGBColor.White:
+                    red = 255;
+                    green = 255;
+                    blue = 255;
+                    break;
+                case RGBColor.purple:
+                    red = 128;
+                    green = 0;
+                    blue = 128;
+                    break;
                 case RGBColor.Off:
                     blue = 0;
                     green = 0;
                     red = 0;
                     break;
+                
             }
             ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = "python3"; ;
-            start.Arguments = $@"/home/gathering/XOGame/RGBLight.py {CLKPin} {DataPin} {red} {green} {blue}";
+            start.Arguments = $@"/home/diving/XOGame/RGBLight.py {CLKPin} {DataPin} {red} {green} {blue}";
             start.UseShellExecute = false;
             start.RedirectStandardOutput = true;
             Process process = Process.Start(start);
@@ -76,11 +100,7 @@ namespace Library.RGBLib
                 Console.Write(result);
             }
             rgbLightBussy = false;
-            //}
-            //else
-            //{
-            //    Console.WriteLine(" RGB Light Bussy");
-            //}
+          
 
         }
 

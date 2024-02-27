@@ -58,8 +58,12 @@ namespace Library
         Red,
         Green,
         Blue,
-        purple,
         Turquoise,
+        purple,
+        Yellow,
+        White,
+        Cyan,
+        Magenta,
         Off
     }
     public enum MotorStatus
