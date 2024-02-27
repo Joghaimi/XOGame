@@ -47,6 +47,13 @@ namespace DivingRoom.Services
             //JQ8400AudioModule.init(SerialPort.Serial2);
             MCP23Controller.Init(true);
             MCP23Controller.PinModeSetup(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN4.Chip, MasterDI.IN4.port, MasterDI.IN4.PinNumber, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN6.Chip, MasterDI.IN6.port, MasterDI.IN6.PinNumber, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN8.Chip, MasterDI.IN8.port, MasterDI.IN8.PinNumber, PinMode.Input);
 
             _appLifetime.ApplicationStopping.Register(Stopped);
             _logger.LogWarning("Start RGBButtonService");
@@ -72,8 +79,19 @@ namespace DivingRoom.Services
         {
             while (true)
             {
-                Console.WriteLine($"value {MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber)}");
-              
+                Console.WriteLine($"INvalue" +
+                    $" {MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber)}" +
+                    $" {MCP23Controller.Read(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber)}" +
+                    $" {MCP23Controller.Read(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber)}" +
+                    $" {MCP23Controller.Read(MasterDI.IN4.Chip, MasterDI.IN4.port, MasterDI.IN4.PinNumber)}" +
+                    $" {MCP23Controller.Read(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber)}" +
+                    $" {MCP23Controller.Read(MasterDI.IN6.Chip, MasterDI.IN6.port, MasterDI.IN6.PinNumber)}" +
+                    $" {MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber)}" +
+                    $" {MCP23Controller.Read(MasterDI.IN8.Chip, MasterDI.IN8.port, MasterDI.IN8.PinNumber)}"
+
+
+                    ) ;
+
                 //RGBColor selectedColor = (RGBColor)CurrentColor;
                 //RGBLight.SetColor(selectedColor);
                 //var PrimaryColor = RGBColorMapping.GetRGBColors(selectedColor);
