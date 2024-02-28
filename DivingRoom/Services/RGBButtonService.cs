@@ -67,38 +67,35 @@ namespace DivingRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            //foreach (var item in RGBButtonList)
-            //{
-            //    item.TurnColorOn(RGBColor.Green);
-            //}
-            //while (true)
-            //{
-            //    Console.Write($"Status");
-            //    foreach (var item in RGBButtonList)
-            //    {
-            //        Console.Write(!item.CurrentStatus());
-            //        if (!item.CurrentStatus())
-            //        {
-            //            item.TurnColorOn(RGBColor.Off);
-            //            //AudioPlayer.PIStartAudio(SoundType.Bonus);
-            //            Console.WriteLine($"score {Score}");
-            //        }
-            //    }
-            //    Console.WriteLine();
-            //    Thread.Sleep(1000);
-            //}
-
-
+            foreach (var item in RGBButtonList)
+            {
+                item.TurnColorOn(RGBColor.Red);
+            }
             while (true)
+            {
+                Console.Write($"Status");
+                foreach (var item in RGBButtonList)
+                {
+                    Console.Write(!item.CurrentStatus());
+                    if (!item.CurrentStatus())
+                    {
+                        item.TurnColorOn(RGBColor.Off);
+                        //AudioPlayer.PIStartAudio(SoundType.Bonus);
+                        Console.WriteLine($"score {Score}");
+                    }
+                }
+                Console.WriteLine();
+                Thread.Sleep(1000);
+            }
+
+
+            while (false)
             {
                 bool isIntered =
                         MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber) ||
-                                    MCP23Controller.Read(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber) ||
-                MCP23Controller.Read(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber);
+                        MCP23Controller.Read(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber) ||
+                        MCP23Controller.Read(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber);
 
-
-
-                ;
 
                 RGBColor selectedColor = (RGBColor)CurrentColor;
                 RGBLight.SetColor(selectedColor);
