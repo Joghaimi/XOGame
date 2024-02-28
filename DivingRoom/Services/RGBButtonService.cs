@@ -163,25 +163,7 @@ namespace DivingRoom.Services
                                 }
                             }
                             isSelected = true;
-
-
-                            //foreach (var item in RGBButtonList)
-                            //{
-                            //    bool randomBoolean = random.Next(0, 2) == 0;
-                            //    if (randomBoolean)
-                            //    {
-                            //        int index = random.Next(0, PrimaryColor.Length);
-                            //        item.TurnColorOn(PrimaryColor[index]);
-                            //        item.Set(true);
-                            //        numberOfSelectedButton++;
-                            //        Console.WriteLine($"{PrimaryColor[index]}");
-                            //    }
-                            //    else
-                            //    {
-                            //        int index = random.Next(0, 3);
-                            //        item.TurnColorOn((RGBColor)index);
-                            //    }
-                            //}
+                       
                         }
 
                         foreach (var item in RGBButtonList)
@@ -201,7 +183,10 @@ namespace DivingRoom.Services
                             numberOfPressedButton = 0;
                             numberOfSelectedButton = 0;
                             isSelected = false;
-                            CurrentColor++;
+                            if (CurrentColor < 9)
+                                CurrentColor++;
+                            else
+                                CurrentColor = 5;
                             await Task.Delay(1000); // Delay for 1 second
                         }
                     }
