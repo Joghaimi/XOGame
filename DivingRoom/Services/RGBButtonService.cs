@@ -72,12 +72,13 @@ namespace DivingRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
+            foreach (var item in RGBButtonList)
+            {
+                item.TurnColorOn(RGBColor.Green);
+            }
             while (true) {
 
-                foreach (var item in RGBButtonList)
-                {
-                    item.TurnColorOn(RGBColor.Green);
-                }
+               
                 Console.Write($"Status");
                 foreach (var item in RGBButtonList)
                 {
@@ -86,7 +87,7 @@ namespace DivingRoom.Services
                     if (!item.CurrentStatus())
                     {
                         item.TurnColorOn(RGBColor.Off);
-                        AudioPlayer.PIStartAudio(SoundType.Bonus);
+                        //AudioPlayer.PIStartAudio(SoundType.Bonus);
                         Console.WriteLine($"score {Score}");
                     }
                 }
@@ -120,7 +121,8 @@ namespace DivingRoom.Services
                             }
                             else
                             {
-
+                                int index = random.Next(0, 3);
+                                item.TurnColorOn(PrimaryColor[index]);
                             }
                         }
                         isSelected = true;
