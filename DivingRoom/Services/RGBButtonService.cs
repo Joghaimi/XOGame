@@ -89,7 +89,7 @@ namespace DivingRoom.Services
             //}
 
 
-            while (TextReader)
+            while (true)
             {
                 bool isIntered =
                         MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber) ||
