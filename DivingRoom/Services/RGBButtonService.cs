@@ -96,7 +96,8 @@ namespace DivingRoom.Services
                         MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber) ||
                         MCP23Controller.Read(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber) ||
                         MCP23Controller.Read(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber);
-                MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
+                MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port,
+                    MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
 
                 while (isIntered && difficulty >= 2)
                 {
@@ -173,7 +174,7 @@ namespace DivingRoom.Services
                     }
                     while (GameStopWatch.ElapsedMilliseconds < 30000)
                     {
-
+                        Console.WriteLine(".");
                         foreach (var item in RGBButtonList)
                         {
                             if (!item.CurrentStatus() && item.isSet())
@@ -193,6 +194,7 @@ namespace DivingRoom.Services
                             break;
                         }
                     }
+                    Console.WriteLine("Game Ended");
                     GameStopWatch.Restart();
                     if (CurrentColor < 9)
                         CurrentColor++;
@@ -223,6 +225,7 @@ namespace DivingRoom.Services
         public void Stopped()
         {
             MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
+            RGBLight.SetColor(RGBColor.Off);
             _logger.LogInformation("Stop RGB Button Service");
             foreach (var item in RGBButtonList)
             {
