@@ -69,7 +69,7 @@ namespace DivingRoom.Services
         {
             foreach (var item in RGBButtonList)
             {
-                item.TurnColorOn(RGBColor.Red);
+                item.TurnColorOn(RGBColor.Blue);
             }
             while (true)
             {
@@ -96,59 +96,61 @@ namespace DivingRoom.Services
                         MCP23Controller.Read(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber) ||
                         MCP23Controller.Read(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber);
 
-
-                RGBColor selectedColor = (RGBColor)CurrentColor;
-                RGBLight.SetColor(selectedColor);
-                var PrimaryColor = RGBColorMapping.GetRGBColors(selectedColor);
-                AudioPlayer.PIStartAudio(SoundType.Button);
-                bool isSelected = false;
-                while (GameStopWatch.ElapsedMilliseconds < 30000)
+                while (isIntered)
                 {
-                    if (!isSelected)
+                    RGBColor selectedColor = (RGBColor)CurrentColor;
+                    RGBLight.SetColor(selectedColor);
+                    var PrimaryColor = RGBColorMapping.GetRGBColors(selectedColor);
+                    AudioPlayer.PIStartAudio(SoundType.Button);
+                    bool isSelected = false;
+                    while (GameStopWatch.ElapsedMilliseconds < 30000)
                     {
+                        if (!isSelected)
+                        {
+                            foreach (var item in RGBButtonList)
+                            {
+                                bool randomBoolean = random.Next(0, 2) == 0;
+                                if (randomBoolean)
+                                {
+                                    int index = random.Next(0, PrimaryColor.Length);
+                                    item.TurnColorOn(PrimaryColor[index]);
+                                    item.Set(true);
+                                    numberOfSelectedButton++;
+                                    Console.WriteLine($"{PrimaryColor[index]}");
+                                }
+                                else
+                                {
+                                    int index = random.Next(0, 3);
+                                    item.TurnColorOn((RGBColor)index);
+                                }
+                            }
+                            isSelected = true;
+                        }
                         foreach (var item in RGBButtonList)
                         {
-                            bool randomBoolean = random.Next(0, 2) == 0;
-                            if (randomBoolean)
+                            if (!item.CurrentStatus() && item.isSet())
                             {
-                                int index = random.Next(0, PrimaryColor.Length);
-                                item.TurnColorOn(PrimaryColor[index]);
-                                item.Set(true);
-                                numberOfSelectedButton++;
-                                Console.WriteLine($"{PrimaryColor[index]}");
-                            }
-                            else
-                            {
-                                int index = random.Next(0, 3);
-                                item.TurnColorOn((RGBColor)index);
+                                numberOfPressedButton++;
+                                Score++;
+                                item.TurnColorOn(RGBColor.Off);
+                                item.Set(false);
+                                AudioPlayer.PIStartAudio(SoundType.Bonus);
+                                Console.WriteLine($"score {Score}");
                             }
                         }
-                        isSelected = true;
-                    }
-                    foreach (var item in RGBButtonList)
-                    {
-                        if (!item.CurrentStatus() && item.isSet())
+                        if (numberOfPressedButton == numberOfSelectedButton)
                         {
-                            numberOfPressedButton++;
-                            Score++;
-                            item.TurnColorOn(RGBColor.Off);
-                            item.Set(false);
-                            AudioPlayer.PIStartAudio(SoundType.Bonus);
-                            Console.WriteLine($"score {Score}");
+                            numberOfPressedButton = 0;
+                            numberOfSelectedButton = 0;
+                            break;
                         }
                     }
-                    if (numberOfPressedButton == numberOfSelectedButton)
-                    {
-                        numberOfPressedButton = 0;
-                        numberOfSelectedButton = 0;
-                        break;
-                    }
+                    GameStopWatch.Restart();
+                    if (CurrentColor < 9)
+                        CurrentColor++;
+                    else
+                        CurrentColor = 4;
                 }
-                GameStopWatch.Restart();
-                if (CurrentColor < 9)
-                    CurrentColor++;
-                else
-                    CurrentColor = 4;
             }
         }
         private async Task TimingService(CancellationToken cancellationToken)
