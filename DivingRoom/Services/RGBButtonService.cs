@@ -149,8 +149,6 @@ namespace DivingRoom.Services
                             }
                             Console.WriteLine($"Finished number of Selected button {numberOfSelectedButton} number of pressed {numberOfPressedButton} unSelectedPushButton {unSelectedPushButton.Count}");
 
-
-
                             RGBColor[] unSelectedColorArray = { RGBColor.Green, RGBColor.Red, RGBColor.Blue };
                             unSelectedColorArray = unSelectedColorArray.Where(val => val != PrimaryColor[0] && val != PrimaryColor[1]).ToArray();
                             if (unSelectedColorArray.Length > 0)
@@ -183,7 +181,7 @@ namespace DivingRoom.Services
                             numberOfPressedButton = 0;
                             numberOfSelectedButton = 0;
                             isSelected = false;
-                            if (CurrentColor < 9)
+                            if (CurrentColor < 8)
                                 CurrentColor++;
                             else
                                 CurrentColor = 5;
@@ -191,7 +189,7 @@ namespace DivingRoom.Services
                         }
                     }
                     Console.WriteLine("Game Ended");
-                    if (CurrentColor < 9)
+                    if (CurrentColor < 8)
                         CurrentColor++;
                     else
                         CurrentColor = 5;
