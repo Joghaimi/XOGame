@@ -130,7 +130,7 @@ namespace DivingRoom.Services
                                 numberOfSelectedButton++;
                                 unSelectedPushButton = unSelectedPushButton.Where(val => val != selectedButtonIndex).ToArray();
                             }
-                            Console.WriteLine($"Finished number of Selected button {numberOfSelectedButton} number of pressed {numberOfPressedButton} unSelectedPushButton {unSelectedPushButton}");
+                            Console.WriteLine($"Finished number of Selected button {numberOfSelectedButton} number of pressed {numberOfPressedButton} unSelectedPushButton {unSelectedPushButton.Length}");
 
 
 
