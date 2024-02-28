@@ -105,7 +105,7 @@ namespace DivingRoom.Services
                 {
                     GameStopWatch.Restart();
                     bool isSelected = false;
-                    while (GameStopWatch.ElapsedMilliseconds < 30000)
+                    while (GameStopWatch.ElapsedMilliseconds < 60000)
                     {
                         if (!isSelected)
                         {
