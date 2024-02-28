@@ -103,7 +103,13 @@ namespace Library.RGBLib
           
 
         }
-
+        public static async Task TurnRGBOFFDelayed() {
+            Task.Run(async () =>
+            {
+                await Task.Delay(1000);
+                SetColor(RGBColor.Off);
+            });
+        }
         public static async Task TurnRGBOffAfter1Sec()
         {
             //if (!rgbWaitBussy)

@@ -20,7 +20,6 @@ namespace FloorIsLava.Services
         {
             _controller = new GPIOController();
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
-            JQ8400AudioModule.init(SerialPort.Serial2);
             MCP23Controller.Init(true);
             // Init the Pin's
             _controller.Setup(MasterDI.PIRPin1, PinMode.InputPullDown);
