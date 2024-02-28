@@ -174,7 +174,6 @@ namespace DivingRoom.Services
                     }
                     while (GameStopWatch.ElapsedMilliseconds < 30000)
                     {
-                        Console.WriteLine(".");
                         foreach (var item in RGBButtonList)
                         {
                             if (!item.CurrentStatus() && item.isSet())
