@@ -78,25 +78,28 @@ namespace DivingRoom.Services
                 RGBLight.SetColor(selectedColor);
                 var PrimaryColor = RGBColorMapping.GetRGBColors(selectedColor);
                 AudioPlayer.PIStartAudio(SoundType.Button);
-                //Console.WriteLine($"{PrimaryColor.Length} {selectedColor.ToString()}");
+                bool isSelected = false;
                 while (GameStopWatch.ElapsedMilliseconds < 30000)
                 {
-                    foreach (var item in RGBButtonList)
+                    if (!isSelected)
                     {
-                        bool randomBoolean = random.Next(0, 2) == 0;
-                        if (randomBoolean)
+                        foreach (var item in RGBButtonList)
                         {
-                            int index = random.Next(0, PrimaryColor.Length);
-                            item.TurnColorOn(PrimaryColor[index]);
-                            item.Set(true);
-                            numberOfSelectedButton++;
-                            Console.WriteLine($"{PrimaryColor[index]}");
+                            bool randomBoolean = random.Next(0, 2) == 0;
+                            if (randomBoolean)
+                            {
+                                int index = random.Next(0, PrimaryColor.Length);
+                                item.TurnColorOn(PrimaryColor[index]);
+                                item.Set(true);
+                                numberOfSelectedButton++;
+                                Console.WriteLine($"{PrimaryColor[index]}");
+                            }
                         }
+                        isSelected =true;
                     }
-
                     foreach (var item in RGBButtonList)
                     {
-                        if (item.CurrentStatus() && item.isSet())
+                        if (!item.CurrentStatus() && item.isSet())
                         {
                             numberOfPressedButton++;
                             Score++;
