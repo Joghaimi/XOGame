@@ -25,11 +25,13 @@ namespace DivingRoom.Services
         int currentPeriod = 30000;
         int CurrentColor = 4;
         int difficulty = 6;
-        int[] unSelectedPushButton = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        //int[] unSelectedPushButton = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        List<int> unSelectedPushButton = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         public RGBButtonServices(ILogger<RGBButtonServices> logger, IHostApplicationLifetime appLifetime)
         {
             _appLifetime = appLifetime;
             _logger = logger;
+         
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -104,12 +106,13 @@ namespace DivingRoom.Services
                     GameStopWatch.Restart();
                     bool isSelected = false;
                     var index = 0;
+                    unSelectedPushButton.Clear();
                     foreach (var item in RGBButtonList)
                     {
                         Console.WriteLine(index);
                         item.Set(false);
                         item.TurnColorOn(RGBColor.Off);
-                        unSelectedPushButton[index] = index;
+                        unSelectedPushButton.Add(index);
                         index++;
                     }
                     Console.WriteLine("Game Started");
@@ -123,22 +126,22 @@ namespace DivingRoom.Services
                         AudioPlayer.PIStartAudio(SoundType.Button);
                         for (int i = 0; i < difficulty; i += 2)
                         {
-                            int randomNumber = random.Next(0, unSelectedPushButton.Length);
+                            int randomNumber = random.Next(0, unSelectedPushButton.Count);
                             int selectedButtonIndex = unSelectedPushButton[randomNumber];
                             RGBButtonList[selectedButtonIndex].TurnColorOn(PrimaryColor[0]);
                             RGBButtonList[selectedButtonIndex].Set(true);
                             Console.WriteLine($"Button #{selectedButtonIndex} color is {PrimaryColor[0].ToString()}");
                             numberOfSelectedButton++;
-                            unSelectedPushButton = unSelectedPushButton.Where(val => val != selectedButtonIndex).ToArray();
-                            randomNumber = random.Next(0, unSelectedPushButton.Length);
+                            unSelectedPushButton.Remove(selectedButtonIndex);//= unSelectedPushButton.Where(val => val != selectedButtonIndex).ToArray();
+                            randomNumber = random.Next(0, unSelectedPushButton.Count);
                             selectedButtonIndex = unSelectedPushButton[randomNumber];
                             RGBButtonList[selectedButtonIndex].TurnColorOn(PrimaryColor[1]);
                             RGBButtonList[selectedButtonIndex].Set(true);
                             Console.WriteLine($"Button #{selectedButtonIndex} color is {PrimaryColor[1].ToString()}");
                             numberOfSelectedButton++;
-                            unSelectedPushButton = unSelectedPushButton.Where(val => val != selectedButtonIndex).ToArray();
+                            unSelectedPushButton.Remove(selectedButtonIndex);
                         }
-                        Console.WriteLine($"Finished number of Selected button {numberOfSelectedButton} number of pressed {numberOfPressedButton} unSelectedPushButton {unSelectedPushButton.Length}");
+                        Console.WriteLine($"Finished number of Selected button {numberOfSelectedButton} number of pressed {numberOfPressedButton} unSelectedPushButton {unSelectedPushButton.Count}");
 
 
 
