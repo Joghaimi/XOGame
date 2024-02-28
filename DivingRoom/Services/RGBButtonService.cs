@@ -96,14 +96,14 @@ namespace DivingRoom.Services
                         MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber) ||
                         MCP23Controller.Read(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber) ||
                         MCP23Controller.Read(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber);
-                        MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
+                MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
 
-                while (isIntered && difficulty>=2)
+                while (isIntered && difficulty >= 2)
                 {
 
                     while (GameStopWatch.ElapsedMilliseconds < 30000)
                     {
-                       
+
                         bool isSelected = false;
                         if (!isSelected)
                         {
@@ -130,7 +130,7 @@ namespace DivingRoom.Services
                                 numberOfSelectedButton++;
                                 unSelectedPushButton = unSelectedPushButton.Where(val => val != selectedButtonIndex).ToArray();
                             }
-                            Console.WriteLine($"Finished");
+                            Console.WriteLine($"Finished number of Selected button {numberOfSelectedButton} number of pressed {numberOfPressedButton}");
 
                             RGBColor[] unSelectedColorArray = { RGBColor.Green, RGBColor.Red, RGBColor.Blue };
                             unSelectedColorArray = unSelectedColorArray.Where(val => val != PrimaryColor[0] && val != PrimaryColor[1]).ToArray();
@@ -139,6 +139,7 @@ namespace DivingRoom.Services
                                 Console.WriteLine($"unselected {unSelectedColorArray[0].ToString()}");
                                 foreach (var item in unSelectedPushButton)
                                 {
+                                    Console.WriteLine($"other color {item}");
                                     RGBButtonList[item].TurnColorOn(unSelectedColorArray[0]);
                                 }
                             }
