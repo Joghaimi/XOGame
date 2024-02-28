@@ -58,11 +58,11 @@ namespace Library
         Red,
         Green,
         Blue,
+        White,
         Turquoise,
+        Cyan,
         purple,
         Yellow,
-        White,
-        Cyan,
         Magenta,
         Off
     }

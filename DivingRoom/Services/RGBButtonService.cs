@@ -205,7 +205,7 @@ namespace DivingRoom.Services
                     if (CurrentColor < 9)
                         CurrentColor++;
                     else
-                        CurrentColor = 4;
+                        CurrentColor = 5;
                     difficulty -= 2;
                 }
                 MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
