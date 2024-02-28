@@ -25,7 +25,7 @@ namespace DivingRoom.Services
         int currentPeriod = 30000;
         int CurrentColor = 4;
         int difficulty = 6;
-        int[] unSelectedPushButton = { 0, 1, 2, 3, 4, 5 };
+        int[] unSelectedPushButton = { 0, 1, 2, 3, 4, 5 , 6,7,8,9 };
         public RGBButtonServices(ILogger<RGBButtonServices> logger, IHostApplicationLifetime appLifetime)
         {
             _appLifetime = appLifetime;
