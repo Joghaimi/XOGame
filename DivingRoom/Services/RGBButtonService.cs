@@ -130,7 +130,9 @@ namespace DivingRoom.Services
                                 numberOfSelectedButton++;
                                 unSelectedPushButton = unSelectedPushButton.Where(val => val != selectedButtonIndex).ToArray();
                             }
-                            Console.WriteLine($"Finished number of Selected button {numberOfSelectedButton} number of pressed {numberOfPressedButton}");
+                            Console.WriteLine($"Finished number of Selected button {numberOfSelectedButton} number of pressed {numberOfPressedButton} unSelectedPushButton {unSelectedPushButton}");
+
+
 
                             RGBColor[] unSelectedColorArray = { RGBColor.Green, RGBColor.Red, RGBColor.Blue };
                             unSelectedColorArray = unSelectedColorArray.Where(val => val != PrimaryColor[0] && val != PrimaryColor[1]).ToArray();
