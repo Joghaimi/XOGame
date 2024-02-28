@@ -72,25 +72,28 @@ namespace DivingRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
+            while (true) {
 
-            foreach (var item in RGBButtonList)
-            {
-                item.TurnColorOn(RGBColor.Green);
-            }
-            Console.Write($"Status");
-            foreach (var item in RGBButtonList)
-            {
-                Console.Write(!item.CurrentStatus());
-
-                if (!item.CurrentStatus())
+                foreach (var item in RGBButtonList)
                 {
-                    item.TurnColorOn(RGBColor.Off);
-                    AudioPlayer.PIStartAudio(SoundType.Bonus);
-                    Console.WriteLine($"score {Score}");
+                    item.TurnColorOn(RGBColor.Green);
                 }
+                Console.Write($"Status");
+                foreach (var item in RGBButtonList)
+                {
+                    Console.Write(!item.CurrentStatus());
+
+                    if (!item.CurrentStatus())
+                    {
+                        item.TurnColorOn(RGBColor.Off);
+                        AudioPlayer.PIStartAudio(SoundType.Bonus);
+                        Console.WriteLine($"score {Score}");
+                    }
+                }
+                Console.WriteLine();
+                Thread.Sleep(1000);
+
             }
-            Console.WriteLine();
-            Thread.Sleep(1000);
 
 
             while (false)
@@ -114,6 +117,10 @@ namespace DivingRoom.Services
                                 item.Set(true);
                                 numberOfSelectedButton++;
                                 Console.WriteLine($"{PrimaryColor[index]}");
+                            }
+                            else
+                            {
+
                             }
                         }
                         isSelected = true;
