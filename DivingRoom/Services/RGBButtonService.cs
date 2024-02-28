@@ -72,7 +72,23 @@ namespace DivingRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            while (true)
+
+            foreach (var item in RGBButtonList)
+            {
+                item.TurnColorOn(RGBColor.Green);
+            }
+            foreach (var item in RGBButtonList)
+            {
+                if (!item.CurrentStatus())
+                {
+                    item.TurnColorOn(RGBColor.Off);
+                  
+                    AudioPlayer.PIStartAudio(SoundType.Bonus);
+                    Console.WriteLine($"score {Score}");
+                }
+            }
+
+            while (false)
             {
                 RGBColor selectedColor = (RGBColor)CurrentColor;
                 RGBLight.SetColor(selectedColor);
