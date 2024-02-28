@@ -197,6 +197,7 @@ namespace DivingRoom.Services
                             numberOfPressedButton = 0;
                             numberOfSelectedButton = 0;
                             isSelected = false;
+                            CurrentColor++;
                         }
                     }
                     Console.WriteLine("Game Ended");
