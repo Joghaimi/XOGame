@@ -44,11 +44,6 @@ namespace DivingRoom.Services
             MCP23Controller.PinModeSetup(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber, PinMode.Input);
-            MCP23Controller.PinModeSetup(MasterDI.IN4.Chip, MasterDI.IN4.port, MasterDI.IN4.PinNumber, PinMode.Input);
-            MCP23Controller.PinModeSetup(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber, PinMode.Input);
-            MCP23Controller.PinModeSetup(MasterDI.IN6.Chip, MasterDI.IN6.port, MasterDI.IN6.PinNumber, PinMode.Input);
-            MCP23Controller.PinModeSetup(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber, PinMode.Input);
-            MCP23Controller.PinModeSetup(MasterDI.IN8.Chip, MasterDI.IN8.port, MasterDI.IN8.PinNumber, PinMode.Input);
 
             _appLifetime.ApplicationStopping.Register(Stopped);
             _logger.LogWarning("Start RGBButtonService");
@@ -72,33 +67,39 @@ namespace DivingRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            foreach (var item in RGBButtonList)
+            //foreach (var item in RGBButtonList)
+            //{
+            //    item.TurnColorOn(RGBColor.Green);
+            //}
+            //while (true)
+            //{
+            //    Console.Write($"Status");
+            //    foreach (var item in RGBButtonList)
+            //    {
+            //        Console.Write(!item.CurrentStatus());
+            //        if (!item.CurrentStatus())
+            //        {
+            //            item.TurnColorOn(RGBColor.Off);
+            //            //AudioPlayer.PIStartAudio(SoundType.Bonus);
+            //            Console.WriteLine($"score {Score}");
+            //        }
+            //    }
+            //    Console.WriteLine();
+            //    Thread.Sleep(1000);
+            //}
+
+
+            while (true)
             {
-                item.TurnColorOn(RGBColor.Green);
-            }
-            while (true) {
-
-               
-                Console.Write($"Status");
-                foreach (var item in RGBButtonList)
-                {
-                    Console.Write(!item.CurrentStatus());
-
-                    if (!item.CurrentStatus())
-                    {
-                        item.TurnColorOn(RGBColor.Off);
-                        //AudioPlayer.PIStartAudio(SoundType.Bonus);
-                        Console.WriteLine($"score {Score}");
-                    }
-                }
-                Console.WriteLine();
-                Thread.Sleep(1000);
-
-            }
+                bool isIntered =
+                        MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber) ||
+                                    MCP23Controller.Read(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber) ||
+                MCP23Controller.Read(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber);
 
 
-            while (false)
-            {
+
+                ;
+
                 RGBColor selectedColor = (RGBColor)CurrentColor;
                 RGBLight.SetColor(selectedColor);
                 var PrimaryColor = RGBColorMapping.GetRGBColors(selectedColor);
@@ -122,7 +123,7 @@ namespace DivingRoom.Services
                             else
                             {
                                 int index = random.Next(0, 3);
-                                item.TurnColorOn(PrimaryColor[index]);
+                                item.TurnColorOn((RGBColor)index);
                             }
                         }
                         isSelected = true;
