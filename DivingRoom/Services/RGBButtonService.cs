@@ -175,6 +175,11 @@ namespace DivingRoom.Services
                                 AudioPlayer.PIStartAudio(SoundType.Bonus);
                                 Console.WriteLine($"score {Score}");
                             }
+                            else if (!item.CurrentStatus() && !item.isSet())
+                            {
+                                Score--;
+                                AudioPlayer.PIStartAudio(SoundType.Descend);
+                            }
                         }
                         if (numberOfPressedButton == numberOfSelectedButton)
                         {
@@ -195,6 +200,11 @@ namespace DivingRoom.Services
                         CurrentColor = 5;
                     difficulty -= 2;
                 }
+                foreach (var item in RGBButtonList)
+                {
+                    item.TurnColorOn(RGBColor.Off);
+                }
+                RGBLight.SetColor(RGBColor.Off);
                 MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
             }
         }
