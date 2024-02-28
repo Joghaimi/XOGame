@@ -77,16 +77,21 @@ namespace DivingRoom.Services
             {
                 item.TurnColorOn(RGBColor.Green);
             }
+            Console.Write($"Status");
             foreach (var item in RGBButtonList)
             {
+                Console.Write(!item.CurrentStatus());
+
                 if (!item.CurrentStatus())
                 {
                     item.TurnColorOn(RGBColor.Off);
-                  
                     AudioPlayer.PIStartAudio(SoundType.Bonus);
                     Console.WriteLine($"score {Score}");
                 }
             }
+            Console.WriteLine();
+            Thread.Sleep(1000);
+
 
             while (false)
             {
@@ -111,7 +116,7 @@ namespace DivingRoom.Services
                                 Console.WriteLine($"{PrimaryColor[index]}");
                             }
                         }
-                        isSelected =true;
+                        isSelected = true;
                     }
                     foreach (var item in RGBButtonList)
                     {
