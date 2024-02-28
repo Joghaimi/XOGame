@@ -15,6 +15,7 @@ namespace Library.RGBLib
 
         public static bool IsMCP23ControllerInit = false;
         RGBColor _CurrnetColor;
+        bool _isSet = false;
         MCP23Pin _PushButtonPin, _RGBRPin, _RGBGPin, _RGBBPin;
         public RGBButton(MCP23Pin RPin, MCP23Pin GPin, MCP23Pin BPin, MCP23Pin Button)
         {
@@ -75,6 +76,14 @@ namespace Library.RGBLib
         public bool CurrentStatus()
         {
             return MCP23Controller.Read(_PushButtonPin.Chip, _PushButtonPin.port, _PushButtonPin.PinNumber);
+        }
+        public bool isSet()
+        {
+            return _isSet;
+        }
+        public void Set(bool isSet)
+        {
+            _isSet = isSet;
         }
     }
 }
