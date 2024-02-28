@@ -31,7 +31,7 @@ namespace DivingRoom.Services
         {
             _appLifetime = appLifetime;
             _logger = logger;
-         
+
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -161,7 +161,7 @@ namespace DivingRoom.Services
                                 }
                             }
                             isSelected = true;
-                       
+
                         }
 
                         foreach (var item in RGBButtonList)
@@ -181,7 +181,7 @@ namespace DivingRoom.Services
                             numberOfPressedButton = 0;
                             numberOfSelectedButton = 0;
                             isSelected = false;
-                            if (CurrentColor < 8)
+                            if (CurrentColor < 7)
                                 CurrentColor++;
                             else
                                 CurrentColor = 5;
@@ -189,7 +189,7 @@ namespace DivingRoom.Services
                         }
                     }
                     Console.WriteLine("Game Ended");
-                    if (CurrentColor < 8)
+                    if (CurrentColor < 7)
                         CurrentColor++;
                     else
                         CurrentColor = 5;
