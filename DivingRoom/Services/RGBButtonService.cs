@@ -106,6 +106,7 @@ namespace DivingRoom.Services
                     var index = 0;
                     foreach (var item in RGBButtonList)
                     {
+                        Console.WriteLine(index);
                         item.Set(false);
                         item.TurnColorOn(RGBColor.Off);
                         unSelectedPushButton[index] = index;
