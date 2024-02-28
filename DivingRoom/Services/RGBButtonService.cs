@@ -103,6 +103,7 @@ namespace DivingRoom.Services
 
                 while (isIntered && difficulty >= 2)
                 {
+                    Console.WriteLine($"difficulty {difficulty}");
                     GameStopWatch.Restart();
                     bool isSelected = false;
                     while (GameStopWatch.ElapsedMilliseconds < 60000)
