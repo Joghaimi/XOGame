@@ -25,7 +25,7 @@ namespace DivingRoom.Services
         int currentPeriod = 30000;
         int CurrentColor = 4;
         int difficulty = 6;
-        int[] unSelectedPushButton = { 0, 1, 2, 3, 4, 5 , 6,7,8,9 };
+        int[] unSelectedPushButton = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         public RGBButtonServices(ILogger<RGBButtonServices> logger, IHostApplicationLifetime appLifetime)
         {
             _appLifetime = appLifetime;
@@ -63,7 +63,7 @@ namespace DivingRoom.Services
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             //_cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task task1 = Task.Run(() => RunService(_cts.Token));
-            //Task task2 = Task.Run(() => TimingService(_cts2.Token));
+            Task task2 = Task.Run(() => TimingService(_cts2.Token));
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
@@ -100,6 +100,15 @@ namespace DivingRoom.Services
 
                 while (isIntered && difficulty >= 2)
                 {
+                    GameStopWatch.Restart();
+                    var index = 0;
+                    foreach (var item in RGBButtonList)
+                    {
+                        item.Set(false);
+                        item.TurnColorOn(RGBColor.Off);
+                        unSelectedPushButton[index] = index;
+                        index++;
+                    }
 
                     while (GameStopWatch.ElapsedMilliseconds < 30000)
                     {
