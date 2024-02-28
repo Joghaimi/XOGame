@@ -110,6 +110,8 @@ namespace DivingRoom.Services
                     {
                         if (!isSelected)
                         {
+                            numberOfPressedButton = 0;
+                            numberOfSelectedButton = 0;
                             var index = 0;
                             unSelectedPushButton.Clear();
                             foreach (var item in RGBButtonList)
