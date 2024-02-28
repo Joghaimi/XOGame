@@ -111,6 +111,7 @@ namespace DivingRoom.Services
                         unSelectedPushButton[index] = index;
                         index++;
                     }
+                    Console.WriteLine("Game Started");
                     if (!isSelected)
                     {
                         RGBColor selectedColor = (RGBColor)CurrentColor;
