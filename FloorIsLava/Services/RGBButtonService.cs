@@ -50,7 +50,7 @@ namespace FloorIsLava.Services
             {
                 RGBButtonList[0].TurnColorOn(RGBColor.Blue);
                 Console.WriteLine(RGBButtonList[0].CurrentStatus());
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
                 //if (MCP23Controller.Read(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber))
                 //{
                 //    IN2 = true;
