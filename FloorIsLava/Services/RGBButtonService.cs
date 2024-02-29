@@ -78,15 +78,15 @@ namespace FloorIsLava.Services
                     Console.WriteLine("Pressed all 3");
 
                     MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber,PinState.High);
-                    while (!RGBButtonList[0].CurrentStatus())
-                    {
+                    //while (!RGBButtonList[0].CurrentStatus())
+                    //{
 
-                    }
-                    Console.WriteLine("Button Pressed");
+                    //}
+                    //Console.WriteLine("Button Pressed");
 
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
-                    RGBButtonList[0].TurnColorOn(RGBColor.Blue);
-                    RGBLight.SetColor(RGBColor.Blue);
+                    //MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
+                    //RGBButtonList[0].TurnColorOn(RGBColor.Blue);
+                    //RGBLight.SetColor(RGBColor.Blue);
                     IN2 = false;
                     IN3 = false;
                     IN4 = false;
