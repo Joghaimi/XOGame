@@ -50,14 +50,14 @@ namespace FloorIsLava.Services
             {
 
 
-                if (!MCP23Controller.Read(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber))
+                if (!MCP23Controller.Read(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber) && !IN2)
                 {
                     IN2 = true;
                     RGBLight.SetColor(RGBColor.Green);
                     RGBLight.TurnRGBOFFDelayed();
                     Console.WriteLine("====");
                 }
-                if (!MCP23Controller.Read(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber))
+                if (!MCP23Controller.Read(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber) && !IN3)
                 {
                     IN3 = true;
                     RGBLight.SetColor(RGBColor.Green);
@@ -65,7 +65,7 @@ namespace FloorIsLava.Services
                     Console.WriteLine("====");
 
                 }
-                if (!MCP23Controller.Read(MasterDI.IN4.Chip, MasterDI.IN4.port, MasterDI.IN4.PinNumber))
+                if (!MCP23Controller.Read(MasterDI.IN4.Chip, MasterDI.IN4.port, MasterDI.IN4.PinNumber) && !IN4)
                 {
                     IN4 = true;
                     RGBLight.SetColor(RGBColor.Green);
