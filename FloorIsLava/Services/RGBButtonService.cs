@@ -78,7 +78,7 @@ namespace FloorIsLava.Services
                     Console.WriteLine("Pressed all 3");
 
                     MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber,PinState.High);
-                    while (RGBButtonList[0].CurrentStatus())
+                    while (!RGBButtonList[0].CurrentStatus())
                     {
 
                     }
