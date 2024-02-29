@@ -15,7 +15,11 @@ namespace Library.Media
     {
         private static Process audioProcess;
         public static string soundFilePath;
-        //private static Process audioProcesss
+        public static Room _currentRoom = Room.Gathering;
+        public static void Init(Room currentRoom)
+        {
+            _currentRoom = currentRoom;
+        }
 
         // For the PI
         public static void PIStartAudio(SoundType soundType)
@@ -33,7 +37,6 @@ namespace Library.Media
                 audioProcess.StartInfo.RedirectStandardOutput = false;
                 audioProcess.StartInfo.RedirectStandardError = false;
                 audioProcess.Start();
-
             }
             catch (Exception ex)
             {
@@ -67,8 +70,6 @@ namespace Library.Media
             audioProcess.StartInfo.RedirectStandardError = false;
             audioProcess.Start();
             Console.WriteLine("Audio playback started.");
-
-
         }
         private static string PISoundPath(SoundType soundType)
         {
@@ -77,10 +78,10 @@ namespace Library.Media
             switch (soundType)
             {
                 case SoundType.Ticking:
-                    soundFilePath = "/home/diving/XOGame/audio";
+                    soundFilePath = $"{HomePath()}/audio";
                     break;
                 case SoundType.Button:
-                    soundFilePath = "/home/diving/XOGame/audio/Button.mp3";
+                    soundFilePath = $"{HomePath()}/audio/Button.mp3";
                     break;
                 case SoundType.Done:
                     break;
@@ -118,7 +119,7 @@ namespace Library.Media
                 case SoundType.Winner1:
                     break;
                 case SoundType.Background:
-                    soundFilePath = "/home/diving/XOGame/audio/Background.wav";
+                    soundFilePath = "/home/diving/XOGame/audio/FloorLava.mp3";
 
                     break;
                 default:
@@ -128,5 +129,28 @@ namespace Library.Media
 
 
         }
+
+        private static string HomePath()
+        {
+            switch (_currentRoom)
+            {
+                case Room.Fort:
+                    return "/home/Fort/XOGame";
+                case Room.Dark:
+                    return "/home/Dark/XOGame";
+                case Room.Diving:
+                    return "/home/diving/XOGame";
+                case Room.FloorIsLava:
+                    return "/home/floor/XOGame";
+                case Room.Gathering:
+                    return "/home/Gathering/XOGame";
+                case Room.Shooting:
+                    return "/home/Shooting/XOGame";
+                default:
+                    return "/home/pi/XOGame";
+            }
+        }
+
+
     }
 }

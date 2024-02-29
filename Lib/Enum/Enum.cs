@@ -27,7 +27,14 @@ namespace Library
         Winner2,
         Winner1,
         Background
-
+    }
+    public enum Room {
+        Fort,
+        Dark,
+        Diving,
+        FloorIsLava,
+        Gathering,
+        Shooting,
     }
     public enum Displays
     {

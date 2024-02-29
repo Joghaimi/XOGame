@@ -32,7 +32,7 @@ namespace FloorIsLava.Services
             MCP23Controller.PinModeSetup(MasterDI.IN4.Chip, MasterDI.IN4.port, MasterDI.IN4.PinNumber, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinMode.Output);
             GameStopWatch.Start();
-
+            AudioPlayer.PIBackgroundSound(SoundType.Background);
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task task1 = Task.Run(() => RunService(_cts.Token));
@@ -228,7 +228,9 @@ namespace FloorIsLava.Services
         }
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            //_cts.Cancel();
+            AudioPlayer.PIStopAudio();
+
+            _cts.Cancel();
             return Task.CompletedTask;
         }
         public void Dispose()
