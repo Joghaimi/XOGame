@@ -75,12 +75,12 @@ namespace FloorIsLava.Services
                 }
                 if (IN2 && IN3 && IN4)
                 {
-                    //MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber,PinState.Low);
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber,PinState.Low);
                     while (RGBButtonList[0].CurrentStatus())
                     {
 
                     }
-                    //MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
                     RGBButtonList[0].TurnColorOn(RGBColor.Blue);
                     RGBLight.SetColor(RGBColor.Blue);
                     IN2 = false;
