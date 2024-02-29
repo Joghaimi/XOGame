@@ -46,6 +46,9 @@ namespace FloorIsLava.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
+            RGBLight.SetColor(RGBColor.Red);
+
+
             while (true)
             {
                 RGBButtonList[0].TurnColorOn(RGBColor.Blue);
