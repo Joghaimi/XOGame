@@ -49,40 +49,43 @@ namespace FloorIsLava.Services
             while (true)
             {
 
-                Console.WriteLine(
-                    MCP23Controller.Read(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber) + " " +
-                    MCP23Controller.Read(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber) + " " +
-                    MCP23Controller.Read(MasterDI.IN4.Chip, MasterDI.IN4.port, MasterDI.IN4.PinNumber)
-                    );
-                Thread.Sleep(1000);
-                if (MCP23Controller.Read(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber))
+
+                if (!MCP23Controller.Read(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber))
                 {
                     IN2 = true;
                     RGBLight.SetColor(RGBColor.Green);
                     RGBLight.TurnRGBOFFDelayed();
+                    Console.WriteLine("====");
                 }
-                if (MCP23Controller.Read(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber))
+                if (!MCP23Controller.Read(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber))
                 {
                     IN3 = true;
                     RGBLight.SetColor(RGBColor.Green);
                     RGBLight.TurnRGBOFFDelayed();
+                    Console.WriteLine("====");
+
                 }
-                if (MCP23Controller.Read(MasterDI.IN4.Chip, MasterDI.IN4.port, MasterDI.IN4.PinNumber))
+                if (!MCP23Controller.Read(MasterDI.IN4.Chip, MasterDI.IN4.port, MasterDI.IN4.PinNumber))
                 {
                     IN4 = true;
                     RGBLight.SetColor(RGBColor.Green);
                     RGBLight.TurnRGBOFFDelayed();
+                    Console.WriteLine("====");
+
                 }
-                if (IN2 && IN3 && IN4 )
+                if (IN2 && IN3 && IN4)
                 {
                     //MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber,PinState.Low);
-                    while (RGBButtonList[0].CurrentStatus()) {
+                    while (RGBButtonList[0].CurrentStatus())
+                    {
 
                     }
                     //MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
                     RGBButtonList[0].TurnColorOn(RGBColor.Blue);
                     RGBLight.SetColor(RGBColor.Blue);
-
+                    IN2 = false;
+                    IN3 = false;
+                    IN4 = false;
                 }
 
 
