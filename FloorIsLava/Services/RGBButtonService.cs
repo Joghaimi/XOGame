@@ -30,7 +30,7 @@ namespace FloorIsLava.Services
             //RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
 
             Console.WriteLine("Init Button#1");
-            RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1));
+            RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR7, RGBButtonPin.RGBG7, RGBButtonPin.RGBB7, RGBButtonPin.RGBPB7));
             RGBButtonList[0].TurnColorOn(RGBColor.Off);
 
             MCP23Controller.PinModeSetup(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber, PinMode.Input);
