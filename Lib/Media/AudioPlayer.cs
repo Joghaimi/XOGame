@@ -88,7 +88,7 @@ namespace Library.Media
                     soundFilePath = "/home/diving/XOGame/audio/GameBonus.mp3";
                     break;
                 case SoundType.Finish:
-                    soundFilePath = "/home/diving/XOGame/audio/Game finish.mp3";
+                    soundFilePath = "/home/diving/XOGame/audio/Gamefinish.mp3";
                     break;
                 case SoundType.Start:
                     break;
