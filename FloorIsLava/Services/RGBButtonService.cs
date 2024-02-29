@@ -27,7 +27,7 @@ namespace FloorIsLava.Services
         {
             // TO DO Init The RGB Light .. 
             // Init RGB
-            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
+            //RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
 
             Console.WriteLine("Init Button#1");
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1));
