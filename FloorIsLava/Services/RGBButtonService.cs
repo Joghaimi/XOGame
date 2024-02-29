@@ -17,14 +17,13 @@ namespace FloorIsLava.Services
         bool PressureMatPressed = false;
         bool IsTimerStarted = false;
         Stopwatch GameStopWatch = new Stopwatch();
+        bool pressureMAtCount = false;
         public Task StartAsync(CancellationToken cancellationToken)
         {
             // TO DO Init The RGB Light .. 
             // Init RGB
             //RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
-
             Console.WriteLine("Init Button#1");
-            
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR7, RGBButtonPin.RGBG7, RGBButtonPin.RGBB7, RGBButtonPin.RGBPB7));
             RGBButtonList[0].TurnColorOn(RGBColor.Off);
             MCP23Controller.PinModeSetup(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber, PinMode.Input);
@@ -32,7 +31,6 @@ namespace FloorIsLava.Services
             MCP23Controller.PinModeSetup(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterDI.IN4.Chip, MasterDI.IN4.port, MasterDI.IN4.PinNumber, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinMode.Output);
-
 
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -78,10 +76,13 @@ namespace FloorIsLava.Services
                     Console.WriteLine("Pressed all 3");
                     RGBButtonList[0].TurnColorOn(RGBColor.Red);
                     MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
+                    pressureMAtCount = true;
                     while (RGBButtonList[0].CurrentStatus() || PressureMatPressed)
                     {
                         Thread.Sleep(10);
                     }
+                    pressureMAtCount = false;
+
                     Console.WriteLine("Button Pressed");
                     MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
                     RGBButtonList[0].TurnColorOn(RGBColor.Blue);
@@ -155,14 +156,18 @@ namespace FloorIsLava.Services
         private async Task PressureMat(CancellationToken cancellationToken)
         {
             bool currentValue = false;
-            while (true) {
+            while (true)
+            {
                 currentValue = MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
-                if (!currentValue) {
+                if (!currentValue)
+                {
                     Console.WriteLine("Pressure mat Pressed");
                     RGBLight.SetColor(RGBColor.Red);
+                    AudioPlayer.PIStartAudio(SoundType.Descend);
                     RGBLight.TurnRGBOFFDelayed();
-                    PressureMatPressed =true;
-                    Thread.Sleep(15000);
+                    PressureMatPressed = true;
+                    if (pressureMAtCount)
+                        Thread.Sleep(15000);
                     PressureMatPressed = false;
                 }
                 Thread.Sleep(100);
