@@ -51,6 +51,8 @@ namespace FloorIsLava.Services
 
             while (true)
             {
+                AudioPlayer.PIStartAudio(SoundType.Button);
+
                 RGBButtonList[0].TurnColorOn(RGBColor.Blue);
                 Console.WriteLine(RGBButtonList[0].CurrentStatus());
                 Thread.Sleep(2000);
