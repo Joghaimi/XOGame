@@ -36,7 +36,7 @@ namespace FloorIsLava.Services
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task task1 = Task.Run(() => RunService(_cts.Token));
-            Task task2 = Task.Run(() => PressureMat(_cts2.Token));
+            //Task task2 = Task.Run(() => PressureMat(_cts2.Token));
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
@@ -71,17 +71,17 @@ namespace FloorIsLava.Services
                     Console.WriteLine("====");
 
                 }
+                pressureMateTest();
                 if (IN2 && IN3 && IN4)
                 {
                     Console.WriteLine("Pressed all 3");
                     RGBButtonList[0].TurnColorOn(RGBColor.Red);
                     MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
                     pressureMAtCount = true;
-                    while (PressureMatPressed) { 
-                        Thread.Sleep(10);
-                    }
-                    while (RGBButtonList[0].CurrentStatus())
+                    while (RGBButtonList[0].CurrentStatus() || PressureMatPressed)
                     {
+                        pressureMateTest();
+
                         Thread.Sleep(10);
                     }
                     pressureMAtCount = false;
@@ -155,6 +155,22 @@ namespace FloorIsLava.Services
             // Sleep for a short duration to avoid excessive checking
             //    Thread.Sleep(10);
             //}
+        }
+        private void pressureMateTest() {
+
+            bool currentValue = false;
+            currentValue = MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
+            if (!currentValue)
+            {
+                Console.WriteLine("Pressure mat Pressed");
+                RGBLight.SetColor(RGBColor.Red);
+                AudioPlayer.PIStartAudio(SoundType.Descend);
+                RGBLight.TurnRGBOFFDelayed();
+                PressureMatPressed = true;
+                if (pressureMAtCount)
+                    Thread.Sleep(15000);
+                PressureMatPressed = false;
+            }
         }
         private async Task PressureMat(CancellationToken cancellationToken)
         {
