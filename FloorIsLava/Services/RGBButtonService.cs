@@ -31,7 +31,7 @@ namespace FloorIsLava.Services
             MCP23Controller.PinModeSetup(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterDI.IN4.Chip, MasterDI.IN4.port, MasterDI.IN4.PinNumber, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinMode.Output);
-
+            GameStopWatch.Start();
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -95,6 +95,7 @@ namespace FloorIsLava.Services
                     IN3 = false;
                     IN4 = false;
                 }
+                Thread.Sleep(10);
 
 
             }
@@ -156,20 +157,32 @@ namespace FloorIsLava.Services
             //    Thread.Sleep(10);
             //}
         }
-        private void pressureMateTest() {
+        bool justDecrease = false;
+        private void pressureMateTest()
+        {
 
             bool currentValue = false;
             currentValue = MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
-            if (!currentValue)
+            if (!currentValue && !justDecrease)
             {
+                justDecrease = true;
+                GameStopWatch.Restart();
                 Console.WriteLine("Pressure mat Pressed");
                 RGBLight.SetColor(RGBColor.Red);
                 AudioPlayer.PIStartAudio(SoundType.Descend);
                 RGBLight.TurnRGBOFFDelayed();
                 PressureMatPressed = true;
                 if (pressureMAtCount)
+                {
+                    RGBButtonList[0].TurnColorOn(RGBColor.Off);
                     Thread.Sleep(15000);
+                    RGBButtonList[0].TurnColorOn(RGBColor.Green);
+                }
                 PressureMatPressed = false;
+            }
+            if (justDecrease && GameStopWatch.ElapsedMilliseconds>3000) {
+
+                justDecrease = false;
             }
         }
         private async Task PressureMat(CancellationToken cancellationToken)
