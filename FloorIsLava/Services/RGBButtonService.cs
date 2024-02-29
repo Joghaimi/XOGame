@@ -36,7 +36,7 @@ namespace FloorIsLava.Services
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task task1 = Task.Run(() => RunService(_cts.Token));
-            //Task task2 = Task.Run(() => PressureMat(_cts2.Token));
+            Task task2 = Task.Run(() => PressureMat(_cts2.Token));
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
@@ -77,7 +77,10 @@ namespace FloorIsLava.Services
                     RGBButtonList[0].TurnColorOn(RGBColor.Red);
                     MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
                     pressureMAtCount = true;
-                    while (RGBButtonList[0].CurrentStatus() || !PressureMatPressed)
+                    while (PressureMatPressed) { 
+                        Thread.Sleep(10);
+                    }
+                    while (RGBButtonList[0].CurrentStatus())
                     {
                         Thread.Sleep(10);
                     }
