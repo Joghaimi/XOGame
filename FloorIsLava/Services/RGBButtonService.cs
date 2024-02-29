@@ -48,6 +48,13 @@ namespace FloorIsLava.Services
         {
             while (true)
             {
+
+                Console.WriteLine(
+                    MCP23Controller.Read(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber) + " " +
+                    MCP23Controller.Read(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber) + " " +
+                    MCP23Controller.Read(MasterDI.IN4.Chip, MasterDI.IN4.port, MasterDI.IN4.PinNumber)
+                    );
+                Thread.Sleep(1000);
                 if (MCP23Controller.Read(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber))
                 {
                     IN2 = true;
