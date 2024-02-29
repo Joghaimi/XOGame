@@ -66,7 +66,7 @@ namespace FloorIsLava.Services
                     RGBLight.SetColor(RGBColor.Green);
                     RGBLight.TurnRGBOFFDelayed();
                 }
-                if ((IN2 && IN3 && IN4 )
+                if (IN2 && IN3 && IN4 )
                 {
                     //MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber,PinState.Low);
                     while (RGBButtonList[0].CurrentStatus()) {
