@@ -77,7 +77,7 @@ namespace FloorIsLava.Services
                     RGBButtonList[0].TurnColorOn(RGBColor.Red);
                     MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
                     pressureMAtCount = true;
-                    while (RGBButtonList[0].CurrentStatus() || PressureMatPressed)
+                    while (RGBButtonList[0].CurrentStatus() || !PressureMatPressed)
                     {
                         Thread.Sleep(10);
                     }
