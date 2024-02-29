@@ -94,6 +94,7 @@ namespace FloorIsLava.Services
                     IN2 = false;
                     IN3 = false;
                     IN4 = false;
+                    break;
                 }
                 Thread.Sleep(10);
 
@@ -176,7 +177,7 @@ namespace FloorIsLava.Services
                 {
                     RGBButtonList[0].TurnColorOn(RGBColor.Off);
                     Thread.Sleep(15000);
-                    RGBButtonList[0].TurnColorOn(RGBColor.Green);
+                    RGBButtonList[0].TurnColorOn(RGBColor.Red);
                 }
                 PressureMatPressed = false;
             }
