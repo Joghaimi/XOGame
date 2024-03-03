@@ -34,12 +34,6 @@ namespace ShootingRoom.Services
             AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT2, HatInputPin.IR6, HatInputPin.IR7, HatInputPin.IR8, HatInputPin.IR9, HatInputPin.IR10));
             AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT3, HatInputPin.IR11, HatInputPin.IR12, HatInputPin.IR13, HatInputPin.IR14, HatInputPin.IR15));
             AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT4, HatInputPin.IR16, HatInputPin.IR17, HatInputPin.IR18, HatInputPin.IR19, HatInputPin.IR20));
-            AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT5, HatInputPin.IR16, HatInputPin.IR17, HatInputPin.IR18, HatInputPin.IR19, HatInputPin.IR20));
-            AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT6, HatInputPin.IR16, HatInputPin.IR17, HatInputPin.IR18, HatInputPin.IR19, HatInputPin.IR20));
-            AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT7, HatInputPin.IR16, HatInputPin.IR17, HatInputPin.IR18, HatInputPin.IR19, HatInputPin.IR20));
-            AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT8, HatInputPin.IR16, HatInputPin.IR17, HatInputPin.IR18, HatInputPin.IR19, HatInputPin.IR20));
-
-
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
@@ -68,44 +62,39 @@ namespace ShootingRoom.Services
                 int index = 0;
                 foreach (var item in AirTargetList)
                 {
-                    Console.WriteLine(index);
-                    index++;
+                    GameStopWatch.Restart();
                     item.Select(true);
-                    Thread.Sleep(3000);
+                    while (timer.ElapsedMilliseconds >= 30000)
+                    {
+                        if (item.TargetOneStatus())
+                        {
+                            AudioPlayer.PIStartAudio(SoundType.Bonus);
+                            Score++;
+                        }
+                        if (item.TargetTwoStatus())
+                        {
+                            AudioPlayer.PIStartAudio(SoundType.Bonus);
+                            Score++;
+                        }
+                        if (item.TargetThreeStatus())
+                        {
+                            AudioPlayer.PIStartAudio(SoundType.Bonus);
+                            Score++;
+                        }
+                        if (item.TargetFourStatus())
+                        {
+                            AudioPlayer.PIStartAudio(SoundType.Bonus);
+                            Score++;
+                        }
+                        if (item.TargetFiveStatus())
+                        {
+                            AudioPlayer.PIStartAudio(SoundType.Bonus);
+                            Score++;
+                        }
+                        Thread.Sleep(10);
+                    }
+                    Console.WriteLine(Score);
                     item.Select(false);
-                    Thread.Sleep(3000);
-
-                    //GameStopWatch.Restart();
-                    //item.Select(true);
-                    //while (timer.ElapsedMilliseconds >= 30000)
-                    //{
-                    //    if (item.TargetOneStatus()) {
-                    //        AudioPlayer.PIStartAudio(SoundType.Bonus);
-                    //        Score++;
-                    //    }
-                    //    if (item.TargetTwoStatus())
-                    //    {
-                    //        AudioPlayer.PIStartAudio(SoundType.Bonus);
-                    //        Score++;
-                    //    }
-                    //    if (item.TargetThreeStatus())
-                    //    {
-                    //        AudioPlayer.PIStartAudio(SoundType.Bonus);
-                    //        Score++;
-                    //    }
-                    //    if (item.TargetFourStatus())
-                    //    {
-                    //        AudioPlayer.PIStartAudio(SoundType.Bonus);
-                    //        Score++;
-                    //    }
-                    //    if (item.TargetFiveStatus())
-                    //    {
-                    //        AudioPlayer.PIStartAudio(SoundType.Bonus);
-                    //        Score++;
-                    //    }
-                    //    Thread.Sleep(10);
-                    //}
-                    //item.Select(false);
                 }
 
                 //if (VariableControlService.IsTheGameStarted && IsTimerStarted)

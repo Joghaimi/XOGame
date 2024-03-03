@@ -26,11 +26,11 @@ namespace Library.AirTarget
             _Target4Pin = Target4Pin;
             _Target5Pin = Target5Pin;
             MCP23Controller.PinModeSetup(_ShelfLightPin.Chip, _ShelfLightPin.port, _ShelfLightPin.PinNumber, PinMode.Output);
-            //MCP23Controller.PinModeSetup(_Target1Pin.Chip, _Target1Pin.port, _Target1Pin.PinNumber, PinMode.Input);
-            //MCP23Controller.PinModeSetup(_Target2Pin.Chip, _Target2Pin.port, _Target2Pin.PinNumber, PinMode.Input);
-            //MCP23Controller.PinModeSetup(_Target3Pin.Chip, _Target3Pin.port, _Target3Pin.PinNumber, PinMode.Input);
-            //MCP23Controller.PinModeSetup(_Target4Pin.Chip, _Target4Pin.port, _Target4Pin.PinNumber, PinMode.Input);
-            //MCP23Controller.PinModeSetup(_Target5Pin.Chip, _Target5Pin.port, _Target5Pin.PinNumber, PinMode.Input);
+            MCP23Controller.PinModeSetup(_Target1Pin.Chip, _Target1Pin.port, _Target1Pin.PinNumber, PinMode.Input);
+            MCP23Controller.PinModeSetup(_Target2Pin.Chip, _Target2Pin.port, _Target2Pin.PinNumber, PinMode.Input);
+            MCP23Controller.PinModeSetup(_Target3Pin.Chip, _Target3Pin.port, _Target3Pin.PinNumber, PinMode.Input);
+            MCP23Controller.PinModeSetup(_Target4Pin.Chip, _Target4Pin.port, _Target4Pin.PinNumber, PinMode.Input);
+            MCP23Controller.PinModeSetup(_Target5Pin.Chip, _Target5Pin.port, _Target5Pin.PinNumber, PinMode.Input);
         }
         public void Select(bool Selected)
         {
