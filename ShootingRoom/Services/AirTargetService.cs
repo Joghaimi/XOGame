@@ -64,29 +64,29 @@ namespace ShootingRoom.Services
                 {
                     timer.Restart();
                     item.Select(true);
-                    while (timer.ElapsedMilliseconds <= 30000)
+                    while (timer.ElapsedMilliseconds <= 5000)
                     {
-                        if (!item.TargetOneStatus())
+                        if (item.TargetOneStatus())
                         {
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             Score++;
                         }
-                        if (!item.TargetTwoStatus())
+                        if (item.TargetTwoStatus())
                         {
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             Score++;
                         }
-                        if (!item.TargetThreeStatus())
+                        if (item.TargetThreeStatus())
                         {
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             Score++;
                         }
-                        if (!item.TargetFourStatus())
+                        if (item.TargetFourStatus())
                         {
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             Score++;
                         }
-                        if (!item.TargetFiveStatus())
+                        if (item.TargetFiveStatus())
                         {
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             Score++;
@@ -94,6 +94,7 @@ namespace ShootingRoom.Services
                         Thread.Sleep(10);
                     }
                     Console.WriteLine(Score);
+                    item.resetTarget();
                     item.Select(false);
                 }
 

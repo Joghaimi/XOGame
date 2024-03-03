@@ -15,6 +15,7 @@ namespace Library.AirTarget
     {
         public static bool IsMCP23ControllerInit = false;
         public static bool IsSelected = false;
+        public static bool TargetOneShootBefore, TargetTwoShootBefore, TargetThreeShootBefore, TargetFourShootBefore, TargetFiveShootBefore = false;
         MCP23Pin _ShelfLightPin, _Target1Pin, _Target2Pin, _Target3Pin, _Target4Pin, _Target5Pin;
         public AirTargetController(MCP23Pin ShelfLightPin, MCP23Pin Target1Pin, MCP23Pin Target2Pin,
                                    MCP23Pin Target3Pin, MCP23Pin Target4Pin, MCP23Pin Target5Pin)
@@ -42,23 +43,78 @@ namespace Library.AirTarget
         }
         public bool TargetOneStatus()
         {
-            return MCP23Controller.Read(_Target1Pin.Chip, _Target1Pin.port, _Target1Pin.PinNumber);
+            bool statusShoot = !MCP23Controller.Read(_Target1Pin.Chip, _Target1Pin.port, _Target1Pin.PinNumber);
+            if (statusShoot && !TargetOneShootBefore)
+            {
+                TargetOneShootBefore = true;
+                return statusShoot;
+            }
+            else
+            {
+                return false;
+            }
+
         }
         public bool TargetTwoStatus()
         {
-            return MCP23Controller.Read(_Target2Pin.Chip, _Target2Pin.port, _Target2Pin.PinNumber);
+
+            bool statusShoot = !MCP23Controller.Read(_Target2Pin.Chip, _Target2Pin.port, _Target2Pin.PinNumber);
+            if (statusShoot && !TargetTwoShootBefore)
+            {
+                TargetTwoShootBefore = true;
+                return statusShoot;
+            }
+            else
+            {
+                return false;
+            }
         }
         public bool TargetThreeStatus()
         {
-            return MCP23Controller.Read(_Target3Pin.Chip, _Target3Pin.port, _Target3Pin.PinNumber);
+            bool statusShoot = !MCP23Controller.Read(_Target3Pin.Chip, _Target3Pin.port, _Target3Pin.PinNumber);
+            if (statusShoot && !TargetThreeShootBefore)
+            {
+                TargetThreeShootBefore = true;
+                return statusShoot;
+            }
+            else
+            {
+                return false;
+            }
         }
         public bool TargetFourStatus()
         {
-            return MCP23Controller.Read(_Target4Pin.Chip, _Target4Pin.port, _Target4Pin.PinNumber);
+            bool statusShoot = !MCP23Controller.Read(_Target4Pin.Chip, _Target4Pin.port, _Target4Pin.PinNumber);
+            if (statusShoot && !TargetFourShootBefore)
+            {
+                TargetFourShootBefore = true;
+                return statusShoot;
+            }
+            else
+            {
+                return false;
+            }
         }
         public bool TargetFiveStatus()
         {
-            return MCP23Controller.Read(_Target5Pin.Chip, _Target5Pin.port, _Target5Pin.PinNumber);
+            bool statusShoot = !MCP23Controller.Read(_Target5Pin.Chip, _Target5Pin.port, _Target5Pin.PinNumber);
+            if (statusShoot && !TargetFourShootBefore)
+            {
+                TargetFourShootBefore = true;
+                return statusShoot;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public void resetTarget()
+        {
+            TargetOneShootBefore = false;
+            TargetTwoShootBefore = false;
+            TargetThreeShootBefore = false;
+            TargetFourShootBefore = false;
+            TargetFiveShootBefore = false;
         }
     }
 }
