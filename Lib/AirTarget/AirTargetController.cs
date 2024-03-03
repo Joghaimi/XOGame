@@ -42,19 +42,19 @@ namespace Library.AirTarget
         }
         public bool TargetOneStatus()
         {
-            return !MCP23Controller.Read(_Target1Pin.Chip, _Target1Pin.port, _Target1Pin.PinNumber);
+            return MCP23Controller.Read(_Target1Pin.Chip, _Target1Pin.port, _Target1Pin.PinNumber);
         }
         public bool TargetTwoStatus()
         {
-            return !MCP23Controller.Read(_Target2Pin.Chip, _Target2Pin.port, _Target2Pin.PinNumber);
+            return MCP23Controller.Read(_Target2Pin.Chip, _Target2Pin.port, _Target2Pin.PinNumber);
         }
         public bool TargetThreeStatus()
         {
-            return !MCP23Controller.Read(_Target3Pin.Chip, _Target3Pin.port, _Target3Pin.PinNumber);
+            return MCP23Controller.Read(_Target3Pin.Chip, _Target3Pin.port, _Target3Pin.PinNumber);
         }
         public bool TargetFourStatus()
         {
-            return !MCP23Controller.Read(_Target4Pin.Chip, _Target4Pin.port, _Target4Pin.PinNumber);
+            return MCP23Controller.Read(_Target4Pin.Chip, _Target4Pin.port, _Target4Pin.PinNumber);
         }
         public bool TargetFiveStatus()
         {

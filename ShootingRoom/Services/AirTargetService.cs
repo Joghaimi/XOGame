@@ -66,27 +66,27 @@ namespace ShootingRoom.Services
                     item.Select(true);
                     while (timer.ElapsedMilliseconds <= 30000)
                     {
-                        if (item.TargetOneStatus())
+                        if (!item.TargetOneStatus())
                         {
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             Score++;
                         }
-                        if (item.TargetTwoStatus())
+                        if (!item.TargetTwoStatus())
                         {
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             Score++;
                         }
-                        if (item.TargetThreeStatus())
+                        if (!item.TargetThreeStatus())
                         {
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             Score++;
                         }
-                        if (item.TargetFourStatus())
+                        if (!item.TargetFourStatus())
                         {
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             Score++;
                         }
-                        if (item.TargetFiveStatus())
+                        if (!item.TargetFiveStatus())
                         {
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             Score++;
