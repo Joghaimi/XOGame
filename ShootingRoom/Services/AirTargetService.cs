@@ -30,10 +30,14 @@ namespace ShootingRoom.Services
         {
             GameStopWatch.Start();
             // TO DO Init The RGB Light .. 
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR1, HatInputPin.IR1, HatInputPin.IR2, HatInputPin.IR3, HatInputPin.IR4, HatInputPin.IR5));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR2, HatInputPin.IR6, HatInputPin.IR7, HatInputPin.IR8, HatInputPin.IR9, HatInputPin.IR10));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR3, HatInputPin.IR11, HatInputPin.IR12, HatInputPin.IR13, HatInputPin.IR14, HatInputPin.IR15));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR4, HatInputPin.IR16, HatInputPin.IR17, HatInputPin.IR18, HatInputPin.IR19, HatInputPin.IR20));
+            AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT1, HatInputPin.IR1, HatInputPin.IR2, HatInputPin.IR3, HatInputPin.IR4, HatInputPin.IR5));
+            AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT2, HatInputPin.IR6, HatInputPin.IR7, HatInputPin.IR8, HatInputPin.IR9, HatInputPin.IR10));
+            AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT3, HatInputPin.IR11, HatInputPin.IR12, HatInputPin.IR13, HatInputPin.IR14, HatInputPin.IR15));
+            AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT4, HatInputPin.IR16, HatInputPin.IR17, HatInputPin.IR18, HatInputPin.IR19, HatInputPin.IR20));
+            AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT5, HatInputPin.IR16, HatInputPin.IR17, HatInputPin.IR18, HatInputPin.IR19, HatInputPin.IR20));
+            AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT6, HatInputPin.IR16, HatInputPin.IR17, HatInputPin.IR18, HatInputPin.IR19, HatInputPin.IR20));
+            AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT7, HatInputPin.IR16, HatInputPin.IR17, HatInputPin.IR18, HatInputPin.IR19, HatInputPin.IR20));
+            AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT8, HatInputPin.IR16, HatInputPin.IR17, HatInputPin.IR18, HatInputPin.IR19, HatInputPin.IR20));
 
 
 
@@ -61,8 +65,11 @@ namespace ShootingRoom.Services
             while (!cancellationToken.IsCancellationRequested)
             {
 
+                int index = 0;
                 foreach (var item in AirTargetList)
                 {
+                    Console.WriteLine(index);
+                    index++;
                     item.Select(true);
                     Thread.Sleep(3000);
                     item.Select(false);
