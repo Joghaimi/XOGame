@@ -20,7 +20,7 @@ namespace ShootingRoom.Services
         {
             _controller = new GPIOController();
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
-            JQ8400AudioModule.init(SerialPort.Serial2);
+            //JQ8400AudioModule.init(SerialPort.Serial2);
 
             // Init the Pin's
             _controller.Setup(MasterDI.PIRPin1, PinMode.InputPullDown);
@@ -46,13 +46,13 @@ namespace ShootingRoom.Services
                 bool DoneOneTimeFlage = false;
                 if (VariableControlService.IsTheGameStarted)
                 {
-                    if (!DoneOneTimeFlage)
-                    {
-                        // Turn the Light Green
-                        RGBLight.SetColor(RGBColor.Green);
-                        //JQ8400AudioModule.PlayAudio((int)SoundType.Start);
-                        DoneOneTimeFlage = true;
-                    }
+                    //if (!DoneOneTimeFlage)
+                    //{
+                    //    // Turn the Light Green
+                    //    RGBLight.SetColor(RGBColor.Green);
+                    //    //JQ8400AudioModule.PlayAudio((int)SoundType.Start);
+                    //    DoneOneTimeFlage = true;
+                    //}
                 }
 
                 Thread.Sleep(10);

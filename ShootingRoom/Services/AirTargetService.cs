@@ -1,8 +1,10 @@
 ﻿using Library;
 using Library.AirTarget;
+using Library.GPIOLib;
 using Library.Media;
 using Library.PinMapping;
 using Library.RGBLib;
+using System.Device.Gpio;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -23,35 +25,26 @@ namespace ShootingRoom.Services
 
         int changingSpeed = 1000;
 
+        int Score = 0;
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            GameStopWatch.Start();
             // TO DO Init The RGB Light .. 
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR1, HatInputPin.IR1));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR2, HatInputPin.IR2));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR3, HatInputPin.IR3));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR4, HatInputPin.IR4));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR5, HatInputPin.IR5));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR6, HatInputPin.IR6));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR7, HatInputPin.IR7));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR8, HatInputPin.IR8));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR9, HatInputPin.IR9));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR10, HatInputPin.IR10));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR11, HatInputPin.IR11));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, HatInputPin.IR12));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, HatInputPin.IR13));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, HatInputPin.IR14));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, HatInputPin.IR15));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, HatInputPin.IR16));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, HatInputPin.IR17));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, HatInputPin.IR18));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, HatInputPin.IR19));
-            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR12, HatInputPin.IR20));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR1, HatInputPin.IR1, HatInputPin.IR2, HatInputPin.IR3, HatInputPin.IR4, HatInputPin.IR5));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR2, HatInputPin.IR6, HatInputPin.IR7, HatInputPin.IR8, HatInputPin.IR9, HatInputPin.IR10));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR3, HatInputPin.IR11, HatInputPin.IR12, HatInputPin.IR13, HatInputPin.IR14, HatInputPin.IR15));
+            AirTargetList.Add(new AirTargetController(RGBButtonPin.RGBR4, HatInputPin.IR16, HatInputPin.IR17, HatInputPin.IR18, HatInputPin.IR19, HatInputPin.IR20));
+
+
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            Task task1 = Task.Run(() => RunService(_cts.Token));
-            Task task2 = Task.Run(() => TimingService(_cts2.Token));
-            return Task.WhenAll(task1, task2);
+            Task.Run(() => RunService(_cts.Token));
+            return Task.CompletedTask;
+            //_cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            //Task task1 = Task.Run(() => RunService(_cts.Token));
+            //Task task2 = Task.Run(() => TimingService(_cts2.Token));
+            //Task.Run(() => RunService(_cts.Token));
+            //Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
@@ -67,41 +60,82 @@ namespace ShootingRoom.Services
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                if (VariableControlService.IsTheGameStarted && IsTimerStarted)
+
+                foreach (var item in AirTargetList)
                 {
-                    if (!activeTarget && timerToStart.ElapsedMilliseconds > randomTime)
-                    {
-                        activeTarget = true;
-                        activeTargetIndox = random.Next(0, 8);
-                        AirTargetList[activeTargetIndox].Select(true);
-                        timer.Restart();
-                        timerToStart.Restart();
-                        randomTime = random.Next(5000, 15000);
-                    }
-                    if (activeTarget & timer.ElapsedMilliseconds >= changingSpeed)
-                    {
-                        AirTargetList[activeTargetIndox].Select(false);
-                        activeTargetIndox = -1;
-                        activeTarget = false;
-                        timer.Restart();
-                        timerToStart.Restart();
-                    }
-                    if (activeTarget && activeTargetIndox > -1)
-                    {
-                        bool isPreesed = AirTargetList[activeTargetIndox].Status();
-                        if (isPreesed)
-                        {
-                            activeTarget = false;
-                            AirTargetList[activeTargetIndox].Select(false);
-                            JQ8400AudioModule.PlayAudio((int)SoundType.Bonus);
-                            VariableControlService.ActiveTargetPressed++;
-                            Console.WriteLine($"Score {VariableControlService.ActiveTargetPressed}");
-                            activeTargetIndox = -1;
-                            timerToStart.Restart();
-                            timer.Restart();
-                        }
-                    }
+                    item.Select(true);
+                    Thread.Sleep(3000);
+                    item.Select(false);
+                    Thread.Sleep(3000);
+
+                    //GameStopWatch.Restart();
+                    //item.Select(true);
+                    //while (timer.ElapsedMilliseconds >= 30000)
+                    //{
+                    //    if (item.TargetOneStatus()) {
+                    //        AudioPlayer.PIStartAudio(SoundType.Bonus);
+                    //        Score++;
+                    //    }
+                    //    if (item.TargetTwoStatus())
+                    //    {
+                    //        AudioPlayer.PIStartAudio(SoundType.Bonus);
+                    //        Score++;
+                    //    }
+                    //    if (item.TargetThreeStatus())
+                    //    {
+                    //        AudioPlayer.PIStartAudio(SoundType.Bonus);
+                    //        Score++;
+                    //    }
+                    //    if (item.TargetFourStatus())
+                    //    {
+                    //        AudioPlayer.PIStartAudio(SoundType.Bonus);
+                    //        Score++;
+                    //    }
+                    //    if (item.TargetFiveStatus())
+                    //    {
+                    //        AudioPlayer.PIStartAudio(SoundType.Bonus);
+                    //        Score++;
+                    //    }
+                    //    Thread.Sleep(10);
+                    //}
+                    //item.Select(false);
                 }
+
+                //if (VariableControlService.IsTheGameStarted && IsTimerStarted)
+                //{
+                //    if (!activeTarget && timerToStart.ElapsedMilliseconds > randomTime)
+                //    {
+                //        activeTarget = true;
+                //        activeTargetIndox = random.Next(0, 8);
+                //        AirTargetList[activeTargetIndox].Select(true);
+                //        timer.Restart();
+                //        timerToStart.Restart();
+                //        randomTime = random.Next(5000, 15000);
+                //    }
+                //    if (activeTarget & timer.ElapsedMilliseconds >= changingSpeed)
+                //    {
+                //        AirTargetList[activeTargetIndox].Select(false);
+                //        activeTargetIndox = -1;
+                //        activeTarget = false;
+                //        timer.Restart();
+                //        timerToStart.Restart();
+                //    }
+                //    if (activeTarget && activeTargetIndox > -1)
+                //    {
+                //        bool isPreesed = AirTargetList[activeTargetIndox].Status();
+                //        if (isPreesed)
+                //        {
+                //            activeTarget = false;
+                //            AirTargetList[activeTargetIndox].Select(false);
+                //            JQ8400AudioModule.PlayAudio((int)SoundType.Bonus);
+                //            VariableControlService.ActiveTargetPressed++;
+                //            Console.WriteLine($"Score {VariableControlService.ActiveTargetPressed}");
+                //            activeTargetIndox = -1;
+                //            timerToStart.Restart();
+                //            timer.Restart();
+                //        }
+                //    }
+                //}
                 // Sleep for a short duration to avoid excessive checking
                 Thread.Sleep(10);
             }
