@@ -64,7 +64,7 @@ namespace ShootingRoom.Services
                 {
                     GameStopWatch.Restart();
                     item.Select(true);
-                    while (timer.ElapsedMilliseconds >= 30000)
+                    while (timer.ElapsedMilliseconds <= 30000)
                     {
                         if (item.TargetOneStatus())
                         {
