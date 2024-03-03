@@ -62,7 +62,7 @@ namespace ShootingRoom.Services
                 int index = 0;
                 foreach (var item in AirTargetList)
                 {
-                    GameStopWatch.Restart();
+                    timer.Restart();
                     item.Select(true);
                     while (timer.ElapsedMilliseconds <= 30000)
                     {
