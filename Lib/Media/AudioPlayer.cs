@@ -135,7 +135,7 @@ namespace Library.Media
             switch (_currentRoom)
             {
                 case Room.Fort:
-                    return "/home/Fort/XOGame";
+                    return "/home/fort/XOGame";
                 case Room.Dark:
                     return "/home/Dark/XOGame";
                 case Room.Diving:
