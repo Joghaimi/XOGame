@@ -119,7 +119,7 @@ namespace Library.Media
                 case SoundType.Winner1:
                     break;
                 case SoundType.Background:
-                    soundFilePath = $"{HomePath()}/audio/FloorLava.mp3";
+                    soundFilePath = $"{HomePath()}/audio/{BackgroundSound()}";
 
                     break;
                 default:
@@ -151,6 +151,26 @@ namespace Library.Media
             }
         }
 
+        private static string BackgroundSound()
+        {
+            switch (_currentRoom)
+            {
+                case Room.Fort:
+                    return "Background.wav";
+                case Room.Dark:
+                    return "/home/Dark/XOGame";
+                case Room.Diving:
+                    return "/home/diving/XOGame";
+                case Room.FloorIsLava:
+                    return "/home/floor/XOGame";
+                case Room.Gathering:
+                    return "/home/Gathering/XOGame";
+                case Room.Shooting:
+                    return "/home/Shooting/XOGame";
+                default:
+                    return "/home/pi/XOGame";
+            }
+        }
 
     }
 }
