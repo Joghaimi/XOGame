@@ -86,10 +86,10 @@ namespace Library.Media
                 case SoundType.Done:
                     break;
                 case SoundType.Bonus:
-                    soundFilePath = "/home/diving/XOGame/audio/GameBonus.mp3";
+                    soundFilePath = $"{HomePath()}/audio/GameBonus.mp3";
                     break;
                 case SoundType.Finish:
-                    soundFilePath = "/home/diving/XOGame/audio/Gamefinish.mp3";
+                    soundFilePath = $"{HomePath()}/audio/Gamefinish.mp3";
                     break;
                 case SoundType.Start:
                     break;
@@ -106,7 +106,7 @@ namespace Library.Media
                 case SoundType.Descend2:
                     break;
                 case SoundType.Descend:
-                    soundFilePath = "/home/diving/XOGame/audio/GameBonus.mp3";
+                    soundFilePath = $"{HomePath()}/audio/GameBonus.mp3";
                     break;
                 case SoundType.GameOver:
                     break;
@@ -119,7 +119,7 @@ namespace Library.Media
                 case SoundType.Winner1:
                     break;
                 case SoundType.Background:
-                    soundFilePath = "/home/diving/XOGame/audio/FloorLava.mp3";
+                    soundFilePath = $"{HomePath()}/audio/FloorLava.mp3";
 
                     break;
                 default:
