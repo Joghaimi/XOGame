@@ -51,7 +51,7 @@ namespace FortRoom.Services
             GameStopWatch.Start();
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             //_cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            //Task task1 = Task.Run(() => RunService(_cts.Token));
+            Task task1 = Task.Run(() => RunService(_cts.Token));
             //Task task2 = Task.Run(() => TimingService(_cts2.Token));
             return Task.CompletedTask;
         }
