@@ -34,6 +34,7 @@ namespace FortRoom.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            MCP23Controller.Init(true);
             _appLifetime.ApplicationStopping.Register(Stopped);
             _logger.LogWarning("Start RGBButtonService");
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR5, RGBButtonPin.RGBG5, RGBButtonPin.RGBB5, RGBButtonPin.RGBPB5));
