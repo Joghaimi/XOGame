@@ -176,6 +176,7 @@ namespace FloorIsLava.Services
                             break;
 
                     }
+                    Console.WriteLine("Game Endded");
 
                     RGBLight.SetColor(RGBColor.Blue);
 
