@@ -82,8 +82,8 @@ namespace FloorIsLava.Services
 
                 }
 
-                if (IN6 || IN5)
-                    break;
+                //if (IN6 || IN5)
+                //    break;
 
             }
             // tEST
