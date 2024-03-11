@@ -31,7 +31,7 @@ namespace FloorIsLava.Services
             MCP23Controller.PinModeSetup(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterDI.IN4.Chip, MasterDI.IN4.port, MasterDI.IN4.PinNumber, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber, PinMode.Input);
-            MCP23Controller.PinModeSetup(MasterDI.IN6.Chip, MasterDI.IN6.port, MasterDI.IN6.PinNumber, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinMode.Output);
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinMode.Output);
             GameStopWatch.Start();
@@ -58,7 +58,7 @@ namespace FloorIsLava.Services
                     RGBLight.TurnRGBRedDelayed();
                     Console.WriteLine("IN5 PRESSED ====");
                 }
-                if (!MCP23Controller.Read(MasterDI.IN6.Chip, MasterDI.IN6.port, MasterDI.IN6.PinNumber) && !IN6)
+                if (!MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber) && !IN6)
                 {
                     IN6 = true;
                     AudioPlayer.PIStartAudio(SoundType.Bonus);
@@ -76,7 +76,7 @@ namespace FloorIsLava.Services
                 }
                 if (IN6)
                 {
-                    IN6 = !MCP23Controller.Read(MasterDI.IN6.Chip, MasterDI.IN6.port, MasterDI.IN6.PinNumber);
+                    IN6 = !MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber);
                     if(!IN6)
                         Console.WriteLine("IN6 bREAK ====");
 
