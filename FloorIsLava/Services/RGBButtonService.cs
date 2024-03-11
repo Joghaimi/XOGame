@@ -147,19 +147,9 @@ namespace FloorIsLava.Services
                             IN5 = true;
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             RGBLight.SetColor(RGBColor.Blue);
-                            if (IN6 && !MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber))
+                            if (!IN6)
                                 RGBLight.TurnRGBRedDelayed();
                             Console.WriteLine("IN5 PRESSED ====");
-                        }
-                        if (!MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber) && !IN6)
-                        {
-                            IN6 = true;
-                            AudioPlayer.PIStartAudio(SoundType.Bonus);
-                            RGBLight.SetColor(RGBColor.Blue);
-                            if (IN5 && !MCP23Controller.Read(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber))
-                                RGBLight.TurnRGBRedDelayed();
-                            Console.WriteLine("IN6 PRESSED ====");
-
                         }
                         if (IN5)
                         {
@@ -168,6 +158,17 @@ namespace FloorIsLava.Services
                                 Console.WriteLine("IN5 bREAK ====");
 
                         }
+                        if (!MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber) && !IN6)
+                        {
+                            IN6 = true;
+                            AudioPlayer.PIStartAudio(SoundType.Bonus);
+                            RGBLight.SetColor(RGBColor.Blue);
+                            if (!IN5)
+                                RGBLight.TurnRGBRedDelayed();
+                            Console.WriteLine("IN6 PRESSED ====");
+
+                        }
+
                         if (IN6)
                         {
                             IN6 = !MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber);
