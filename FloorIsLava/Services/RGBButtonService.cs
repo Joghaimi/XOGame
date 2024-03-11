@@ -143,6 +143,7 @@ namespace FloorIsLava.Services
                     MCP23Controller.Write(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinState.High);
                     while (true)
                     {
+                        pressureMateTest();
                         if (!MCP23Controller.Read(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber) && !IN5)
                         {
                             IN5 = true;
