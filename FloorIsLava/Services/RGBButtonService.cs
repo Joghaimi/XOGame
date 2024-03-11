@@ -203,9 +203,7 @@ namespace FloorIsLava.Services
                 justDecrease = true;
                 GameStopWatch.Restart();
                 Console.WriteLine("Pressure mat Pressed");
-                //RGBLight.SetColor(RGBColor.Red);
                 AudioPlayer.PIStartAudio(SoundType.Descend);
-                //RGBLight.TurnRGBRedDelayed();
                 PressureMatPressed = true;
                 if (pressureMAtCount)
                 {
@@ -220,46 +218,6 @@ namespace FloorIsLava.Services
 
                 justDecrease = false;
             }
-        }
-        private async Task PressureMat(CancellationToken cancellationToken)
-        {
-            bool currentValue = false;
-            while (true)
-            {
-                currentValue = MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
-                if (!currentValue)
-                {
-                    Console.WriteLine("Pressure mat Pressed");
-                    RGBLight.SetColor(RGBColor.Red);
-                    AudioPlayer.PIStartAudio(SoundType.Descend);
-                    RGBLight.TurnRGBOFFDelayed();
-                    PressureMatPressed = true;
-                    if (pressureMAtCount)
-                        Thread.Sleep(15000);
-                    PressureMatPressed = false;
-                }
-                Thread.Sleep(100);
-            }
-            //if (VariableControlService.IsTheGameStarted)
-            //{
-            //    if (!IsTimerStarted)
-            //    {
-            //        GameStopWatch.Start();
-            //        IsTimerStarted = true;
-            //    }
-            //}
-            //while (true)
-            //{
-            //    if (GameStopWatch.ElapsedMilliseconds > SlowPeriod && GameStopWatch.ElapsedMilliseconds < MediumPeriod)
-            //    {
-            //        changingSpeed = mediumChangeTime;
-            //    }
-            //    else if (GameStopWatch.ElapsedMilliseconds > MediumPeriod)
-            //    {
-            //        changingSpeed = highChangeTime;
-            //    }
-            //    Thread.Sleep(10);
-            //}
         }
         public Task StopAsync(CancellationToken cancellationToken)
         {

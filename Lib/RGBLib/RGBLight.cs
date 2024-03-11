@@ -38,7 +38,7 @@ namespace Library.RGBLib
             uint blue = 0;
             uint green = 0;
             uint red = 0;
-
+            Console.WriteLine(selectedColor.ToString());
             switch (selectedColor)
             {
                 case RGBColor.Red:
