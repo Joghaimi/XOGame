@@ -61,7 +61,6 @@ namespace Library.Media
         }
         public static void PIBackgroundSound(SoundType soundType)
         {
-            return;
 
             soundFilePath = PISoundPath(soundType);
             //Console.WriteLine(soundFilePath);
@@ -163,9 +162,9 @@ namespace Library.Media
                 case Room.Dark:
                     return "/home/Dark/XOGame";
                 case Room.Diving:
-                    return "/home/diving/XOGame";
+                    return "FloorLava.mp3";
                 case Room.FloorIsLava:
-                    return "/home/floor/XOGame";
+                    return "FloorLava.mp3";
                 case Room.Gathering:
                     return "/home/Gathering/XOGame";
                 case Room.Shooting:
