@@ -45,8 +45,48 @@ namespace FloorIsLava.Services
         private async Task RunService(CancellationToken cancellationToken)
         {
             RGBLight.SetColor(RGBColor.Red);
-
+            
+            // tEST
+            MCP23Controller.Write(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinState.High);
             while (true)
+            {
+                if (!MCP23Controller.Read(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber) && !IN5)
+                {
+                    IN5 = true;
+                    AudioPlayer.PIStartAudio(SoundType.Bonus);
+                    RGBLight.SetColor(RGBColor.Blue);
+                    RGBLight.TurnRGBRedDelayed();
+                    Console.WriteLine("IN5 PRESSED ====");
+                }
+                if (!MCP23Controller.Read(MasterDI.IN6.Chip, MasterDI.IN6.port, MasterDI.IN6.PinNumber) && !IN6)
+                {
+                    IN6 = true;
+                    AudioPlayer.PIStartAudio(SoundType.Bonus);
+                    RGBLight.SetColor(RGBColor.Blue);
+                    RGBLight.TurnRGBRedDelayed();
+                    Console.WriteLine("IN6 PRESSED ====");
+
+                }
+                if (!IN5)
+                {
+                    IN5 = !MCP23Controller.Read(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber);
+                    Console.WriteLine("IN5 bREAK ====");
+
+                }
+                if (!IN6)
+                {
+                    IN6 = !MCP23Controller.Read(MasterDI.IN6.Chip, MasterDI.IN6.port, MasterDI.IN6.PinNumber);
+                    Console.WriteLine("IN6 bREAK ====");
+
+                }
+
+                if (IN6 || IN5)
+                    break;
+
+            }
+            // tEST
+
+            while (false)
             {
 
 
@@ -105,7 +145,7 @@ namespace FloorIsLava.Services
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             RGBLight.SetColor(RGBColor.Blue);
                             RGBLight.TurnRGBRedDelayed();
-                            Console.WriteLine("====");
+                            Console.WriteLine("IN5 PRESSED ====");
                         }
                         if (!MCP23Controller.Read(MasterDI.IN6.Chip, MasterDI.IN6.port, MasterDI.IN6.PinNumber) && !IN6)
                         {
@@ -113,7 +153,7 @@ namespace FloorIsLava.Services
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             RGBLight.SetColor(RGBColor.Blue);
                             RGBLight.TurnRGBRedDelayed();
-                            Console.WriteLine("====");
+                            Console.WriteLine("IN6 PRESSED ====");
 
                         }
                         if (!IN5) {
