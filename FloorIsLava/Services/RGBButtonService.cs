@@ -172,7 +172,7 @@ namespace FloorIsLava.Services
                                 Console.WriteLine("IN6 bREAK ====");
 
                         }
-                        if (IN6 || IN5)
+                        if (IN6 && IN5)
                             break;
 
                     }
