@@ -13,7 +13,7 @@ namespace FloorIsLava.Services
     {
         List<RGBButton> RGBButtonList = new List<RGBButton>();
         private CancellationTokenSource _cts, _cts2;
-        bool IN4, IN2, IN3 = false;
+        bool IN4, IN2, IN3 ,IN5,IN6 = false;
         bool PressureMatPressed = false;
         bool IsTimerStarted = false;
         Stopwatch GameStopWatch = new Stopwatch();
@@ -30,7 +30,10 @@ namespace FloorIsLava.Services
             MCP23Controller.PinModeSetup(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterDI.IN4.Chip, MasterDI.IN4.port, MasterDI.IN4.PinNumber, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN6.Chip, MasterDI.IN6.port, MasterDI.IN6.PinNumber, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinMode.Output);
+            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinMode.Output);
             GameStopWatch.Start();
             AudioPlayer.PIBackgroundSound(SoundType.Background);
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -49,16 +52,16 @@ namespace FloorIsLava.Services
                 {
                     IN2 = true;
                     AudioPlayer.PIStartAudio(SoundType.Bonus);
-                    RGBLight.SetColor(RGBColor.Green);
-                    RGBLight.TurnRGBOFFDelayed();
+                    RGBLight.SetColor(RGBColor.Blue);
+                    RGBLight.TurnRGBRedDelayed();
                     Console.WriteLine("====");
                 }
                 if (!MCP23Controller.Read(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber) && !IN3)
                 {
                     IN3 = true;
                     AudioPlayer.PIStartAudio(SoundType.Bonus);
-                    RGBLight.SetColor(RGBColor.Green);
-                    RGBLight.TurnRGBOFFDelayed();
+                    RGBLight.SetColor(RGBColor.Blue);
+                    RGBLight.TurnRGBRedDelayed();
                     Console.WriteLine("====");
 
                 }
@@ -66,8 +69,8 @@ namespace FloorIsLava.Services
                 {
                     IN4 = true;
                     AudioPlayer.PIStartAudio(SoundType.Bonus);
-                    RGBLight.SetColor(RGBColor.Green);
-                    RGBLight.TurnRGBOFFDelayed();
+                    RGBLight.SetColor(RGBColor.Blue);
+                    RGBLight.TurnRGBRedDelayed();
                     Console.WriteLine("====");
 
                 }
@@ -90,6 +93,40 @@ namespace FloorIsLava.Services
                     MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
                     RGBButtonList[0].TurnColorOn(RGBColor.Blue);
                     RGBLight.SetColor(RGBColor.Blue);
+                    RGBLight.TurnRGBRedDelayed();
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinState.Low);
+                    while (true)
+                    {
+                        if (!MCP23Controller.Read(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber) && !IN5)
+                        {
+                            IN5 = true;
+                            AudioPlayer.PIStartAudio(SoundType.Bonus);
+                            RGBLight.SetColor(RGBColor.Blue);
+                            RGBLight.TurnRGBRedDelayed();
+                            Console.WriteLine("====");
+                        }
+                        if (!MCP23Controller.Read(MasterDI.IN6.Chip, MasterDI.IN6.port, MasterDI.IN6.PinNumber) && !IN6)
+                        {
+                            IN6 = true;
+                            AudioPlayer.PIStartAudio(SoundType.Bonus);
+                            RGBLight.SetColor(RGBColor.Blue);
+                            RGBLight.TurnRGBRedDelayed();
+                            Console.WriteLine("====");
+
+                        }
+                        if (!IN5) {
+                            IN5 = !MCP23Controller.Read(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber);
+                        }
+                        if (!IN6) {
+                            IN6 = !MCP23Controller.Read(MasterDI.IN6.Chip, MasterDI.IN6.port, MasterDI.IN6.PinNumber);
+                        }
+
+                        if(IN6 || IN5)
+                            break;
+
+                    }
+
+                    //MCP23Controller.Write(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinState.Low);
                     AudioPlayer.PIStartAudio(SoundType.Finish);
                     IN2 = false;
                     IN3 = false;
@@ -169,9 +206,9 @@ namespace FloorIsLava.Services
                 justDecrease = true;
                 GameStopWatch.Restart();
                 Console.WriteLine("Pressure mat Pressed");
-                RGBLight.SetColor(RGBColor.Red);
+                //RGBLight.SetColor(RGBColor.Red);
                 AudioPlayer.PIStartAudio(SoundType.Descend);
-                RGBLight.TurnRGBOFFDelayed();
+                //RGBLight.TurnRGBRedDelayed();
                 PressureMatPressed = true;
                 if (pressureMAtCount)
                 {
@@ -181,7 +218,8 @@ namespace FloorIsLava.Services
                 }
                 PressureMatPressed = false;
             }
-            if (justDecrease && GameStopWatch.ElapsedMilliseconds>3000) {
+            if (justDecrease && GameStopWatch.ElapsedMilliseconds > 3000)
+            {
 
                 justDecrease = false;
             }

@@ -110,6 +110,14 @@ namespace Library.RGBLib
                 SetColor(RGBColor.Off);
             });
         }
+        public static async Task TurnRGBRedDelayed()
+        {
+            Task.Run(async () =>
+            {
+                await Task.Delay(1000);
+                SetColor(RGBColor.Red);
+            });
+        }
         public static async Task TurnRGBOffAfter1Sec()
         {
             //if (!rgbWaitBussy)
