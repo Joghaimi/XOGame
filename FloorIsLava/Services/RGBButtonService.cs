@@ -46,49 +46,49 @@ namespace FloorIsLava.Services
         {
             RGBLight.SetColor(RGBColor.Red);
             
-            // tEST
-            MCP23Controller.Write(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinState.High);
+            //// tEST
+            //MCP23Controller.Write(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinState.High);
+            //while (true)
+            //{
+            //    if (!MCP23Controller.Read(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber) && !IN5)
+            //    {
+            //        IN5 = true;
+            //        AudioPlayer.PIStartAudio(SoundType.Bonus);
+            //        RGBLight.SetColor(RGBColor.Blue);
+            //        RGBLight.TurnRGBRedDelayed();
+            //        Console.WriteLine("IN5 PRESSED ====");
+            //    }
+            //    if (!MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber) && !IN6)
+            //    {
+            //        IN6 = true;
+            //        AudioPlayer.PIStartAudio(SoundType.Bonus);
+            //        RGBLight.SetColor(RGBColor.Blue);
+            //        RGBLight.TurnRGBRedDelayed();
+            //        Console.WriteLine("IN6 PRESSED ====");
+
+            //    }
+            //    if (IN5)
+            //    {
+            //        IN5 = !MCP23Controller.Read(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber);
+            //        if(!IN5)
+            //            Console.WriteLine("IN5 bREAK ====");
+
+            //    }
+            //    if (IN6)
+            //    {
+            //        IN6 = !MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber);
+            //        if(!IN6)
+            //            Console.WriteLine("IN6 bREAK ====");
+
+            //    }
+
+            //    //if (IN6 || IN5)
+            //    //    break;
+
+            //}
+            //// tEST
+
             while (true)
-            {
-                if (!MCP23Controller.Read(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber) && !IN5)
-                {
-                    IN5 = true;
-                    AudioPlayer.PIStartAudio(SoundType.Bonus);
-                    RGBLight.SetColor(RGBColor.Blue);
-                    RGBLight.TurnRGBRedDelayed();
-                    Console.WriteLine("IN5 PRESSED ====");
-                }
-                if (!MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber) && !IN6)
-                {
-                    IN6 = true;
-                    AudioPlayer.PIStartAudio(SoundType.Bonus);
-                    RGBLight.SetColor(RGBColor.Blue);
-                    RGBLight.TurnRGBRedDelayed();
-                    Console.WriteLine("IN6 PRESSED ====");
-
-                }
-                if (IN5)
-                {
-                    IN5 = !MCP23Controller.Read(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber);
-                    if(!IN5)
-                    Console.WriteLine("IN5 bREAK ====");
-
-                }
-                if (IN6)
-                {
-                    IN6 = !MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber);
-                    if(!IN6)
-                        Console.WriteLine("IN6 bREAK ====");
-
-                }
-
-                //if (IN6 || IN5)
-                //    break;
-
-            }
-            // tEST
-
-            while (false)
             {
 
 
@@ -149,7 +149,7 @@ namespace FloorIsLava.Services
                             RGBLight.TurnRGBRedDelayed();
                             Console.WriteLine("IN5 PRESSED ====");
                         }
-                        if (!MCP23Controller.Read(MasterDI.IN6.Chip, MasterDI.IN6.port, MasterDI.IN6.PinNumber) && !IN6)
+                        if (!MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber) && !IN6)
                         {
                             IN6 = true;
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
@@ -158,17 +158,26 @@ namespace FloorIsLava.Services
                             Console.WriteLine("IN6 PRESSED ====");
 
                         }
-                        if (!IN5) {
+                        if (IN5)
+                        {
                             IN5 = !MCP23Controller.Read(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber);
-                        }
-                        if (!IN6) {
-                            IN6 = !MCP23Controller.Read(MasterDI.IN6.Chip, MasterDI.IN6.port, MasterDI.IN6.PinNumber);
-                        }
+                            if (!IN5)
+                                Console.WriteLine("IN5 bREAK ====");
 
-                        if(IN6 || IN5)
+                        }
+                        if (IN6)
+                        {
+                            IN6 = !MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber);
+                            if (!IN6)
+                                Console.WriteLine("IN6 bREAK ====");
+
+                        }
+                        if (IN6 || IN5)
                             break;
 
                     }
+
+                    RGBLight.SetColor(RGBColor.Blue);
 
                     //MCP23Controller.Write(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinState.Low);
                     AudioPlayer.PIStartAudio(SoundType.Finish);
