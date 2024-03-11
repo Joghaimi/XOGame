@@ -70,13 +70,15 @@ namespace FloorIsLava.Services
                 if (IN5)
                 {
                     IN5 = !MCP23Controller.Read(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber);
+                    if(!IN5)
                     Console.WriteLine("IN5 bREAK ====");
 
                 }
                 if (IN6)
                 {
                     IN6 = !MCP23Controller.Read(MasterDI.IN6.Chip, MasterDI.IN6.port, MasterDI.IN6.PinNumber);
-                    Console.WriteLine("IN6 bREAK ====");
+                    if(!IN6)
+                        Console.WriteLine("IN6 bREAK ====");
 
                 }
 
