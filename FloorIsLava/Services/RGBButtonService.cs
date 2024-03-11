@@ -137,63 +137,6 @@ namespace FloorIsLava.Services
 
 
             }
-            //bool activeButton = false;
-            //Stopwatch timer = new Stopwatch();
-            //Stopwatch timerToStart = new Stopwatch();
-            //int activeButtonIndox = -1;
-            //Random random = new Random();
-            //int randomTime = random.Next(1000, 5000);
-            //timerToStart.Start();
-            //timer.Start();
-            //Console.WriteLine("Started .... ");
-            //while (!cancellationToken.IsCancellationRequested)
-            //{
-
-            //    if (VariableControlService.IsTheGameStarted)
-            //    {
-            //        if (!activeButton && timerToStart.ElapsedMilliseconds > randomTime)
-            //        {
-
-            //            activeButton = true;
-            //            activeButtonIndox = random.Next(0, 12);
-            //            Console.WriteLine($"Button {activeButtonIndox} Activated");
-            //            RGBLight.SetColor(RGBColor.Off);
-            //            JQ8400AudioModule.PlayAudio((int)SoundType.Button);
-            //            RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Green);
-            //            timer.Restart();
-            //            timerToStart.Restart();
-            //            randomTime = random.Next(1000, 5000);
-            //        }
-            //        if (activeButton & timer.ElapsedMilliseconds >= 5000)//changingSpeed)
-            //        {
-            //            RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
-            //            Console.WriteLine($"Button {activeButtonIndox} Deactivated");
-            //            activeButtonIndox = -1;
-            //            activeButton = false;
-            //            timer.Restart();
-            //            timerToStart.Restart();
-            //        }
-            //        if (activeButton && activeButtonIndox > -1)
-            //        {
-            //            bool isPressed = !RGBButtonList[activeButtonIndox].CurrentStatus();
-            //            if (isPressed)
-            //            {
-            //                JQ8400AudioModule.PlayAudio((int)SoundType.Bonus);
-            //                activeButton = false;
-            //                RGBButtonList[activeButtonIndox].TurnColorOn(RGBColor.Off);
-            //                RGBLight.SetColor(RGBColor.Green);
-            //                VariableControlService.ActiveButtonPressed++;
-            //                Console.WriteLine($"Button {activeButtonIndox} Pressed");
-            //                Console.WriteLine($"Current Score {VariableControlService.ActiveButtonPressed}");
-            //                activeButtonIndox = -1;
-            //                timerToStart.Restart();
-            //                timer.Restart();
-            //            }
-            //        }
-            //    }
-            // Sleep for a short duration to avoid excessive checking
-            //    Thread.Sleep(10);
-            //}
         }
         bool justDecrease = false;
         private void pressureMateTest()
