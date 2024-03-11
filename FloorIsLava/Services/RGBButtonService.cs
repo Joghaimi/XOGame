@@ -138,6 +138,7 @@ namespace FloorIsLava.Services
                     MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
                     RGBButtonList[0].TurnColorOn(RGBColor.Blue);
                     RGBLight.SetColor(RGBColor.Blue);
+                    AudioPlayer.PIStartAudio(SoundType.Bonus);
                     RGBLight.TurnRGBRedDelayed();
                     MCP23Controller.Write(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinState.High);
                     while (true)
