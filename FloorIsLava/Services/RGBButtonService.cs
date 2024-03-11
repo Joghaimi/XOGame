@@ -13,7 +13,7 @@ namespace FloorIsLava.Services
     {
         List<RGBButton> RGBButtonList = new List<RGBButton>();
         private CancellationTokenSource _cts, _cts2;
-        bool IN4, IN2, IN3 ,IN5,IN6 = false;
+        bool IN4, IN2, IN3, IN5, IN6 = false;
         bool PressureMatPressed = false;
         bool IsTimerStarted = false;
         Stopwatch GameStopWatch = new Stopwatch();
@@ -44,8 +44,9 @@ namespace FloorIsLava.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
+            Console.WriteLine("Main");
             RGBLight.SetColor(RGBColor.Red);
-            
+
             //// tEST
             //MCP23Controller.Write(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinState.High);
             //while (true)
@@ -146,7 +147,8 @@ namespace FloorIsLava.Services
                             IN5 = true;
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             RGBLight.SetColor(RGBColor.Blue);
-                            RGBLight.TurnRGBRedDelayed();
+                            if (IN6 && !MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber))
+                                RGBLight.TurnRGBRedDelayed();
                             Console.WriteLine("IN5 PRESSED ====");
                         }
                         if (!MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber) && !IN6)
@@ -154,7 +156,8 @@ namespace FloorIsLava.Services
                             IN6 = true;
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             RGBLight.SetColor(RGBColor.Blue);
-                            RGBLight.TurnRGBRedDelayed();
+                            if (IN5 && !MCP23Controller.Read(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber))
+                                RGBLight.TurnRGBRedDelayed();
                             Console.WriteLine("IN6 PRESSED ====");
 
                         }
@@ -219,6 +222,8 @@ namespace FloorIsLava.Services
                 justDecrease = false;
             }
         }
+
+
         public Task StopAsync(CancellationToken cancellationToken)
         {
             AudioPlayer.PIStopAudio();
