@@ -24,7 +24,6 @@ namespace Library.Media
         // For the PI
         public static void PIStartAudio(SoundType soundType)
         {
-            return;
             try
             {
                 //if (true)
