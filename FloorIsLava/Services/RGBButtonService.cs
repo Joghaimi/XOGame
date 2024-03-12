@@ -50,138 +50,173 @@ namespace FloorIsLava.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            Console.WriteLine("Main");
-            RGBLight.SetColor(RGBColor.Red);
-            while (true)
+            if (!ceilingMotorDown)
             {
-                if (!MCP23Controller.Read(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber) && !IN2)
-                {
-                    IN2 = true;
-                    AudioPlayer.PIStartAudio(SoundType.Bonus);
-                    RGBLight.SetColor(RGBColor.Blue);
-                    RGBLight.TurnRGBRedDelayed();
-                    Console.WriteLine("====");
-                    if (!ceilingMotorDown) {
-                        motorTiming = MotorStopWatch.ElapsedMilliseconds;
-                        MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
-                    }
-                    motorTiming += 5000;
-                    ceilingMotorDown = true;
-
-                }
-                if (!MCP23Controller.Read(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber) && !IN3)
-                {
-                    IN3 = true;
-                    AudioPlayer.PIStartAudio(SoundType.Bonus);
-                    RGBLight.SetColor(RGBColor.Blue);
-                    RGBLight.TurnRGBRedDelayed();
-                    Console.WriteLine("====");
-                    if (!ceilingMotorDown)
-                    {
-                        motorTiming = MotorStopWatch.ElapsedMilliseconds;
-                        MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
-                    }
-                    motorTiming += 5000;
-                    ceilingMotorDown = true;
-               
-                }
-                if (!MCP23Controller.Read(MasterDI.IN4.Chip, MasterDI.IN4.port, MasterDI.IN4.PinNumber) && !IN4)
-                {
-                    IN4 = true;
-                    AudioPlayer.PIStartAudio(SoundType.Bonus);
-                    RGBLight.SetColor(RGBColor.Blue);
-                    RGBLight.TurnRGBRedDelayed();
-                    Console.WriteLine("====");
-                    if (!ceilingMotorDown)
-                    {
-                        motorTiming = MotorStopWatch.ElapsedMilliseconds;
-                        MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
-                    }
-                    motorTiming += 5000;
-                    ceilingMotorDown = true;
-                  
-                }
-                pressureMat();
-                if (IN2 && IN3 && IN4)
-                {
-                    motorTiming = MotorStopWatch.ElapsedMilliseconds + 15000;
-                    ceilingMotoruUp = true;
-
-
-                    Console.WriteLine("Pressed all 3");
-                    RGBButtonList[0].TurnColorOn(RGBColor.Red);
-                    //MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
-                    pressureMAtCount = true;
-                    while (RGBButtonList[0].CurrentStatus() || PressureMatPressed)
-                    {
-                        pressureMat();
-                        Thread.Sleep(10);
-                    }
-                    pressureMAtCount = false;
-                    Console.WriteLine("Button Pressed");
-                    //MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
-                    RGBButtonList[0].TurnColorOn(RGBColor.Blue);
-                    RGBLight.SetColor(RGBColor.Blue);
-                    AudioPlayer.PIStartAudio(SoundType.Bonus);
-                    RGBLight.TurnRGBRedDelayed();
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinState.High);
-                    while (true)
-                    {
-                        pressureMat();
-                        if (!MCP23Controller.Read(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber) && !IN5)
-                        {
-                            IN5 = true;
-                            AudioPlayer.PIStartAudio(SoundType.Bonus);
-                            RGBLight.SetColor(RGBColor.Blue);
-                            if (!IN6)
-                                RGBLight.TurnRGBRedDelayed();
-                            Console.WriteLine("IN5 PRESSED ====");
-                        }
-                        pressureMat();
-                        if (IN5)
-                        {
-                            IN5 = !MCP23Controller.Read(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber);
-                            if (!IN5)
-                                Console.WriteLine("IN5 bREAK ====");
-
-                        }
-                        if (!MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber) && !IN6)
-                        {
-                            IN6 = true;
-                            AudioPlayer.PIStartAudio(SoundType.Bonus);
-                            RGBLight.SetColor(RGBColor.Blue);
-                            if (!IN5)
-                                RGBLight.TurnRGBRedDelayed();
-                            Console.WriteLine("IN6 PRESSED ====");
-
-                        }
-                        pressureMat();
-                        if (IN6)
-                        {
-                            IN6 = !MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber);
-                            if (!IN6)
-                                Console.WriteLine("IN6 bREAK ====");
-
-                        }
-                        if (IN6 && IN5)
-                            break;
-
-                    }
-                    Console.WriteLine("Game Endded");
-                    RGBLight.SetColor(RGBColor.Blue);
-                    //MCP23Controller.Write(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinState.Low);
-                    AudioPlayer.PIStopAudio();
-                    Thread.Sleep(300);
-                    AudioPlayer.PIStartAudio(SoundType.Finish);
-                    IN2 = false;
-                    IN3 = false;
-                    IN4 = false;
-                    break;
-                }
-                Thread.Sleep(10);
-
-
+                motorTiming = MotorStopWatch.ElapsedMilliseconds;
+                MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
             }
+            motorTiming += 5000;
+            ceilingMotorDown = true;
+            Thread.Sleep(1000);
+
+            if (!ceilingMotorDown)
+            {
+                motorTiming = MotorStopWatch.ElapsedMilliseconds;
+                MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
+            }
+            motorTiming += 5000;
+            Thread.Sleep(1000);
+
+            ceilingMotorDown = true;
+            if (!ceilingMotorDown)
+            {
+                motorTiming = MotorStopWatch.ElapsedMilliseconds;
+                MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
+            }
+            motorTiming += 5000;
+            ceilingMotorDown = true;
+
+
+            //==================
+            motorTiming = MotorStopWatch.ElapsedMilliseconds + 15000;
+            ceilingMotoruUp = true;
+
+            //Console.WriteLine("Main");
+            //RGBLight.SetColor(RGBColor.Red);
+            //while (true)
+            //{
+            //    if (!MCP23Controller.Read(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber) && !IN2)
+            //    {
+            //        IN2 = true;
+            //        AudioPlayer.PIStartAudio(SoundType.Bonus);
+            //        RGBLight.SetColor(RGBColor.Blue);
+            //        RGBLight.TurnRGBRedDelayed();
+            //        Console.WriteLine("====");
+            //        if (!ceilingMotorDown) {
+            //            motorTiming = MotorStopWatch.ElapsedMilliseconds;
+            //            MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
+            //        }
+            //        motorTiming += 5000;
+            //        ceilingMotorDown = true;
+
+            //    }
+            //    if (!MCP23Controller.Read(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber) && !IN3)
+            //    {
+            //        IN3 = true;
+            //        AudioPlayer.PIStartAudio(SoundType.Bonus);
+            //        RGBLight.SetColor(RGBColor.Blue);
+            //        RGBLight.TurnRGBRedDelayed();
+            //        Console.WriteLine("====");
+            //        if (!ceilingMotorDown)
+            //        {
+            //            motorTiming = MotorStopWatch.ElapsedMilliseconds;
+            //            MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
+            //        }
+            //        motorTiming += 5000;
+            //        ceilingMotorDown = true;
+
+            //    }
+            //    if (!MCP23Controller.Read(MasterDI.IN4.Chip, MasterDI.IN4.port, MasterDI.IN4.PinNumber) && !IN4)
+            //    {
+            //        IN4 = true;
+            //        AudioPlayer.PIStartAudio(SoundType.Bonus);
+            //        RGBLight.SetColor(RGBColor.Blue);
+            //        RGBLight.TurnRGBRedDelayed();
+            //        Console.WriteLine("====");
+            //        if (!ceilingMotorDown)
+            //        {
+            //            motorTiming = MotorStopWatch.ElapsedMilliseconds;
+            //            MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
+            //        }
+            //        motorTiming += 5000;
+            //        ceilingMotorDown = true;
+
+            //    }
+            //    pressureMat();
+            //    if (IN2 && IN3 && IN4)
+            //    {
+            //        motorTiming = MotorStopWatch.ElapsedMilliseconds + 15000;
+            //        ceilingMotoruUp = true;
+
+
+            //        Console.WriteLine("Pressed all 3");
+            //        RGBButtonList[0].TurnColorOn(RGBColor.Red);
+            //        //MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
+            //        pressureMAtCount = true;
+            //        while (RGBButtonList[0].CurrentStatus() || PressureMatPressed)
+            //        {
+            //            pressureMat();
+            //            Thread.Sleep(10);
+            //        }
+            //        pressureMAtCount = false;
+            //        Console.WriteLine("Button Pressed");
+            //        //MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
+            //        RGBButtonList[0].TurnColorOn(RGBColor.Blue);
+            //        RGBLight.SetColor(RGBColor.Blue);
+            //        AudioPlayer.PIStartAudio(SoundType.Bonus);
+            //        RGBLight.TurnRGBRedDelayed();
+            //        MCP23Controller.Write(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinState.High);
+            //        while (true)
+            //        {
+            //            pressureMat();
+            //            if (!MCP23Controller.Read(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber) && !IN5)
+            //            {
+            //                IN5 = true;
+            //                AudioPlayer.PIStartAudio(SoundType.Bonus);
+            //                RGBLight.SetColor(RGBColor.Blue);
+            //                if (!IN6)
+            //                    RGBLight.TurnRGBRedDelayed();
+            //                Console.WriteLine("IN5 PRESSED ====");
+            //            }
+            //            pressureMat();
+            //            if (IN5)
+            //            {
+            //                IN5 = !MCP23Controller.Read(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber);
+            //                if (!IN5)
+            //                    Console.WriteLine("IN5 bREAK ====");
+
+            //            }
+            //            if (!MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber) && !IN6)
+            //            {
+            //                IN6 = true;
+            //                AudioPlayer.PIStartAudio(SoundType.Bonus);
+            //                RGBLight.SetColor(RGBColor.Blue);
+            //                if (!IN5)
+            //                    RGBLight.TurnRGBRedDelayed();
+            //                Console.WriteLine("IN6 PRESSED ====");
+
+            //            }
+            //            pressureMat();
+            //            if (IN6)
+            //            {
+            //                IN6 = !MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber);
+            //                if (!IN6)
+            //                    Console.WriteLine("IN6 bREAK ====");
+
+            //            }
+            //            if (IN6 && IN5)
+            //                break;
+
+            //        }
+            //        Console.WriteLine("Game Endded");
+            //        RGBLight.SetColor(RGBColor.Blue);
+            //        //MCP23Controller.Write(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinState.Low);
+            //        AudioPlayer.PIStopAudio();
+            //        Thread.Sleep(300);
+            //        AudioPlayer.PIStartAudio(SoundType.Finish);
+            //        IN2 = false;
+            //        IN3 = false;
+            //        IN4 = false;
+            //        break;
+            //    }
+            //    Thread.Sleep(10);
+
+
+            //}
+
+
+
+
         }
         bool justDecrease = false;
         private void pressureMat()
@@ -209,16 +244,18 @@ namespace FloorIsLava.Services
         }
         private async Task StopMotorAfter(CancellationToken cancellationToken)
         {
-            while(true)
+            while (true)
             {
-                if (ceilingMotorDown) {
+                if (ceilingMotorDown)
+                {
                     Console.WriteLine("Start Ceiling down");
-                    while (MotorStopWatch.ElapsedMilliseconds < motorTiming) {}
+                    while (MotorStopWatch.ElapsedMilliseconds < motorTiming) { }
                     Console.WriteLine("stop Ceiling down");
                     MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
                     ceilingMotorDown = false;
                 }
-                if (ceilingMotoruUp) {
+                if (ceilingMotoruUp)
+                {
                     Console.WriteLine("Start Ceiling up");
                     MCP23Controller.Write(MasterOutputPin.OUTPUT1.Chip, MasterOutputPin.OUTPUT1.port, MasterOutputPin.OUTPUT1.PinNumber, PinState.High);
                     while (MotorStopWatch.ElapsedMilliseconds < motorTiming) { }
