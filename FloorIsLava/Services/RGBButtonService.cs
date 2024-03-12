@@ -21,6 +21,7 @@ namespace FloorIsLava.Services
         bool pressureMAtCount = false;
         bool ceilingMotorDown = false;
         bool ceilingMotoruUp = false;
+        int numberOfPressedMotor = 0;
         long motorTiming = 0;
         public Task StartAsync(CancellationToken cancellationToken)
         {
@@ -97,7 +98,8 @@ namespace FloorIsLava.Services
                         motorTiming = MotorStopWatch.ElapsedMilliseconds;
                         MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
                     }
-                    motorTiming += 5000;
+                    motorTiming += 3000;
+                    numberOfPressedMotor++;
                     ceilingMotorDown = true;
 
                 }
@@ -113,7 +115,9 @@ namespace FloorIsLava.Services
                         motorTiming = MotorStopWatch.ElapsedMilliseconds;
                         MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
                     }
-                    motorTiming += 5000;
+                    numberOfPressedMotor++;
+
+                    motorTiming += 3000;
                     ceilingMotorDown = true;
 
                 }
@@ -129,12 +133,13 @@ namespace FloorIsLava.Services
                         motorTiming = MotorStopWatch.ElapsedMilliseconds;
                         MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
                     }
-                    motorTiming += 5000;
+                    numberOfPressedMotor++;
+                    motorTiming += 3000;
                     ceilingMotorDown = true;
 
                 }
                 pressureMat();
-                if (IN2 && IN3 && IN4)
+                if (IN2 && IN3 && IN4 && numberOfPressedMotor == 3 && !ceilingMotorDown)
                 {
                     motorTiming = MotorStopWatch.ElapsedMilliseconds + 15000;
                     ceilingMotoruUp = true;
