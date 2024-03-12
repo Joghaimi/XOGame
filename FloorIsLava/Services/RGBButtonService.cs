@@ -160,6 +160,7 @@ namespace FloorIsLava.Services
                     RGBLight.SetColor(RGBColor.Blue);
                     AudioPlayer.PIStartAudio(SoundType.Bonus);
                     RGBLight.TurnRGBRedDelayed();
+                    Console.WriteLine("Magnet Start");
                     MCP23Controller.Write(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinState.High);
                     while (true)
                     {
@@ -205,7 +206,9 @@ namespace FloorIsLava.Services
                     }
                     Console.WriteLine("Game Endded");
                     RGBLight.SetColor(RGBColor.Blue);
-                    //MCP23Controller.Write(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinState.Low);
+                    Console.WriteLine("Magnet Stop");
+
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinState.Low);
                     AudioPlayer.PIStopAudio();
                     Thread.Sleep(300);
                     AudioPlayer.PIStartAudio(SoundType.Finish);
