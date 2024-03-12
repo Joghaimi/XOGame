@@ -214,9 +214,7 @@ namespace FloorIsLava.Services
             {
                 if (ceilingMotorDown) {
                     Console.WriteLine("Start Ceiling down");
-                    while (MotorStopWatch.ElapsedMilliseconds < motorTiming) {
-                        
-                    }
+                    while (MotorStopWatch.ElapsedMilliseconds < motorTiming) {}
                     Console.WriteLine("stop Ceiling down");
                     MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
                     ceilingMotorDown = false;
