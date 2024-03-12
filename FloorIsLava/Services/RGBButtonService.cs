@@ -145,7 +145,6 @@ namespace FloorIsLava.Services
 
                     Console.WriteLine("Pressed all 3");
                     RGBButtonList[0].TurnColorOn(RGBColor.Red);
-                    //MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
                     pressureMAtCount = true;
                     while (RGBButtonList[0].CurrentStatus() || PressureMatPressed)
                     {
@@ -157,7 +156,6 @@ namespace FloorIsLava.Services
 
                     pressureMAtCount = false;
                     Console.WriteLine("Button Pressed");
-                    //MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
                     RGBButtonList[0].TurnColorOn(RGBColor.Blue);
                     RGBLight.SetColor(RGBColor.Blue);
                     AudioPlayer.PIStartAudio(SoundType.Bonus);
@@ -263,12 +261,15 @@ namespace FloorIsLava.Services
                 }
                 if (ceilingMotoruUp)
                 {
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
                     Console.WriteLine("Start Ceiling up");
                     MCP23Controller.Write(MasterOutputPin.OUTPUT1.Chip, MasterOutputPin.OUTPUT1.port, MasterOutputPin.OUTPUT1.PinNumber, PinState.High);
                     while (MotorStopWatch.ElapsedMilliseconds < motorTiming) { }
                     MCP23Controller.Write(MasterOutputPin.OUTPUT1.Chip, MasterOutputPin.OUTPUT1.port, MasterOutputPin.OUTPUT1.PinNumber, PinState.Low);
                     Console.WriteLine("stop Ceiling up");
                     ceilingMotoruUp = false;
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
+
                 }
             }
 
