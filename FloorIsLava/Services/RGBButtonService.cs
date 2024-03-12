@@ -141,9 +141,7 @@ namespace FloorIsLava.Services
                 pressureMat();
                 if (IN2 && IN3 && IN4 && numberOfPressedMotor == 3 && !ceilingMotorDown)
                 {
-                    motorTiming = MotorStopWatch.ElapsedMilliseconds + 15000;
-                    ceilingMotoruUp = true;
-
+                    
 
                     Console.WriteLine("Pressed all 3");
                     RGBButtonList[0].TurnColorOn(RGBColor.Red);
@@ -154,6 +152,9 @@ namespace FloorIsLava.Services
                         pressureMat();
                         Thread.Sleep(10);
                     }
+                    motorTiming = MotorStopWatch.ElapsedMilliseconds + 15000;
+                    ceilingMotoruUp = true;
+
                     pressureMAtCount = false;
                     Console.WriteLine("Button Pressed");
                     //MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
