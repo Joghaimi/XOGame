@@ -184,9 +184,7 @@ namespace FloorIsLava.Services
         bool justDecrease = false;
         private void pressureMat()
         {
-
-            bool currentValue = false;
-            currentValue = MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
+            bool currentValue = MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
             if (!currentValue && !justDecrease)
             {
                 justDecrease = true;
@@ -204,7 +202,6 @@ namespace FloorIsLava.Services
             }
             if (justDecrease && GameStopWatch.ElapsedMilliseconds > 3000)
             {
-
                 justDecrease = false;
             }
         }
@@ -225,7 +222,6 @@ namespace FloorIsLava.Services
                     while (MotorStopWatch.ElapsedMilliseconds < motorTiming) { }
                     MCP23Controller.Write(MasterOutputPin.OUTPUT1.Chip, MasterOutputPin.OUTPUT1.port, MasterOutputPin.OUTPUT1.PinNumber, PinState.Low);
                     Console.WriteLine("stop Ceiling up");
-
                 }
             }
 
