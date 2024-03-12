@@ -75,7 +75,7 @@ namespace FloorIsLava.Services
             }
             motorTiming += 5000;
             ceilingMotorDown = true;
-
+            Thread.Sleep(15000);
 
             //==================
             motorTiming = MotorStopWatch.ElapsedMilliseconds + 15000;
@@ -261,7 +261,7 @@ namespace FloorIsLava.Services
                     while (MotorStopWatch.ElapsedMilliseconds < motorTiming) { }
                     MCP23Controller.Write(MasterOutputPin.OUTPUT1.Chip, MasterOutputPin.OUTPUT1.port, MasterOutputPin.OUTPUT1.PinNumber, PinState.Low);
                     Console.WriteLine("stop Ceiling up");
-                    ceilingMotoruUp = true;
+                    ceilingMotoruUp = false;
                 }
             }
 
