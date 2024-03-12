@@ -17,6 +17,7 @@ namespace FloorIsLava.Services
         bool PressureMatPressed = false;
         bool IsTimerStarted = false;
         Stopwatch GameStopWatch = new Stopwatch();
+        Stopwatch MotorStopWatch = new Stopwatch();
         bool pressureMAtCount = false;
         bool ceilingMotorDown = false;
         bool ceilingMotoruUp = false;
@@ -39,6 +40,7 @@ namespace FloorIsLava.Services
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinMode.Output);
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinMode.Output);
             GameStopWatch.Start();
+            MotorStopWatch.Start();
             AudioPlayer.PIBackgroundSound(SoundType.Background);
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -60,7 +62,7 @@ namespace FloorIsLava.Services
                     RGBLight.TurnRGBRedDelayed();
                     Console.WriteLine("====");
                     if (!ceilingMotorDown) {
-                        motorTiming = GameStopWatch.ElapsedMilliseconds;
+                        motorTiming = MotorStopWatch.ElapsedMilliseconds;
                         MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
                     }
                     ceilingMotorDown = true;
@@ -76,7 +78,7 @@ namespace FloorIsLava.Services
                     Console.WriteLine("====");
                     if (!ceilingMotorDown)
                     {
-                        motorTiming = GameStopWatch.ElapsedMilliseconds;
+                        motorTiming = MotorStopWatch.ElapsedMilliseconds;
                         MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
                     }
                     ceilingMotorDown = true;
@@ -91,7 +93,7 @@ namespace FloorIsLava.Services
                     Console.WriteLine("====");
                     if (!ceilingMotorDown)
                     {
-                        motorTiming = GameStopWatch.ElapsedMilliseconds;
+                        motorTiming = MotorStopWatch.ElapsedMilliseconds;
                         MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
                     }
                     ceilingMotorDown = true;
@@ -101,7 +103,7 @@ namespace FloorIsLava.Services
                 if (IN2 && IN3 && IN4)
                 {
                     ceilingMotoruUp = true;
-                    motorTiming = GameStopWatch.ElapsedMilliseconds + 15000;
+                    motorTiming = MotorStopWatch.ElapsedMilliseconds + 15000;
 
 
                     Console.WriteLine("Pressed all 3");
@@ -211,16 +213,21 @@ namespace FloorIsLava.Services
             while(true)
             {
                 if (ceilingMotorDown) {
-                    while (GameStopWatch.ElapsedMilliseconds < motorTiming) {
+                    Console.WriteLine("Start Ceiling down");
+                    while (MotorStopWatch.ElapsedMilliseconds < motorTiming) {
                         
                     }
+                    Console.WriteLine("stop Ceiling down");
                     MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
                     ceilingMotorDown = false;
                 }
                 if (ceilingMotoruUp) {
+                    Console.WriteLine("Start Ceiling up");
                     MCP23Controller.Write(MasterOutputPin.OUTPUT1.Chip, MasterOutputPin.OUTPUT1.port, MasterOutputPin.OUTPUT1.PinNumber, PinState.High);
-                    while (GameStopWatch.ElapsedMilliseconds < motorTiming) { }
+                    while (MotorStopWatch.ElapsedMilliseconds < motorTiming) { }
                     MCP23Controller.Write(MasterOutputPin.OUTPUT1.Chip, MasterOutputPin.OUTPUT1.port, MasterOutputPin.OUTPUT1.PinNumber, PinState.Low);
+                    Console.WriteLine("stop Ceiling up");
+
                 }
             }
 
