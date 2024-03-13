@@ -90,7 +90,7 @@ namespace Library.RGBLib
             }
             ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = "python3"; ;
-            start.Arguments = $@"/home/Shooting/XOGame/RGBLight.py {CLKPin} {DataPin} {red} {green} {blue}";
+            start.Arguments = $@"/home/shooting/XOGame/RGBLight.py {CLKPin} {DataPin} {red} {green} {blue}";
             start.UseShellExecute = false;
             start.RedirectStandardOutput = true;
             Process process = Process.Start(start);
