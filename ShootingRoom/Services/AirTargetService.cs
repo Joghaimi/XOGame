@@ -87,7 +87,7 @@ namespace ShootingRoom.Services
                 {
                     Console.WriteLine($"Remove Big Target and start the game");
                     _controller.Write(MasterOutputPin.GPIO23, false);
-                    _controller.Setup(MasterOutputPin.GPIO24, PinMode.Input);
+                    _controller.Setup(MasterOutputPin.GPIO23, PinMode.Input);
 
                     break;
                 }
