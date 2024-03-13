@@ -167,7 +167,7 @@ namespace Library.Media
                 case Room.Gathering:
                     return "/home/Gathering/XOGame";
                 case Room.Shooting:
-                    return "/home/Shooting/XOGame";
+                    return "FloorLava.mp3";
                 default:
                     return "/home/pi/XOGame";
             }
