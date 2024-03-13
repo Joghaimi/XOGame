@@ -162,7 +162,6 @@ namespace ShootingRoom.Services
                 foreach (var item in AirTargetList)
                 {
                     item.resetTarget();
-
                 }
 
                 //if (VariableControlService.IsTheGameStarted && IsTimerStarted)

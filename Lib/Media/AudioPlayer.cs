@@ -146,7 +146,7 @@ namespace Library.Media
                 case Room.Gathering:
                     return "/home/Gathering/XOGame";
                 case Room.Shooting:
-                    return "/home/Shooting/XOGame";
+                    return "/home/shooting/XOGame";
                 default:
                     return "/home/pi/XOGame";
             }
