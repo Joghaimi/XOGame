@@ -82,6 +82,7 @@ namespace ShootingRoom.Services
                 {
                     bigTargetHitScore++;
                     Console.WriteLine($"Target Hit # {bigTargetHitScore}");
+                    Thread.Sleep(500);
                 }
                 if (bigTargetHitScore == 5)
                 {
