@@ -41,7 +41,7 @@ namespace ShootingRoom.Services
             AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT2, HatInputPin.IR6, HatInputPin.IR7, HatInputPin.IR8, HatInputPin.IR9, HatInputPin.IR10));
             AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT3, HatInputPin.IR11, HatInputPin.IR12, HatInputPin.IR13, HatInputPin.IR14, HatInputPin.IR15));
             AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT4, HatInputPin.IR16, HatInputPin.IR17, HatInputPin.IR18, HatInputPin.IR19, HatInputPin.IR20));
-
+            RGBLight.SetColor(RGBColor.White);
             // Output5 for relocate the targets
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinMode.Output);
             // IN1 --> Big Target signal 
@@ -82,6 +82,8 @@ namespace ShootingRoom.Services
                 {
                     bigTargetHitScore++;
                     Console.WriteLine($"Target Hit # {bigTargetHitScore}");
+                    RGBLight.SetColor(RGBColor.Blue);
+                    RGBLight.TurnRGBColorDelayed(RGBColor.White);
                     Thread.Sleep(500);
                 }
                 if (bigTargetHitScore == 5)
@@ -109,28 +111,39 @@ namespace ShootingRoom.Services
                         if (item.TargetOneStatus())
                         {
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
+                            RGBLight.SetColor(RGBColor.Blue);
+                            RGBLight.TurnRGBColorDelayed(RGBColor.White);
                             Score++;
                         }
                         if (item.TargetTwoStatus())
                         {
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
+                            RGBLight.SetColor(RGBColor.Blue);
+                            RGBLight.TurnRGBColorDelayed(RGBColor.White);
                             Score++;
                         }
                         if (item.TargetThreeStatus())
                         {
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
+                            RGBLight.SetColor(RGBColor.Blue);
+                            RGBLight.TurnRGBColorDelayed(RGBColor.White);
                             Score++;
                         }
                         if (item.TargetFourStatus())
                         {
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
+                            RGBLight.SetColor(RGBColor.Blue);
+                            RGBLight.TurnRGBColorDelayed(RGBColor.White);
                             Score++;
                         }
                         if (item.TargetFiveStatus())
                         {
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
+                            RGBLight.SetColor(RGBColor.Blue);
+                            RGBLight.TurnRGBColorDelayed(RGBColor.White);
                             Score++;
                         }
+
                         Thread.Sleep(10);
                     }
                     Console.WriteLine(Score);

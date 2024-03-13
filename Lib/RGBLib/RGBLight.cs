@@ -103,6 +103,16 @@ namespace Library.RGBLib
           
 
         }
+
+        public static async Task TurnRGBColorDelayed(RGBColor rGBColor)
+        {
+            Task.Run(async () =>
+            {
+                await Task.Delay(1000);
+                SetColor(rGBColor);
+            });
+        }
+
         public static async Task TurnRGBOFFDelayed() {
             Task.Run(async () =>
             {
