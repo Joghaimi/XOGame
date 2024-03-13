@@ -1,4 +1,5 @@
-﻿using Library;
+﻿using Iot.Device.Mcp3428;
+using Library;
 using Library.AirTarget;
 using Library.GPIOLib;
 using Library.Media;
@@ -97,6 +98,9 @@ namespace ShootingRoom.Services
                 Thread.Sleep(10);
             }
 
+            MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber ,PinState.High);
+            Thread.Sleep(5000);
+            MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
 
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -106,6 +110,7 @@ namespace ShootingRoom.Services
                 {
                     timer.Restart();
                     item.Select(true);
+
                     while (timer.ElapsedMilliseconds <= 5000)
                     {
                         if (item.TargetOneStatus())
