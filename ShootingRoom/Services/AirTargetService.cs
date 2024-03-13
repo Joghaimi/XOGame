@@ -75,7 +75,7 @@ namespace ShootingRoom.Services
             _controller.Write(MasterOutputPin.GPIO23, true);// GPIO24 -> gunsenoloid 
             _controller.Write(MasterOutputPin.GPIO24, true);// GPIO24 -> gunsenoloid 
 
-         
+
 
             while (true)
             {
@@ -98,7 +98,7 @@ namespace ShootingRoom.Services
                 Thread.Sleep(10);
             }
 
-            MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber ,PinState.High);
+            MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
             Thread.Sleep(5000);
             MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
 
@@ -152,8 +152,17 @@ namespace ShootingRoom.Services
                         Thread.Sleep(10);
                     }
                     Console.WriteLine(Score);
-                    item.resetTarget();
+                    //item.resetTarget();
                     item.Select(false);
+                }
+                MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
+                Thread.Sleep(5000);
+                MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
+
+                foreach (var item in AirTargetList)
+                {
+                    item.resetTarget();
+
                 }
 
                 //if (VariableControlService.IsTheGameStarted && IsTimerStarted)
