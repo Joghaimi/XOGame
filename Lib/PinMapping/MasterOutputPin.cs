@@ -61,6 +61,7 @@ namespace Library.PinMapping
 
         public static int Clk  = 20;
         public static int Data = 21;
-
+        public static int GPIO23 = 23;
+        public static int GPIO24 = 24;
     }
 }

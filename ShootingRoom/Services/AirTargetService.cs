@@ -16,6 +16,7 @@ namespace ShootingRoom.Services
         private CancellationTokenSource _cts, _cts2;
         bool IsTimerStarted = false;
         Stopwatch GameStopWatch = new Stopwatch();
+        private GPIOController _controller;
         int SlowPeriod = 3000;
         int MediumPeriod = 3000;
 
@@ -25,24 +26,35 @@ namespace ShootingRoom.Services
 
         int changingSpeed = 1000;
 
+
+        int bigTargetHitScore = 0;
+
         int Score = 0;
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            _controller = new GPIOController();
+
+
+
             GameStopWatch.Start();
-            // TO DO Init The RGB Light .. 
             AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT1, HatInputPin.IR1, HatInputPin.IR2, HatInputPin.IR3, HatInputPin.IR4, HatInputPin.IR5));
             AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT2, HatInputPin.IR6, HatInputPin.IR7, HatInputPin.IR8, HatInputPin.IR9, HatInputPin.IR10));
             AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT3, HatInputPin.IR11, HatInputPin.IR12, HatInputPin.IR13, HatInputPin.IR14, HatInputPin.IR15));
             AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT4, HatInputPin.IR16, HatInputPin.IR17, HatInputPin.IR18, HatInputPin.IR19, HatInputPin.IR20));
 
+            // Output5 for relocate the targets
+            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinMode.Output);
+            // IN1 --> Big Target signal 
+            MCP23Controller.PinModeSetup(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber, PinMode.Input);
+            // Control By Controller => Selonoid
+            // GPIO23 -> Big Target Selonoide
+            _controller.Setup(MasterOutputPin.GPIO23, PinMode.Output);
+            // GPIO24 -> gunsenoloid 
+            _controller.Setup(MasterOutputPin.GPIO24, PinMode.Output);
+
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
-            //_cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            //Task task1 = Task.Run(() => RunService(_cts.Token));
-            //Task task2 = Task.Run(() => TimingService(_cts2.Token));
-            //Task.Run(() => RunService(_cts.Token));
-            //Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
@@ -55,6 +67,28 @@ namespace ShootingRoom.Services
             int randomTime = random.Next(5000, 15000);
             timerToStart.Restart();
             timer.Restart();
+
+            // Start Both Selonoid @TODO Depend on the api start game
+
+            // GPIO23 -> Big Target Selonoide
+            _controller.Write(MasterOutputPin.GPIO23 , true);
+            // GPIO24 -> gunsenoloid 
+            _controller.Write(MasterOutputPin.GPIO24, true);
+            while (true)
+            {
+                if (MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber))
+                {
+                    bigTargetHitScore++;
+                    Console.WriteLine($"Target Hit # {bigTargetHitScore}");
+                }
+                if (bigTargetHitScore == 5) {
+                    Console.WriteLine($"Remove Big Target and start the game");
+                    _controller.Write(MasterOutputPin.GPIO23, false);
+                    break;
+                }
+                Thread.Sleep(10);
+            }
+
 
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -137,6 +171,11 @@ namespace ShootingRoom.Services
                 Thread.Sleep(10);
             }
         }
+        
+        
+        
+        
+        
         private async Task TimingService(CancellationToken cancellationToken)
         {
             if (VariableControlService.IsTheGameStarted)
