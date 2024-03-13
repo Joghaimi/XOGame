@@ -73,7 +73,7 @@ namespace ShootingRoom.Services
             // GPIO23 -> Big Target Selonoide
             _controller.Write(MasterOutputPin.GPIO23 , false);
             // GPIO24 -> gunsenoloid 
-            _controller.Write(MasterOutputPin.GPIO24, true);
+            _controller.Write(MasterOutputPin.GPIO24, false);
             while (true)
             {
                 if (!MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber))
