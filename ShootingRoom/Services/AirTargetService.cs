@@ -74,14 +74,16 @@ namespace ShootingRoom.Services
            while (true)
             {
                 // GPIO23 -> Big Target Selonoide
+                _controller.Setup(MasterOutputPin.GPIO23, PinMode.Output);
+                // GPIO24 -> gunsenoloid 
+                _controller.Setup(MasterOutputPin.GPIO24, PinMode.Output);
+                // GPIO23 -> Big Target Selonoide
                 _controller.Write(MasterOutputPin.GPIO23, true);
                 // GPIO24 -> gunsenoloid 
                 _controller.Write(MasterOutputPin.GPIO24, true);
                 Thread.Sleep(5000);
-                // GPIO23 -> Big Target Selonoide
-                _controller.Write(MasterOutputPin.GPIO23, false);
-                // GPIO24 -> gunsenoloid 
-                _controller.Write(MasterOutputPin.GPIO24, false);
+                _controller.Setup(MasterOutputPin.GPIO23, PinMode.Input);
+                _controller.Setup(MasterOutputPin.GPIO24, PinMode.Input);
                 Thread.Sleep(5000);
 
 
