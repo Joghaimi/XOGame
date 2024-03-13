@@ -69,26 +69,12 @@ namespace ShootingRoom.Services
             timer.Restart();
 
             // Start Both Selonoid @TODO Depend on the api start game
+            _controller.Setup(MasterOutputPin.GPIO23, PinMode.Output);
+            _controller.Setup(MasterOutputPin.GPIO24, PinMode.Output);
+            _controller.Write(MasterOutputPin.GPIO23, true);// GPIO24 -> gunsenoloid 
+            _controller.Write(MasterOutputPin.GPIO24, true);// GPIO24 -> gunsenoloid 
 
-            
-           while (true)
-            {
-                // GPIO23 -> Big Target Selonoide
-                _controller.Setup(MasterOutputPin.GPIO23, PinMode.Output);
-                // GPIO24 -> gunsenoloid 
-                _controller.Setup(MasterOutputPin.GPIO24, PinMode.Output);
-                // GPIO23 -> Big Target Selonoide
-                _controller.Write(MasterOutputPin.GPIO23, true);
-                // GPIO24 -> gunsenoloid 
-                _controller.Write(MasterOutputPin.GPIO24, true);
-                Thread.Sleep(5000);
-                _controller.Setup(MasterOutputPin.GPIO23, PinMode.Input);
-                _controller.Setup(MasterOutputPin.GPIO24, PinMode.Input);
-                Thread.Sleep(5000);
-
-
-            }
-
+         
 
             while (true)
             {
@@ -97,9 +83,12 @@ namespace ShootingRoom.Services
                     bigTargetHitScore++;
                     Console.WriteLine($"Target Hit # {bigTargetHitScore}");
                 }
-                if (bigTargetHitScore == 5) {
+                if (bigTargetHitScore == 5)
+                {
                     Console.WriteLine($"Remove Big Target and start the game");
                     _controller.Write(MasterOutputPin.GPIO23, false);
+                    _controller.Setup(MasterOutputPin.GPIO24, PinMode.Input);
+
                     break;
                 }
                 Thread.Sleep(10);
@@ -187,11 +176,11 @@ namespace ShootingRoom.Services
                 Thread.Sleep(10);
             }
         }
-        
-        
-        
-        
-        
+
+
+
+
+
         private async Task TimingService(CancellationToken cancellationToken)
         {
             if (VariableControlService.IsTheGameStarted)
