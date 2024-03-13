@@ -148,8 +148,6 @@ namespace ShootingRoom.Services
                             RGBLight.TurnRGBColorDelayed(RGBColor.White);
                             Score++;
                         }
-
-                        Thread.Sleep(10);
                     }
                     Console.WriteLine(Score);
                     //item.resetTarget();
