@@ -70,10 +70,24 @@ namespace ShootingRoom.Services
 
             // Start Both Selonoid @TODO Depend on the api start game
 
-            // GPIO23 -> Big Target Selonoide
-            _controller.Write(MasterOutputPin.GPIO23 , false);
-            // GPIO24 -> gunsenoloid 
-            _controller.Write(MasterOutputPin.GPIO24, false);
+            
+           while (true)
+            {
+                // GPIO23 -> Big Target Selonoide
+                _controller.Write(MasterOutputPin.GPIO23, true);
+                // GPIO24 -> gunsenoloid 
+                _controller.Write(MasterOutputPin.GPIO24, true);
+                Thread.Sleep(5000);
+                // GPIO23 -> Big Target Selonoide
+                _controller.Write(MasterOutputPin.GPIO23, false);
+                // GPIO24 -> gunsenoloid 
+                _controller.Write(MasterOutputPin.GPIO24, false);
+                Thread.Sleep(5000);
+
+
+            }
+
+
             while (true)
             {
                 if (!MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber))
