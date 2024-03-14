@@ -282,10 +282,5 @@ namespace Library.GPIOLib
                     throw new ArgumentException("Invalid Chip Selected");
             }
         }
-
-
-
-
-
     }
 }

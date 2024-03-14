@@ -24,8 +24,7 @@ namespace Library.RGBLib
         private static int CLKPin = 0;
         private static int DataPin = 0;
         private static GPIOController _controller;
-        private static bool rgbLightBussy = false;
-        private static bool rgbWaitBussy = false;
+   
         public static void Init(int _clkPin, int _dataPin)
         {
             CLKPin = _clkPin;
@@ -34,7 +33,6 @@ namespace Library.RGBLib
         }
         public static async void SetColor(RGBColor selectedColor)
         {
-            rgbLightBussy = true;
             uint blue = 0;
             uint green = 0;
             uint red = 0;
@@ -99,9 +97,6 @@ namespace Library.RGBLib
                 string result = reader.ReadToEnd();
                 Console.Write(result);
             }
-            rgbLightBussy = false;
-          
-
         }
 
         public static async Task TurnRGBColorDelayed(RGBColor rGBColor)
@@ -130,24 +125,12 @@ namespace Library.RGBLib
         }
         public static async Task TurnRGBOffAfter1Sec()
         {
-            //if (!rgbWaitBussy)
-            //{
-            //    rgbWaitBussy = true;
             Task.Run(async () =>
             {
                 await Task.Delay(1000);
                 SetColor(RGBColor.Off);
                 MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
             });
-            rgbWaitBussy = false;
-            //}
-            //else
-            //{
-            //    Console.WriteLine("rgb Wait Bussy");
-
-            //}
-
-
         }
         public static void DatSend(uint dx)
         {
