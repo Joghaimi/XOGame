@@ -62,7 +62,6 @@ namespace Library.Media
         {
 
             soundFilePath = PISoundPath(soundType);
-            //Console.WriteLine(soundFilePath);
             audioProcess = new Process();
             audioProcess.StartInfo.FileName = "/bin/bash";
             audioProcess.StartInfo.Arguments = $"cvlc -R --gain +0.5 --vout none {soundFilePath}";
