@@ -163,7 +163,7 @@ namespace ShootingRoom.Services
                     {
                         //foreach (var item in AirTargetList)
                         //{
-                            var item = AirTargetList[0];
+                            var item = AirTargetList[1];
                             timer.Restart();
                             item.Select();
 
