@@ -113,7 +113,7 @@ namespace ShootingRoom.Services
             ControlPin(GunShootRelay, true);
             BigTargetTimer.Start();
             BigTargetTimer.Restart();
-            while (true && BigTargetTimer.ElapsedMilliseconds < 1000)
+            while (true && BigTargetTimer.ElapsedMilliseconds < 60000)
             {
                 if (MCP23Controller.Read(MasterDI.IN1))
                 {
