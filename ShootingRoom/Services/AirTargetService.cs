@@ -118,7 +118,6 @@ namespace ShootingRoom.Services
 
             ControlPin(BigTargetRelay, true);
             ControlPin(GunShootRelay, true);
-            ReturnAllTargets();
 
             while (true)
             {
@@ -138,8 +137,9 @@ namespace ShootingRoom.Services
                 }
                 Thread.Sleep(10);
             }
+            ReturnAllTargets();
 
-            
+
 
             while (!cancellationToken.IsCancellationRequested)
             {
