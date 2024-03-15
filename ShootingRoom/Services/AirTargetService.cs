@@ -60,13 +60,20 @@ namespace ShootingRoom.Services
         int slowChangeTime = 1000;
         int mediumChangeTime = 700;
         int highChangeTime = 500;
-
         int changingSpeed = 1000;
-
-
         int bigTargetHitScore = 0;
 
         int Score = 0;
+
+        List<(int, int)> scoreList = new List<(int, int)>();
+        
+
+        int stageOneScore = 0;
+        int stageOneNeededScore = 0;
+
+        int stageSecoundScore = 0;
+        int stageSecoundNeededScore = 0;
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _controller = new GPIOController();
@@ -131,10 +138,10 @@ namespace ShootingRoom.Services
             MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
             Thread.Sleep(5000);
             MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
+
             while (!cancellationToken.IsCancellationRequested)
             {
 
-                int index = 0;
                 foreach (var item in AirTargetList)
                 {
                     timer.Restart();
@@ -143,66 +150,31 @@ namespace ShootingRoom.Services
                     {
                         foreach (var element in AirTargetList)
                         {
-                            (bool state, int itemScore) = item.TargetOneStatus();
+                            (bool state, int itemScore) = element.TargetOneStatus();
                             Score += itemScore;
                             if (itemScore > 0 && state)
                                 Scored();
-                            (state, itemScore) = item.TargetTwoStatus();
+                            (state, itemScore) = element.TargetTwoStatus();
                             Score += itemScore;
                             if (itemScore > 0 && state)
                                 Scored();
-                            (state, itemScore) = item.TargetThreeStatus();
+                            (state, itemScore) = element.TargetThreeStatus();
                             Score += itemScore;
                             if (itemScore > 0 && state)
                                 Scored();
-                            (state, itemScore) = item.TargetFourStatus();
+                            (state, itemScore) = element.TargetFourStatus();
                             Score += itemScore;
                             if (itemScore > 0 && state)
                                 Scored();
-                            (state, itemScore) = item.TargetFiveStatus();
+                            (state, itemScore) = element.TargetFiveStatus();
                             Score += itemScore;
                             if (itemScore > 0 && state)
                                 Scored();
                         }
-                        //if (item.TargetOneStatus())
-                        //{
-                        //    AudioPlayer.PIStartAudio(SoundType.Bonus);
-                        //    RGBLight.SetColor(RGBColor.Blue);
-                        //    RGBLight.TurnRGBColorDelayed(RGBColor.White);
-                        //    Score++;
-                        //}
-                        //if (item.TargetTwoStatus())
-                        //{
-                        //    AudioPlayer.PIStartAudio(SoundType.Bonus);
-                        //    RGBLight.SetColor(RGBColor.Blue);
-                        //    RGBLight.TurnRGBColorDelayed(RGBColor.White);
-                        //    Score++;
-                        //}
-                        //if (item.TargetThreeStatus())
-                        //{
-                        //    AudioPlayer.PIStartAudio(SoundType.Bonus);
-                        //    RGBLight.SetColor(RGBColor.Blue);
-                        //    RGBLight.TurnRGBColorDelayed(RGBColor.White);
-                        //    Score++;
-                        //}
-                        //if (item.TargetFourStatus())
-                        //{
-                        //    AudioPlayer.PIStartAudio(SoundType.Bonus);
-                        //    RGBLight.SetColor(RGBColor.Blue);
-                        //    RGBLight.TurnRGBColorDelayed(RGBColor.White);
-                        //    Score++;
-                        //}
-                        //if (item.TargetFiveStatus())
-                        //{
-                        //    AudioPlayer.PIStartAudio(SoundType.Bonus);
-                        //    RGBLight.SetColor(RGBColor.Blue);
-                        //    RGBLight.TurnRGBColorDelayed(RGBColor.White);
-                        //    Score++;
-                        //}
+
                     }
-                    Console.WriteLine(Score);
-                    //item.resetTarget();
                     item.UnSelectTarget();
+                    Console.WriteLine(Score);
                 }
                 MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
                 Thread.Sleep(5000);
@@ -213,42 +185,6 @@ namespace ShootingRoom.Services
                     item.UnSelectTarget();
                 }
 
-                //if (VariableControlService.IsTheGameStarted && IsTimerStarted)
-                //{
-                //    if (!activeTarget && timerToStart.ElapsedMilliseconds > randomTime)
-                //    {
-                //        activeTarget = true;
-                //        activeTargetIndox = random.Next(0, 8);
-                //        AirTargetList[activeTargetIndox].Select(true);
-                //        timer.Restart();
-                //        timerToStart.Restart();
-                //        randomTime = random.Next(5000, 15000);
-                //    }
-                //    if (activeTarget & timer.ElapsedMilliseconds >= changingSpeed)
-                //    {
-                //        AirTargetList[activeTargetIndox].Select(false);
-                //        activeTargetIndox = -1;
-                //        activeTarget = false;
-                //        timer.Restart();
-                //        timerToStart.Restart();
-                //    }
-                //    if (activeTarget && activeTargetIndox > -1)
-                //    {
-                //        bool isPreesed = AirTargetList[activeTargetIndox].Status();
-                //        if (isPreesed)
-                //        {
-                //            activeTarget = false;
-                //            AirTargetList[activeTargetIndox].Select(false);
-                //            JQ8400AudioModule.PlayAudio((int)SoundType.Bonus);
-                //            VariableControlService.ActiveTargetPressed++;
-                //            Console.WriteLine($"Score {VariableControlService.ActiveTargetPressed}");
-                //            activeTargetIndox = -1;
-                //            timerToStart.Restart();
-                //            timer.Restart();
-                //        }
-                //    }
-                //}
-                // Sleep for a short duration to avoid excessive checking
                 Thread.Sleep(10);
             }
         }
@@ -311,3 +247,76 @@ namespace ShootingRoom.Services
 
     }
 }
+
+//if (item.TargetOneStatus())
+//{
+//    AudioPlayer.PIStartAudio(SoundType.Bonus);
+//    RGBLight.SetColor(RGBColor.Blue);
+//    RGBLight.TurnRGBColorDelayed(RGBColor.White);
+//    Score++;
+//}
+//if (item.TargetTwoStatus())
+//{
+//    AudioPlayer.PIStartAudio(SoundType.Bonus);
+//    RGBLight.SetColor(RGBColor.Blue);
+//    RGBLight.TurnRGBColorDelayed(RGBColor.White);
+//    Score++;
+//}
+//if (item.TargetThreeStatus())
+//{
+//    AudioPlayer.PIStartAudio(SoundType.Bonus);
+//    RGBLight.SetColor(RGBColor.Blue);
+//    RGBLight.TurnRGBColorDelayed(RGBColor.White);
+//    Score++;
+//}
+//if (item.TargetFourStatus())
+//{
+//    AudioPlayer.PIStartAudio(SoundType.Bonus);
+//    RGBLight.SetColor(RGBColor.Blue);
+//    RGBLight.TurnRGBColorDelayed(RGBColor.White);
+//    Score++;
+//}
+//if (item.TargetFiveStatus())
+//{
+//    AudioPlayer.PIStartAudio(SoundType.Bonus);
+//    RGBLight.SetColor(RGBColor.Blue);
+//    RGBLight.TurnRGBColorDelayed(RGBColor.White);
+//    Score++;
+//}
+
+//if (VariableControlService.IsTheGameStarted && IsTimerStarted)
+//{
+//    if (!activeTarget && timerToStart.ElapsedMilliseconds > randomTime)
+//    {
+//        activeTarget = true;
+//        activeTargetIndox = random.Next(0, 8);
+//        AirTargetList[activeTargetIndox].Select(true);
+//        timer.Restart();
+//        timerToStart.Restart();
+//        randomTime = random.Next(5000, 15000);
+//    }
+//    if (activeTarget & timer.ElapsedMilliseconds >= changingSpeed)
+//    {
+//        AirTargetList[activeTargetIndox].Select(false);
+//        activeTargetIndox = -1;
+//        activeTarget = false;
+//        timer.Restart();
+//        timerToStart.Restart();
+//    }
+//    if (activeTarget && activeTargetIndox > -1)
+//    {
+//        bool isPreesed = AirTargetList[activeTargetIndox].Status();
+//        if (isPreesed)
+//        {
+//            activeTarget = false;
+//            AirTargetList[activeTargetIndox].Select(false);
+//            JQ8400AudioModule.PlayAudio((int)SoundType.Bonus);
+//            VariableControlService.ActiveTargetPressed++;
+//            Console.WriteLine($"Score {VariableControlService.ActiveTargetPressed}");
+//            activeTargetIndox = -1;
+//            timerToStart.Restart();
+//            timer.Restart();
+//        }
+//    }
+//}
+// Sleep for a short duration to avoid excessive checking
