@@ -74,11 +74,9 @@ namespace Library.AirTarget
         {
             if (!MCP23Controller.Read(_Target2.Pin) && !_Target2.isShoot)
             {
+                _Target2.isShoot = true;
                 if (_Target2.isSelected)
-                {
-                    _Target2.isShoot = true;
                     return (true, _Target2.Score);
-                }
                 else
                     return (true, -1 * _Target2.Score);
             }
@@ -89,11 +87,9 @@ namespace Library.AirTarget
         {
             if (!MCP23Controller.Read(_Target3.Pin) && !_Target3.isShoot)
             {
+                _Target3.isShoot = true;
                 if (_Target3.isSelected)
-                {
-                    _Target3.isShoot = true;
                     return (true, _Target3.Score);
-                }
                 else
                     return (true, -1 * _Target3.Score);
             }
@@ -104,11 +100,9 @@ namespace Library.AirTarget
         {
             if (!MCP23Controller.Read(_Target4.Pin) && !_Target4.isShoot)
             {
+                _Target4.isShoot = true;
                 if (_Target4.isSelected)
-                {
-                    _Target4.isShoot = true;
                     return (true, _Target4.Score);
-                }
                 else
                     return (true, -1 * _Target4.Score);
             }
@@ -117,14 +111,11 @@ namespace Library.AirTarget
         }
         public (bool, int) TargetFiveStatus()
         {
-            int targetScore = 0;
             if (!MCP23Controller.Read(_Target5.Pin) && !_Target5.isShoot)
             {
+                _Target5.isShoot = true;
                 if (_Target5.isSelected)
-                {
-                    _Target5.isShoot = true;
                     return (true, _Target5.Score);
-                }
                 else
                     return (true, -1 * _Target5.Score);
             }
