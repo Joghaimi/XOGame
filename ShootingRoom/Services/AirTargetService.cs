@@ -116,31 +116,31 @@ namespace ShootingRoom.Services
             //_controller.Write(MasterOutputPin.GPIO23, true);// GPIO24 -> gunsenoloid 
             //_controller.Write(MasterOutputPin.GPIO24, true);// GPIO24 -> gunsenoloid 
 
-            //ControlPin(BigTargetRelay, true);
-            //ControlPin(GunShootRelay, true);
+            ControlPin(BigTargetRelay, true);
+            ControlPin(GunShootRelay, true);
 
-            //while (true)
-            //{
-            //    if (MCP23Controller.Read(MasterDI.IN1))
-            //    {
-            //        bigTargetHitScore++;
-            //        Console.WriteLine($"Target Hit # {bigTargetHitScore}");
-            //        RGBLight.SetColor(RGBColor.Blue);
-            //        RGBLight.TurnRGBColorDelayed(RGBColor.White);
-            //        Thread.Sleep(500);
-            //    }
-            //    if (bigTargetHitScore == 5)
-            //    {
-            //        Console.WriteLine($"Remove Big Target and start the game");
-            //        ControlPin(BigTargetRelay, false);
-            //        break;
-            //    }
-            //    Thread.Sleep(10);
-            //}
+            while (true)
+            {
+                if (MCP23Controller.Read(MasterDI.IN1))
+                {
+                    bigTargetHitScore++;
+                    Console.WriteLine($"Target Hit # {bigTargetHitScore}");
+                    RGBLight.SetColor(RGBColor.Blue);
+                    RGBLight.TurnRGBColorDelayed(RGBColor.White);
+                    Thread.Sleep(500);
+                }
+                if (bigTargetHitScore == 5)
+                {
+                    Console.WriteLine($"Remove Big Target and start the game");
+                    ControlPin(BigTargetRelay, false);
+                    break;
+                }
+                Thread.Sleep(10);
+            }
 
-            //MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
-            //Thread.Sleep(5000);
-            //MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
+            MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
+            Thread.Sleep(5000);
+            MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
 
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -156,7 +156,6 @@ namespace ShootingRoom.Services
                             //    var item = AirTargetList[1];
                             timer.Restart();
                             item.Select();
-
                             while (timer.ElapsedMilliseconds <= 5000)
                             {
                                 foreach (var element in AirTargetList)
@@ -257,7 +256,6 @@ namespace ShootingRoom.Services
                             Console.WriteLine($"numberOfRightHits {numberOfRightHits}");
                             Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
                             item.UnSelectTarget(false);
-
                         }
                     }
                     Console.WriteLine("=================");
