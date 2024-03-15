@@ -131,7 +131,7 @@ namespace Library.AirTarget
             else
                 return (false, 0);
         }
-        public void UnSelectTarget()
+        public void UnSelectTarget(bool finishLevel)
         {
             MCP23Controller.Write(_ShelfLight.Pin, PinState.Low);
 
@@ -142,12 +142,13 @@ namespace Library.AirTarget
             _Target3.isSelected = false;
             _Target4.isSelected = false;
             _Target5.isSelected = false;
-
-            _Target1.isShoot = false;
-            _Target2.isShoot = false;
-            _Target3.isShoot = false;
-            _Target4.isShoot = false;
-            _Target5.isShoot = false;
+            if (finishLevel) {
+                _Target1.isShoot = false;
+                _Target2.isShoot = false;
+                _Target3.isShoot = false;
+                _Target4.isShoot = false;
+                _Target5.isShoot = false;
+            }
         }
     }
 }

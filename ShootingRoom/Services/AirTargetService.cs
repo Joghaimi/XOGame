@@ -231,8 +231,8 @@ namespace ShootingRoom.Services
                             Console.WriteLine($"ActualLevelScore {ActualLevelScore}");
                             Console.WriteLine($"numberOfRightHits {numberOfRightHits}");
                             Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
+                            item.UnSelectTarget(false);
 
-                           
                         }
                     }
                     Console.WriteLine("=================");
@@ -247,7 +247,7 @@ namespace ShootingRoom.Services
                     MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
                     foreach (var item in AirTargetList)
                     {
-                        item.UnSelectTarget();
+                        item.UnSelectTarget(true);
                     }
                 }
 
@@ -279,29 +279,29 @@ namespace ShootingRoom.Services
 
 
 
-        private async Task TimingService(CancellationToken cancellationToken)
-        {
-            if (VariableControlService.IsTheGameStarted)
-            {
-                if (!IsTimerStarted)
-                {
-                    GameStopWatch.Start();
-                    IsTimerStarted = true;
-                }
-            }
-            while (true)
-            {
-                if (GameStopWatch.ElapsedMilliseconds > SlowPeriod && GameStopWatch.ElapsedMilliseconds < MediumPeriod)
-                {
-                    changingSpeed = mediumChangeTime;
-                }
-                else if (GameStopWatch.ElapsedMilliseconds > MediumPeriod)
-                {
-                    changingSpeed = highChangeTime;
-                }
-                Thread.Sleep(10);
-            }
-        }
+        //private async Task TimingService(CancellationToken cancellationToken)
+        //{
+        //    if (VariableControlService.IsTheGameStarted)
+        //    {
+        //        if (!IsTimerStarted)
+        //        {
+        //            GameStopWatch.Start();
+        //            IsTimerStarted = true;
+        //        }
+        //    }
+        //    while (true)
+        //    {
+        //        if (GameStopWatch.ElapsedMilliseconds > SlowPeriod && GameStopWatch.ElapsedMilliseconds < MediumPeriod)
+        //        {
+        //            changingSpeed = mediumChangeTime;
+        //        }
+        //        else if (GameStopWatch.ElapsedMilliseconds > MediumPeriod)
+        //        {
+        //            changingSpeed = highChangeTime;
+        //        }
+        //        Thread.Sleep(10);
+        //    }
+        //}
         public Task StopAsync(CancellationToken cancellationToken)
         {
             //_cts.Cancel();
