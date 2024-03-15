@@ -80,10 +80,18 @@ namespace ShootingRoom.Services
 
 
             GameStopWatch.Start();
-            AirTargetList.Add(new AirTargetController(ShelfLight, Target1, Target2, Target3, Target4, Target5));
-            AirTargetList.Add(new AirTargetController(ShelfLight2, Target6, Target7, Target8, Target9, Target10));
-            AirTargetList.Add(new AirTargetController(ShelfLight3, Target11, Target12, Target13, Target14, Target15));
-            AirTargetList.Add(new AirTargetController(ShelfLight4, Target16, Target17, Target18, Target19, Target20));
+            var airTarget1 = new AirTargetController(ShelfLight, Target1, Target2, Target3, Target4, Target5);
+            var airTarget2 = new AirTargetController(ShelfLight2, Target6, Target7, Target8, Target9, Target10);
+            var airTarget3 = new AirTargetController(ShelfLight3, Target11, Target12, Target13, Target14, Target15);
+            var airTarget4 = new AirTargetController(ShelfLight4, Target16, Target17, Target18, Target19, Target20);
+            airTarget1.Init();
+            airTarget2.Init();
+            airTarget3.Init();
+            airTarget4.Init();
+            AirTargetList.Add(airTarget1);
+            AirTargetList.Add(airTarget2);
+            AirTargetList.Add(airTarget3);
+            AirTargetList.Add(airTarget4);
             MCP23Controller.PinModeSetup(TargetMotorControl, PinMode.Output);
             MCP23Controller.PinModeSetup(BigTargetIRSensor, PinMode.Input);
             _controller.Setup(BigTargetRelay, PinMode.Output);
@@ -105,9 +113,13 @@ namespace ShootingRoom.Services
         private async Task RunService(CancellationToken cancellationToken)
         {
 
-            while (true) {
+            while (true)
+            {
+                AirTargetList[0].Select();
+                (bool state, int itemScore) = AirTargetList[0].TargetOneStatus();
+                Console.WriteLine($"itemScore:{itemScore} state:{state} condition:{itemScore > 0 && state}");
 
-                Console.WriteLine(MCP23Controller.Read(Target1.Pin));
+                //Console.WriteLine(MCP23Controller.Read(Target1.Pin));
                 Thread.Sleep(1000);
             }
             Stopwatch timer = new Stopwatch();
