@@ -118,6 +118,7 @@ namespace ShootingRoom.Services
 
             ControlPin(BigTargetRelay, true);
             ControlPin(GunShootRelay, true);
+            ReturnAllTargets();
 
             while (true)
             {
@@ -138,9 +139,7 @@ namespace ShootingRoom.Services
                 Thread.Sleep(10);
             }
 
-            MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
-            Thread.Sleep(5000);
-            MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
+            
 
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -262,12 +261,7 @@ namespace ShootingRoom.Services
                     Console.WriteLine($"ActualLevelScore {ActualLevelScore}");
                     Console.WriteLine($"numberOfRightHits {numberOfRightHits}");
                     Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
-
-
-
-                    //MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
-                    //Thread.Sleep(5000);
-                    //MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
+                    ReturnAllTargets();
                     foreach (var item in AirTargetList)
                     {
                         item.UnSelectTarget(true);
@@ -292,6 +286,12 @@ namespace ShootingRoom.Services
                 _controller.Write(pinNumber, true);// GPIO24 -> gunsenoloid
             }
 
+        }
+        private void ReturnAllTargets()
+        {
+            MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
+            Thread.Sleep(5000);
+            MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
         }
         private void Scored()
         {
