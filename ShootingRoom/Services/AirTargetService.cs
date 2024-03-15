@@ -161,8 +161,9 @@ namespace ShootingRoom.Services
                     int numberOfWrongHits = 0;
                     while (LevelScore > ActualLevelScore)
                     {
-                        foreach (var item in AirTargetList)
-                        {
+                        //foreach (var item in AirTargetList)
+                        //{
+                            var item = AirTargetList[0];
                             timer.Restart();
                             item.Select();
 
@@ -267,7 +268,7 @@ namespace ShootingRoom.Services
                             Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
                             item.UnSelectTarget(false);
 
-                        }
+                        //}
                     }
                     Console.WriteLine("=================");
                     Console.WriteLine($"ActualLevelScore {ActualLevelScore}");
