@@ -227,11 +227,15 @@ namespace ShootingRoom.Services
                                 }
 
                             }
-                            item.UnSelectTarget();
-                            Console.WriteLine(Score);
+
+                            Console.WriteLine($"ActualLevelScore {ActualLevelScore}");
+                            Console.WriteLine($"numberOfRightHits {numberOfRightHits}");
+                            Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
+
+                           
                         }
                     }
-
+                    Console.WriteLine("=================");
                     Console.WriteLine($"ActualLevelScore {ActualLevelScore}");
                     Console.WriteLine($"numberOfRightHits {numberOfRightHits}");
                     Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
@@ -241,7 +245,6 @@ namespace ShootingRoom.Services
                     MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
                     Thread.Sleep(5000);
                     MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
-
                     foreach (var item in AirTargetList)
                     {
                         item.UnSelectTarget();
