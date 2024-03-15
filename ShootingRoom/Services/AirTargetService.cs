@@ -96,6 +96,8 @@ namespace ShootingRoom.Services
             scoreList.Add(255);
 
 
+            MCP23Controller.PinModeSetup(Target1.Pin, PinMode.Input);
+
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
@@ -103,7 +105,11 @@ namespace ShootingRoom.Services
         private async Task RunService(CancellationToken cancellationToken)
         {
 
+            while (true) {
 
+                Console.WriteLine(MCP23Controller.Read(Target1.Pin));
+                Thread.Sleep(1000);
+            }
             Stopwatch timer = new Stopwatch();
             Stopwatch timerToStart = new Stopwatch();
             int activeTargetIndox = -1;
