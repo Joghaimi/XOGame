@@ -14,7 +14,6 @@ namespace Library.AirTarget
     public class AirTargetController
     {
         public static bool IsMCP23ControllerInit = false;
-        public static bool IsSelected = false;
         public static bool TargetOneShootBefore, TargetTwoShootBefore, TargetThreeShootBefore, TargetFourShootBefore, TargetFiveShootBefore = false;
         AirTargetModel _ShelfLight, _Target1, _Target2, _Target3, _Target4, _Target5;
         public AirTargetController(
@@ -32,9 +31,10 @@ namespace Library.AirTarget
             _Target3 = Target3;
             _Target4 = Target4;
             _Target5 = Target5;
-            
+
         }
-        public void Init() {
+        public void Init()
+        {
             MCP23Controller.PinModeSetup(_ShelfLight.Pin, PinMode.Output);
             MCP23Controller.PinModeSetup(_Target1.Pin, PinMode.Input);
             MCP23Controller.PinModeSetup(_Target2.Pin, PinMode.Input);
@@ -55,7 +55,7 @@ namespace Library.AirTarget
         }
         public (bool, int) TargetOneStatus()
         {
-            
+
             if (!MCP23Controller.Read(_Target1.Pin) && !_Target1.isShoot)
             {
                 if (_Target1.isSelected)
@@ -72,7 +72,7 @@ namespace Library.AirTarget
         }
         public (bool, int) TargetTwoStatus()
         {
-            if (!MCP23Controller.Read(_Target2.Pin)&&!_Target2.isShoot)
+            if (!MCP23Controller.Read(_Target2.Pin) && !_Target2.isShoot)
             {
                 if (_Target2.isSelected)
                 {
@@ -136,13 +136,13 @@ namespace Library.AirTarget
             MCP23Controller.Write(_ShelfLight.Pin, PinState.Low);
 
             _ShelfLight.isSelected = false;
-
             _Target1.isSelected = false;
             _Target2.isSelected = false;
             _Target3.isSelected = false;
             _Target4.isSelected = false;
             _Target5.isSelected = false;
-            if (finishLevel) {
+            if (finishLevel)
+            {
                 _Target1.isShoot = false;
                 _Target2.isShoot = false;
                 _Target3.isShoot = false;
