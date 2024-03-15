@@ -52,68 +52,65 @@ namespace Library.AirTarget
         }
         public (bool, int) TargetOneStatus()
         {
-            int targetScore = 0;
+            
             if (!MCP23Controller.Read(_Target1.Pin))
             {
                 if (_Target1.isSelected)
                 {
                     _Target1.isShoot = true;
-                    return (true, targetScore);
+                    return (true, _Target1.Score);
                 }
                 else
-                    return (true, -1 * targetScore);
+                    return (true, -1 * _Target1.Score);
 
             }
             else
-                return (false, targetScore);
+                return (false, 0);
         }
         public (bool, int) TargetTwoStatus()
         {
-            int targetScore = 0;
             if (!MCP23Controller.Read(_Target2.Pin))
             {
                 if (_Target2.isSelected)
                 {
                     _Target2.isShoot = true;
-                    return (true, targetScore);
+                    return (true, _Target2.Score);
                 }
                 else
-                    return (true, -1 * targetScore);
+                    return (true, -1 * _Target2.Score);
             }
             else
-                return (false, targetScore);
+                return (false, 0);
         }
         public (bool, int) TargetThreeStatus()
         {
-            int targetScore = 0;
             if (!MCP23Controller.Read(_Target3.Pin))
             {
                 if (_Target3.isSelected)
                 {
                     _Target3.isShoot = true;
-                    return (true, targetScore);
+                    return (true, _Target3.Score);
                 }
                 else
-                    return (true, -1 * targetScore);
+                    return (true, -1 * _Target3.Score);
             }
             else
-                return (false, targetScore);
+                return (false, 0);
         }
         public (bool, int) TargetFourStatus()
         {
-            int targetScore = 0;
             if (!MCP23Controller.Read(_Target4.Pin))
             {
                 if (_Target4.isSelected)
                 {
                     _Target4.isShoot = true;
-                    return (true, targetScore);
+                    return (true, _Target4.Score);
                 }
                 else
-                    return (true, -1 * targetScore);
+                    return (true, -1 * _Target4.Score);
             }
             else
-                return (false, targetScore);
+                return (false, 0);
         }
         public (bool, int) TargetFiveStatus()
         {
@@ -123,13 +120,13 @@ namespace Library.AirTarget
                 if (_Target5.isSelected)
                 {
                     _Target5.isShoot = true;
-                    return (true, targetScore);
+                    return (true, _Target5.Score);
                 }
                 else
-                    return (true, -1 * targetScore);
+                    return (true, -1 * _Target5.Score);
             }
             else
-                return (false, targetScore);
+                return (false, 0);
         }
         public void UnSelectTarget()
         {
