@@ -180,6 +180,8 @@ namespace ShootingRoom.Services
                                     {
                                         numberOfWrongHits++;
                                     }
+                                    state = false;
+                                    itemScore=0;
                                     (state, itemScore) = element.TargetTwoStatus();
                                     ActualLevelScore += itemScore;
                                     if (itemScore > 0 && state)
@@ -191,6 +193,8 @@ namespace ShootingRoom.Services
                                     {
                                         numberOfWrongHits++;
                                     }
+                                    state = false;
+                                    itemScore = 0;
                                     (state, itemScore) = element.TargetThreeStatus();
                                     ActualLevelScore += itemScore;
                                     if (itemScore > 0 && state)
@@ -202,6 +206,8 @@ namespace ShootingRoom.Services
                                     {
                                         numberOfWrongHits++;
                                     }
+                                    state = false;
+                                    itemScore = 0;
                                     (state, itemScore) = element.TargetFourStatus();
                                     ActualLevelScore += itemScore;
                                     if (itemScore > 0 && state)
@@ -213,6 +219,8 @@ namespace ShootingRoom.Services
                                     {
                                         numberOfWrongHits++;
                                     }
+                                    state = false;
+                                    itemScore = 0;
                                     (state, itemScore) = element.TargetFiveStatus();
                                     ActualLevelScore += itemScore;
                                     if (itemScore > 0 && state)
