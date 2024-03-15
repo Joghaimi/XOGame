@@ -111,6 +111,7 @@ namespace ShootingRoom.Services
             ControlPin(BigTargetRelay, true);
             ControlPin(GunShootRelay, true);
             BigTargetTimer.Start();
+            BigTargetTimer.Restart();
             while (true && BigTargetTimer.ElapsedMilliseconds < 1000)
             {
                 if (MCP23Controller.Read(MasterDI.IN1))
@@ -129,6 +130,8 @@ namespace ShootingRoom.Services
                 }
                 Thread.Sleep(10);
             }
+            Console.WriteLine($"Big Target Finished");
+
             ReturnAllTargets();
 
             while (!cancellationToken.IsCancellationRequested)
