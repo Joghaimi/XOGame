@@ -113,32 +113,32 @@ namespace ShootingRoom.Services
             timer.Restart();
 
             // Start Both Selonoid @TODO Depend on the api start game
-            _controller.Setup(MasterOutputPin.GPIO23, PinMode.Output);
-            _controller.Setup(MasterOutputPin.GPIO24, PinMode.Output);
-            _controller.Write(MasterOutputPin.GPIO23, true);// GPIO24 -> gunsenoloid 
-            _controller.Write(MasterOutputPin.GPIO24, true);// GPIO24 -> gunsenoloid 
+            //_controller.Setup(MasterOutputPin.GPIO23, PinMode.Output);
+            //_controller.Setup(MasterOutputPin.GPIO24, PinMode.Output);
+            //_controller.Write(MasterOutputPin.GPIO23, true);// GPIO24 -> gunsenoloid 
+            //_controller.Write(MasterOutputPin.GPIO24, true);// GPIO24 -> gunsenoloid 
 
-            ControlPin(BigTargetRelay, true);
-            ControlPin(GunShootRelay, true);
+            //ControlPin(BigTargetRelay, true);
+            //ControlPin(GunShootRelay, true);
 
-            while (true)
-            {
-                if (MCP23Controller.Read(MasterDI.IN1))
-                {
-                    bigTargetHitScore++;
-                    Console.WriteLine($"Target Hit # {bigTargetHitScore}");
-                    RGBLight.SetColor(RGBColor.Blue);
-                    RGBLight.TurnRGBColorDelayed(RGBColor.White);
-                    Thread.Sleep(500);
-                }
-                if (bigTargetHitScore == 5)
-                {
-                    Console.WriteLine($"Remove Big Target and start the game");
-                    ControlPin(BigTargetRelay, false);
-                    break;
-                }
-                Thread.Sleep(10);
-            }
+            //while (true)
+            //{
+            //    if (MCP23Controller.Read(MasterDI.IN1))
+            //    {
+            //        bigTargetHitScore++;
+            //        Console.WriteLine($"Target Hit # {bigTargetHitScore}");
+            //        RGBLight.SetColor(RGBColor.Blue);
+            //        RGBLight.TurnRGBColorDelayed(RGBColor.White);
+            //        Thread.Sleep(500);
+            //    }
+            //    if (bigTargetHitScore == 5)
+            //    {
+            //        Console.WriteLine($"Remove Big Target and start the game");
+            //        ControlPin(BigTargetRelay, false);
+            //        break;
+            //    }
+            //    Thread.Sleep(10);
+            //}
 
             MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
             Thread.Sleep(5000);
