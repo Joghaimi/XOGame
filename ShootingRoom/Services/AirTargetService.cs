@@ -50,7 +50,7 @@ namespace ShootingRoom.Services
         int GunShootRelay = MasterOutputPin.GPIO24;
 
 
-        private CancellationTokenSource _cts, _cts2;
+        private CancellationTokenSource _cts;
         bool IsTimerStarted = false;
         Stopwatch GameStopWatch = new Stopwatch();
         private GPIOController _controller;
@@ -62,17 +62,8 @@ namespace ShootingRoom.Services
         int highChangeTime = 500;
         int changingSpeed = 1000;
         int bigTargetHitScore = 0;
-
         int Score = 0;
-
         List<int> scoreList = new List<int>();
-
-        int stageOneScore = 0;
-        int stageOneNeededScore = 0;
-
-        int stageSecoundScore = 0;
-        int stageSecoundNeededScore = 0;
-
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _controller = new GPIOController();

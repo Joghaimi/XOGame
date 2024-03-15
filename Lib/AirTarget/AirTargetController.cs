@@ -56,7 +56,7 @@ namespace Library.AirTarget
         public (bool, int) TargetOneStatus()
         {
             
-            if (!MCP23Controller.Read(_Target1.Pin))
+            if (!MCP23Controller.Read(_Target1.Pin) && !_Target1.isShoot)
             {
                 if (_Target1.isSelected)
                 {
@@ -72,7 +72,7 @@ namespace Library.AirTarget
         }
         public (bool, int) TargetTwoStatus()
         {
-            if (!MCP23Controller.Read(_Target2.Pin))
+            if (!MCP23Controller.Read(_Target2.Pin)&&!_Target2.isShoot)
             {
                 if (_Target2.isSelected)
                 {
@@ -87,7 +87,7 @@ namespace Library.AirTarget
         }
         public (bool, int) TargetThreeStatus()
         {
-            if (!MCP23Controller.Read(_Target3.Pin))
+            if (!MCP23Controller.Read(_Target3.Pin) && !_Target3.isShoot)
             {
                 if (_Target3.isSelected)
                 {
@@ -102,7 +102,7 @@ namespace Library.AirTarget
         }
         public (bool, int) TargetFourStatus()
         {
-            if (!MCP23Controller.Read(_Target4.Pin))
+            if (!MCP23Controller.Read(_Target4.Pin) && !_Target4.isShoot)
             {
                 if (_Target4.isSelected)
                 {
@@ -118,7 +118,7 @@ namespace Library.AirTarget
         public (bool, int) TargetFiveStatus()
         {
             int targetScore = 0;
-            if (!MCP23Controller.Read(_Target5.Pin))
+            if (!MCP23Controller.Read(_Target5.Pin) && !_Target5.isShoot)
             {
                 if (_Target5.isSelected)
                 {
