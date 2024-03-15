@@ -102,6 +102,7 @@ namespace ShootingRoom.Services
         private async Task RunService(CancellationToken cancellationToken)
         {
 
+            Console.WriteLine($"Game Started");
 
             Stopwatch Shelftimer = new Stopwatch();
             Stopwatch LevelTimer = new Stopwatch();
