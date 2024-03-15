@@ -161,7 +161,8 @@ namespace ShootingRoom.Services
                             {
                                 foreach (var element in AirTargetList)
                                 {
-                                    while (true) {
+                                    while (true)
+                                    {
                                         (bool statea, int itemScorea) = element.TargetOneStatus();
                                         ActualLevelScore += itemScorea;
                                         Console.WriteLine($"itemScore:{itemScorea} state:{statea} condition:{itemScorea > 0 && statea}");
@@ -169,7 +170,7 @@ namespace ShootingRoom.Services
                                         {
                                             Scored();
                                             numberOfRightHits++;
-                                            
+
                                         }
                                         Thread.Sleep(300);
 
@@ -240,9 +241,9 @@ namespace ShootingRoom.Services
                     Console.WriteLine($"ActualLevelScore {ActualLevelScore}");
                     Console.WriteLine($"numberOfRightHits {numberOfRightHits}");
                     Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
-                    
-                    
-                    
+
+
+
                     MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
                     Thread.Sleep(5000);
                     MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
