@@ -97,7 +97,6 @@ namespace ShootingRoom.Services
             _controller.Setup(BigTargetRelay, PinMode.Output);
             _controller.Setup(GunShootRelay, PinMode.Output);
             RGBLight.SetColor(RGBColor.White);
-
             scoreList.Add(100);
             scoreList.Add(150);
             scoreList.Add(200);
@@ -113,15 +112,15 @@ namespace ShootingRoom.Services
         private async Task RunService(CancellationToken cancellationToken)
         {
 
-            while (true)
-            {
-                AirTargetList[0].Select();
-                (bool state, int itemScore) = AirTargetList[0].TargetOneStatus();
-                Console.WriteLine($"itemScore:{itemScore} state:{state} condition:{itemScore > 0 && state}");
+            //while (true)
+            //{
+            //    AirTargetList[0].Select();
+            //    (bool state, int itemScore) = AirTargetList[0].TargetOneStatus();
+            //    Console.WriteLine($"itemScore:{itemScore} state:{state} condition:{itemScore > 0 && state}");
 
-                //Console.WriteLine(MCP23Controller.Read(Target1.Pin));
-                Thread.Sleep(1000);
-            }
+            //    //Console.WriteLine(MCP23Controller.Read(Target1.Pin));
+            //    Thread.Sleep(1000);
+            //}
             Stopwatch timer = new Stopwatch();
             Stopwatch timerToStart = new Stopwatch();
             int activeTargetIndox = -1;
