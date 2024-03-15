@@ -66,7 +66,7 @@ namespace ShootingRoom.Services
         int Score = 0;
 
         List<(int, int)> scoreList = new List<(int, int)>();
-        
+
 
         int stageOneScore = 0;
         int stageOneNeededScore = 0;
