@@ -155,7 +155,7 @@ namespace ShootingRoom.Services
                         {
                             //    var item = AirTargetList[1];
                             //timer.Restart();
-                            //item.Select();
+                            item.Select();
 
                             while (timer.ElapsedMilliseconds <= 5000)
                             {
