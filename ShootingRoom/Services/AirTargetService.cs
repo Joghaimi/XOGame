@@ -165,6 +165,7 @@ namespace ShootingRoom.Services
                         {
                             timer.Restart();
                             item.Select();
+
                             while (timer.ElapsedMilliseconds <= 5000)
                             {
                                 foreach (var element in AirTargetList)
@@ -173,24 +174,32 @@ namespace ShootingRoom.Services
                                     ActualLevelScore += itemScore;
                                     if (itemScore > 0 && state)
                                     {
+                                        Console.WriteLine("Target 1 Right ");
                                         Scored();
                                         numberOfRightHits++;
                                     }
                                     else if (itemScore < 0 && state)
                                     {
+                                        Console.WriteLine("Target 1 Wrong ");
+
                                         numberOfWrongHits++;
                                     }
+
                                     state = false;
                                     itemScore=0;
                                     (state, itemScore) = element.TargetTwoStatus();
                                     ActualLevelScore += itemScore;
                                     if (itemScore > 0 && state)
                                     {
+                                        Console.WriteLine("Target 2 Right ");
+
                                         Scored();
                                         numberOfRightHits++;
                                     }
                                     else if (itemScore < 0 && state)
                                     {
+                                        Console.WriteLine("Target 2 Wrong ");
+
                                         numberOfWrongHits++;
                                     }
                                     state = false;
@@ -199,11 +208,15 @@ namespace ShootingRoom.Services
                                     ActualLevelScore += itemScore;
                                     if (itemScore > 0 && state)
                                     {
+                                        Console.WriteLine("Target 3 Right ");
+
                                         Scored();
                                         numberOfRightHits++;
                                     }
                                     else if (itemScore < 0 && state)
                                     {
+                                        Console.WriteLine("Target 3 Wrong ");
+
                                         numberOfWrongHits++;
                                     }
                                     state = false;
@@ -212,11 +225,15 @@ namespace ShootingRoom.Services
                                     ActualLevelScore += itemScore;
                                     if (itemScore > 0 && state)
                                     {
+                                        Console.WriteLine("Target 4 Right ");
+
                                         Scored();
                                         numberOfRightHits++;
                                     }
                                     else if (itemScore < 0 && state)
                                     {
+                                        Console.WriteLine("Target 4 Wrong ");
+
                                         numberOfWrongHits++;
                                     }
                                     state = false;
@@ -225,13 +242,17 @@ namespace ShootingRoom.Services
                                     ActualLevelScore += itemScore;
                                     if (itemScore > 0 && state)
                                     {
+                                        Console.WriteLine("Target 5 Right ");
+
                                         Scored();
                                         numberOfRightHits++;
                                     }
                                     else if (itemScore < 0 && state)
                                     {
+                                        Console.WriteLine("Target 5 Wrong ");
                                         numberOfWrongHits++;
                                     }
+                                    Thread.Sleep(10);
                                 }
 
                             }
@@ -239,7 +260,7 @@ namespace ShootingRoom.Services
                             Console.WriteLine($"ActualLevelScore {ActualLevelScore}");
                             Console.WriteLine($"numberOfRightHits {numberOfRightHits}");
                             Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
-                            item.UnSelectTarget(false);
+                            //item.UnSelectTarget(false);
 
                         }
                     }
