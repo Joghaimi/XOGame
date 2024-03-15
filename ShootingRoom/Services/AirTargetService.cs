@@ -67,9 +67,6 @@ namespace ShootingRoom.Services
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _controller = new GPIOController();
-
-
-
             GameStopWatch.Start();
             var airTarget1 = new AirTargetController(ShelfLight, Target1, Target2, Target3, Target4, Target5);
             var airTarget2 = new AirTargetController(ShelfLight2, Target6, Target7, Target8, Target9, Target10);
@@ -89,10 +86,14 @@ namespace ShootingRoom.Services
             _controller.Setup(BigTargetRelay, PinMode.Output);
             _controller.Setup(GunShootRelay, PinMode.Output);
             RGBLight.SetColor(RGBColor.White);
-            scoreList.Add(100);
-            scoreList.Add(150);
-            scoreList.Add(200);
-            scoreList.Add(255);
+
+
+            // Big Target Score === 100 > 1 Min
+
+            scoreList.Add(100); // 2 Min
+            scoreList.Add(150); // 2 Min
+            scoreList.Add(200); // 2 Min
+            scoreList.Add(255); // 2 Min
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
@@ -102,24 +103,15 @@ namespace ShootingRoom.Services
         {
 
 
-            Stopwatch timer = new Stopwatch();
-            Stopwatch timerToStart = new Stopwatch();
-            int activeTargetIndox = -1;
-            Random random = new Random();
-            int randomTime = random.Next(5000, 15000);
-            timerToStart.Restart();
-            timer.Restart();
+            Stopwatch Shelftimer = new Stopwatch();
+            Stopwatch LevelTimer = new Stopwatch();
+            Stopwatch BigTargetTimer = new Stopwatch();
 
-            // Start Both Selonoid @TODO Depend on the api start game
-            //_controller.Setup(MasterOutputPin.GPIO23, PinMode.Output);
-            //_controller.Setup(MasterOutputPin.GPIO24, PinMode.Output);
-            //_controller.Write(MasterOutputPin.GPIO23, true);// GPIO24 -> gunsenoloid 
-            //_controller.Write(MasterOutputPin.GPIO24, true);// GPIO24 -> gunsenoloid 
-
+            //96
             ControlPin(BigTargetRelay, true);
             ControlPin(GunShootRelay, true);
-
-            while (true)
+            BigTargetTimer.Start();
+            while (true && BigTargetTimer.ElapsedMilliseconds < 1000)
             {
                 if (MCP23Controller.Read(MasterDI.IN1))
                 {
@@ -139,8 +131,6 @@ namespace ShootingRoom.Services
             }
             ReturnAllTargets();
 
-
-
             while (!cancellationToken.IsCancellationRequested)
             {
                 foreach (var LevelScore in scoreList)
@@ -148,14 +138,14 @@ namespace ShootingRoom.Services
                     int ActualLevelScore = 0;
                     int numberOfRightHits = 0;
                     int numberOfWrongHits = 0;
-                    while (LevelScore > ActualLevelScore)
+                    LevelTimer.Restart();
+                    while (LevelScore > ActualLevelScore && LevelTimer.ElapsedMilliseconds < 96000)
                     {
                         foreach (var item in AirTargetList)
                         {
-                            //    var item = AirTargetList[1];
-                            timer.Restart();
+                            Shelftimer.Restart();
                             item.Select();
-                            while (timer.ElapsedMilliseconds <= 5000)
+                            while (Shelftimer.ElapsedMilliseconds <= 5000)
                             {
                                 foreach (var element in AirTargetList)
                                 {
@@ -170,13 +160,11 @@ namespace ShootingRoom.Services
                                     else if (itemScore < 0 && state)
                                     {
                                         Console.WriteLine("Target 1 Wrong ");
-
+                                        WrongScored();
                                         numberOfWrongHits++;
                                     }
-
                                     state = false;
                                     itemScore = 0;
-
                                     (state, itemScore) = element.TargetTwoStatus();
                                     ActualLevelScore += itemScore;
                                     if (itemScore > 0 && state)
@@ -189,12 +177,11 @@ namespace ShootingRoom.Services
                                     else if (itemScore < 0 && state)
                                     {
                                         Console.WriteLine("Target 2 Wrong ");
-
+                                        WrongScored();
                                         numberOfWrongHits++;
                                     }
                                     state = false;
                                     itemScore = 0;
-
                                     (state, itemScore) = element.TargetThreeStatus();
                                     ActualLevelScore += itemScore;
                                     if (itemScore > 0 && state)
@@ -207,7 +194,7 @@ namespace ShootingRoom.Services
                                     else if (itemScore < 0 && state)
                                     {
                                         Console.WriteLine("Target 3 Wrong ");
-
+                                        WrongScored();
                                         numberOfWrongHits++;
                                     }
                                     state = false;
@@ -225,7 +212,7 @@ namespace ShootingRoom.Services
                                     else if (itemScore < 0 && state)
                                     {
                                         Console.WriteLine("Target 4 Wrong ");
-
+                                        WrongScored();
                                         numberOfWrongHits++;
                                     }
 
@@ -237,13 +224,13 @@ namespace ShootingRoom.Services
                                     if (itemScore > 0 && state)
                                     {
                                         Console.WriteLine("Target 5 Right ");
-
                                         Scored();
                                         numberOfRightHits++;
                                     }
                                     else if (itemScore < 0 && state)
                                     {
                                         Console.WriteLine("Target 5 Wrong ");
+                                        WrongScored();
                                         numberOfWrongHits++;
                                     }
                                     Thread.Sleep(10);
@@ -300,6 +287,12 @@ namespace ShootingRoom.Services
             RGBLight.TurnRGBColorDelayed(RGBColor.White);
         }
 
+        private void WrongScored()
+        {
+            AudioPlayer.PIStartAudio(SoundType.Descend);
+            RGBLight.SetColor(RGBColor.Red);
+            RGBLight.TurnRGBColorDelayed(RGBColor.White);
+        }
 
 
         //private async Task TimingService(CancellationToken cancellationToken)
