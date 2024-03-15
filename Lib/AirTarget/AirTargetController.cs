@@ -42,6 +42,12 @@ namespace Library.AirTarget
             MCP23Controller.PinModeSetup(_Target4.Pin, PinMode.Input);
             MCP23Controller.PinModeSetup(_Target5.Pin, PinMode.Input);
         }
+        public void test() {
+
+            Console.WriteLine($"{MCP23Controller.Read(_Target1.Pin)} {MCP23Controller.Read(_Target2.Pin)} {MCP23Controller.Read(_Target3.Pin)} {MCP23Controller.Read(_Target4.Pin)} {MCP23Controller.Read(_Target5.Pin)}");
+
+
+        }
         public void Select()
         {
             MCP23Controller.Write(_ShelfLight.Pin, PinState.High);

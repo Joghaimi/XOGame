@@ -83,6 +83,7 @@ namespace ShootingRoom.Services
             AirTargetList.Add(airTarget2);
             AirTargetList.Add(airTarget3);
             AirTargetList.Add(airTarget4);
+
             MCP23Controller.PinModeSetup(TargetMotorControl, PinMode.Output);
             MCP23Controller.PinModeSetup(BigTargetIRSensor, PinMode.Input);
             _controller.Setup(BigTargetRelay, PinMode.Output);
@@ -94,11 +95,11 @@ namespace ShootingRoom.Services
             scoreList.Add(255);
 
 
-            MCP23Controller.PinModeSetup(Target1.Pin, PinMode.Input);
-            MCP23Controller.PinModeSetup(Target2.Pin, PinMode.Input);
-            MCP23Controller.PinModeSetup(Target3.Pin, PinMode.Input);
-            MCP23Controller.PinModeSetup(Target4.Pin, PinMode.Input);
-            MCP23Controller.PinModeSetup(Target5.Pin, PinMode.Input);
+            //MCP23Controller.PinModeSetup(Target1.Pin, PinMode.Input);
+            //MCP23Controller.PinModeSetup(Target2.Pin, PinMode.Input);
+            //MCP23Controller.PinModeSetup(Target3.Pin, PinMode.Input);
+            //MCP23Controller.PinModeSetup(Target4.Pin, PinMode.Input);
+            //MCP23Controller.PinModeSetup(Target5.Pin, PinMode.Input);
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
@@ -110,8 +111,8 @@ namespace ShootingRoom.Services
             while (true)
             {
 
-                Console.WriteLine($"{MCP23Controller.Read(Target1.Pin)} {MCP23Controller.Read(Target2.Pin)} {MCP23Controller.Read(Target3.Pin)} {MCP23Controller.Read(Target4.Pin)} {MCP23Controller.Read(Target5.Pin)}");
-
+                //Console.WriteLine($"{MCP23Controller.Read(Target1.Pin)} {MCP23Controller.Read(Target2.Pin)} {MCP23Controller.Read(Target3.Pin)} {MCP23Controller.Read(Target4.Pin)} {MCP23Controller.Read(Target5.Pin)}");
+                AirTargetList[0].test();
 
                 //Console.WriteLine(MCP23Controller.Read(Target1.Pin));
                 Thread.Sleep(1000);
