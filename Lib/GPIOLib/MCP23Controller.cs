@@ -99,6 +99,7 @@ namespace Library.GPIOLib
         public static bool Read(MCP23Pin _MCP23Pin)
         {
             byte GPIOStatus = ReturnMCPChip(_MCP23Pin.Chip).ReadByte(Register.GPIO, _MCP23Pin.port);
+            Thread.Sleep(5);
             return ((GPIOStatus >> _MCP23Pin.PinNumber) & 0x01) == 1;
         }
 
