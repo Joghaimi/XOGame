@@ -185,7 +185,7 @@ namespace ShootingRoom.Services
                                         Console.WriteLine($"itemScore:{itemScorea} state:{statea} condition:{itemScorea > 0 && statea}");
                                         if (itemScorea > 0 && statea)
                                         {
-                                            //Scored();
+                                            Scored();
                                             numberOfRightHits++;
 
                                         }
