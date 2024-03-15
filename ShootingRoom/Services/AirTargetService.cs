@@ -161,6 +161,19 @@ namespace ShootingRoom.Services
                             {
                                 foreach (var element in AirTargetList)
                                 {
+                                    while (true) {
+                                        (bool statea, int itemScorea) = element.TargetOneStatus();
+                                        ActualLevelScore += itemScorea;
+                                        Console.WriteLine($"itemScore:{itemScorea} state:{statea} condition:{itemScorea > 0 && statea}");
+                                        if (itemScorea > 0 && statea)
+                                        {
+                                            Scored();
+                                            numberOfRightHits++;
+                                            
+                                        }
+                                        Thread.Sleep(300);
+
+                                    }
                                     (bool state, int itemScore) = element.TargetOneStatus();
                                     ActualLevelScore += itemScore;
                                     if (itemScore > 0 && state)
