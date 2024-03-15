@@ -24,7 +24,8 @@ namespace Library.RGBLib
         private static int CLKPin = 0;
         private static int DataPin = 0;
         private static GPIOController _controller;
-   
+
+        private static Queue<(RGBColor, int)> _rgbLightQueue = new Queue<(RGBColor, int)>();
         public static void Init(int _clkPin, int _dataPin)
         {
             CLKPin = _clkPin;

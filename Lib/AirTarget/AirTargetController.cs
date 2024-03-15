@@ -16,104 +16,138 @@ namespace Library.AirTarget
         public static bool IsMCP23ControllerInit = false;
         public static bool IsSelected = false;
         public static bool TargetOneShootBefore, TargetTwoShootBefore, TargetThreeShootBefore, TargetFourShootBefore, TargetFiveShootBefore = false;
-        MCP23Pin _ShelfLightPin, _Target1Pin, _Target2Pin, _Target3Pin, _Target4Pin, _Target5Pin;
+        AirTargetModel _ShelfLight, _Target1, _Target2, _Target3, _Target4, _Target5;
         public AirTargetController(
-            MCP23Pin ShelfLightPin, MCP23Pin Target1Pin, MCP23Pin Target2Pin,
-            MCP23Pin Target3Pin, MCP23Pin Target4Pin, MCP23Pin Target5Pin)
+            AirTargetModel ShelfLight,
+            AirTargetModel Target1,
+            AirTargetModel Target2,
+            AirTargetModel Target3,
+            AirTargetModel Target4,
+            AirTargetModel Target5
+            )
         {
-            _ShelfLightPin = ShelfLightPin;
-            _Target1Pin = Target1Pin;
-            _Target2Pin = Target2Pin;
-            _Target3Pin = Target3Pin;
-            _Target4Pin = Target4Pin;
-            _Target5Pin = Target5Pin;
-            MCP23Controller.PinModeSetup(_ShelfLightPin, PinMode.Output);
-            MCP23Controller.PinModeSetup(_Target1Pin, PinMode.Input);
-            MCP23Controller.PinModeSetup(_Target2Pin, PinMode.Input);
-            MCP23Controller.PinModeSetup(_Target3Pin, PinMode.Input);
-            MCP23Controller.PinModeSetup(_Target4Pin, PinMode.Input);
-            MCP23Controller.PinModeSetup(_Target5Pin, PinMode.Input);
+            _ShelfLight = ShelfLight;
+            _Target1 = Target1;
+            _Target2 = Target2;
+            _Target3 = Target3;
+            _Target4 = Target4;
+            _Target5 = Target5;
+            MCP23Controller.PinModeSetup(_ShelfLight.Pin, PinMode.Output);
+            MCP23Controller.PinModeSetup(_Target1.Pin, PinMode.Input);
+            MCP23Controller.PinModeSetup(_Target2.Pin, PinMode.Input);
+            MCP23Controller.PinModeSetup(_Target3.Pin, PinMode.Input);
+            MCP23Controller.PinModeSetup(_Target4.Pin, PinMode.Input);
+            MCP23Controller.PinModeSetup(_Target5.Pin, PinMode.Input);
         }
         public void Select(bool Selected)
         {
-            IsSelected = Selected;
-            if (IsSelected)
-                MCP23Controller.Write(_ShelfLightPin, PinState.High);
-            else
-                MCP23Controller.Write(_ShelfLightPin, PinState.Low);
-        }
-        public bool TargetOneStatus()
-        {
-            bool statusShoot = !MCP23Controller.Read(_Target1Pin);
-            if (statusShoot && !TargetOneShootBefore)
-            {
-                TargetOneShootBefore = true;
-                return statusShoot;
-            }
-            else
-                return false;
+            MCP23Controller.Write(_ShelfLight.Pin, PinState.High);
+            _ShelfLight.isSelected = true;
 
+            _Target1.isSelected = true;
+            _Target2.isSelected = true;
+            _Target3.isSelected = true;
+            _Target4.isSelected = true;
+            _Target5.isSelected = true;
         }
-        public bool TargetTwoStatus()
+        public (bool, int) TargetOneStatus()
         {
+            int targetScore = 0;
+            if (!MCP23Controller.Read(_Target1.Pin))
+            {
+                if (_Target1.isSelected)
+                {
+                    _Target1.isShoot = true;
+                    return (true, targetScore);
+                }
+                else
+                    return (true, -1 * targetScore);
 
-            bool statusShoot = !MCP23Controller.Read(_Target2Pin);
-            if (statusShoot && !TargetTwoShootBefore)
-            {
-                TargetTwoShootBefore = true;
-                return statusShoot;
             }
             else
-            {
-                return false;
-            }
+                return (false, targetScore);
         }
-        public bool TargetThreeStatus()
+        public (bool, int) TargetTwoStatus()
         {
-            bool statusShoot = !MCP23Controller.Read(_Target3Pin);
-            if (statusShoot && !TargetThreeShootBefore)
+            int targetScore = 0;
+            if (!MCP23Controller.Read(_Target2.Pin))
             {
-                TargetThreeShootBefore = true;
-                return statusShoot;
+                if (_Target2.isSelected)
+                {
+                    _Target2.isShoot = true;
+                    return (true, targetScore);
+                }
+                else
+                    return (true, -1 * targetScore);
             }
             else
-            {
-                return false;
-            }
+                return (false, targetScore);
         }
-        public bool TargetFourStatus()
+        public (bool, int) TargetThreeStatus()
         {
-            bool statusShoot = !MCP23Controller.Read(_Target4Pin);
-            if (statusShoot && !TargetFourShootBefore)
+            int targetScore = 0;
+            if (!MCP23Controller.Read(_Target3.Pin))
             {
-                TargetFourShootBefore = true;
-                return statusShoot;
+                if (_Target3.isSelected)
+                {
+                    _Target3.isShoot = true;
+                    return (true, targetScore);
+                }
+                else
+                    return (true, -1 * targetScore);
             }
             else
-            {
-                return false;
-            }
+                return (false, targetScore);
         }
-        public bool TargetFiveStatus()
+        public (bool, int) TargetFourStatus()
         {
-            bool statusShoot = !MCP23Controller.Read(_Target5Pin);
-            if (statusShoot && !TargetFourShootBefore)
+            int targetScore = 0;
+            if (!MCP23Controller.Read(_Target4.Pin))
             {
-                TargetFourShootBefore = true;
-                return statusShoot;
+                if (_Target4.isSelected)
+                {
+                    _Target4.isShoot = true;
+                    return (true, targetScore);
+                }
+                else
+                    return (true, -1 * targetScore);
             }
             else
-            {
-                return false;
-            }
+                return (false, targetScore);
         }
-        public void resetTarget()
+        public (bool, int) TargetFiveStatus()
         {
-            TargetOneShootBefore = false;
-            TargetTwoShootBefore = false;
-            TargetThreeShootBefore = false;
-            TargetFourShootBefore = false;
-            TargetFiveShootBefore = false;
+            int targetScore = 0;
+            if (!MCP23Controller.Read(_Target5.Pin))
+            {
+                if (_Target5.isSelected)
+                {
+                    _Target5.isShoot = true;
+                    return (true, targetScore);
+                }
+                else
+                    return (true, -1 * targetScore);
+            }
+            else
+                return (false, targetScore);
+        }
+        public void UnSelectTarget()
+        {
+            MCP23Controller.Write(_ShelfLight.Pin, PinState.Low);
+
+            _ShelfLight.isSelected = false;
+
+            _Target1.isSelected = false;
+            _Target2.isSelected = false;
+            _Target3.isSelected = false;
+            _Target4.isSelected = false;
+            _Target5.isSelected = false;
+
+            _Target1.isShoot = false;
+            _Target2.isShoot = false;
+            _Target3.isShoot = false;
+            _Target4.isShoot = false;
+            _Target5.isShoot = false;
         }
     }
 }
