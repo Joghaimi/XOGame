@@ -39,7 +39,7 @@ namespace Library.AirTarget
             MCP23Controller.PinModeSetup(_Target4.Pin, PinMode.Input);
             MCP23Controller.PinModeSetup(_Target5.Pin, PinMode.Input);
         }
-        public void Select(bool Selected)
+        public void Select()
         {
             MCP23Controller.Write(_ShelfLight.Pin, PinState.High);
             _ShelfLight.isSelected = true;

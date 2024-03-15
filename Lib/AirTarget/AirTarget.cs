@@ -8,5 +8,9 @@ namespace Library.AirTarget
         public int Score{ get; set; }
         public bool isSelected { get; set; }=false;
         public bool isShoot { get; set; }=false;
+        public AirTargetModel(MCP23Pin Pin, int Score ) {
+            this.Pin = Pin;
+            this.Score = Score;
+        }
     }
 }

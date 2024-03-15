@@ -1,4 +1,5 @@
 ﻿using Iot.Device.Mcp3428;
+using IronPython.Compiler.Ast;
 using Library;
 using Library.AirTarget;
 using Library.GPIOLib;
@@ -14,6 +15,41 @@ namespace ShootingRoom.Services
     public class AirTargetService : IHostedService, IDisposable
     {
         List<AirTargetController> AirTargetList = new List<AirTargetController>();
+        // Shelf One
+        AirTargetModel ShelfLight = new AirTargetModel(MasterOutputPin.OUTPUT1, 0);
+        AirTargetModel Target1 = new AirTargetModel(HatInputPin.IR1, 15);
+        AirTargetModel Target2 = new AirTargetModel(HatInputPin.IR2, 5);
+        AirTargetModel Target3 = new AirTargetModel(HatInputPin.IR3, 10);
+        AirTargetModel Target4 = new AirTargetModel(HatInputPin.IR4, 5);
+        AirTargetModel Target5 = new AirTargetModel(HatInputPin.IR5, 15);
+        // Shelf Two
+        AirTargetModel ShelfLight2 = new AirTargetModel(MasterOutputPin.OUTPUT2, 0);
+        AirTargetModel Target6 = new AirTargetModel(HatInputPin.IR6, 5);
+        AirTargetModel Target7 = new AirTargetModel(HatInputPin.IR7, 10);
+        AirTargetModel Target8 = new AirTargetModel(HatInputPin.IR8, 5);
+        AirTargetModel Target9 = new AirTargetModel(HatInputPin.IR9, 5);
+        AirTargetModel Target10 = new AirTargetModel(HatInputPin.IR10, 15);
+        // Shelf Three
+        AirTargetModel ShelfLight3 = new AirTargetModel(MasterOutputPin.OUTPUT3, 0);
+        AirTargetModel Target11 = new AirTargetModel(HatInputPin.IR11, 15);
+        AirTargetModel Target12 = new AirTargetModel(HatInputPin.IR12, 5);
+        AirTargetModel Target13 = new AirTargetModel(HatInputPin.IR13, 5);
+        AirTargetModel Target14 = new AirTargetModel(HatInputPin.IR14, 10);
+        AirTargetModel Target15 = new AirTargetModel(HatInputPin.IR15, 5);
+        // Shelf Four
+        AirTargetModel ShelfLight4 = new AirTargetModel(MasterOutputPin.OUTPUT4, 0);
+        AirTargetModel Target16 = new AirTargetModel(HatInputPin.IR16, 5);
+        AirTargetModel Target17 = new AirTargetModel(HatInputPin.IR17, 10);
+        AirTargetModel Target18 = new AirTargetModel(HatInputPin.IR18, 5);
+        AirTargetModel Target19 = new AirTargetModel(HatInputPin.IR19, 10);
+        AirTargetModel Target20 = new AirTargetModel(HatInputPin.IR20, 5);
+        MCP23Pin TargetMotorControl = MasterOutputPin.OUTPUT5;
+        MCP23Pin BigTargetIRSensor = MasterDI.IN1;
+
+        int BigTargetRelay = MasterOutputPin.GPIO23;
+        int GunShootRelay = MasterOutputPin.GPIO24;
+
+
         private CancellationTokenSource _cts, _cts2;
         bool IsTimerStarted = false;
         Stopwatch GameStopWatch = new Stopwatch();
@@ -38,20 +74,15 @@ namespace ShootingRoom.Services
 
 
             GameStopWatch.Start();
-            AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT1, HatInputPin.IR1, HatInputPin.IR2, HatInputPin.IR3, HatInputPin.IR4, HatInputPin.IR5));
-            AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT2, HatInputPin.IR6, HatInputPin.IR7, HatInputPin.IR8, HatInputPin.IR9, HatInputPin.IR10));
-            AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT3, HatInputPin.IR11, HatInputPin.IR12, HatInputPin.IR13, HatInputPin.IR14, HatInputPin.IR15));
-            AirTargetList.Add(new AirTargetController(MasterOutputPin.OUTPUT4, HatInputPin.IR16, HatInputPin.IR17, HatInputPin.IR18, HatInputPin.IR19, HatInputPin.IR20));
+            AirTargetList.Add(new AirTargetController(ShelfLight, Target1, Target2, Target3, Target4, Target5));
+            AirTargetList.Add(new AirTargetController(ShelfLight2, Target6, Target7, Target8, Target9, Target10));
+            AirTargetList.Add(new AirTargetController(ShelfLight3, Target11, Target12, Target13, Target14, Target15));
+            AirTargetList.Add(new AirTargetController(ShelfLight4, Target16, Target17, Target18, Target19, Target20));
+            MCP23Controller.PinModeSetup(TargetMotorControl, PinMode.Output);
+            MCP23Controller.PinModeSetup(BigTargetIRSensor, PinMode.Input);
+            _controller.Setup(BigTargetRelay, PinMode.Output);
+            _controller.Setup(GunShootRelay, PinMode.Output);
             RGBLight.SetColor(RGBColor.White);
-            // Output5 for relocate the targets
-            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinMode.Output);
-            // IN1 --> Big Target signal 
-            MCP23Controller.PinModeSetup(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber, PinMode.Input);
-            // Control By Controller => Selonoid
-            // GPIO23 -> Big Target Selonoide
-            _controller.Setup(MasterOutputPin.GPIO23, PinMode.Output);
-            // GPIO24 -> gunsenoloid 
-            _controller.Setup(MasterOutputPin.GPIO24, PinMode.Output);
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
@@ -60,7 +91,7 @@ namespace ShootingRoom.Services
         private async Task RunService(CancellationToken cancellationToken)
         {
 
-            bool activeTarget = false;
+
             Stopwatch timer = new Stopwatch();
             Stopwatch timerToStart = new Stopwatch();
             int activeTargetIndox = -1;
@@ -75,11 +106,12 @@ namespace ShootingRoom.Services
             _controller.Write(MasterOutputPin.GPIO23, true);// GPIO24 -> gunsenoloid 
             _controller.Write(MasterOutputPin.GPIO24, true);// GPIO24 -> gunsenoloid 
 
-
+            ControlPin(BigTargetRelay, true);
+            ControlPin(GunShootRelay, true);
 
             while (true)
             {
-                if (MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber))
+                if (MCP23Controller.Read(MasterDI.IN1))
                 {
                     bigTargetHitScore++;
                     Console.WriteLine($"Target Hit # {bigTargetHitScore}");
@@ -90,18 +122,15 @@ namespace ShootingRoom.Services
                 if (bigTargetHitScore == 5)
                 {
                     Console.WriteLine($"Remove Big Target and start the game");
-                    _controller.Write(MasterOutputPin.GPIO23, false);
-                    _controller.Setup(MasterOutputPin.GPIO23, PinMode.Input);
-
+                    ControlPin(BigTargetRelay, false);
                     break;
                 }
                 Thread.Sleep(10);
             }
 
-            MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
+            MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
             Thread.Sleep(5000);
-            MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
-
+            MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
             while (!cancellationToken.IsCancellationRequested)
             {
 
@@ -109,57 +138,79 @@ namespace ShootingRoom.Services
                 foreach (var item in AirTargetList)
                 {
                     timer.Restart();
-                    item.Select(true);
-
+                    item.Select();
                     while (timer.ElapsedMilliseconds <= 5000)
                     {
-                        if (item.TargetOneStatus())
+                        foreach (var element in AirTargetList)
                         {
-                            AudioPlayer.PIStartAudio(SoundType.Bonus);
-                            RGBLight.SetColor(RGBColor.Blue);
-                            RGBLight.TurnRGBColorDelayed(RGBColor.White);
-                            Score++;
+                            (bool state, int itemScore) = item.TargetOneStatus();
+                            Score += itemScore;
+                            if (itemScore > 0 && state)
+                                Scored();
+                            (state, itemScore) = item.TargetTwoStatus();
+                            Score += itemScore;
+                            if (itemScore > 0 && state)
+                                Scored();
+                            (state, itemScore) = item.TargetThreeStatus();
+                            Score += itemScore;
+                            if (itemScore > 0 && state)
+                                Scored();
+                            (state, itemScore) = item.TargetFourStatus();
+                            Score += itemScore;
+                            if (itemScore > 0 && state)
+                                Scored();
+                            (state, itemScore) = item.TargetFiveStatus();
+                            Score += itemScore;
+                            if (itemScore > 0 && state)
+                                Scored();
                         }
-                        if (item.TargetTwoStatus())
-                        {
-                            AudioPlayer.PIStartAudio(SoundType.Bonus);
-                            RGBLight.SetColor(RGBColor.Blue);
-                            RGBLight.TurnRGBColorDelayed(RGBColor.White);
-                            Score++;
-                        }
-                        if (item.TargetThreeStatus())
-                        {
-                            AudioPlayer.PIStartAudio(SoundType.Bonus);
-                            RGBLight.SetColor(RGBColor.Blue);
-                            RGBLight.TurnRGBColorDelayed(RGBColor.White);
-                            Score++;
-                        }
-                        if (item.TargetFourStatus())
-                        {
-                            AudioPlayer.PIStartAudio(SoundType.Bonus);
-                            RGBLight.SetColor(RGBColor.Blue);
-                            RGBLight.TurnRGBColorDelayed(RGBColor.White);
-                            Score++;
-                        }
-                        if (item.TargetFiveStatus())
-                        {
-                            AudioPlayer.PIStartAudio(SoundType.Bonus);
-                            RGBLight.SetColor(RGBColor.Blue);
-                            RGBLight.TurnRGBColorDelayed(RGBColor.White);
-                            Score++;
-                        }
+                        //if (item.TargetOneStatus())
+                        //{
+                        //    AudioPlayer.PIStartAudio(SoundType.Bonus);
+                        //    RGBLight.SetColor(RGBColor.Blue);
+                        //    RGBLight.TurnRGBColorDelayed(RGBColor.White);
+                        //    Score++;
+                        //}
+                        //if (item.TargetTwoStatus())
+                        //{
+                        //    AudioPlayer.PIStartAudio(SoundType.Bonus);
+                        //    RGBLight.SetColor(RGBColor.Blue);
+                        //    RGBLight.TurnRGBColorDelayed(RGBColor.White);
+                        //    Score++;
+                        //}
+                        //if (item.TargetThreeStatus())
+                        //{
+                        //    AudioPlayer.PIStartAudio(SoundType.Bonus);
+                        //    RGBLight.SetColor(RGBColor.Blue);
+                        //    RGBLight.TurnRGBColorDelayed(RGBColor.White);
+                        //    Score++;
+                        //}
+                        //if (item.TargetFourStatus())
+                        //{
+                        //    AudioPlayer.PIStartAudio(SoundType.Bonus);
+                        //    RGBLight.SetColor(RGBColor.Blue);
+                        //    RGBLight.TurnRGBColorDelayed(RGBColor.White);
+                        //    Score++;
+                        //}
+                        //if (item.TargetFiveStatus())
+                        //{
+                        //    AudioPlayer.PIStartAudio(SoundType.Bonus);
+                        //    RGBLight.SetColor(RGBColor.Blue);
+                        //    RGBLight.TurnRGBColorDelayed(RGBColor.White);
+                        //    Score++;
+                        //}
                     }
                     Console.WriteLine(Score);
                     //item.resetTarget();
-                    item.Select(false);
+                    item.UnSelectTarget();
                 }
-                MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
+                MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
                 Thread.Sleep(5000);
-                MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
+                MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
 
                 foreach (var item in AirTargetList)
                 {
-                    item.resetTarget();
+                    item.UnSelectTarget();
                 }
 
                 //if (VariableControlService.IsTheGameStarted && IsTimerStarted)
@@ -202,7 +253,26 @@ namespace ShootingRoom.Services
             }
         }
 
+        private void ControlPin(int pinNumber, bool state)
+        {
+            if (state)
+            {
+                _controller.Setup(pinNumber, PinMode.Output);
+                _controller.Write(pinNumber, true);// GPIO24 -> gunsenoloid
+            }
+            else
+            {
+                _controller.Setup(pinNumber, PinMode.Input);
+                _controller.Write(pinNumber, true);// GPIO24 -> gunsenoloid
+            }
 
+        }
+        private void Scored()
+        {
+            AudioPlayer.PIStartAudio(SoundType.Bonus);
+            RGBLight.SetColor(RGBColor.Blue);
+            RGBLight.TurnRGBColorDelayed(RGBColor.White);
+        }
 
 
 
