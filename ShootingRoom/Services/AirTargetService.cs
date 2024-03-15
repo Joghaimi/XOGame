@@ -148,9 +148,9 @@ namespace ShootingRoom.Services
             //    Thread.Sleep(10);
             //}
 
-            MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
-            Thread.Sleep(5000);
-            MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
+            //MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
+            //Thread.Sleep(5000);
+            //MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
 
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -277,9 +277,9 @@ namespace ShootingRoom.Services
 
 
 
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
-                    Thread.Sleep(5000);
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
+                    //MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
+                    //Thread.Sleep(5000);
+                    //MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
                     foreach (var item in AirTargetList)
                     {
                         item.UnSelectTarget(true);
