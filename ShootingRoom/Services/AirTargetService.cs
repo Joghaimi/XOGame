@@ -95,6 +95,9 @@ namespace ShootingRoom.Services
             scoreList.Add(200);
             scoreList.Add(255);
 
+
+            MCP23Controller.PinModeSetup(Target1.Pin, PinMode.Input);
+
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
