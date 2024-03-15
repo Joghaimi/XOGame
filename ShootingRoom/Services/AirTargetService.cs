@@ -65,8 +65,7 @@ namespace ShootingRoom.Services
 
         int Score = 0;
 
-        List<(int, int)> scoreList = new List<(int, int)>();
-
+        List<int> scoreList = new List<int>();
 
         int stageOneScore = 0;
         int stageOneNeededScore = 0;
@@ -90,6 +89,12 @@ namespace ShootingRoom.Services
             _controller.Setup(BigTargetRelay, PinMode.Output);
             _controller.Setup(GunShootRelay, PinMode.Output);
             RGBLight.SetColor(RGBColor.White);
+
+            scoreList.Add(100);
+            scoreList.Add(150);
+            scoreList.Add(200);
+            scoreList.Add(255);
+
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
@@ -141,49 +146,100 @@ namespace ShootingRoom.Services
 
             while (!cancellationToken.IsCancellationRequested)
             {
-
-                foreach (var item in AirTargetList)
+                foreach (var LevelScore in scoreList)
                 {
-                    timer.Restart();
-                    item.Select();
-                    while (timer.ElapsedMilliseconds <= 5000)
+                    int ActualLevelScore = 0;
+                    int numberOfRightHits = 0;
+                    int numberOfWrongHits = 0;
+                    while (LevelScore > ActualLevelScore)
                     {
-                        foreach (var element in AirTargetList)
+                        foreach (var item in AirTargetList)
                         {
-                            (bool state, int itemScore) = element.TargetOneStatus();
-                            Score += itemScore;
-                            if (itemScore > 0 && state)
-                                Scored();
-                            (state, itemScore) = element.TargetTwoStatus();
-                            Score += itemScore;
-                            if (itemScore > 0 && state)
-                                Scored();
-                            (state, itemScore) = element.TargetThreeStatus();
-                            Score += itemScore;
-                            if (itemScore > 0 && state)
-                                Scored();
-                            (state, itemScore) = element.TargetFourStatus();
-                            Score += itemScore;
-                            if (itemScore > 0 && state)
-                                Scored();
-                            (state, itemScore) = element.TargetFiveStatus();
-                            Score += itemScore;
-                            if (itemScore > 0 && state)
-                                Scored();
+                            timer.Restart();
+                            item.Select();
+                            while (timer.ElapsedMilliseconds <= 5000)
+                            {
+                                foreach (var element in AirTargetList)
+                                {
+                                    (bool state, int itemScore) = element.TargetOneStatus();
+                                    ActualLevelScore += itemScore;
+                                    if (itemScore > 0 && state)
+                                    {
+                                        Scored();
+                                        numberOfRightHits++;
+                                    }
+                                    else if (itemScore < 0 && state)
+                                    {
+                                        numberOfWrongHits++;
+                                    }
+                                    (state, itemScore) = element.TargetTwoStatus();
+                                    ActualLevelScore += itemScore;
+                                    if (itemScore > 0 && state)
+                                    {
+                                        Scored();
+                                        numberOfRightHits++;
+                                    }
+                                    else if (itemScore < 0 && state)
+                                    {
+                                        numberOfWrongHits++;
+                                    }
+                                    (state, itemScore) = element.TargetThreeStatus();
+                                    ActualLevelScore += itemScore;
+                                    if (itemScore > 0 && state)
+                                    {
+                                        Scored();
+                                        numberOfRightHits++;
+                                    }
+                                    else if (itemScore < 0 && state)
+                                    {
+                                        numberOfWrongHits++;
+                                    }
+                                    (state, itemScore) = element.TargetFourStatus();
+                                    ActualLevelScore += itemScore;
+                                    if (itemScore > 0 && state)
+                                    {
+                                        Scored();
+                                        numberOfRightHits++;
+                                    }
+                                    else if (itemScore < 0 && state)
+                                    {
+                                        numberOfWrongHits++;
+                                    }
+                                    (state, itemScore) = element.TargetFiveStatus();
+                                    ActualLevelScore += itemScore;
+                                    if (itemScore > 0 && state)
+                                    {
+                                        Scored();
+                                        numberOfRightHits++;
+                                    }
+                                    else if (itemScore < 0 && state)
+                                    {
+                                        numberOfWrongHits++;
+                                    }
+                                }
+
+                            }
+                            item.UnSelectTarget();
+                            Console.WriteLine(Score);
                         }
-
                     }
-                    item.UnSelectTarget();
-                    Console.WriteLine(Score);
-                }
-                MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
-                Thread.Sleep(5000);
-                MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
 
-                foreach (var item in AirTargetList)
-                {
-                    item.UnSelectTarget();
+                    Console.WriteLine($"ActualLevelScore {ActualLevelScore}");
+                    Console.WriteLine($"numberOfRightHits {numberOfRightHits}");
+                    Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
+                    
+                    
+                    
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
+                    Thread.Sleep(5000);
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
+
+                    foreach (var item in AirTargetList)
+                    {
+                        item.UnSelectTarget();
+                    }
                 }
+
 
                 Thread.Sleep(10);
             }
