@@ -94,6 +94,7 @@ namespace Library.GPIOLib
                 ReturnMCPChip(_MCP23Pin.Chip).WriteByte(Register.IODIR, (byte)(mcp23017x20.ReadByte(Register.IODIR, _MCP23Pin.port) | (1 << _MCP23Pin.PinNumber)), _MCP23Pin.port);
             else
                 ReturnMCPChip(_MCP23Pin.Chip).WriteByte(Register.IODIR, (byte)(mcp23017x20.ReadByte(Register.IODIR, _MCP23Pin.port) & ~(1 << _MCP23Pin.PinNumber)), _MCP23Pin.port);
+            Thread.Sleep(5);
         }
         public static bool Read(MCP23Pin _MCP23Pin)
         {
