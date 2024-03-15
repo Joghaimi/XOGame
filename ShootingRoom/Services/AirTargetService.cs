@@ -126,13 +126,12 @@ namespace ShootingRoom.Services
                 if (bigTargetHitScore == 5)
                 {
                     Console.WriteLine($"Remove Big Target and start the game");
-                    ControlPin(BigTargetRelay, false);
                     break;
                 }
                 Thread.Sleep(10);
             }
+            ControlPin(BigTargetRelay, false);
             Console.WriteLine($"Big Target Finished");
-
             ReturnAllTargets();
 
             while (!cancellationToken.IsCancellationRequested)
@@ -258,8 +257,7 @@ namespace ShootingRoom.Services
                         item.UnSelectTarget(true);
                     }
                 }
-
-
+                Console.WriteLine($"All Game Finished");
                 Thread.Sleep(10);
             }
         }
