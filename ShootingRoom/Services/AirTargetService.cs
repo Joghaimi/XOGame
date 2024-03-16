@@ -246,8 +246,9 @@ namespace ShootingRoom.Services
                             Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
                             item.UnSelectTarget(false);
                         }
+
                     }
-                    Console.WriteLine("=================");
+                    Console.WriteLine("================= Next Level");
                     Console.WriteLine($"ActualLevelScore {ActualLevelScore}");
                     Console.WriteLine($"numberOfRightHits {numberOfRightHits}");
                     Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
