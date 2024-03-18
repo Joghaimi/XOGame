@@ -80,7 +80,6 @@ namespace ShootingRoom.Services
             AirTargetList.Add(airTarget2);
             AirTargetList.Add(airTarget3);
             AirTargetList.Add(airTarget4);
-
             MCP23Controller.PinModeSetup(TargetMotorControl, PinMode.Output);
             MCP23Controller.PinModeSetup(BigTargetIRSensor, PinMode.Input);
             _controller.Setup(BigTargetRelay, PinMode.Output);
