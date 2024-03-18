@@ -48,7 +48,7 @@ namespace ShootingRoom.Services
 
         int BigTargetRelay = MasterOutputPin.GPIO23;
         int GunShootRelay = MasterOutputPin.GPIO24;
-        //int UVLight = MasterOutputPin.GPIO4;
+        int UVLight = MasterOutputPin.GPIO4;
 
 
         private CancellationTokenSource _cts;
@@ -137,7 +137,7 @@ namespace ShootingRoom.Services
                     int numberOfRightHits = 0;
                     int numberOfWrongHits = 0;
                     LevelTimer.Restart();
-                    while (LevelScore > ActualLevelScore && LevelTimer.ElapsedMilliseconds < 96000)
+                    while (LevelScore >= ActualLevelScore && LevelTimer.ElapsedMilliseconds < 96000)
                     {
                         int i = 1;
                         int numberOfHit = 0;
