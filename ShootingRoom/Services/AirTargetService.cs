@@ -42,7 +42,7 @@ namespace ShootingRoom.Services
         AirTargetModel Target17 = new AirTargetModel(HatInputPin.IR17, 10);
         AirTargetModel Target18 = new AirTargetModel(HatInputPin.IR18, 5);
         AirTargetModel Target19 = new AirTargetModel(HatInputPin.IR19, 10);
-        AirTargetModel Target20 = new AirTargetModel(HatInputPin.IR20, 5);
+        AirTargetModel Target20 = new AirTargetModel(HatInputPin.IR20, 15);
         MCP23Pin TargetMotorControl = MasterOutputPin.OUTPUT5;
         MCP23Pin BigTargetIRSensor = MasterDI.IN1;
 
@@ -80,6 +80,7 @@ namespace ShootingRoom.Services
             _controller.Setup(BigTargetRelay, PinMode.Output);
             _controller.Setup(GunShootRelay, PinMode.Output);
             _controller.Setup(UVLight, PinMode.Output);
+            ControlPin(UVLight, false);
             RGBLight.SetColor(RGBColor.White);
             // Big Target Score === 100 > 1 Min
             scoreList.Add(75); // 2 Min
@@ -87,7 +88,7 @@ namespace ShootingRoom.Services
             scoreList.Add(125); // 2 Min
             scoreList.Add(150); // 2 Min
             scoreList.Add(300); // 2 Min
-            _controller.Write(UVLight, false);
+            
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
@@ -216,14 +217,14 @@ namespace ShootingRoom.Services
                         Score += (numberOfRightHits * 10 - numberOfWrongHits * 10);
                         numberOfAchivedInRow = 0;
                         Console.WriteLine($"================= Final Level {Score}");
-                        _controller.Write(UVLight, false);
+                        ControlPin(UVLight, false);
 
                     }
                     else if (ActualLevelScore == LevelScore && numberOfAchivedInRow == 2)
                     {
                         Score += (LevelScore * 2);
                         numberOfAchivedInRow = 0;
-                        _controller.Write(UVLight, true);
+                        ControlPin(UVLight, true);
                         Console.WriteLine($"================= Double Score {Score}");
                     }
                     else if (ActualLevelScore == LevelScore)
@@ -231,14 +232,14 @@ namespace ShootingRoom.Services
                         Score += (LevelScore);
                         numberOfAchivedInRow++;
                         Console.WriteLine($"================= Achived Score {Score}");
-                        _controller.Write(UVLight, false);
+                        ControlPin(UVLight, false);
                     }
                     else
                     {
                         numberOfAchivedInRow = 0;
                         Score += (numberOfRightHits * 5 - numberOfWrongHits * 3);
                         Console.WriteLine($"================= Less Score {Score}");
-                        _controller.Write(UVLight, false);
+                        ControlPin(UVLight, false);
                     }
 
                     ReturnAllTargets();
