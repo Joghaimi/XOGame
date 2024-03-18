@@ -144,10 +144,13 @@ namespace ShootingRoom.Services
                     LevelTimer.Restart();
                     while (LevelScore > ActualLevelScore && LevelTimer.ElapsedMilliseconds < 96000)
                     {
+                        int i = 1;
                         foreach (var item in AirTargetList)
                         {
                             Shelftimer.Restart();
                             item.Select();
+                            Console.WriteLine($" Shelf #{i}");
+                            i++;
                             while (Shelftimer.ElapsedMilliseconds <= 5000)
                             {
                                 foreach (var element in AirTargetList)
@@ -268,12 +271,12 @@ namespace ShootingRoom.Services
             if (state)
             {
                 _controller.Setup(pinNumber, PinMode.Output);
-                _controller.Write(pinNumber, true);// GPIO24 -> gunsenoloid
+                _controller.Write(pinNumber, true);
             }
             else
             {
                 _controller.Setup(pinNumber, PinMode.Input);
-                _controller.Write(pinNumber, true);// GPIO24 -> gunsenoloid
+                _controller.Write(pinNumber, true);
             }
 
         }

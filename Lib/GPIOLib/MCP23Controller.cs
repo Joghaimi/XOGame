@@ -64,28 +64,28 @@ namespace Library.GPIOLib
             }
         }
 
-        
-      
-        private static Mcp23017 ReturnMCPChip(MCP23017 chip)
+
+
+        private static ref Mcp23017 ReturnMCPChip(MCP23017 chip)
         {
             switch (chip)
             {
                 case MCP23017.MCP2301720:
-                    return mcp23017x20;
+                    return ref mcp23017x20;
                 case MCP23017.MCP2301721:
-                    return mcp23017x21;
+                    return ref mcp23017x21;
                 case MCP23017.MCP2301722:
-                    return mcp23017x22;
+                    return ref mcp23017x22;
                 case MCP23017.MCP2301723:
-                    return mcp23017x23;
+                    return ref mcp23017x23;
                 case MCP23017.MCP2301724:
-                    return mcp23017x24;
+                    return ref mcp23017x24;
                 case MCP23017.MCP2301725:
-                    return mcp23017x25;
+                    return ref mcp23017x25;
                 case MCP23017.MCP2301726:
-                    return mcp23017x26;
+                    return ref mcp23017x26;
                 case MCP23017.MCP2301727:
-                    return mcp23017x27;
+                    return ref mcp23017x27;
                 default: throw new ArgumentException($"ReturnMCPChip : Not Valid {chip}");
             }
         }
