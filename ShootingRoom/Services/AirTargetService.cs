@@ -136,7 +136,7 @@ namespace ShootingRoom.Services
                     int ActualLevelScore = 0;
                     int numberOfRightHits = 0;
                     int numberOfWrongHits = 0;
-                    LevelTimer.Restart();
+                    LevelTimer.Restart();   
                     while (LevelScore > ActualLevelScore && LevelTimer.ElapsedMilliseconds < 96000)
                     {
                         int i = 1;
@@ -276,7 +276,7 @@ namespace ShootingRoom.Services
         private void ReturnAllTargets()
         {
             MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
-            Thread.Sleep(5000);
+            Thread.Sleep(3000);
             MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
         }
         private void Scored()
