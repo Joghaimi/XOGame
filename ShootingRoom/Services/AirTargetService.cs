@@ -197,6 +197,11 @@ namespace ShootingRoom.Services
                                 break;
                             }
                         }
+                        if (numberOfHit == 20)
+                        {
+                            Console.WriteLine("All Target Down Go Next Level");
+                            break;
+                        }
 
                     }
                     Console.WriteLine("================= Next Level");
