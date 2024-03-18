@@ -95,13 +95,13 @@ namespace ShootingRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            while (true) {
-                ControlPin(UVLight, true);
-                Thread.Sleep(5000);
-                ControlPin(UVLight, false);
-                Thread.Sleep(5000);
+            //while (true) {
+            //    ControlPin(UVLight, true);
+            //    Thread.Sleep(5000);
+            //    ControlPin(UVLight, false);
+            //    Thread.Sleep(5000);
 
-            }
+            //}
             Console.WriteLine($"Game Started");
 
             Stopwatch Shelftimer = new Stopwatch();
