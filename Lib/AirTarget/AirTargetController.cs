@@ -101,7 +101,7 @@ namespace Library.AirTarget
                         return (true, -1 * _Target3.Score, numberOfTargetDown, 3);
                 }
             }
-            if (!_Target3.isShoot)
+            if (!_Target4.isShoot)
             {
                
                 if (!MCP23Controller.Read(_Target4.Pin))
