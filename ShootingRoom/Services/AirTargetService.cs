@@ -247,6 +247,7 @@ namespace ShootingRoom.Services
                         item.UnSelectTarget(true);
                     }
                 }
+                ControlPin(GunShootRelay, false);
                 Console.WriteLine($"All Game Finished");
                 break;
             }
