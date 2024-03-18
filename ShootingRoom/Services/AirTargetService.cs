@@ -109,28 +109,28 @@ namespace ShootingRoom.Services
             Stopwatch BigTargetTimer = new Stopwatch();
 
             //96
-            //ControlPin(BigTargetRelay, true);
+            ControlPin(BigTargetRelay, true);
             ControlPin(GunShootRelay, true);
             BigTargetTimer.Start();
             BigTargetTimer.Restart();
-            //while (true && BigTargetTimer.ElapsedMilliseconds < 60000)
-            //{
-            //    if (MCP23Controller.Read(MasterDI.IN1))
-            //    {
-            //        bigTargetHitScore++;
-            //        Console.WriteLine($"Target Hit # {bigTargetHitScore}");
-            //        RGBLight.SetColor(RGBColor.Blue);
-            //        RGBLight.TurnRGBColorDelayed(RGBColor.White);
-            //        Thread.Sleep(500);
-            //    }
-            //    if (bigTargetHitScore == 5)
-            //    {
-            //        Console.WriteLine($"Remove Big Target and start the game");
-            //        break;
-            //    }
-            //    Thread.Sleep(10);
-            //}
-            //ControlPin(BigTargetRelay, false);
+            while (true && BigTargetTimer.ElapsedMilliseconds < 60000)
+            {
+                if (MCP23Controller.Read(MasterDI.IN1))
+                {
+                    bigTargetHitScore++;
+                    Console.WriteLine($"Target Hit # {bigTargetHitScore}");
+                    RGBLight.SetColor(RGBColor.Blue);
+                    RGBLight.TurnRGBColorDelayed(RGBColor.White);
+                    Thread.Sleep(500);
+                }
+                if (bigTargetHitScore == 5)
+                {
+                    Console.WriteLine($"Remove Big Target and start the game");
+                    break;
+                }
+                Thread.Sleep(10);
+            }
+            ControlPin(BigTargetRelay, false);
             Console.WriteLine($"Big Target Finished");
             ReturnAllTargets();
 
