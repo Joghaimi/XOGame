@@ -87,7 +87,7 @@ namespace ShootingRoom.Services
             scoreList.Add(125); // 2 Min
             scoreList.Add(150); // 2 Min
             scoreList.Add(300); // 2 Min
-
+            _controller.Write(UVLight, false);
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
