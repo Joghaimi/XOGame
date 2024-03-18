@@ -95,7 +95,13 @@ namespace ShootingRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
+            while (true) {
+                ControlPin(UVLight, true);
+                Thread.Sleep(1000);
+                ControlPin(UVLight, false);
+                Thread.Sleep(1000);
 
+            }
             Console.WriteLine($"Game Started");
 
             Stopwatch Shelftimer = new Stopwatch();
@@ -253,11 +259,6 @@ namespace ShootingRoom.Services
                 Console.WriteLine($"All Game Finished");
                 break;
             }
-        }
-
-
-        private void calculateScore()
-        {
         }
 
         private void ControlPin(int pinNumber, bool state)
