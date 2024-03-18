@@ -97,9 +97,9 @@ namespace ShootingRoom.Services
         {
             while (true) {
                 ControlPin(UVLight, true);
-                Thread.Sleep(1000);
+                Thread.Sleep(5000);
                 ControlPin(UVLight, false);
-                Thread.Sleep(1000);
+                Thread.Sleep(5000);
 
             }
             Console.WriteLine($"Game Started");
