@@ -86,10 +86,7 @@ namespace ShootingRoom.Services
             _controller.Setup(BigTargetRelay, PinMode.Output);
             _controller.Setup(GunShootRelay, PinMode.Output);
             RGBLight.SetColor(RGBColor.White);
-
-
             // Big Target Score === 100 > 1 Min
-
             scoreList.Add(100); // 2 Min
             scoreList.Add(150); // 2 Min
             scoreList.Add(200); // 2 Min
@@ -107,7 +104,6 @@ namespace ShootingRoom.Services
             Stopwatch Shelftimer = new Stopwatch();
             Stopwatch LevelTimer = new Stopwatch();
             Stopwatch BigTargetTimer = new Stopwatch();
-
             //96
             ControlPin(BigTargetRelay, true);
             ControlPin(GunShootRelay, true);
@@ -215,7 +211,7 @@ namespace ShootingRoom.Services
                     }
                 }
                 Console.WriteLine($"All Game Finished");
-                Thread.Sleep(10);
+                break;
             }
         }
 
