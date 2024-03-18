@@ -153,9 +153,10 @@ namespace ShootingRoom.Services
                             i++;
                             while (Shelftimer.ElapsedMilliseconds <= 5000)
                             {
+                                int numberOfHit = 0;
                                 foreach (var element in AirTargetList)
                                 {
-                                    (bool state, int itemScore) = element.TargetOneStatus();
+                                    (bool state, int itemScore, numberOfHit) = element.TargetOneStatus();
                                     ActualLevelScore += itemScore;
                                     if (itemScore > 0 && state)
                                     {
@@ -169,9 +170,13 @@ namespace ShootingRoom.Services
                                         WrongScored();
                                         numberOfWrongHits++;
                                     }
+                                    if (numberOfHit == 20)
+                                    {
+                                        break;
+                                    }
                                     state = false;
                                     itemScore = 0;
-                                    (state, itemScore) = element.TargetTwoStatus();
+                                    (state, itemScore, numberOfHit) = element.TargetTwoStatus();
                                     ActualLevelScore += itemScore;
                                     if (itemScore > 0 && state)
                                     {
@@ -186,9 +191,13 @@ namespace ShootingRoom.Services
                                         WrongScored();
                                         numberOfWrongHits++;
                                     }
+                                    if (numberOfHit == 20)
+                                    {
+                                        break;
+                                    }
                                     state = false;
                                     itemScore = 0;
-                                    (state, itemScore) = element.TargetThreeStatus();
+                                    (state, itemScore, numberOfHit) = element.TargetThreeStatus();
                                     ActualLevelScore += itemScore;
                                     if (itemScore > 0 && state)
                                     {
@@ -203,10 +212,14 @@ namespace ShootingRoom.Services
                                         WrongScored();
                                         numberOfWrongHits++;
                                     }
+                                    if (numberOfHit == 20)
+                                    {
+                                        break;
+                                    }
                                     state = false;
                                     itemScore = 0;
 
-                                    (state, itemScore) = element.TargetFourStatus();
+                                    (state, itemScore, numberOfHit) = element.TargetFourStatus();
                                     ActualLevelScore += itemScore;
                                     if (itemScore > 0 && state)
                                     {
@@ -221,11 +234,14 @@ namespace ShootingRoom.Services
                                         WrongScored();
                                         numberOfWrongHits++;
                                     }
+                                    if (numberOfHit == 20)
+                                    {
+                                        break;
+                                    }
 
                                     state = false;
                                     itemScore = 0;
-
-                                    (state, itemScore) = element.TargetFiveStatus();
+                                    (state, itemScore, numberOfHit) = element.TargetFiveStatus();
                                     ActualLevelScore += itemScore;
                                     if (itemScore > 0 && state)
                                     {
@@ -239,7 +255,15 @@ namespace ShootingRoom.Services
                                         WrongScored();
                                         numberOfWrongHits++;
                                     }
+                                    if (numberOfHit == 20)
+                                    {
+                                        break;
+                                    }
                                     Thread.Sleep(10);
+                                }
+                                if (numberOfHit == 20)
+                                {
+                                    break;
                                 }
 
                             }

@@ -97,5 +97,13 @@ namespace Library
         Slave3 = 3,
         Slave4 = 4,
     }
+    public enum Target
+    {
+        Target1 = 1,
+        Target2 = 2,
+        Target3 = 3,
+        Target4 = 4,
+        Target5 = 5,
+    }
 
 }

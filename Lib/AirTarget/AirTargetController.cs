@@ -2,6 +2,7 @@
 using Iot.Device.Mcp3428;
 using Iot.Device.Nmea0183.Ais;
 using Library.GPIOLib;
+using Library.PinMapping;
 using System;
 using System.Collections.Generic;
 using System.Device.Gpio;
@@ -16,6 +17,7 @@ namespace Library.AirTarget
         public static bool IsMCP23ControllerInit = false;
         public static bool TargetOneShootBefore, TargetTwoShootBefore, TargetThreeShootBefore, TargetFourShootBefore, TargetFiveShootBefore = false;
         AirTargetModel _ShelfLight, _Target1, _Target2, _Target3, _Target4, _Target5;
+        public static int numberOfTargetDown = 0;
         public AirTargetController(
             AirTargetModel ShelfLight,
             AirTargetModel Target1,
@@ -42,7 +44,8 @@ namespace Library.AirTarget
             MCP23Controller.PinModeSetup(_Target4.Pin, PinMode.Input);
             MCP23Controller.PinModeSetup(_Target5.Pin, PinMode.Input);
         }
-        public void test() {
+        public void test()
+        {
 
             Console.WriteLine($"{MCP23Controller.Read(_Target1.Pin)} {MCP23Controller.Read(_Target2.Pin)} {MCP23Controller.Read(_Target3.Pin)} {MCP23Controller.Read(_Target4.Pin)} {MCP23Controller.Read(_Target5.Pin)}");
 
@@ -52,81 +55,107 @@ namespace Library.AirTarget
         {
             MCP23Controller.Write(_ShelfLight.Pin, PinState.High);
             _ShelfLight.isSelected = true;
-
             _Target1.isSelected = true;
             _Target2.isSelected = true;
             _Target3.isSelected = true;
             _Target4.isSelected = true;
             _Target5.isSelected = true;
         }
-        public (bool, int) TargetOneStatus()
+
+        //public (bool status, int score, int numberOfHitTarget) TargetStatus()
+        //{
+
+
+        //}
+
+        //private static ref AirTargetModel returnAirTargetModel(Target target)
+        //{
+        //    return ref _Target1;
+        //    switch (target)
+        //    {
+        //        case Target.Target1:
+        //            ;
+        //    }
+        //}
+
+        public (bool, int, int) TargetOneStatus()
         {
 
             if (!MCP23Controller.Read(_Target1.Pin) && !_Target1.isShoot)
             {
+                if (!_Target1.isShoot)
+                    numberOfTargetDown++;
                 if (_Target1.isSelected)
                 {
                     _Target1.isShoot = true;
-                    return (true, _Target1.Score);
+                    return (true, _Target1.Score, numberOfTargetDown);
                 }
                 else
-                    return (true, -1 * _Target1.Score);
+                    return (true, -1 * _Target1.Score, numberOfTargetDown);
 
             }
             else
-                return (false, 0);
+                return (false, 0, numberOfTargetDown);
         }
-        public (bool, int) TargetTwoStatus()
+        public (bool, int, int) TargetTwoStatus()
         {
             if (!MCP23Controller.Read(_Target2.Pin) && !_Target2.isShoot)
             {
+                if (!_Target2.isShoot)
+                    numberOfTargetDown++;
                 _Target2.isShoot = true;
                 if (_Target2.isSelected)
-                    return (true, _Target2.Score);
+                    return (true, _Target2.Score, numberOfTargetDown);
                 else
-                    return (true, -1 * _Target2.Score);
+                    return (true, -1 * _Target2.Score, numberOfTargetDown);
             }
             else
-                return (false, 0);
+                return (false, 0, numberOfTargetDown);
         }
-        public (bool, int) TargetThreeStatus()
+        public (bool, int, int) TargetThreeStatus()
         {
             if (!MCP23Controller.Read(_Target3.Pin) && !_Target3.isShoot)
             {
+                if (!_Target3.isShoot)
+                    numberOfTargetDown++;
                 _Target3.isShoot = true;
                 if (_Target3.isSelected)
-                    return (true, _Target3.Score);
+                    return (true, _Target3.Score, numberOfTargetDown);
                 else
-                    return (true, -1 * _Target3.Score);
+                    return (true, -1 * _Target3.Score, numberOfTargetDown);
             }
             else
-                return (false, 0);
+                return (false, 0, numberOfTargetDown);
         }
-        public (bool, int) TargetFourStatus()
+        public (bool, int, int) TargetFourStatus()
         {
             if (!MCP23Controller.Read(_Target4.Pin) && !_Target4.isShoot)
             {
+                if (!_Target4.isShoot)
+                    numberOfTargetDown++;
                 _Target4.isShoot = true;
                 if (_Target4.isSelected)
-                    return (true, _Target4.Score);
+                    return (true, _Target4.Score, numberOfTargetDown);
                 else
-                    return (true, -1 * _Target4.Score);
+                    return (true, -1 * _Target4.Score, numberOfTargetDown);
             }
             else
-                return (false, 0);
+                return (false, 0, numberOfTargetDown);
         }
-        public (bool, int) TargetFiveStatus()
+        public (bool, int, int) TargetFiveStatus()
         {
             if (!MCP23Controller.Read(_Target5.Pin) && !_Target5.isShoot)
             {
+                if (!_Target5.isShoot)
+                    numberOfTargetDown++;
                 _Target5.isShoot = true;
                 if (_Target5.isSelected)
-                    return (true, _Target5.Score);
+                    return (true, _Target5.Score, numberOfTargetDown);
                 else
-                    return (true, -1 * _Target5.Score);
+                    return (true, -1 * _Target5.Score, numberOfTargetDown);
             }
             else
-                return (false, 0);
+                return (false, 0, numberOfTargetDown);
         }
         public void UnSelectTarget(bool finishLevel)
         {
