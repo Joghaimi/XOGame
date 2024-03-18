@@ -137,7 +137,7 @@ namespace ShootingRoom.Services
                     int numberOfRightHits = 0;
                     int numberOfWrongHits = 0;
                     LevelTimer.Restart();
-                    while (LevelScore >= ActualLevelScore && LevelTimer.ElapsedMilliseconds < 96000)
+                    while (LevelScore > ActualLevelScore && LevelTimer.ElapsedMilliseconds < 96000)
                     {
                         int i = 1;
                         int numberOfHit = 0;
@@ -186,13 +186,13 @@ namespace ShootingRoom.Services
                             Console.WriteLine($"numberOfRightHits {numberOfRightHits}");
                             Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
                             item.UnSelectTarget(false);
-                            if (numberOfHit == 20)
+                            if (numberOfHit == 20 || ActualLevelScore >=LevelScore)
                             {
                                 Console.WriteLine("All Target Down Go Next Level");
                                 break;
                             }
                         }
-                        if (numberOfHit == 20)
+                        if (numberOfHit == 20 || ActualLevelScore >= LevelScore)
                         {
                             Console.WriteLine("All Target Down Go Next Level");
                             break;
