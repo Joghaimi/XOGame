@@ -51,18 +51,12 @@ namespace ShootingRoom.Services
 
 
         private CancellationTokenSource _cts;
-        bool IsTimerStarted = false;
         Stopwatch GameStopWatch = new Stopwatch();
         private GPIOController _controller;
-        int SlowPeriod = 3000;
-        int MediumPeriod = 3000;
-
-        int slowChangeTime = 1000;
-        int mediumChangeTime = 700;
-        int highChangeTime = 500;
-        int changingSpeed = 1000;
         int bigTargetHitScore = 0;
+
         int Score = 0;
+        int numberOfAchivedInRow = 0;
         List<int> scoreList = new List<int>();
         public Task StartAsync(CancellationToken cancellationToken)
         {
@@ -86,10 +80,11 @@ namespace ShootingRoom.Services
             _controller.Setup(GunShootRelay, PinMode.Output);
             RGBLight.SetColor(RGBColor.White);
             // Big Target Score === 100 > 1 Min
+            scoreList.Add(75); // 2 Min
             scoreList.Add(100); // 2 Min
+            scoreList.Add(125); // 2 Min
             scoreList.Add(150); // 2 Min
-            scoreList.Add(200); // 2 Min
-            scoreList.Add(255); // 2 Min
+            scoreList.Add(300); // 2 Min
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
@@ -131,8 +126,10 @@ namespace ShootingRoom.Services
 
             while (!cancellationToken.IsCancellationRequested)
             {
+                int level = 0;
                 foreach (var LevelScore in scoreList)
                 {
+                    level++;
                     int ActualLevelScore = 0;
                     int numberOfRightHits = 0;
                     int numberOfWrongHits = 0;
@@ -149,7 +146,7 @@ namespace ShootingRoom.Services
                             i++;
                             while (Shelftimer.ElapsedMilliseconds <= 5000)
                             {
-                                
+
                                 int inShelf = 1;
                                 foreach (var element in AirTargetList)
                                 {
@@ -174,7 +171,7 @@ namespace ShootingRoom.Services
                                     inShelf++;
                                     Thread.Sleep(10);
                                 }
-                               
+
 
                             }
                             if (numberOfHit == 20)
@@ -203,6 +200,40 @@ namespace ShootingRoom.Services
                     Console.WriteLine($"ActualLevelScore {ActualLevelScore}");
                     Console.WriteLine($"numberOfRightHits {numberOfRightHits}");
                     Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
+
+
+                    // Calculate The Score 
+
+                    // actualScore != recuired -> numberOfRightHits*5 - numberOfWrongHits*3 
+                    // If mession1 and 2 turn uvlight -> if done *2 
+                    if (level == 5)
+                    {
+                        Score += (numberOfRightHits * 10 - numberOfWrongHits * 10);
+                        numberOfAchivedInRow = 0;
+                        Console.WriteLine($"================= Final Level {Score}");
+                    }
+                    else if (ActualLevelScore == LevelScore && numberOfAchivedInRow == 2)
+                    {
+                        Score += (LevelScore * 2);
+                        numberOfAchivedInRow = 0;
+                        Console.WriteLine($"================= Double Score {Score}");
+                    }
+                    else if (ActualLevelScore == LevelScore)
+                    {
+                        Score += (LevelScore);
+                        numberOfAchivedInRow++;
+                        Console.WriteLine($"================= Achived Score {Score}");
+                    }
+                    else
+                    {
+                        numberOfAchivedInRow = 0;
+                        Score += (numberOfRightHits * 5 - numberOfWrongHits * 3);
+                        Console.WriteLine($"================= Less Score {Score}");
+
+                    }
+
+
+
                     ReturnAllTargets();
                     foreach (var item in AirTargetList)
                     {
@@ -212,6 +243,11 @@ namespace ShootingRoom.Services
                 Console.WriteLine($"All Game Finished");
                 break;
             }
+        }
+
+
+        private void calculateScore()
+        {
         }
 
         private void ControlPin(int pinNumber, bool state)
@@ -247,31 +283,6 @@ namespace ShootingRoom.Services
             RGBLight.SetColor(RGBColor.Red);
             RGBLight.TurnRGBColorDelayed(RGBColor.White);
         }
-
-
-        //private async Task TimingService(CancellationToken cancellationToken)
-        //{
-        //    if (VariableControlService.IsTheGameStarted)
-        //    {
-        //        if (!IsTimerStarted)
-        //        {
-        //            GameStopWatch.Start();
-        //            IsTimerStarted = true;
-        //        }
-        //    }
-        //    while (true)
-        //    {
-        //        if (GameStopWatch.ElapsedMilliseconds > SlowPeriod && GameStopWatch.ElapsedMilliseconds < MediumPeriod)
-        //        {
-        //            changingSpeed = mediumChangeTime;
-        //        }
-        //        else if (GameStopWatch.ElapsedMilliseconds > MediumPeriod)
-        //        {
-        //            changingSpeed = highChangeTime;
-        //        }
-        //        Thread.Sleep(10);
-        //    }
-        //}
         public Task StopAsync(CancellationToken cancellationToken)
         {
             //_cts.Cancel();
@@ -284,76 +295,3 @@ namespace ShootingRoom.Services
 
     }
 }
-
-//if (item.TargetOneStatus())
-//{
-//    AudioPlayer.PIStartAudio(SoundType.Bonus);
-//    RGBLight.SetColor(RGBColor.Blue);
-//    RGBLight.TurnRGBColorDelayed(RGBColor.White);
-//    Score++;
-//}
-//if (item.TargetTwoStatus())
-//{
-//    AudioPlayer.PIStartAudio(SoundType.Bonus);
-//    RGBLight.SetColor(RGBColor.Blue);
-//    RGBLight.TurnRGBColorDelayed(RGBColor.White);
-//    Score++;
-//}
-//if (item.TargetThreeStatus())
-//{
-//    AudioPlayer.PIStartAudio(SoundType.Bonus);
-//    RGBLight.SetColor(RGBColor.Blue);
-//    RGBLight.TurnRGBColorDelayed(RGBColor.White);
-//    Score++;
-//}
-//if (item.TargetFourStatus())
-//{
-//    AudioPlayer.PIStartAudio(SoundType.Bonus);
-//    RGBLight.SetColor(RGBColor.Blue);
-//    RGBLight.TurnRGBColorDelayed(RGBColor.White);
-//    Score++;
-//}
-//if (item.TargetFiveStatus())
-//{
-//    AudioPlayer.PIStartAudio(SoundType.Bonus);
-//    RGBLight.SetColor(RGBColor.Blue);
-//    RGBLight.TurnRGBColorDelayed(RGBColor.White);
-//    Score++;
-//}
-
-//if (VariableControlService.IsTheGameStarted && IsTimerStarted)
-//{
-//    if (!activeTarget && timerToStart.ElapsedMilliseconds > randomTime)
-//    {
-//        activeTarget = true;
-//        activeTargetIndox = random.Next(0, 8);
-//        AirTargetList[activeTargetIndox].Select(true);
-//        timer.Restart();
-//        timerToStart.Restart();
-//        randomTime = random.Next(5000, 15000);
-//    }
-//    if (activeTarget & timer.ElapsedMilliseconds >= changingSpeed)
-//    {
-//        AirTargetList[activeTargetIndox].Select(false);
-//        activeTargetIndox = -1;
-//        activeTarget = false;
-//        timer.Restart();
-//        timerToStart.Restart();
-//    }
-//    if (activeTarget && activeTargetIndox > -1)
-//    {
-//        bool isPreesed = AirTargetList[activeTargetIndox].Status();
-//        if (isPreesed)
-//        {
-//            activeTarget = false;
-//            AirTargetList[activeTargetIndox].Select(false);
-//            JQ8400AudioModule.PlayAudio((int)SoundType.Bonus);
-//            VariableControlService.ActiveTargetPressed++;
-//            Console.WriteLine($"Score {VariableControlService.ActiveTargetPressed}");
-//            activeTargetIndox = -1;
-//            timerToStart.Restart();
-//            timer.Restart();
-//        }
-//    }
-//}
-// Sleep for a short duration to avoid excessive checking
