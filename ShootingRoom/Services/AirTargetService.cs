@@ -79,7 +79,7 @@ namespace ShootingRoom.Services
             MCP23Controller.PinModeSetup(BigTargetIRSensor, PinMode.Input);
             _controller.Setup(BigTargetRelay, PinMode.Output);
             _controller.Setup(GunShootRelay, PinMode.Output);
-            //_controller.Setup(UVLight, PinMode.Output);
+            _controller.Setup(UVLight, PinMode.Output);
             RGBLight.SetColor(RGBColor.White);
             // Big Target Score === 100 > 1 Min
             scoreList.Add(75); // 2 Min
@@ -216,14 +216,14 @@ namespace ShootingRoom.Services
                         Score += (numberOfRightHits * 10 - numberOfWrongHits * 10);
                         numberOfAchivedInRow = 0;
                         Console.WriteLine($"================= Final Level {Score}");
-                        //_controller.Write(UVLight, false);
+                        _controller.Write(UVLight, false);
 
                     }
                     else if (ActualLevelScore == LevelScore && numberOfAchivedInRow == 2)
                     {
                         Score += (LevelScore * 2);
                         numberOfAchivedInRow = 0;
-                        //_controller.Write(UVLight, true);
+                        _controller.Write(UVLight, true);
                         Console.WriteLine($"================= Double Score {Score}");
                     }
                     else if (ActualLevelScore == LevelScore)
@@ -231,14 +231,14 @@ namespace ShootingRoom.Services
                         Score += (LevelScore);
                         numberOfAchivedInRow++;
                         Console.WriteLine($"================= Achived Score {Score}");
-                        //_controller.Write(UVLight, false);
+                        _controller.Write(UVLight, false);
                     }
                     else
                     {
                         numberOfAchivedInRow = 0;
                         Score += (numberOfRightHits * 5 - numberOfWrongHits * 3);
                         Console.WriteLine($"================= Less Score {Score}");
-                        //_controller.Write(UVLight, false);
+                        _controller.Write(UVLight, false);
                     }
 
                     ReturnAllTargets();
