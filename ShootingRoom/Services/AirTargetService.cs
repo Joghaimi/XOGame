@@ -154,19 +154,20 @@ namespace ShootingRoom.Services
                             while (Shelftimer.ElapsedMilliseconds <= 5000)
                             {
                                 int numberOfHit = 0;
+                                int inShelf = 1;
                                 foreach (var element in AirTargetList)
                                 {
-                                    (bool state, int itemScore, numberOfHit) = element.TargetOneStatus();
+                                    (bool state, int itemScore, numberOfHit, int targetNumber) = element.TargetStatus();
                                     ActualLevelScore += itemScore;
                                     if (itemScore > 0 && state)
                                     {
-                                        Console.WriteLine("Target 1 Right ");
+                                        Console.WriteLine($"Target {targetNumber} Right in {inShelf}");
                                         Scored();
                                         numberOfRightHits++;
                                     }
                                     else if (itemScore < 0 && state)
                                     {
-                                        Console.WriteLine("Target 1 Wrong ");
+                                        Console.WriteLine($"Target {targetNumber} Wrong {inShelf}");
                                         WrongScored();
                                         numberOfWrongHits++;
                                     }
@@ -174,91 +175,92 @@ namespace ShootingRoom.Services
                                     {
                                         break;
                                     }
-                                    state = false;
-                                    itemScore = 0;
-                                    (state, itemScore, numberOfHit) = element.TargetTwoStatus();
-                                    ActualLevelScore += itemScore;
-                                    if (itemScore > 0 && state)
-                                    {
-                                        Console.WriteLine("Target 2 Right ");
+                                    inShelf++;
+                                    //state = false;
+                                    //itemScore = 0;
+                                    //(state, itemScore, numberOfHit) = element.TargetTwoStatus();
+                                    //ActualLevelScore += itemScore;
+                                    //if (itemScore > 0 && state)
+                                    //{
+                                    //    Console.WriteLine("Target 2 Right ");
 
-                                        Scored();
-                                        numberOfRightHits++;
-                                    }
-                                    else if (itemScore < 0 && state)
-                                    {
-                                        Console.WriteLine("Target 2 Wrong ");
-                                        WrongScored();
-                                        numberOfWrongHits++;
-                                    }
-                                    if (numberOfHit == 20)
-                                    {
-                                        break;
-                                    }
-                                    state = false;
-                                    itemScore = 0;
-                                    (state, itemScore, numberOfHit) = element.TargetThreeStatus();
-                                    ActualLevelScore += itemScore;
-                                    if (itemScore > 0 && state)
-                                    {
-                                        Console.WriteLine("Target 3 Right ");
+                                    //    Scored();
+                                    //    numberOfRightHits++;
+                                    //}
+                                    //else if (itemScore < 0 && state)
+                                    //{
+                                    //    Console.WriteLine("Target 2 Wrong ");
+                                    //    WrongScored();
+                                    //    numberOfWrongHits++;
+                                    //}
+                                    //if (numberOfHit == 20)
+                                    //{
+                                    //    break;
+                                    //}
+                                    //state = false;
+                                    //itemScore = 0;
+                                    //(state, itemScore, numberOfHit) = element.TargetThreeStatus();
+                                    //ActualLevelScore += itemScore;
+                                    //if (itemScore > 0 && state)
+                                    //{
+                                    //    Console.WriteLine("Target 3 Right ");
 
-                                        Scored();
-                                        numberOfRightHits++;
-                                    }
-                                    else if (itemScore < 0 && state)
-                                    {
-                                        Console.WriteLine("Target 3 Wrong ");
-                                        WrongScored();
-                                        numberOfWrongHits++;
-                                    }
-                                    if (numberOfHit == 20)
-                                    {
-                                        break;
-                                    }
-                                    state = false;
-                                    itemScore = 0;
+                                    //    Scored();
+                                    //    numberOfRightHits++;
+                                    //}
+                                    //else if (itemScore < 0 && state)
+                                    //{
+                                    //    Console.WriteLine("Target 3 Wrong ");
+                                    //    WrongScored();
+                                    //    numberOfWrongHits++;
+                                    //}
+                                    //if (numberOfHit == 20)
+                                    //{
+                                    //    break;
+                                    //}
+                                    //state = false;
+                                    //itemScore = 0;
 
-                                    (state, itemScore, numberOfHit) = element.TargetFourStatus();
-                                    ActualLevelScore += itemScore;
-                                    if (itemScore > 0 && state)
-                                    {
-                                        Console.WriteLine("Target 4 Right ");
+                                    //(state, itemScore, numberOfHit) = element.TargetFourStatus();
+                                    //ActualLevelScore += itemScore;
+                                    //if (itemScore > 0 && state)
+                                    //{
+                                    //    Console.WriteLine("Target 4 Right ");
 
-                                        Scored();
-                                        numberOfRightHits++;
-                                    }
-                                    else if (itemScore < 0 && state)
-                                    {
-                                        Console.WriteLine("Target 4 Wrong ");
-                                        WrongScored();
-                                        numberOfWrongHits++;
-                                    }
-                                    if (numberOfHit == 20)
-                                    {
-                                        break;
-                                    }
+                                    //    Scored();
+                                    //    numberOfRightHits++;
+                                    //}
+                                    //else if (itemScore < 0 && state)
+                                    //{
+                                    //    Console.WriteLine("Target 4 Wrong ");
+                                    //    WrongScored();
+                                    //    numberOfWrongHits++;
+                                    //}
+                                    //if (numberOfHit == 20)
+                                    //{
+                                    //    break;
+                                    //}
 
-                                    state = false;
-                                    itemScore = 0;
-                                    (state, itemScore, numberOfHit) = element.TargetFiveStatus();
-                                    ActualLevelScore += itemScore;
-                                    if (itemScore > 0 && state)
-                                    {
-                                        Console.WriteLine("Target 5 Right ");
-                                        Scored();
-                                        numberOfRightHits++;
-                                    }
-                                    else if (itemScore < 0 && state)
-                                    {
-                                        Console.WriteLine("Target 5 Wrong ");
-                                        WrongScored();
-                                        numberOfWrongHits++;
-                                    }
-                                    if (numberOfHit == 20)
-                                    {
-                                        break;
-                                    }
+                                    //state = false;
+                                    //itemScore = 0;
+                                    //(state, itemScore, numberOfHit) = element.TargetFiveStatus();
+                                    //ActualLevelScore += itemScore;
+                                    //if (itemScore > 0 && state)
+                                    //{
+                                    //    Console.WriteLine("Target 5 Right ");
+                                    //    Scored();
+                                    //    numberOfRightHits++;
+                                    //}
+                                    //else if (itemScore < 0 && state)
+                                    //{
+                                    //    Console.WriteLine("Target 5 Wrong ");
+                                    //    WrongScored();
+                                    //    numberOfWrongHits++;
+                                    //}
+                                    //if (numberOfHit == 20)
+                                    //{
+                                    //    break;
+                                    //}
                                     Thread.Sleep(10);
                                 }
                                 if (numberOfHit == 20)

@@ -62,11 +62,71 @@ namespace Library.AirTarget
             _Target5.isSelected = true;
         }
 
-        //public (bool status, int score, int numberOfHitTarget) TargetStatus()
-        //{
+        public (bool status, int score, int numberOfHitTarget, int targetNumber) TargetStatus()
+        {
+            if (!_Target1.isShoot)
+            {
+                _Target1.isShoot = true;
+                numberOfTargetDown++;
+                if (!MCP23Controller.Read(_Target1.Pin))
+                {
+                    if (_Target1.isSelected)
+                        return (true, _Target1.Score, numberOfTargetDown, 1);
+                    else
+                        return (true, -1 * _Target1.Score, numberOfTargetDown, 1);
+                }
+            }
+            else if (!_Target2.isShoot)
+            {
+                _Target2.isShoot = true;
+                numberOfTargetDown++;
+                if (!MCP23Controller.Read(_Target2.Pin))
+                {
+                    if (_Target2.isSelected)
+                        return (true, _Target2.Score, numberOfTargetDown, 2);
+                    else
+                        return (true, -1 * _Target2.Score, numberOfTargetDown, 2);
+                }
+            }
+            else if (!_Target3.isShoot)
+            {
+                _Target3.isShoot = true;
+                numberOfTargetDown++;
+                if (!MCP23Controller.Read(_Target3.Pin))
+                {
+                    if (_Target3.isSelected)
+                        return (true, _Target3.Score, numberOfTargetDown, 3);
+                    else
+                        return (true, -1 * _Target3.Score, numberOfTargetDown, 3);
+                }
+            }
+            else if (!_Target3.isShoot)
+            {
+                _Target4.isShoot = true;
+                numberOfTargetDown++;
+                if (!MCP23Controller.Read(_Target4.Pin))
+                {
+                    if (_Target4.isSelected)
+                        return (true, _Target4.Score, numberOfTargetDown, 4);
+                    else
+                        return (true, -1 * _Target4.Score, numberOfTargetDown, 4);
+                }
+            }
 
-
-        //}
+            else if (!_Target5.isShoot)
+            {
+                _Target5.isShoot = true;
+                numberOfTargetDown++;
+                if (!MCP23Controller.Read(_Target5.Pin))
+                {
+                    if (_Target5.isSelected)
+                        return (true, _Target5.Score, numberOfTargetDown, 5);
+                    else
+                        return (true, -1 * _Target5.Score, numberOfTargetDown, 5);
+                }
+            }
+            return (false, 0, numberOfTargetDown, 0);
+        }
 
         //private static ref AirTargetModel returnAirTargetModel(Target target)
         //{
