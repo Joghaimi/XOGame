@@ -115,6 +115,7 @@ namespace ShootingRoom.Services
                 }
                 if (bigTargetHitScore == 5)
                 {
+                    Score += 100;
                     Console.WriteLine($"Remove Big Target and start the game");
                     break;
                 }
