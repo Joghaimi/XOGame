@@ -143,6 +143,8 @@ namespace ShootingRoom.Services
                         int numberOfHit = 0;
                         foreach (var item in AirTargetList)
                         {
+                            if (item.isAllDown())
+                                continue;
                             Shelftimer.Restart();
                             item.Select();
                             Console.WriteLine($" Shelf #{i}");
@@ -238,8 +240,6 @@ namespace ShootingRoom.Services
                         Console.WriteLine($"================= Less Score {Score}");
                         //_controller.Write(UVLight, false);
                     }
-
-
 
                     ReturnAllTargets();
                     foreach (var item in AirTargetList)

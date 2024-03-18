@@ -61,6 +61,11 @@ namespace Library.AirTarget
             _Target4.isSelected = true;
             _Target5.isSelected = true;
         }
+        public bool isAllDown()
+        {
+            bool isAllDown = _Target1.isShoot && _Target2.isShoot && _Target3.isShoot && _Target4.isShoot && _Target5.isShoot;
+            return isAllDown;
+        }
 
         public (bool status, int score, int numberOfHitTarget, int targetNumber) TargetStatus()
         {
