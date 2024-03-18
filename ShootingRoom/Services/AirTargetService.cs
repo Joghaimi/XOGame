@@ -145,6 +145,7 @@ namespace ShootingRoom.Services
                     while (LevelScore > ActualLevelScore && LevelTimer.ElapsedMilliseconds < 96000)
                     {
                         int i = 1;
+                        int numberOfHit = 0;
                         foreach (var item in AirTargetList)
                         {
                             Shelftimer.Restart();
@@ -153,7 +154,7 @@ namespace ShootingRoom.Services
                             i++;
                             while (Shelftimer.ElapsedMilliseconds <= 5000)
                             {
-                                int numberOfHit = 0;
+                                
                                 int inShelf = 1;
                                 foreach (var element in AirTargetList)
                                 {
@@ -274,6 +275,10 @@ namespace ShootingRoom.Services
                             Console.WriteLine($"numberOfRightHits {numberOfRightHits}");
                             Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
                             item.UnSelectTarget(false);
+                            if (numberOfHit == 20)
+                            {
+                                break;
+                            }
                         }
 
                     }
