@@ -43,7 +43,7 @@ namespace Library.Media
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("Excepton ==>" + ex.Message);
 
             }
 
