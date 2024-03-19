@@ -82,7 +82,7 @@ namespace FortRoom.Services
                         bool itemSelected = !item.CurrentStatus() && item.CurrentColor() == selectedColor;
                         if (itemSelected)
                         {
-                            MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
+                            MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
                             RGBLight.SetColor(RGBColor.Green);
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             item.TurnColorOn(RGBColor.Off);
@@ -128,7 +128,7 @@ namespace FortRoom.Services
         }
         public void Stopped()
         {
-            MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
+            MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
             _logger.LogInformation("Stop RGB Button Service");
             foreach (var item in RGBButtonList)
             {
