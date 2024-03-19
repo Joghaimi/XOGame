@@ -181,8 +181,9 @@ namespace FortRoom.Services
 
                     }
                 }
-                Thread.Sleep(400);
+                Thread.Sleep(10);
             }
+            Thread.Sleep(400);
         }
     }
 }
