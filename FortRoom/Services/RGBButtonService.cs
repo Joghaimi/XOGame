@@ -70,7 +70,9 @@ namespace FortRoom.Services
                 RGBColor selectedColor = (RGBColor)CurrentColor;
                 AudioPlayer.PIStartAudio(SoundType.Button);
                 // Add Extra Task
+                Console.WriteLine("Enter Task ================");
                 StartGameTask(selectedColor, level);
+                Console.WriteLine("Out From Task ================");
                 TurnRGBButtonWithColor(selectedColor);
                 byte numberOfClieckedButton = 0;
                 GameStopWatch.Restart();
@@ -83,7 +85,7 @@ namespace FortRoom.Services
                         if (itemSelected)
                         {
                             MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
-                            RGBLight.SetColor(RGBColor.Green);
+                            RGBLight.SetColor(RGBColor.Blue);
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             item.TurnColorOn(RGBColor.Off);
                             RGBLight.TurnRGBOffAfter1Sec();
@@ -146,6 +148,8 @@ namespace FortRoom.Services
         }
         public void StartGameTask(RGBColor color, int level)
         {
+            if (level > RGBButtonList.Count)
+                return;
             bool Button1 = false; bool Button2 = false;
             (int button1Index, int button2Index) = ButtonTaskList[level];
             RGBButtonList[button1Index].TurnColorOn(color);
@@ -158,7 +162,7 @@ namespace FortRoom.Services
                     {
                         Button1 = true;
                         Console.WriteLine("Button #1 Pressed");
-                        RGBLight.SetColor(RGBColor.Green);
+                        RGBLight.SetColor(RGBColor.Blue);
                         AudioPlayer.PIStartAudio(SoundType.Bonus);
                         RGBButtonList[button1Index].TurnColorOn(RGBColor.Off);
                         RGBLight.TurnRGBOffAfter1Sec();
@@ -170,7 +174,7 @@ namespace FortRoom.Services
                     {
                         Button2 = true;
                         Console.WriteLine("Button #2 Pressed");
-                        RGBLight.SetColor(RGBColor.Green);
+                        RGBLight.SetColor(RGBColor.Blue);
                         AudioPlayer.PIStartAudio(SoundType.Bonus);
                         RGBButtonList[button2Index].TurnColorOn(RGBColor.Off);
                         RGBLight.TurnRGBOffAfter1Sec();
