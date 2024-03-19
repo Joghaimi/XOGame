@@ -40,18 +40,17 @@ namespace FortRoom.Services
             {
                 try
                 {
-
-                    currentValue = MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
+                    currentValue = MCP23Controller.Read(MasterDI.IN1);
                     if (!currentValue && !scoreJustDecreased)
                     {
                         VariableControlService.TimeOfPressureHit++;
-                        MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
+                        MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
                         AudioPlayer.PIStartAudio(SoundType.Descend);
                         RGBLight.SetColor(RGBColor.Red);
                         RGBLight.TurnRGBOffAfter1Sec();
                         scoreJustDecreased = true;
                         timer.Restart();
-                        Console.WriteLine($"Pressure Mate Pressed {VariableControlService.TimeOfPressureHit}");
+                        //Console.WriteLine($"Pressure Mate Pressed {VariableControlService.TimeOfPressureHit}");
                     }
                     //previousValue = currentValue;
                     if (scoreJustDecreased && timer.ElapsedMilliseconds >= 3000)
