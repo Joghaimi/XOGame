@@ -68,16 +68,16 @@ namespace Library.Media
             audioProcess = new Process();
             audioProcess.StartInfo.FileName = "/bin/bash";
             audioProcess.StartInfo.Arguments = $"cvlc -R --gain +0.5 --vout none {soundFilePath}";
-            audioProcess.StartInfo.UseShellExecute = false;
-            audioProcess.StartInfo.RedirectStandardOutput = false;
-            audioProcess.StartInfo.RedirectStandardError = false;
-
-            //audioProcess.StartInfo.RedirectStandardOutput = true;
-            //audioProcess.StartInfo.RedirectStandardError = true;
             //audioProcess.StartInfo.UseShellExecute = false;
-            //audioProcess.StartInfo.StandardOutputEncoding = System.Text.Encoding.UTF8;
-            //audioProcess.StartInfo.StandardErrorEncoding = System.Text.Encoding.UTF8;
-            //audioProcess.StartInfo.CreateNoWindow = true;
+            //audioProcess.StartInfo.RedirectStandardOutput = false;
+            //audioProcess.StartInfo.RedirectStandardError = false;
+
+            audioProcess.StartInfo.RedirectStandardOutput = true;
+            audioProcess.StartInfo.RedirectStandardError = true;
+            audioProcess.StartInfo.UseShellExecute = false;
+            audioProcess.StartInfo.StandardOutputEncoding = System.Text.Encoding.UTF8;
+            audioProcess.StartInfo.StandardErrorEncoding = System.Text.Encoding.UTF8;
+            audioProcess.StartInfo.CreateNoWindow = true;
 
 
             audioProcess.Start();
