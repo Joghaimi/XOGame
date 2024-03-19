@@ -102,11 +102,17 @@ namespace FortRoom.Services
                 if (CurrentColor < 2)
                 {
                     CurrentColor++;
-                    level++;
+                   
                 }
                 else
                 {
                     CurrentColor = 0;
+                }
+                if (level < 4)
+                {
+                    level++;
+                }
+                else {
                     level = 0;
                 }
             }
