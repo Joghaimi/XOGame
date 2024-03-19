@@ -99,7 +99,7 @@ namespace FortRoom.Services
                     Thread.Sleep(10);
                 }
                 TurnRGBButtonWithColor(RGBColor.Off);
-                if (CurrentColor < 4)
+                if (CurrentColor < 3)
                 {
                     CurrentColor++;
                     level++;
