@@ -177,6 +177,7 @@ namespace FortRoom.Services
 
                     }
                 }
+                Thread.Sleep(100);
             }
         }
     }
