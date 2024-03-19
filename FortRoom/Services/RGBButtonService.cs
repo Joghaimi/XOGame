@@ -17,6 +17,15 @@ namespace FortRoom.Services
         Stopwatch GameStopWatch = new Stopwatch();
         private CancellationTokenSource _cts, _cts2;
         bool IsTimerStarted = false;
+        List<(int, int)> ButtonTaskList = new List<(int, int)>
+        {
+            (15, 13),
+            (12, 5),
+            (14, 11),
+            (6, 13),
+        };
+
+
         int Score = 0;
 
 
@@ -46,21 +55,21 @@ namespace FortRoom.Services
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR14, RGBButtonPin.RGBG14, RGBButtonPin.RGBB14, RGBButtonPin.RGBPB14));
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR15, RGBButtonPin.RGBG15, RGBButtonPin.RGBB15, RGBButtonPin.RGBPB15));
             //RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR16, RGBButtonPin.RGBG16, RGBButtonPin.RGBB16, RGBButtonPin.RGBPB16));
-
             GameStopWatch.Start();
             AudioPlayer.PIBackgroundSound(SoundType.Background);
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            //_cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task task1 = Task.Run(() => RunService(_cts.Token));
-            //Task task2 = Task.Run(() => TimingService(_cts2.Token));
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
+            int level = 0;
             while (true)
             {
                 RGBColor selectedColor = (RGBColor)CurrentColor;
                 AudioPlayer.PIStartAudio(SoundType.Button);
+                // Add Extra Task
+                StartGameTask(selectedColor, level);
                 TurnRGBButtonWithColor(selectedColor);
                 byte numberOfClieckedButton = 0;
                 GameStopWatch.Restart();
@@ -88,9 +97,15 @@ namespace FortRoom.Services
                 }
                 TurnRGBButtonWithColor(RGBColor.Off);
                 if (CurrentColor < 4)
+                {
                     CurrentColor++;
+                    level++;
+                }
                 else
+                {
                     CurrentColor = 0;
+                    level = 0;
+                }
             }
         }
         private async Task TimingService(CancellationToken cancellationToken)
@@ -127,6 +142,41 @@ namespace FortRoom.Services
         {
             foreach (var item in RGBButtonList)
                 item.TurnColorOn(color);
+        }
+        public void StartGameTask(RGBColor color, int level)
+        {
+            bool Button1 = false; bool Button2 = false;
+            (int button1Index, int button2Index) = ButtonTaskList[level];
+            RGBButtonList[button1Index].TurnColorOn(color);
+            RGBButtonList[button2Index].TurnColorOn(color);
+            while (!Button1 || !Button2)
+            {
+                if (!Button1)
+                {
+                    if (!RGBButtonList[button1Index].CurrentStatus() && RGBButtonList[button1Index].CurrentColor() == color)
+                    {
+                        Button1 = true;
+                        Console.WriteLine("Button #1 Pressed");
+                        RGBLight.SetColor(RGBColor.Green);
+                        AudioPlayer.PIStartAudio(SoundType.Bonus);
+                        RGBButtonList[button1Index].TurnColorOn(RGBColor.Off);
+                        RGBLight.TurnRGBOffAfter1Sec();
+                    }
+                }
+                if (!Button2)
+                {
+                    if (!RGBButtonList[button2Index].CurrentStatus() && RGBButtonList[button2Index].CurrentColor() == color)
+                    {
+                        Button2 = true;
+                        Console.WriteLine("Button #2 Pressed");
+                        RGBLight.SetColor(RGBColor.Green);
+                        AudioPlayer.PIStartAudio(SoundType.Bonus);
+                        RGBButtonList[button2Index].TurnColorOn(RGBColor.Off);
+                        RGBLight.TurnRGBOffAfter1Sec();
+
+                    }
+                }
+            }
         }
     }
 }
