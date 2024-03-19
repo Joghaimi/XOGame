@@ -19,10 +19,11 @@ namespace FortRoom.Services
         bool IsTimerStarted = false;
         List<(int, int)> ButtonTaskList = new List<(int, int)>
         {
-            (14, 12),
-            (11, 4),
-            (13, 10),
-            (5, 12),
+            (2,3),
+            (8,6),
+            (5,0),
+            (7,4),
+            (2,6),
         };
 
 
