@@ -13,34 +13,10 @@ namespace FortRoom.Services
     {
         private readonly IHostApplicationLifetime _appLifetime;
         private ModbusLib Modbus = new ModbusLib();
-        private Stopwatch GameStopWatch = new Stopwatch();
         private readonly ILogger<ObstructionControlService> _logger;
-        private CancellationTokenSource _cts1, _cts2, _cts3, _cts4, _cts5;
+        private CancellationTokenSource _cts1;
 
-        bool IsTimerStarted = false;
-        bool IsMotorOneStarted = false;
-        bool IsMotorOneStartPeriod2 = false;
-        bool IsMotorOneStartPeriod3 = false;
-        int SlowPeriod = 5000;
-        int MediumPeriod = 10000;
-
-
-        bool IsMotorTwoStarted = false;
-        bool IsMotorTwoStartPeriod2 = false;
-        bool IsMotorTwoStartPeriod3 = false;
-        int MotorTwoDiffPeriod = 1000;
-
-        bool IsMotorThreeStarted = false;
-        bool IsMotorThreeStartPeriod2 = false;
-        bool IsMotorThreeStartPeriod3 = false;
-        int MotorThreeDiffPeriod = 2000;
-
-
-        bool IsMotorFourStarted = false;
-        bool IsMotorFourStartPeriod2 = false;
-        bool IsMotorFourStartPeriod3 = false;
-        int MotorFourDiffPeriod = 3000;
-
+        
         public ObstructionControlService(ILogger<ObstructionControlService> logger, IHostApplicationLifetime appLifetime)
         {
             _appLifetime = appLifetime;

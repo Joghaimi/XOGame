@@ -85,7 +85,7 @@ namespace Library.RGBLib
                     green = 0;
                     red = 0;
                     break;
-                
+
             }
             ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = "python3"; ;
@@ -109,7 +109,8 @@ namespace Library.RGBLib
             });
         }
 
-        public static async Task TurnRGBOFFDelayed() {
+        public static async Task TurnRGBOFFDelayed()
+        {
             Task.Run(async () =>
             {
                 await Task.Delay(1000);
@@ -130,7 +131,7 @@ namespace Library.RGBLib
             {
                 await Task.Delay(1000);
                 SetColor(RGBColor.Off);
-                MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
+                MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
             });
         }
         public static void DatSend(uint dx)

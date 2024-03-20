@@ -25,10 +25,10 @@ namespace Library.RGBLib
             _RGBGPin = GPin;
             _RGBBPin = BPin;
             // Set Pinout
-            MCP23Controller.PinModeSetup(_PushButtonPin.Chip, _PushButtonPin.port, _PushButtonPin.PinNumber, PinMode.Input);
-            MCP23Controller.PinModeSetup(_RGBGPin.Chip, _RGBGPin.port, _RGBGPin.PinNumber, PinMode.Output);
-            MCP23Controller.PinModeSetup(_RGBRPin.Chip, _RGBRPin.port, _RGBRPin.PinNumber, PinMode.Output);
-            MCP23Controller.PinModeSetup(_RGBBPin.Chip, _RGBBPin.port, _RGBBPin.PinNumber, PinMode.Output);
+            MCP23Controller.PinModeSetup(_PushButtonPin, PinMode.Input);
+            MCP23Controller.PinModeSetup(_RGBGPin, PinMode.Output);
+            MCP23Controller.PinModeSetup(_RGBRPin, PinMode.Output);
+            MCP23Controller.PinModeSetup(_RGBBPin, PinMode.Output);
             this.TurnColorOn(RGBColor.Off);
         }
         public void TurnColorOn(RGBColor selectedColor)
@@ -37,34 +37,34 @@ namespace Library.RGBLib
             switch (_CurrnetColor)
             {
                 case RGBColor.Red:
-                    MCP23Controller.Write(_RGBRPin.Chip, _RGBRPin.port, _RGBRPin.PinNumber, PinState.Low);
-                    MCP23Controller.Write(_RGBBPin.Chip, _RGBBPin.port, _RGBBPin.PinNumber, PinState.High);
-                    MCP23Controller.Write(_RGBGPin.Chip, _RGBGPin.port, _RGBGPin.PinNumber, PinState.High);
+                    MCP23Controller.Write(_RGBRPin, PinState.Low);
+                    MCP23Controller.Write(_RGBBPin, PinState.High);
+                    MCP23Controller.Write(_RGBGPin, PinState.High);
                     break;
                 case RGBColor.Green:
-                    MCP23Controller.Write(_RGBGPin.Chip, _RGBGPin.port, _RGBGPin.PinNumber, PinState.Low);
-                    MCP23Controller.Write(_RGBBPin.Chip, _RGBBPin.port, _RGBBPin.PinNumber, PinState.High);
-                    MCP23Controller.Write(_RGBRPin.Chip, _RGBRPin.port, _RGBRPin.PinNumber, PinState.High);
+                    MCP23Controller.Write(_RGBGPin, PinState.Low);
+                    MCP23Controller.Write(_RGBBPin, PinState.High);
+                    MCP23Controller.Write(_RGBRPin, PinState.High);
                     break;
                 case RGBColor.Blue:
-                    MCP23Controller.Write(_RGBBPin.Chip, _RGBBPin.port, _RGBBPin.PinNumber, PinState.Low);
-                    MCP23Controller.Write(_RGBRPin.Chip, _RGBRPin.port, _RGBRPin.PinNumber, PinState.High);
-                    MCP23Controller.Write(_RGBGPin.Chip, _RGBGPin.port, _RGBGPin.PinNumber, PinState.High);
+                    MCP23Controller.Write(_RGBBPin, PinState.Low);
+                    MCP23Controller.Write(_RGBRPin, PinState.High);
+                    MCP23Controller.Write(_RGBGPin, PinState.High);
                     break;
                 case RGBColor.purple:
-                    MCP23Controller.Write(_RGBBPin.Chip, _RGBBPin.port, _RGBBPin.PinNumber, PinState.Low);
-                    MCP23Controller.Write(_RGBRPin.Chip, _RGBRPin.port, _RGBRPin.PinNumber, PinState.Low);
-                    MCP23Controller.Write(_RGBGPin.Chip, _RGBGPin.port, _RGBGPin.PinNumber, PinState.High);
+                    MCP23Controller.Write(_RGBBPin, PinState.Low);
+                    MCP23Controller.Write(_RGBRPin, PinState.Low);
+                    MCP23Controller.Write(_RGBGPin, PinState.High);
                     break;
                 case RGBColor.Turquoise:
-                    MCP23Controller.Write(_RGBBPin.Chip, _RGBBPin.port, _RGBBPin.PinNumber, PinState.Low);
-                    MCP23Controller.Write(_RGBRPin.Chip, _RGBRPin.port, _RGBRPin.PinNumber, PinState.High);
-                    MCP23Controller.Write(_RGBGPin.Chip, _RGBGPin.port, _RGBGPin.PinNumber, PinState.Low);
+                    MCP23Controller.Write(_RGBBPin, PinState.Low);
+                    MCP23Controller.Write(_RGBRPin, PinState.High);
+                    MCP23Controller.Write(_RGBGPin, PinState.Low);
                     break;
                 case RGBColor.Off:
-                    MCP23Controller.Write(_RGBRPin.Chip, _RGBRPin.port, _RGBRPin.PinNumber, PinState.High);
-                    MCP23Controller.Write(_RGBBPin.Chip, _RGBBPin.port, _RGBBPin.PinNumber, PinState.High);
-                    MCP23Controller.Write(_RGBGPin.Chip, _RGBGPin.port, _RGBGPin.PinNumber, PinState.High);
+                    MCP23Controller.Write(_RGBRPin, PinState.High);
+                    MCP23Controller.Write(_RGBBPin, PinState.High);
+                    MCP23Controller.Write(_RGBGPin, PinState.High);
                     break;
             }
         }
@@ -75,7 +75,7 @@ namespace Library.RGBLib
         }
         public bool CurrentStatus()
         {
-            return MCP23Controller.Read(_PushButtonPin.Chip, _PushButtonPin.port, _PushButtonPin.PinNumber);
+            return MCP23Controller.Read(_PushButtonPin);
         }
         public bool isSet()
         {

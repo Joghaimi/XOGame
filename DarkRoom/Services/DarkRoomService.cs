@@ -15,8 +15,7 @@ namespace DarkRoom.Services
     public class DarkRoomService : IHostedService, IDisposable
     {
         private List<DarkRoomSensorController> DarkRoomSensorList = new List<DarkRoomSensorController>();
-        private DisplayController display;
-        private CancellationTokenSource _cts, _cts2;
+        private CancellationTokenSource _cts;
         Stopwatch GameStopWatch = new Stopwatch();
         private int Score = 0;
 

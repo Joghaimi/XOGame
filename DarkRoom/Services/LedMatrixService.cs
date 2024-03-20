@@ -14,7 +14,7 @@ namespace DarkRoom.Services
     {
 
 
-        private DisplayController display;
+        private DisplayController ?display;
         private CancellationTokenSource _cts, _cts2;
         bool IsTimerStarted = false;
         Stopwatch GameStopWatch = new Stopwatch();
@@ -45,7 +45,6 @@ namespace DarkRoom.Services
             bool activeButton = false;
             Stopwatch timer = new Stopwatch();
             Stopwatch timerToStart = new Stopwatch();
-            int activeButtonIndox = -1;
             Random random = new Random();
             int randomTime = random.Next(1000, 5000);
             timerToStart.Start();
