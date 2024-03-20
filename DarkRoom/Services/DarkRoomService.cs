@@ -83,8 +83,6 @@ namespace DarkRoom.Services
                             AudioPlayer.PIStartAudio(SoundType.Descend);
                             Console.WriteLine($"Scored Wrong, Total {Score}");
                         }
-
-
                     }
                 }
             }
