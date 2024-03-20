@@ -149,7 +149,7 @@ namespace ShootingRoom.Services
                             item.Select();
                             Console.WriteLine($" Shelf #{i}");
                             i++;
-                            while (Shelftimer.ElapsedMilliseconds <= (10000 - 2000*level))
+                            while (Shelftimer.ElapsedMilliseconds <= (10000 - 2000*(level-1)))
                             {
 
                                 int inShelf = 1;
