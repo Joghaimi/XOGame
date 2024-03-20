@@ -22,7 +22,7 @@ namespace FortRoom.Services
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _controller = new GPIOController();
-            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
+            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Fort);
             AudioPlayer.Init(Room.Fort);
             MCP23Controller.Init(true);
             // Init the Pin's

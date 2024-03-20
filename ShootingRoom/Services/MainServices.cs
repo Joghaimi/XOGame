@@ -19,7 +19,7 @@ namespace ShootingRoom.Services
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _controller = new GPIOController();
-            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
+            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data ,Room.Shooting);
             MCP23Controller.Init(true);
             AudioPlayer.Init(Room.Shooting);
             // Init the Pin's

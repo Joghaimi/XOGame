@@ -19,7 +19,7 @@ namespace FloorIsLava.Services
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _controller = new GPIOController();
-            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
+            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.FloorIsLava);
             AudioPlayer.Init(Room.Diving);
             MCP23Controller.Init(true);
             // Init the Pin's

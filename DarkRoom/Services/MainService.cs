@@ -1,4 +1,5 @@
-﻿using Library.GPIOLib;
+﻿using Library;
+using Library.GPIOLib;
 using Library.Media;
 using Library.PinMapping;
 using Library.RGBLib;
@@ -17,7 +18,7 @@ namespace DarkRoom.Services
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _controller = new GPIOController();
-            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
+            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data,Room.Dark);
             JQ8400AudioModule.init(SerialPort.Serial2);
             MCP23Controller.Init(true);
             // Init the Pin's

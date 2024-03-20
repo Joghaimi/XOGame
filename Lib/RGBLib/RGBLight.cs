@@ -24,12 +24,13 @@ namespace Library.RGBLib
         private static int CLKPin = 0;
         private static int DataPin = 0;
         private static GPIOController _controller;
-
         private static Queue<(RGBColor, int)> _rgbLightQueue = new Queue<(RGBColor, int)>();
-        public static void Init(int _clkPin, int _dataPin)
+        private static Room _room;
+        public static void Init(int _clkPin, int _dataPin, Room room)
         {
             CLKPin = _clkPin;
             DataPin = _dataPin;
+            _room=room;
 
         }
         public static async void SetColor(RGBColor selectedColor)
@@ -89,7 +90,7 @@ namespace Library.RGBLib
             }
             ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = "python3"; ;
-            start.Arguments = $@"/home/fort/XOGame/RGBLight.py {CLKPin} {DataPin} {red} {green} {blue}";
+            start.Arguments = $@"{HomePath()}/RGBLight.py {CLKPin} {DataPin} {red} {green} {blue}";
             start.UseShellExecute = false;
             start.RedirectStandardOutput = true;
             Process process = Process.Start(start);
@@ -99,7 +100,26 @@ namespace Library.RGBLib
                 Console.Write(result);
             }
         }
-
+        private static string HomePath()
+        {
+            switch (_room)
+            {
+                case Room.Fort:
+                    return "/home/fort/XOGame";
+                case Room.Dark:
+                    return "/home/Dark/XOGame";
+                case Room.Diving:
+                    return "/home/diving/XOGame";
+                case Room.FloorIsLava:
+                    return "/home/floor/XOGame";
+                case Room.Gathering:
+                    return "/home/Gathering/XOGame";
+                case Room.Shooting:
+                    return "/home/shooting/XOGame";
+                default:
+                    return "/home/pi/XOGame";
+            }
+        }
         public static async Task TurnRGBColorDelayed(RGBColor rGBColor)
         {
             Task.Run(async () =>

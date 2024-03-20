@@ -64,5 +64,6 @@ namespace Library.PinMapping
         public static int GPIO23 = 23;
         public static int GPIO24 = 24;
         public static int GPIO4 = 4;
+        public static int GPIO17 = 17;
     }
 }

@@ -39,7 +39,7 @@ namespace DivingRoom.Services
 
 
 
-            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
+            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Diving);
             MCP23Controller.Init(true);
 
             MCP23Controller.PinModeSetup(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber, PinMode.Input);

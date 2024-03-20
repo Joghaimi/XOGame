@@ -22,7 +22,7 @@ namespace DivingRoom.Services
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _controller = new GPIOController();
-            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
+            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Diving);
             //JQ8400AudioModule.init(SerialPort.Serial2);
             MCP23Controller.Init(true);
             // Init the Pin's

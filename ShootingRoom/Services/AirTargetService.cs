@@ -48,8 +48,8 @@ namespace ShootingRoom.Services
 
         int BigTargetRelay = MasterOutputPin.GPIO23;
         int GunShootRelay = MasterOutputPin.GPIO24;
-        int UVLight = MasterOutputPin.GPIO4;
-
+        int UVLight = MasterOutputPin.GPIO17;
+        
 
         private CancellationTokenSource _cts;
         Stopwatch GameStopWatch = new Stopwatch();
@@ -88,20 +88,13 @@ namespace ShootingRoom.Services
             scoreList.Add(125); // 2 Min
             scoreList.Add(150); // 2 Min
             scoreList.Add(300); // 2 Min
-            
+
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            //while (true) {
-            //    ControlPin(UVLight, true);
-            //    Thread.Sleep(5000);
-            //    ControlPin(UVLight, false);
-            //    Thread.Sleep(5000);
-
-            //}
             Console.WriteLine($"Game Started");
 
             Stopwatch Shelftimer = new Stopwatch();
@@ -143,7 +136,7 @@ namespace ShootingRoom.Services
                     int ActualLevelScore = 0;
                     int numberOfRightHits = 0;
                     int numberOfWrongHits = 0;
-                    LevelTimer.Restart();   
+                    LevelTimer.Restart();
                     while (LevelScore > ActualLevelScore && LevelTimer.ElapsedMilliseconds < 96000)
                     {
                         int i = 1;
@@ -156,7 +149,7 @@ namespace ShootingRoom.Services
                             item.Select();
                             Console.WriteLine($" Shelf #{i}");
                             i++;
-                            while (Shelftimer.ElapsedMilliseconds <= 5000)
+                            while (Shelftimer.ElapsedMilliseconds <= (10000 - 2000*level))
                             {
 
                                 int inShelf = 1;
@@ -195,7 +188,7 @@ namespace ShootingRoom.Services
                             Console.WriteLine($"numberOfRightHits {numberOfRightHits}");
                             Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
                             item.UnSelectTarget(false);
-                            if (numberOfHit == 20 || ActualLevelScore >=LevelScore)
+                            if (numberOfHit == 20 || ActualLevelScore >= LevelScore)
                             {
                                 Console.WriteLine("All Target Down Go Next Level");
                                 break;
