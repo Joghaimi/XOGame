@@ -28,8 +28,7 @@ namespace DarkRoom.Services
         int changingSpeed = 5000;
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT1.Chip, MasterOutputPin.OUTPUT1.port,
-                MasterOutputPin.OUTPUT1.PinNumber, PinMode.Output);
+            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT1, PinMode.Output);
 
 
             display = new DisplayController(SerialPort.Serial);
@@ -126,9 +125,9 @@ namespace DarkRoom.Services
                     if (IsTimerSet && GameStopWatch.ElapsedMilliseconds > timePeriod)
                     {
                         IsTimerSet = false;
-                        MCP23Controller.Write(MasterOutputPin.OUTPUT1.Chip, MasterOutputPin.OUTPUT1.port,MasterOutputPin.OUTPUT1.PinNumber, PinState.High);
+                        MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.High);
                         Thread.Sleep(1000);
-                        MCP23Controller.Write(MasterOutputPin.OUTPUT1.Chip, MasterOutputPin.OUTPUT1.port, MasterOutputPin.OUTPUT1.PinNumber, PinState.Low);
+                        MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.Low);
                     }
                 }
 

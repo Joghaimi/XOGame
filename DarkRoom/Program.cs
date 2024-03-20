@@ -9,7 +9,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHostedService<MainService>();
-builder.Services.AddHostedService<LedMatrixService>();
+builder.Services.AddHostedService<DarkRoomService>();
+//builder.Services.AddHostedService<LedMatrixService>();
 
 
 var app = builder.Build();
