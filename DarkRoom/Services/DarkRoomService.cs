@@ -19,9 +19,9 @@ namespace DarkRoom.Services
         Stopwatch GameStopWatch = new Stopwatch();
         private int Score = 0;
 
-        DarkRoomSensor IN1 = new DarkRoomSensor(HatInputPin.IR1, -1,true);
-        DarkRoomSensor IN2 = new DarkRoomSensor(HatInputPin.IR2, 2,false);
-        DarkRoomSensor IN3 = new DarkRoomSensor(HatInputPin.IR3, -3,false);
+        DarkRoomSensor IN1 = new DarkRoomSensor(HatInputPin.IR1, -1, true);
+        DarkRoomSensor IN2 = new DarkRoomSensor(HatInputPin.IR2, 2, false);
+        DarkRoomSensor IN3 = new DarkRoomSensor(HatInputPin.IR3, -3, false);
         DarkRoomSensor IN4 = new DarkRoomSensor(HatInputPin.IR4, -4, false);
         DarkRoomSensor IN5 = new DarkRoomSensor(HatInputPin.IR5, 5, false);
         DarkRoomSensor IN6 = new DarkRoomSensor(HatInputPin.IR6, -6, false);
@@ -87,11 +87,15 @@ namespace DarkRoom.Services
 
             while (true)
             {
+                int i = 0;
                 foreach (var sensor in DarkRoomSensorList)
                 {
+
+                    i++;
                     (bool state, int addedScore) = sensor.SensorStatus();
                     if (state)
                     {
+                        Console.WriteLine($"Sensor #{i}");
                         Score += addedScore;
                         if (addedScore > 0)
                         {
@@ -110,9 +114,13 @@ namespace DarkRoom.Services
                             AudioPlayer.PIStartAudio(SoundType.Descend);
                             Console.WriteLine($"Scored Wrong, Total {Score}");
                         }
+
                     }
+
                     Thread.Sleep(100);
                 }
+               
+
             }
         }
         public Task StopAsync(CancellationToken cancellationToken)
