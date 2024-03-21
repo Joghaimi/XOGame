@@ -111,6 +111,7 @@ namespace DarkRoom.Services
                             Console.WriteLine($"Scored Wrong, Total {Score}");
                         }
                     }
+                    Thread.Sleep(100);
                 }
             }
         }
