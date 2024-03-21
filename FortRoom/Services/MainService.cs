@@ -38,6 +38,8 @@ namespace FortRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
+            bool lastRoomState = false;
+            RGBLight.SetColor(RGBColor.Red);
             MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -45,11 +47,19 @@ namespace FortRoom.Services
                 PIR2 = _controller.Read(MasterDI.PIRPin2);
                 PIR3 = _controller.Read(MasterDI.PIRPin3);
                 PIR4 = _controller.Read(MasterDI.PIRPin4);
-                //Console.WriteLine($"PIR Status PIR1:{PIR1} PIR2:{PIR2} PIR3:{PIR3} PIR4:{PIR4}");
-                VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
+                Console.WriteLine($"PIR Status PIR1:{PIR1} PIR2:{PIR2} PIR3:{PIR3} PIR4:{PIR4}");
+                VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4;//|| VariableControlService.IsTheirAnyOneInTheRoom;
                 //MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
+                if (VariableControlService.IsTheirAnyOneInTheRoom != lastRoomState)
+                {
+                    lastRoomState = VariableControlService.IsTheirAnyOneInTheRoom;
+                    if (VariableControlService.IsTheirAnyOneInTheRoom)
+                        RGBLight.SetColor(RGBColor.Green);
+                    else
+                        RGBLight.SetColor(RGBColor.Red);
 
-
+                }
+                Thread.Sleep(1000);
                 bool DoneOneTimeFlage = false;
                 if (VariableControlService.IsTheGameStarted)
                 {
