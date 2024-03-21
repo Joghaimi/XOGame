@@ -20,10 +20,10 @@ namespace Library.DarkRoomSensor
 
         public (bool status, int score) SensorStatus()
         {
-            if (_darkRoomSensor.isShoot)
+            if (!_darkRoomSensor.isShoot)
             {
                 _darkRoomSensor.isShoot=true;
-                return (!MCP23Controller.Read(_darkRoomSensor.Pin), _darkRoomSensor.Score);
+                return (MCP23Controller.Read(_darkRoomSensor.Pin), _darkRoomSensor.Score);
             }
             return (false, 0);
         }
