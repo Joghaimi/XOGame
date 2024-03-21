@@ -19,7 +19,9 @@ namespace DarkRoom.Services
         {
             _controller = new GPIOController();
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data,Room.Shooting);
-            JQ8400AudioModule.init(SerialPort.Serial2);
+            AudioPlayer.Init(Room.Shooting);
+            AudioPlayer.PIBackgroundSound(SoundType.Background);
+            //JQ8400AudioModule.init(SerialPort.Serial2);
             MCP23Controller.Init(true);
             // Init the Pin's
             _controller.Setup(MasterDI.PIRPin1, PinMode.InputPullDown);

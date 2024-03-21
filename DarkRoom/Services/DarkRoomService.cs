@@ -120,8 +120,6 @@ namespace DarkRoom.Services
 
                 }
                 Thread.Sleep(100);
-
-
             }
         }
         public Task StopAsync(CancellationToken cancellationToken)
