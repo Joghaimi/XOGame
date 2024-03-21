@@ -17,6 +17,14 @@ namespace Library.DarkRoomSensor
             _darkRoomSensor = darkRoomSensor;
             MCP23Controller.PinModeSetup(darkRoomSensor.Pin, PinMode.Input);
         }
+        public bool stauts()
+        {
+            if (_darkRoomSensor.isInverted)
+                return (!MCP23Controller.Read(_darkRoomSensor.Pin));
+            else
+                return (MCP23Controller.Read(_darkRoomSensor.Pin));
+
+        }
 
         public (bool status, int score) SensorStatus()
         {
@@ -25,7 +33,7 @@ namespace Library.DarkRoomSensor
                 _darkRoomSensor.isShoot = true;
                 if (_darkRoomSensor.isInverted)
                     return (!MCP23Controller.Read(_darkRoomSensor.Pin), _darkRoomSensor.Score);
-               else
+                else
                     return (MCP23Controller.Read(_darkRoomSensor.Pin), _darkRoomSensor.Score);
 
             }
