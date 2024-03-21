@@ -119,8 +119,7 @@ namespace DarkRoom.Services
                     }
 
                 }
-                Console.WriteLine();
-                Thread.Sleep(1000);
+                Thread.Sleep(100);
 
 
             }
