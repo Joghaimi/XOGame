@@ -13,10 +13,13 @@ namespace Library.DarkRoomSensor
         public int Score { get; set; }
         public bool isSelected { get; set; } = false;
         public bool isShoot { get; set; } = false;
-        public DarkRoomSensor(MCP23Pin Pin, int Score)
+        public bool isInverted { get; set; } = false;
+
+        public DarkRoomSensor(MCP23Pin Pin, int Score,bool isInverted)
         {
             this.Pin = Pin;
             this.Score = Score;
+            this.isInverted = isInverted;
         }
     }
 

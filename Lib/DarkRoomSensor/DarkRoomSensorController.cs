@@ -22,8 +22,12 @@ namespace Library.DarkRoomSensor
         {
             if (!_darkRoomSensor.isShoot)
             {
-                _darkRoomSensor.isShoot=true;
-                return (MCP23Controller.Read(_darkRoomSensor.Pin), _darkRoomSensor.Score);
+                _darkRoomSensor.isShoot = true;
+                if (_darkRoomSensor.isInverted)
+                    return (!MCP23Controller.Read(_darkRoomSensor.Pin), _darkRoomSensor.Score);
+               else
+                    return (MCP23Controller.Read(_darkRoomSensor.Pin), _darkRoomSensor.Score);
+
             }
             return (false, 0);
         }
