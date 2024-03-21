@@ -11,7 +11,8 @@ namespace Library.DarkRoomSensor
 {
     public class DarkRoomSensorController
     {
-        private DarkRoomSensor _darkRoomSensor;
+        public DarkRoomSensor _darkRoomSensor;
+        private bool falseForKnow =false;
         public DarkRoomSensorController(DarkRoomSensor darkRoomSensor)
         {
             _darkRoomSensor = darkRoomSensor;
@@ -19,6 +20,8 @@ namespace Library.DarkRoomSensor
         }
         public bool stauts()
         {
+            if(falseForKnow)
+                return false;
             if (_darkRoomSensor.isInverted)
                 return (!MCP23Controller.Read(_darkRoomSensor.Pin));
             else
@@ -44,8 +47,9 @@ namespace Library.DarkRoomSensor
 
             Task.Run(async () =>
             {
+                falseForKnow = true;
                 await Task.Delay(1000);
-                _darkRoomSensor.isShoot = false;
+                falseForKnow = false;
             });
         }
     }

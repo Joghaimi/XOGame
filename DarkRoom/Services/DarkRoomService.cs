@@ -90,33 +90,33 @@ namespace DarkRoom.Services
                 int i = 0;
                 foreach (var sensor in DarkRoomSensorList)
                 {
-                    Console.Write(sensor.stauts());
+                    bool status = sensor.stauts();
 
-                    //i++;
-                    //(bool state, int addedScore) = sensor.SensorStatus();
-                    //if (state)
-                    //{
-                    //    Console.WriteLine($"Sensor #{i}");
-                    //    Score += addedScore;
-                    //    if (addedScore > 0)
-                    //    {
-                    //        RGBLight.SetColor(RGBColor.Blue);
-                    //        RGBLight.TurnRGBColorDelayed(RGBColor.White);
-                    //        AudioPlayer.PIStartAudio(SoundType.Bonus);
-                    //        sensor.BlockScoreFor1Sec();
-                    //        Console.WriteLine($"Scored, Total {Score}");
 
-                    //    }
-                    //    else
-                    //    {
-                    //        sensor.BlockScoreFor1Sec();
-                    //        RGBLight.SetColor(RGBColor.Red);
-                    //        RGBLight.TurnRGBColorDelayed(RGBColor.White);
-                    //        AudioPlayer.PIStartAudio(SoundType.Descend);
-                    //        Console.WriteLine($"Scored Wrong, Total {Score}");
-                    //    }
+                    if (status)
+                    {
+                        Console.WriteLine($"Sensor #{i}");
+                        int addedScore = sensor._darkRoomSensor.Score;
+                        Score += addedScore;
+                        if (addedScore > 0)
+                        {
+                            RGBLight.SetColor(RGBColor.Blue);
+                            RGBLight.TurnRGBColorDelayed(RGBColor.White);
+                            AudioPlayer.PIStartAudio(SoundType.Bonus);
+                            sensor.BlockScoreFor1Sec();
+                            Console.WriteLine($"Scored, Total {Score}");
 
-                    //}
+                        }
+                        else
+                        {
+                            sensor.BlockScoreFor1Sec();
+                            RGBLight.SetColor(RGBColor.Red);
+                            RGBLight.TurnRGBColorDelayed(RGBColor.White);
+                            AudioPlayer.PIStartAudio(SoundType.Descend);
+                            Console.WriteLine($"Scored Wrong, Total {Score}");
+                        }
+
+                    }
 
                 }
                 Console.WriteLine();
