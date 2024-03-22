@@ -68,35 +68,26 @@ namespace FortRoom.Services
             while (true)
             {
                 var index = 0;
+                Console.WriteLine("Green =====");
                 foreach (var item in RGBButtonList)
                 {
-                    Console.WriteLine(index);
-                    index++;
                     item.TurnColorOn(RGBColor.Green);
-                    Thread.Sleep(1000);
                 }
-                foreach (var item in RGBButtonList)
-                {
-                    Console.WriteLine(index);
-                    index++;
-                    item.TurnColorOn(RGBColor.Red);
-                    Thread.Sleep(1000);
-                }
-                foreach (var item in RGBButtonList)
-                {
-                    Console.WriteLine(index);
-                    index++;
-                    item.TurnColorOn(RGBColor.Blue);
-                    Thread.Sleep(1000);
-                }
-                foreach (var item in RGBButtonList)
-                {
-                    Console.WriteLine(index);
-                    index++;
-                    item.TurnColorOn(RGBColor.Off);
-                    Thread.Sleep(1000);
-                }
+                Thread.Sleep(10000);
+                Console.WriteLine("Red =====");
 
+                foreach (var item in RGBButtonList)
+                {
+                    item.TurnColorOn(RGBColor.Red);
+                }
+                Thread.Sleep(10000);
+                Console.WriteLine("Blue =====");
+
+                foreach (var item in RGBButtonList)
+                {
+                    item.TurnColorOn(RGBColor.Blue);
+                }
+                Thread.Sleep(10000);
             }
             
             while (true)
