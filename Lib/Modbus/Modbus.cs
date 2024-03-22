@@ -46,7 +46,7 @@ namespace Library.Modbus
             }
             catch (Exception ex)
             {
-                _logger.LogError($"InitModbusRTU  {ex.Message}");
+                _logger.LogError($"WriteSingleRegister  {ex.Message}");
             }
         }
         public void ReleasePort()
