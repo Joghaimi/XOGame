@@ -16,7 +16,7 @@ namespace Library.Modbus
     {
         ModbusSerialMaster master;
         private SerialPort port = new();
-        private static readonly ILogger _logger = LoggerFactory.Create(builder => { builder.AddConsole(); }).CreateLogger<RFID>();
+        private static readonly ILogger _logger = LoggerFactory.Create(builder => { builder.AddConsole(); }).CreateLogger<ModbusLib>();
         public bool Init(string SerialPort)
         {
             try
