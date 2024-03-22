@@ -30,7 +30,7 @@ namespace FortRoom.Services
             _controller.Setup(MasterDI.PIRPin2, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin3, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
-
+            //AudioPlayer.PIBackgroundSound(SoundType.Background);
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT6, PinMode.Output);
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
