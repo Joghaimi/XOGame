@@ -18,7 +18,7 @@ namespace DarkRoom.Services
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _controller = new GPIOController();
-            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data,Room.Shooting);
+            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data,Room.Dark);
             AudioPlayer.Init(Room.Shooting);
             AudioPlayer.PIBackgroundSound(SoundType.Background);
             //JQ8400AudioModule.init(SerialPort.Serial2);
