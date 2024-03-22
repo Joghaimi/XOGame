@@ -16,10 +16,10 @@ namespace FortRoom.Services
     {
         private CancellationTokenSource _cts;
         private readonly ILogger<ObstructionControlService> _logger;
-        //public PressureMatService(ILogger<ObstructionControlService> logger)
-        //{
-        //    _logger = logger;
-        //}
+        public PressureMatService(ILogger<ObstructionControlService> logger)
+        {
+            _logger = logger;
+        }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
