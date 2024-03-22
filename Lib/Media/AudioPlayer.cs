@@ -149,7 +149,7 @@ namespace Library.Media
                 case Room.Fort:
                     return "/home/fort/XOGame";
                 case Room.Dark:
-                    return "/home/Dark/XOGame";
+                    return "/home/dark/XOGame";
                 case Room.Diving:
                     return "/home/diving/XOGame";
                 case Room.FloorIsLava:
