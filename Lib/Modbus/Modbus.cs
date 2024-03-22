@@ -41,7 +41,7 @@ namespace Library.Modbus
         {
             try
             {
-                _logger.LogTrace($"Write To {slaveAddress} at register {registerAddress} value {valueToWrite} ");
+                _logger.LogDebug($"Write To {slaveAddress} at register {registerAddress} value {valueToWrite} ");
                 master.WriteSingleRegister(slaveAddress, registerAddress, valueToWrite);
             }
             catch (Exception ex)
