@@ -258,126 +258,126 @@ namespace Library.GPIOLib
         {
             // The Working One
 
-            //switch (_MCP23Pin.Chip)
-            //{
-            //    case MCP23017.MCP2301720:
-            //        byte gpioStatus1 = mcp23017x20.ReadByte(Register.GPIO, _MCP23Pin.port);
-            //        return ((gpioStatus1 >> _MCP23Pin.PinNumber) & 0x01) == 1;
-            //    case MCP23017.MCP2301721:
-            //        byte gpioStatus2 = mcp23017x21.ReadByte(Register.GPIO, _MCP23Pin.port);
-            //        return ((gpioStatus2 >> _MCP23Pin.PinNumber) & 0x01) == 1;
-            //    case MCP23017.MCP2301722:
-            //        byte gpioStatus3 = mcp23017x22.ReadByte(Register.GPIO, _MCP23Pin.port);
-            //        return ((gpioStatus3 >> _MCP23Pin.PinNumber) & 0x01) == 1;
-            //    case MCP23017.MCP2301723:
-            //        byte gpioStatus4 = mcp23017x23.ReadByte(Register.GPIO, _MCP23Pin.port);
-            //        return ((gpioStatus4 >> _MCP23Pin.PinNumber) & 0x01) == 1;
-            //    case MCP23017.MCP2301724:
-            //        byte gpioStatus5 = mcp23017x24.ReadByte(Register.GPIO, _MCP23Pin.port);
-            //        return ((gpioStatus5 >> _MCP23Pin.PinNumber) & 0x01) == 1;
-            //    case MCP23017.MCP2301725:
-            //        byte gpioStatus6 = mcp23017x25.ReadByte(Register.GPIO, _MCP23Pin.port);
-            //        return ((gpioStatus6 >> _MCP23Pin.PinNumber) & 0x01) == 1;
-            //    case MCP23017.MCP2301726:
-            //        byte gpioStatus7 = mcp23017x26.ReadByte(Register.GPIO, _MCP23Pin.port);
-            //        return ((gpioStatus7 >> _MCP23Pin.PinNumber) & 0x01) == 1;
-            //    case MCP23017.MCP2301727:
-            //        byte gpioStatus8 = mcp23017x27.ReadByte(Register.GPIO, _MCP23Pin.port);
-            //        return ((gpioStatus8 >> _MCP23Pin.PinNumber) & 0x01) == 1;
-            //    default:
-            //        throw new ArgumentException("Invalid Chip Selected");
-            //}
+            switch (_MCP23Pin.Chip)
+            {
+                case MCP23017.MCP2301720:
+                    byte gpioStatus1 = mcp23017x20.ReadByte(Register.GPIO, _MCP23Pin.port);
+                    return ((gpioStatus1 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                case MCP23017.MCP2301721:
+                    byte gpioStatus2 = mcp23017x21.ReadByte(Register.GPIO, _MCP23Pin.port);
+                    return ((gpioStatus2 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                case MCP23017.MCP2301722:
+                    byte gpioStatus3 = mcp23017x22.ReadByte(Register.GPIO, _MCP23Pin.port);
+                    return ((gpioStatus3 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                case MCP23017.MCP2301723:
+                    byte gpioStatus4 = mcp23017x23.ReadByte(Register.GPIO, _MCP23Pin.port);
+                    return ((gpioStatus4 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                case MCP23017.MCP2301724:
+                    byte gpioStatus5 = mcp23017x24.ReadByte(Register.GPIO, _MCP23Pin.port);
+                    return ((gpioStatus5 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                case MCP23017.MCP2301725:
+                    byte gpioStatus6 = mcp23017x25.ReadByte(Register.GPIO, _MCP23Pin.port);
+                    return ((gpioStatus6 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                case MCP23017.MCP2301726:
+                    byte gpioStatus7 = mcp23017x26.ReadByte(Register.GPIO, _MCP23Pin.port);
+                    return ((gpioStatus7 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                case MCP23017.MCP2301727:
+                    byte gpioStatus8 = mcp23017x27.ReadByte(Register.GPIO, _MCP23Pin.port);
+                    return ((gpioStatus8 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                default:
+                    throw new ArgumentException("Invalid Chip Selected");
+            }
             // Test 
-            byte GPIOStatus = ReturnMCPChip(_MCP23Pin.Chip).ReadByte(Register.GPIO, _MCP23Pin.port);
-            return ((GPIOStatus >> _MCP23Pin.PinNumber) & 0x01) == 1;
+            //byte GPIOStatus = ReturnMCPChip(_MCP23Pin.Chip).ReadByte(Register.GPIO, _MCP23Pin.port);
+            //return ((GPIOStatus >> _MCP23Pin.PinNumber) & 0x01) == 1;
         }
 
         public static void Write(MCP23Pin _MCP23Pin, PinState PinState)
         {
             // The Working One
-            //if (_MCP23Pin.PinNumber < 0 || _MCP23Pin.PinNumber > 15)
-            //{
-            //    throw new ArgumentException("Invalid pin number");
-            //}
-
-            //switch (_MCP23Pin.Chip)
-            //{
-            //    case MCP23017.MCP2301720:
-            //        byte currentValue = mcp23017x20.ReadByte(Register.GPIO, _MCP23Pin.port);
-            //        if (PinState == PinState.High)
-            //            currentValue |= (byte)(1 << _MCP23Pin.PinNumber);
-            //        else
-            //            currentValue &= (byte)~(1 << _MCP23Pin.PinNumber);
-            //        mcp23017x20.WriteByte(Register.GPIO, currentValue, _MCP23Pin.port);
-            //        break;
-            //    case MCP23017.MCP2301721:
-            //        byte currentValue2 = mcp23017x21.ReadByte(Register.GPIO, _MCP23Pin.port);
-            //        if (PinState == PinState.High)
-            //            currentValue2 |= (byte)(1 << _MCP23Pin.PinNumber);
-            //        else
-            //            currentValue2 &= (byte)~(1 << _MCP23Pin.PinNumber);
-            //        mcp23017x21.WriteByte(Register.GPIO, currentValue2, _MCP23Pin.port);
-            //        break;
-
-            //    case MCP23017.MCP2301722:
-            //        byte currentValue3 = mcp23017x22.ReadByte(Register.GPIO, _MCP23Pin.port);
-            //        if (PinState == PinState.High)
-            //            currentValue3 |= (byte)(1 << _MCP23Pin.PinNumber);
-            //        else
-            //            currentValue3 &= (byte)~(1 << _MCP23Pin.PinNumber);
-            //        mcp23017x22.WriteByte(Register.GPIO, currentValue3, _MCP23Pin.port);
-            //        break;
-            //    case MCP23017.MCP2301723:
-            //        byte currentValue4 = mcp23017x23.ReadByte(Register.GPIO, _MCP23Pin.port);
-            //        if (PinState == PinState.High)
-            //            currentValue4 |= (byte)(1 << _MCP23Pin.PinNumber);
-            //        else
-            //            currentValue4 &= (byte)~(1 << _MCP23Pin.PinNumber);
-            //        mcp23017x23.WriteByte(Register.GPIO, currentValue4, _MCP23Pin.port);
-            //        break;
-            //    case MCP23017.MCP2301724:
-            //        byte currentValue5 = mcp23017x24.ReadByte(Register.GPIO, _MCP23Pin.port);
-            //        if (PinState == PinState.High)
-            //            currentValue5 |= (byte)(1 << _MCP23Pin.PinNumber);
-            //        else
-            //            currentValue5 &= (byte)~(1 << _MCP23Pin.PinNumber);
-            //        mcp23017x24.WriteByte(Register.GPIO, currentValue5, _MCP23Pin.port);
-            //        break;
-            //    case MCP23017.MCP2301725:
-            //        byte currentValue6 = mcp23017x25.ReadByte(Register.GPIO, _MCP23Pin.port);
-            //        if (PinState == PinState.High)
-            //            currentValue6 |= (byte)(1 << _MCP23Pin.PinNumber);
-            //        else
-            //            currentValue6 &= (byte)~(1 << _MCP23Pin.PinNumber);
-            //        mcp23017x25.WriteByte(Register.GPIO, currentValue6, _MCP23Pin.port);
-            //        break;
-            //    case MCP23017.MCP2301726:
-            //        byte currentValue7 = mcp23017x26.ReadByte(Register.GPIO, _MCP23Pin.port);
-            //        if (PinState == PinState.High)
-            //            currentValue7 |= (byte)(1 << _MCP23Pin.PinNumber);
-            //        else
-            //            currentValue7 &= (byte)~(1 << _MCP23Pin.PinNumber);
-            //        mcp23017x26.WriteByte(Register.GPIO, currentValue7, _MCP23Pin.port);
-            //        break;
-            //    case MCP23017.MCP2301727:
-            //        byte currentValue8 = mcp23017x27.ReadByte(Register.GPIO, _MCP23Pin.port);
-            //        if (PinState == PinState.High)
-            //            currentValue8 |= (byte)(1 << _MCP23Pin.PinNumber);
-            //        else
-            //            currentValue8 &= (byte)~(1 << _MCP23Pin.PinNumber);
-            //        mcp23017x27.WriteByte(Register.GPIO, currentValue8, _MCP23Pin.port);
-            //        break;
-            //    default:
-            //        throw new ArgumentException("Invalid Chip Selected");
-            //}
             if (_MCP23Pin.PinNumber < 0 || _MCP23Pin.PinNumber > 15)
+            {
                 throw new ArgumentException("Invalid pin number");
-            byte currentValue = ReturnMCPChip(_MCP23Pin.Chip).ReadByte(Register.GPIO, _MCP23Pin.port);
-            if (PinState == PinState.High)
-                currentValue |= (byte)(1 << _MCP23Pin.PinNumber);
-            else
-                currentValue &= (byte)~(1 << _MCP23Pin.PinNumber);
-            ReturnMCPChip(_MCP23Pin.Chip).WriteByte(Register.GPIO, currentValue, _MCP23Pin.port);
+            }
+
+            switch (_MCP23Pin.Chip)
+            {
+                case MCP23017.MCP2301720:
+                    byte currentValue = mcp23017x20.ReadByte(Register.GPIO, _MCP23Pin.port);
+                    if (PinState == PinState.High)
+                        currentValue |= (byte)(1 << _MCP23Pin.PinNumber);
+                    else
+                        currentValue &= (byte)~(1 << _MCP23Pin.PinNumber);
+                    mcp23017x20.WriteByte(Register.GPIO, currentValue, _MCP23Pin.port);
+                    break;
+                case MCP23017.MCP2301721:
+                    byte currentValue2 = mcp23017x21.ReadByte(Register.GPIO, _MCP23Pin.port);
+                    if (PinState == PinState.High)
+                        currentValue2 |= (byte)(1 << _MCP23Pin.PinNumber);
+                    else
+                        currentValue2 &= (byte)~(1 << _MCP23Pin.PinNumber);
+                    mcp23017x21.WriteByte(Register.GPIO, currentValue2, _MCP23Pin.port);
+                    break;
+
+                case MCP23017.MCP2301722:
+                    byte currentValue3 = mcp23017x22.ReadByte(Register.GPIO, _MCP23Pin.port);
+                    if (PinState == PinState.High)
+                        currentValue3 |= (byte)(1 << _MCP23Pin.PinNumber);
+                    else
+                        currentValue3 &= (byte)~(1 << _MCP23Pin.PinNumber);
+                    mcp23017x22.WriteByte(Register.GPIO, currentValue3, _MCP23Pin.port);
+                    break;
+                case MCP23017.MCP2301723:
+                    byte currentValue4 = mcp23017x23.ReadByte(Register.GPIO, _MCP23Pin.port);
+                    if (PinState == PinState.High)
+                        currentValue4 |= (byte)(1 << _MCP23Pin.PinNumber);
+                    else
+                        currentValue4 &= (byte)~(1 << _MCP23Pin.PinNumber);
+                    mcp23017x23.WriteByte(Register.GPIO, currentValue4, _MCP23Pin.port);
+                    break;
+                case MCP23017.MCP2301724:
+                    byte currentValue5 = mcp23017x24.ReadByte(Register.GPIO, _MCP23Pin.port);
+                    if (PinState == PinState.High)
+                        currentValue5 |= (byte)(1 << _MCP23Pin.PinNumber);
+                    else
+                        currentValue5 &= (byte)~(1 << _MCP23Pin.PinNumber);
+                    mcp23017x24.WriteByte(Register.GPIO, currentValue5, _MCP23Pin.port);
+                    break;
+                case MCP23017.MCP2301725:
+                    byte currentValue6 = mcp23017x25.ReadByte(Register.GPIO, _MCP23Pin.port);
+                    if (PinState == PinState.High)
+                        currentValue6 |= (byte)(1 << _MCP23Pin.PinNumber);
+                    else
+                        currentValue6 &= (byte)~(1 << _MCP23Pin.PinNumber);
+                    mcp23017x25.WriteByte(Register.GPIO, currentValue6, _MCP23Pin.port);
+                    break;
+                case MCP23017.MCP2301726:
+                    byte currentValue7 = mcp23017x26.ReadByte(Register.GPIO, _MCP23Pin.port);
+                    if (PinState == PinState.High)
+                        currentValue7 |= (byte)(1 << _MCP23Pin.PinNumber);
+                    else
+                        currentValue7 &= (byte)~(1 << _MCP23Pin.PinNumber);
+                    mcp23017x26.WriteByte(Register.GPIO, currentValue7, _MCP23Pin.port);
+                    break;
+                case MCP23017.MCP2301727:
+                    byte currentValue8 = mcp23017x27.ReadByte(Register.GPIO, _MCP23Pin.port);
+                    if (PinState == PinState.High)
+                        currentValue8 |= (byte)(1 << _MCP23Pin.PinNumber);
+                    else
+                        currentValue8 &= (byte)~(1 << _MCP23Pin.PinNumber);
+                    mcp23017x27.WriteByte(Register.GPIO, currentValue8, _MCP23Pin.port);
+                    break;
+                default:
+                    throw new ArgumentException("Invalid Chip Selected");
+            }
+            //if (_MCP23Pin.PinNumber < 0 || _MCP23Pin.PinNumber > 15)
+            //    throw new ArgumentException("Invalid pin number");
+            //byte currentValue = ReturnMCPChip(_MCP23Pin.Chip).ReadByte(Register.GPIO, _MCP23Pin.port);
+            //if (PinState == PinState.High)
+            //    currentValue |= (byte)(1 << _MCP23Pin.PinNumber);
+            //else
+            //    currentValue &= (byte)~(1 << _MCP23Pin.PinNumber);
+            //ReturnMCPChip(_MCP23Pin.Chip).WriteByte(Register.GPIO, currentValue, _MCP23Pin.port);
         }
 
 
