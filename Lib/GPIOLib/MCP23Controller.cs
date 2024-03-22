@@ -43,9 +43,9 @@ namespace Library.GPIOLib
                 var i2cDevicex22 = I2cDevice.Create(connectionSettingsx22);
                 mcp23017x22 = new Mcp23017(i2cDevicex22);
 
-                //var connectionSettingsx23 = new I2cConnectionSettings(1, 0x23);
-                //var i2cDevicex23 = I2cDevice.Create(connectionSettingsx23);
-                //mcp23017x23 = new Mcp23017(i2cDevicex23);
+                var connectionSettingsx23 = new I2cConnectionSettings(1, 0x23);
+                var i2cDevicex23 = I2cDevice.Create(connectionSettingsx23);
+                mcp23017x23 = new Mcp23017(i2cDevicex23);
 
                 var connectionSettingsx24 = new I2cConnectionSettings(1, 0x24);
                 var i2cDevicex24 = I2cDevice.Create(connectionSettingsx24);
