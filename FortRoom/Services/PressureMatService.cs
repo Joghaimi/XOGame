@@ -23,7 +23,7 @@ namespace FortRoom.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            MCP23Controller.PinModeSetup(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
@@ -70,6 +70,7 @@ namespace FortRoom.Services
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Pressure Mat Stopped");
             _cts.Cancel();
             return Task.CompletedTask;
         }
