@@ -37,7 +37,7 @@ namespace FortRoom.Services
 
         private async Task RunService1(CancellationToken cancellationToken)
         {
-            while (false) // test
+            while (true)
             {
                 if (VariableControlService.IsTheGameStarted)
                 {
