@@ -82,7 +82,7 @@ namespace FortRoom.Services
         {
             while (true)
             {
-                if (VariableControlService.IsTheirAnyOneInTheRoom && !VariableControlService.IsTheGameStarted))
+                if (VariableControlService.IsTheirAnyOneInTheRoom && !VariableControlService.IsTheGameStarted)
                 {
                     VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4;
                     Thread.Sleep(10000);
