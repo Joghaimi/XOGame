@@ -64,32 +64,6 @@ namespace FortRoom.Services
         private async Task RunService(CancellationToken cancellationToken)
         {
             int level = 0;
-            
-            while (true)
-            {
-                var index = 0;
-                Console.WriteLine("Green =====");
-                foreach (var item in RGBButtonList)
-                {
-                    item.TurnColorOn(RGBColor.Green);
-                }
-                Thread.Sleep(10000);
-                Console.WriteLine("Red =====");
-
-                foreach (var item in RGBButtonList)
-                {
-                    item.TurnColorOn(RGBColor.Red);
-                }
-                Thread.Sleep(10000);
-                Console.WriteLine("Blue =====");
-
-                foreach (var item in RGBButtonList)
-                {
-                    item.TurnColorOn(RGBColor.Blue);
-                }
-                Thread.Sleep(10000);
-            }
-            
             while (true)
             {
                 RGBColor selectedColor = (RGBColor)CurrentColor;
