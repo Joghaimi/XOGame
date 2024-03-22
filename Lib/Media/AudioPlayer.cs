@@ -170,7 +170,7 @@ namespace Library.Media
                 case Room.Fort:
                     return "Background.wav";
                 case Room.Dark:
-                    return "Dark Room.wav";
+                    return "DarkRoom.wav";
                 case Room.Diving:
                     return "FloorLava.mp3";
                 case Room.FloorIsLava:
