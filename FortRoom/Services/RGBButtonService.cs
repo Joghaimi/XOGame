@@ -75,6 +75,27 @@ namespace FortRoom.Services
                     item.TurnColorOn(RGBColor.Green);
                     Thread.Sleep(1000);
                 }
+                foreach (var item in RGBButtonList)
+                {
+                    Console.WriteLine(index);
+                    index++;
+                    item.TurnColorOn(RGBColor.Red);
+                    Thread.Sleep(1000);
+                }
+                foreach (var item in RGBButtonList)
+                {
+                    Console.WriteLine(index);
+                    index++;
+                    item.TurnColorOn(RGBColor.Blue);
+                    Thread.Sleep(1000);
+                }
+                foreach (var item in RGBButtonList)
+                {
+                    Console.WriteLine(index);
+                    index++;
+                    item.TurnColorOn(RGBColor.Off);
+                    Thread.Sleep(1000);
+                }
 
             }
             
