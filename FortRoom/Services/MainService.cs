@@ -14,7 +14,6 @@ namespace FortRoom.Services
 
     public class MainService : IHostedService, IDisposable
     {
-
         private GPIOController _controller;
         public bool isTheirAreSomeOneInTheRoom = false;
         private CancellationTokenSource _cts, cts2;

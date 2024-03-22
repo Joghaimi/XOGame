@@ -11,7 +11,7 @@ namespace FortRoom.Services
 {
     public class ObstructionControlService : IHostedService, IDisposable
     {
-        private readonly IHostApplicationLifetime _appLifetime;
+        //private readonly IHostApplicationLifetime _appLifetime;
         private ModbusLib Modbus = new ModbusLib();
         private readonly ILogger<ObstructionControlService> _logger;
         private CancellationTokenSource _cts1;
@@ -19,7 +19,7 @@ namespace FortRoom.Services
         
         public ObstructionControlService(ILogger<ObstructionControlService> logger, IHostApplicationLifetime appLifetime)
         {
-            _appLifetime = appLifetime;
+            //_appLifetime = appLifetime;
             _logger = logger;
 
         }
@@ -27,7 +27,7 @@ namespace FortRoom.Services
         {
             _logger.LogInformation("Start Obstruction Service");
             Modbus.Init(SerialPort.Serial);
-            _appLifetime.ApplicationStopping.Register(Stopped);
+            //_appLifetime.ApplicationStopping.Register(Stopped);
             _cts1 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
             Task task1 = Task.Run(() => RunService1(_cts1.Token));
@@ -114,6 +114,7 @@ namespace FortRoom.Services
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
+            Stopped();
             //_cts1?.Cancel();
             return Task.CompletedTask;
         }

@@ -13,7 +13,7 @@ namespace FortRoom.Services
     {
         List<RGBButton> RGBButtonList = new List<RGBButton>();
         private readonly ILogger<ObstructionControlService> _logger;
-        private readonly IHostApplicationLifetime _appLifetime;
+        //private readonly IHostApplicationLifetime _appLifetime;
         Stopwatch GameStopWatch = new Stopwatch();
         private CancellationTokenSource _cts, _cts2;
         bool IsTimerStarted = false;
@@ -38,13 +38,13 @@ namespace FortRoom.Services
 
         public RGBButtonService(ILogger<ObstructionControlService> logger, IHostApplicationLifetime appLifetime)
         {
-            _appLifetime = appLifetime;
+            //_appLifetime = appLifetime;
             _logger = logger;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _appLifetime.ApplicationStopping.Register(Stopped);
+            //_appLifetime.ApplicationStopping.Register(Stopped);
             _logger.LogWarning("Start RGBButtonService");
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR5, RGBButtonPin.RGBG5, RGBButtonPin.RGBB5, RGBButtonPin.RGBPB5));
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR6, RGBButtonPin.RGBG6, RGBButtonPin.RGBB6, RGBButtonPin.RGBPB6));
@@ -126,6 +126,7 @@ namespace FortRoom.Services
         }
         public Task StopAsync(CancellationToken cancellationToken)
         {
+            Stopped();
             //_cts.Cancel();
             return Task.CompletedTask;
         }
