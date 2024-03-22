@@ -34,9 +34,8 @@ namespace GatheringRoom.Services
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _logger.LogInformation("RoomSensorServices Started");
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Gathering);
-            MCP23Controller.Init(false);
-            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port,
-                MasterOutputPin.OUTPUT6.PinNumber, PinMode.Output);
+            MCP23Controller.Init(Room.Gathering);
+            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT6, PinMode.Output);
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
         }
@@ -53,7 +52,7 @@ namespace GatheringRoom.Services
                 if (isAnyOfRIPSensorActive && !isLightOn)
                 {
                     _logger.LogTrace("Some One In The Room");
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
                     RGBLight.SetColor(RGBColor.Blue);
                     Console.WriteLine("Switch Light On"); // To Do
                     isTheirAreSomeOneInTheRoom = true;// rise a flag 
@@ -62,7 +61,7 @@ namespace GatheringRoom.Services
                 else if (!isAnyOfRIPSensorActive && isLightOn)
                 {
                     _logger.LogTrace("No One In The Room");
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
                     RGBLight.SetColor(RGBColor.Off);
                     Console.WriteLine("Switch Light Off"); // To Do
                     isLightOn = false;
@@ -81,7 +80,7 @@ namespace GatheringRoom.Services
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
+            MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
             RGBLight.SetColor(RGBColor.Off);
             _logger.LogInformation("RoomSensorServices Stopped");
             _cts.Cancel();

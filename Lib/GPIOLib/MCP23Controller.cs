@@ -24,6 +24,8 @@ namespace Library.GPIOLib
         public static Mcp23017 mcp23017x26;
         public static Mcp23017 mcp23017x27;
         public static bool _isItHat = false;
+
+        [Obsolete("Not Recommended")]
         public static void Init(bool isItHat)
         {
             _isItHat = isItHat;
@@ -63,8 +65,111 @@ namespace Library.GPIOLib
 
             }
         }
+        
+        public static void Init(Room currentRoom)
+        {
+            var connectionSettings = new I2cConnectionSettings(1, 0x20);
+            var i2cDevice = I2cDevice.Create(connectionSettings);
+            mcp23017x20 = new Mcp23017(i2cDevice);
 
 
+            switch (currentRoom)
+            {
+                case Room.Gathering:
+                    break;
+                case Room.Shooting:
+                    connectionSettings = new I2cConnectionSettings(1, 0x21);
+                    i2cDevice = I2cDevice.Create(connectionSettings);
+                    mcp23017x21 = new Mcp23017(i2cDevice);
+                    connectionSettings = new I2cConnectionSettings(1, 0x22);
+                    i2cDevice = I2cDevice.Create(connectionSettings);
+                    mcp23017x22 = new Mcp23017(i2cDevice);
+                    connectionSettings = new I2cConnectionSettings(1, 0x23);
+                    i2cDevice = I2cDevice.Create(connectionSettings);
+                    mcp23017x23 = new Mcp23017(i2cDevice);
+                    connectionSettings = new I2cConnectionSettings(1, 0x24);
+                    i2cDevice = I2cDevice.Create(connectionSettings);
+                    mcp23017x24 = new Mcp23017(i2cDevice);
+                    connectionSettings = new I2cConnectionSettings(1, 0x25);
+                    i2cDevice = I2cDevice.Create(connectionSettings);
+                    mcp23017x25 = new Mcp23017(i2cDevice);
+                    connectionSettings = new I2cConnectionSettings(1, 0x27);
+                    i2cDevice = I2cDevice.Create(connectionSettings);
+                    mcp23017x27 = new Mcp23017(i2cDevice);
+                    break;
+                case Room.Dark:
+                    connectionSettings = new I2cConnectionSettings(1, 0x21);
+                    i2cDevice = I2cDevice.Create(connectionSettings);
+                    mcp23017x21 = new Mcp23017(i2cDevice);
+                    connectionSettings = new I2cConnectionSettings(1, 0x22);
+                    i2cDevice = I2cDevice.Create(connectionSettings);
+                    mcp23017x22 = new Mcp23017(i2cDevice);
+                    connectionSettings = new I2cConnectionSettings(1, 0x24);
+                    i2cDevice = I2cDevice.Create(connectionSettings);
+                    mcp23017x24 = new Mcp23017(i2cDevice);
+                    break;
+                default:
+                    connectionSettings = new I2cConnectionSettings(1, 0x21);
+                    i2cDevice = I2cDevice.Create(connectionSettings);
+                    mcp23017x21 = new Mcp23017(i2cDevice);
+                    connectionSettings = new I2cConnectionSettings(1, 0x22);
+                    i2cDevice = I2cDevice.Create(connectionSettings);
+                    mcp23017x22 = new Mcp23017(i2cDevice);
+                    connectionSettings = new I2cConnectionSettings(1, 0x23);
+                    i2cDevice = I2cDevice.Create(connectionSettings);
+                    mcp23017x23 = new Mcp23017(i2cDevice);
+                    connectionSettings = new I2cConnectionSettings(1, 0x24);
+                    i2cDevice = I2cDevice.Create(connectionSettings);
+                    mcp23017x24 = new Mcp23017(i2cDevice);
+                    connectionSettings = new I2cConnectionSettings(1, 0x25);
+                    i2cDevice = I2cDevice.Create(connectionSettings);
+                    mcp23017x25 = new Mcp23017(i2cDevice);
+                    connectionSettings = new I2cConnectionSettings(1, 0x26);
+                    i2cDevice = I2cDevice.Create(connectionSettings);
+                    mcp23017x26 = new Mcp23017(i2cDevice);
+                    connectionSettings = new I2cConnectionSettings(1, 0x27);
+                    i2cDevice = I2cDevice.Create(connectionSettings);
+                    mcp23017x27 = new Mcp23017(i2cDevice);
+
+
+                    break;
+            }
+
+
+            //_isItHat = isItHat;
+
+            //if (_isItHat)
+            //{
+            //    var connectionSettingsx21 = new I2cConnectionSettings(1, 0x21);
+            //    var i2cDevicex21 = I2cDevice.Create(connectionSettingsx21);
+            //    mcp23017x21 = new Mcp23017(i2cDevicex21);
+
+            //    var connectionSettingsx22 = new I2cConnectionSettings(1, 0x22);
+            //    var i2cDevicex22 = I2cDevice.Create(connectionSettingsx22);
+            //    mcp23017x22 = new Mcp23017(i2cDevicex22);
+
+            //    //var connectionSettingsx23 = new I2cConnectionSettings(1, 0x23);
+            //    //var i2cDevicex23 = I2cDevice.Create(connectionSettingsx23);
+            //    //mcp23017x23 = new Mcp23017(i2cDevicex23);
+
+            //    var connectionSettingsx24 = new I2cConnectionSettings(1, 0x24);
+            //    var i2cDevicex24 = I2cDevice.Create(connectionSettingsx24);
+            //    mcp23017x24 = new Mcp23017(i2cDevicex24);
+
+            //    //var connectionSettingsx25 = new I2cConnectionSettings(1, 0x25);
+            //    //var i2cDevicex25 = I2cDevice.Create(connectionSettingsx25);
+            //    //mcp23017x25 = new Mcp23017(i2cDevicex25);
+
+            //    var connectionSettingsx26 = new I2cConnectionSettings(1, 0x26);
+            //    var i2cDevicex26 = I2cDevice.Create(connectionSettingsx26);
+            //    mcp23017x26 = new Mcp23017(i2cDevicex26);
+
+            //    //var connectionSettingsx27 = new I2cConnectionSettings(1, 0x27);
+            //    //var i2cDevicex27 = I2cDevice.Create(connectionSettingsx27);
+            //    //mcp23017x27 = new Mcp23017(i2cDevicex27);
+
+            //}
+        }
 
         private static ref Mcp23017 ReturnMCPChip(MCP23017 chip)
         {
@@ -91,7 +196,7 @@ namespace Library.GPIOLib
         }
         public static void PinModeSetup(MCP23Pin _MCP23Pin, PinMode Mode)
         {
-           // The Working One
+            // The Working One
             //switch (_MCP23Pin.Chip)
             //{
             //    case MCP23017.MCP2301720:

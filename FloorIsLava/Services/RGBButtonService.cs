@@ -31,15 +31,15 @@ namespace FloorIsLava.Services
             Console.WriteLine("Init Button#1");
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR7, RGBButtonPin.RGBG7, RGBButtonPin.RGBB7, RGBButtonPin.RGBPB7));
             RGBButtonList[0].TurnColorOn(RGBColor.Off);
-            MCP23Controller.PinModeSetup(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber, PinMode.Input);
-            MCP23Controller.PinModeSetup(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber, PinMode.Input);
-            MCP23Controller.PinModeSetup(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber, PinMode.Input);
-            MCP23Controller.PinModeSetup(MasterDI.IN4.Chip, MasterDI.IN4.port, MasterDI.IN4.PinNumber, PinMode.Input);
-            MCP23Controller.PinModeSetup(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber, PinMode.Input);
-            MCP23Controller.PinModeSetup(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber, PinMode.Input);
-            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT1.Chip, MasterOutputPin.OUTPUT1.port, MasterOutputPin.OUTPUT1.PinNumber, PinMode.Output);
-            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinMode.Output);
-            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinMode.Output);
+            MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN2, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN3, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN4, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN5, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN7, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT1, PinMode.Output);
+            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT5, PinMode.Output);
+            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT4, PinMode.Output);
             GameStopWatch.Start();
             MotorStopWatch.Start();
             AudioPlayer.PIBackgroundSound(SoundType.Background);
@@ -86,7 +86,7 @@ namespace FloorIsLava.Services
             RGBLight.SetColor(RGBColor.Red);
             while (true)
             {
-                if (!MCP23Controller.Read(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber) && !IN2)
+                if (!MCP23Controller.Read(MasterDI.IN2) && !IN2)
                 {
                     IN2 = true;
                     AudioPlayer.PIStartAudio(SoundType.Bonus);
@@ -96,14 +96,14 @@ namespace FloorIsLava.Services
                     if (!ceilingMotorDown)
                     {
                         motorTiming = MotorStopWatch.ElapsedMilliseconds;
-                        MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
+                        MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
                     }
                     motorTiming += 3000;
                     numberOfPressedMotor++;
                     ceilingMotorDown = true;
 
                 }
-                if (!MCP23Controller.Read(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber) && !IN3)
+                if (!MCP23Controller.Read(MasterDI.IN3) && !IN3)
                 {
                     IN3 = true;
                     AudioPlayer.PIStartAudio(SoundType.Bonus);
@@ -113,7 +113,7 @@ namespace FloorIsLava.Services
                     if (!ceilingMotorDown)
                     {
                         motorTiming = MotorStopWatch.ElapsedMilliseconds;
-                        MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
+                        MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
                     }
                     numberOfPressedMotor++;
 
@@ -121,7 +121,7 @@ namespace FloorIsLava.Services
                     ceilingMotorDown = true;
 
                 }
-                if (!MCP23Controller.Read(MasterDI.IN4.Chip, MasterDI.IN4.port, MasterDI.IN4.PinNumber) && !IN4)
+                if (!MCP23Controller.Read(MasterDI.IN4) && !IN4)
                 {
                     IN4 = true;
                     AudioPlayer.PIStartAudio(SoundType.Bonus);
@@ -131,7 +131,7 @@ namespace FloorIsLava.Services
                     if (!ceilingMotorDown)
                     {
                         motorTiming = MotorStopWatch.ElapsedMilliseconds;
-                        MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
+                        MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
                     }
                     numberOfPressedMotor++;
                     motorTiming += 3000;
@@ -161,11 +161,11 @@ namespace FloorIsLava.Services
                     AudioPlayer.PIStartAudio(SoundType.Bonus);
                     RGBLight.TurnRGBRedDelayed();
                     Console.WriteLine("Magnet Start");
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinState.High);
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT4, PinState.High);
                     while (true)
                     {
                         pressureMat();
-                        if (!MCP23Controller.Read(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber) && !IN5)
+                        if (!MCP23Controller.Read(MasterDI.IN5) && !IN5)
                         {
                             IN5 = true;
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
@@ -177,12 +177,12 @@ namespace FloorIsLava.Services
                         pressureMat();
                         if (IN5)
                         {
-                            IN5 = !MCP23Controller.Read(MasterDI.IN5.Chip, MasterDI.IN5.port, MasterDI.IN5.PinNumber);
+                            IN5 = !MCP23Controller.Read(MasterDI.IN5);
                             if (!IN5)
                                 Console.WriteLine("IN5 bREAK ====");
 
                         }
-                        if (!MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber) && !IN6)
+                        if (!MCP23Controller.Read(MasterDI.IN7) && !IN6)
                         {
                             IN6 = true;
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
@@ -195,7 +195,7 @@ namespace FloorIsLava.Services
                         pressureMat();
                         if (IN6)
                         {
-                            IN6 = !MCP23Controller.Read(MasterDI.IN7.Chip, MasterDI.IN7.port, MasterDI.IN7.PinNumber);
+                            IN6 = !MCP23Controller.Read(MasterDI.IN7);
                             if (!IN6)
                                 Console.WriteLine("IN6 bREAK ====");
 
@@ -208,7 +208,7 @@ namespace FloorIsLava.Services
                     RGBLight.SetColor(RGBColor.Blue);
                     Console.WriteLine("Magnet Stop");
 
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT4.Chip, MasterOutputPin.OUTPUT4.port, MasterOutputPin.OUTPUT4.PinNumber, PinState.Low);
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT4, PinState.Low);
                     AudioPlayer.PIStopAudio();
                     Thread.Sleep(300);
                     AudioPlayer.PIStartAudio(SoundType.Finish);
@@ -229,7 +229,7 @@ namespace FloorIsLava.Services
         bool justDecrease = false;
         private void pressureMat()
         {
-            bool currentValue = MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
+            bool currentValue = MCP23Controller.Read(MasterDI.IN1);
             if (!currentValue && !justDecrease)
             {
                 justDecrease = true;
@@ -259,20 +259,19 @@ namespace FloorIsLava.Services
                     Console.WriteLine("Start Ceiling down");
                     while (MotorStopWatch.ElapsedMilliseconds < motorTiming) { }
                     Console.WriteLine("stop Ceiling down");
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
                     ceilingMotorDown = false;
                 }
                 if (ceilingMotoruUp)
                 {
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
                     Console.WriteLine("Start Ceiling up");
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT1.Chip, MasterOutputPin.OUTPUT1.port, MasterOutputPin.OUTPUT1.PinNumber, PinState.High);
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.High);
                     while (MotorStopWatch.ElapsedMilliseconds < motorTiming) { }
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT1.Chip, MasterOutputPin.OUTPUT1.port, MasterOutputPin.OUTPUT1.PinNumber, PinState.Low);
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.Low);
                     Console.WriteLine("stop Ceiling up");
                     ceilingMotoruUp = false;
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.Low);
-
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
                 }
             }
 

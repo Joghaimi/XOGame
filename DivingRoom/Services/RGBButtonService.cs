@@ -40,12 +40,12 @@ namespace DivingRoom.Services
 
 
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Diving);
-            MCP23Controller.Init(true);
+            MCP23Controller.Init(Room.Diving);
 
-            MCP23Controller.PinModeSetup(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber, PinMode.Input);
-            MCP23Controller.PinModeSetup(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber, PinMode.Input);
-            MCP23Controller.PinModeSetup(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber, PinMode.Input);
-            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinMode.Output);
+            MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN2, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN3, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT6, PinMode.Output);
             MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
 
             _appLifetime.ApplicationStopping.Register(Stopped);
@@ -95,11 +95,10 @@ namespace DivingRoom.Services
             while (true)
             {
                 bool isIntered =
-                        MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber) ||
-                        MCP23Controller.Read(MasterDI.IN2.Chip, MasterDI.IN2.port, MasterDI.IN2.PinNumber) ||
-                        MCP23Controller.Read(MasterDI.IN3.Chip, MasterDI.IN3.port, MasterDI.IN3.PinNumber);
-                MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port,
-                    MasterOutputPin.OUTPUT6.PinNumber, PinState.High);
+                        MCP23Controller.Read(MasterDI.IN1) ||
+                        MCP23Controller.Read(MasterDI.IN2) ||
+                        MCP23Controller.Read(MasterDI.IN3);
+                MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
 
                 while (isIntered && difficulty >= 2)
                 {
@@ -205,7 +204,7 @@ namespace DivingRoom.Services
                     item.TurnColorOn(RGBColor.Off);
                 }
                 RGBLight.SetColor(RGBColor.Off);
-                MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
+                MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
             }
         }
         private async Task TimingService(CancellationToken cancellationToken)
@@ -227,7 +226,7 @@ namespace DivingRoom.Services
         }
         public void Stopped()
         {
-            MCP23Controller.Write(MasterOutputPin.OUTPUT6.Chip, MasterOutputPin.OUTPUT6.port, MasterOutputPin.OUTPUT6.PinNumber, PinState.Low);
+            MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
             RGBLight.SetColor(RGBColor.Off);
             _logger.LogInformation("Stop RGB Button Service");
             foreach (var item in RGBButtonList)

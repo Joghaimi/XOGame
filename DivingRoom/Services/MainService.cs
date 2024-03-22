@@ -24,7 +24,7 @@ namespace DivingRoom.Services
             _controller = new GPIOController();
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Diving);
             //JQ8400AudioModule.init(SerialPort.Serial2);
-            MCP23Controller.Init(true);
+            MCP23Controller.Init(Room.Diving);
             // Init the Pin's
             _controller.Setup(MasterDI.PIRPin1, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin2, PinMode.InputPullDown);

@@ -22,7 +22,7 @@ namespace DarkRoom.Services
             AudioPlayer.Init(Room.Shooting);
             AudioPlayer.PIBackgroundSound(SoundType.Background);
             //JQ8400AudioModule.init(SerialPort.Serial2);
-            MCP23Controller.Init(true);
+            MCP23Controller.Init(Room.Dark);
             // Init the Pin's
             _controller.Setup(MasterDI.PIRPin1, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin2, PinMode.InputPullDown);

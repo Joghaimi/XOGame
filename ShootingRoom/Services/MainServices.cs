@@ -20,7 +20,7 @@ namespace ShootingRoom.Services
         {
             _controller = new GPIOController();
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data ,Room.Shooting);
-            MCP23Controller.Init(true);
+            MCP23Controller.Init(Room.Shooting);
             AudioPlayer.Init(Room.Shooting);
             // Init the Pin's
             _controller.Setup(MasterDI.PIRPin1, PinMode.InputPullDown);

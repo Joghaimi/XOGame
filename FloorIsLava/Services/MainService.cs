@@ -21,7 +21,7 @@ namespace FloorIsLava.Services
             _controller = new GPIOController();
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.FloorIsLava);
             AudioPlayer.Init(Room.Diving);
-            MCP23Controller.Init(true);
+            MCP23Controller.Init(Room.FloorIsLava);
             // Init the Pin's
             _controller.Setup(MasterDI.PIRPin1, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin2, PinMode.InputPullDown);
