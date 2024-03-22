@@ -69,13 +69,13 @@ namespace FortRoom.Services
                 RGBColor selectedColor = (RGBColor)CurrentColor;
                 AudioPlayer.PIStartAudio(SoundType.Button);
                 // Add Extra Task
-                Console.WriteLine("Enter Task ================");
+                //Console.WriteLine("Enter Task ================");
                 StartGameTask(selectedColor, level);
-                Console.WriteLine("Out From Task ================");
+                //Console.WriteLine("Out From Task ================");
                 TurnRGBButtonWithColor(selectedColor);
                 byte numberOfClieckedButton = 0;
                 GameStopWatch.Restart();
-                Console.WriteLine("New Round ================");
+                //Console.WriteLine("New Round ================");
                 while (GameStopWatch.ElapsedMilliseconds < 30000)
                 {
                     foreach (var item in RGBButtonList)
@@ -90,7 +90,7 @@ namespace FortRoom.Services
                             RGBLight.TurnRGBOffAfter1Sec();
                             numberOfClieckedButton++;
                             VariableControlService.ActiveButtonPressed++;
-                            Console.WriteLine($"Score {VariableControlService.ActiveButtonPressed} numberOfPressed now {numberOfClieckedButton}");
+                            //Console.WriteLine($"Score {VariableControlService.ActiveButtonPressed} numberOfPressed now {numberOfClieckedButton}");
                         }
                     }
                     if (numberOfClieckedButton == RGBButtonList.Count())
