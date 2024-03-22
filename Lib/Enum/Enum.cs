@@ -81,6 +81,7 @@ namespace Library
     }
     public enum MotorSpeed
     {
+        Stop = 0,
         Slow = 1000,
         Medium = 1500,
         High = 2000,
