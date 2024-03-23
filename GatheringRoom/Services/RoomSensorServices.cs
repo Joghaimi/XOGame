@@ -118,7 +118,7 @@ namespace GatheringRoom.Services
 
         public void DoorStatus(MCP23Pin doorPin, bool status)
         {
-            if (status)
+            if (!status)
             {
                 MCP23Controller.PinModeSetup(doorPin, PinMode.Output);
                 MCP23Controller.Write(doorPin, PinState.High);
