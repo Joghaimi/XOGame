@@ -42,7 +42,6 @@ namespace GatheringRoom.Services
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Gathering);
             MCP23Controller.Init(Room.Gathering);
             AudioPlayer.Init(Room.Gathering);
-            MCP23Controller.PinModeSetup(DoorPin, PinMode.Output);
             DoorStatus(DoorPin, false);
             Task.Run(() => CheckIFRoomIsEmpty(cts2.Token));
             Task.Run(() => RunService(_cts.Token));
@@ -50,6 +49,7 @@ namespace GatheringRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
+            
             while (!cancellationToken.IsCancellationRequested)
             {
                 PIR1 = _controller.Read(VariableControlService.PIRPin1);
@@ -133,6 +133,7 @@ namespace GatheringRoom.Services
             else
             {
                 MCP23Controller.PinModeSetup(doorPin, PinMode.Input);
+                MCP23Controller.Write(doorPin, PinState.Low);
             }
         }
         private async Task CheckIFRoomIsEmpty(CancellationToken cancellationToken)
