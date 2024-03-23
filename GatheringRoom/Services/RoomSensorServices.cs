@@ -49,15 +49,6 @@ namespace GatheringRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            while (true)
-            {
-                Console.WriteLine("Door Status True");
-                DoorStatus(DoorPin, true);
-                Thread.Sleep(10000);
-                Console.WriteLine("Door Status False");
-                DoorStatus(DoorPin, false);
-                Thread.Sleep(10000);
-            }
             while (!cancellationToken.IsCancellationRequested)
             {
                 PIR1 = _controller.Read(VariableControlService.PIRPin1);
