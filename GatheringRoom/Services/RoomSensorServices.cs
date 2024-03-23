@@ -18,7 +18,7 @@ namespace GatheringRoom.Services
         private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
         private bool isLightOn = false;
         private GPIOController _controller;
-        private CancellationTokenSource _cts;
+        private CancellationTokenSource _cts, cts2;
         public RoomSensorServices(ILogger<RoomSensorServices> logger)
         {
             _logger = logger;
@@ -32,11 +32,12 @@ namespace GatheringRoom.Services
             _controller.Setup(VariableControlService.PIRPin4, PinMode.InputPullDown);
             _controller.Setup(VariableControlService.PIRPin2, PinMode.InputPullDown);
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _logger.LogInformation("RoomSensorServices Started");
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Gathering);
             MCP23Controller.Init(Room.Gathering);
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT7, PinMode.Output);
-
+            Task.Run(() => CheckIFRoomIsEmpty(cts2.Token));
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
         }
