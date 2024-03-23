@@ -113,7 +113,7 @@ namespace Library.RGBLib
                 case Room.FloorIsLava:
                     return "/home/floor/XOGame";
                 case Room.Gathering:
-                    return "/home/Gathering/XOGame";
+                    return "/home/gathering/XOGame";
                 case Room.Shooting:
                     return "/home/shooting/XOGame";
                 default:
