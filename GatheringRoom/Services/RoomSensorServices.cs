@@ -109,7 +109,7 @@ namespace GatheringRoom.Services
             // Turn RGB Low
             RGBLight.SetColor(RGBColor.Off);
             // Open Door
-            DoorStatus(MasterOutputPin.OUTPUT7, true);
+            DoorStatus(DoorPin, true);
             _logger.LogDebug("RoomSensorServices Stopped");
             _cts.Cancel();
             return Task.CompletedTask;
@@ -123,7 +123,7 @@ namespace GatheringRoom.Services
 
         public void DoorStatus(MCP23Pin doorPin, bool status)
         {
-            if (!status)
+            if (status)
             {
                 MCP23Controller.PinModeSetup(doorPin, PinMode.Output);
                 MCP23Controller.Write(doorPin, PinState.High);
