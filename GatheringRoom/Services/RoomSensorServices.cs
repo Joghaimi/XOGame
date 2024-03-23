@@ -49,7 +49,15 @@ namespace GatheringRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            
+            while (true)
+            {
+                Console.WriteLine("Door Status True");
+                DoorStatus(DoorPin, true);
+                Thread.Sleep(10000);
+                Console.WriteLine("Door Status False");
+                DoorStatus(DoorPin, false);
+                Thread.Sleep(10000);
+            }
             while (!cancellationToken.IsCancellationRequested)
             {
                 PIR1 = _controller.Read(VariableControlService.PIRPin1);
@@ -66,8 +74,6 @@ namespace GatheringRoom.Services
                     RGBLight.SetColor(RGBColor.Blue);
                     _logger.LogDebug("Switch Light On"); // To Do
                     VariableControlService.IsTheirAnyOneInTheRoom = true;// rise a flag 
-                    _logger.LogDebug("Turn BackGround SoundOn");
-                    AudioPlayer.PIBackgroundSound(SoundType.Background);
                     isLightOn = true;
                 }
                 else if (!VariableControlService.IsTheirAnyOneInTheRoom && isLightOn)
@@ -75,8 +81,6 @@ namespace GatheringRoom.Services
                     _logger.LogInformation("No One In The Room");
                     Console.WriteLine("Switch Light Off"); // To Do
                     RGBLight.SetColor(RGBColor.Off);
-                    _logger.LogDebug("Turn BackGround SoundOff");
-                    AudioPlayer.PIStopAudio();
                     isLightOn = false;
                 }
 
@@ -110,8 +114,6 @@ namespace GatheringRoom.Services
             RGBLight.SetColor(RGBColor.Off);
             _logger.LogDebug("Open The Door");
             DoorStatus(DoorPin, true);
-            _logger.LogDebug("Turn BackGround SoundOff");
-            AudioPlayer.PIStopAudio();
             _logger.LogDebug("RoomSensorServices Stopped");
             _cts.Cancel();
             return Task.CompletedTask;
