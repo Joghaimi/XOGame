@@ -1,4 +1,5 @@
 ﻿using GatheringRoom.Controllers;
+using Iot.Device.Board;
 using Iot.Device.Mcp3428;
 using Library;
 using Library.GPIOLib;
@@ -44,11 +45,11 @@ namespace GatheringRoom.Services
             while (true)
             {
                 _logger.LogInformation("Open The Door");
-                MCP23Controller.Write(MasterOutputPin.OUTPUT7, PinState.High);
-                Thread.Sleep(2000);
+                DoorStatus(MasterOutputPin.OUTPUT7, true);
+                Thread.Sleep(5000);
                 _logger.LogInformation("Close The Door");
-                MCP23Controller.Write(MasterOutputPin.OUTPUT7, PinState.High);
-                Thread.Sleep(2000);
+                DoorStatus(MasterOutputPin.OUTPUT7, false);
+                Thread.Sleep(5000);
             }
 
 
@@ -102,8 +103,10 @@ namespace GatheringRoom.Services
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
+            // Turn RGB Low
             RGBLight.SetColor(RGBColor.Off);
+            // Open Door
+            DoorStatus(MasterOutputPin.OUTPUT7, true);
             _logger.LogInformation("RoomSensorServices Stopped");
             _cts.Cancel();
             return Task.CompletedTask;
@@ -112,6 +115,20 @@ namespace GatheringRoom.Services
         {
             _logger.LogInformation("RoomSensorServices Disposed");
             _cts.Dispose();
+        }
+
+
+        public void DoorStatus(MCP23Pin doorPin, bool status)
+        {
+            if (!status)
+            {
+                MCP23Controller.PinModeSetup(doorPin, PinMode.Output);
+                MCP23Controller.Write(doorPin, PinState.High);
+            }
+            else
+            {
+                MCP23Controller.PinModeSetup(doorPin ,PinMode.Input);
+            }
         }
     }
 }
