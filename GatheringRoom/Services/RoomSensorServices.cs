@@ -15,7 +15,6 @@ namespace GatheringRoom.Services
     public class RoomSensorServices : IHostedService, IDisposable
     {
         private readonly ILogger<RoomSensorServices> _logger;
-        public bool isTheirAreSomeOneInTheRoom = false;
         private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
         private bool isLightOn = false;
         private GPIOController _controller;
@@ -37,6 +36,7 @@ namespace GatheringRoom.Services
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Gathering);
             MCP23Controller.Init(Room.Gathering);
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT7, PinMode.Output);
+
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
         }
@@ -48,14 +48,16 @@ namespace GatheringRoom.Services
                 PIR2 = _controller.Read(VariableControlService.PIRPin2);
                 PIR3 = _controller.Read(VariableControlService.PIRPin3);
                 PIR4 = _controller.Read(VariableControlService.PIRPin4);
-                bool isAnyOfRIPSensorActive = PIR1 || PIR2 || PIR3 || PIR4;// || isTheirAreSomeOneInTheRoom;
-                //Console.WriteLine($"PIR1 {PIR1} PIR2 {PIR2} PIR3 {PIR3} PIR4 {PIR4}");
-                if (isAnyOfRIPSensorActive && !isLightOn)
+
+                VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
+
+
+                if (VariableControlService.IsTheirAnyOneInTheRoom && !isLightOn)
                 {
                     _logger.LogDebug("Some One In The Room");
                     RGBLight.SetColor(RGBColor.White);
                     Console.WriteLine("Switch Light On"); // To Do
-                    isTheirAreSomeOneInTheRoom = true;// rise a flag 
+                    VariableControlService.IsTheirAnyOneInTheRoom = true;// rise a flag 
                     isLightOn = true;
                 }
                 //else if (!isAnyOfRIPSensorActive && isLightOn)
@@ -70,7 +72,7 @@ namespace GatheringRoom.Services
                 if (VariableControlService.EnableGoingToTheNextRoom)
                 {
                     _logger.LogDebug("Open The Door");
-                    DoorStatus(MasterOutputPin.OUTPUT7,true);
+                    DoorStatus(MasterOutputPin.OUTPUT7, true);
                     while (PIR1 || PIR2 || PIR3 || PIR4)
                     {
                         PIR1 = _controller.Read(VariableControlService.PIRPin1);
@@ -80,7 +82,8 @@ namespace GatheringRoom.Services
                     }
                     DoorStatus(MasterOutputPin.OUTPUT7, false);
                     VariableControlService.EnableGoingToTheNextRoom = false;
-                    isTheirAreSomeOneInTheRoom = false;
+                    VariableControlService.IsTheirAnyOneInTheRoom = false;
+                    VariableControlService.IsTheGameStarted=false;
                     RGBLight.SetColor(RGBColor.Off);
                     _logger.LogDebug("No One In The Room , All Gone To The Next Room");
 
@@ -115,7 +118,19 @@ namespace GatheringRoom.Services
             }
             else
             {
-                MCP23Controller.PinModeSetup(doorPin ,PinMode.Input);
+                MCP23Controller.PinModeSetup(doorPin, PinMode.Input);
+            }
+        }
+        private async Task CheckIFRoomIsEmpty(CancellationToken cancellationToken)
+        {
+            while (true)
+            {
+                if (VariableControlService.IsTheirAnyOneInTheRoom && !VariableControlService.IsTheGameStarted)
+                {
+                    Thread.Sleep(90000);
+                    VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4;
+                }
+
             }
         }
     }
