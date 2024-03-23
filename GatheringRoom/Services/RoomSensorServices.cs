@@ -66,13 +66,13 @@ namespace GatheringRoom.Services
                     VariableControlService.IsTheirAnyOneInTheRoom = true;// rise a flag 
                     isLightOn = true;
                 }
-                //else if (!isAnyOfRIPSensorActive && isLightOn)
-                //{
-                //    _logger.LogInformation("No One In The Room");
-                //    RGBLight.SetColor(RGBColor.Off);
-                //    Console.WriteLine("Switch Light Off"); // To Do
-                //    isLightOn = false;
-                //}
+                else if (!VariableControlService.IsTheirAnyOneInTheRoom && isLightOn)
+                {
+                    _logger.LogInformation("No One In The Room");
+                    RGBLight.SetColor(RGBColor.Off);
+                    Console.WriteLine("Switch Light Off"); // To Do
+                    isLightOn = false;
+                }
 
                 // IF Enable Going To The Next room 
                 if (VariableControlService.EnableGoingToTheNextRoom)
