@@ -134,7 +134,7 @@ namespace GatheringRoom.Services
                 if (VariableControlService.IsTheirAnyOneInTheRoom && !VariableControlService.IsTheGameStarted)
                 {
 
-                    Thread.Sleep(90000);
+                    Thread.Sleep(30000);
                     VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4;
                     _logger.LogDebug($"Check if Their any in the Room {VariableControlService.IsTheirAnyOneInTheRoom}");
                 }
