@@ -106,10 +106,12 @@ namespace GatheringRoom.Services
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            // Turn RGB Low
+            _logger.LogDebug("Turn Off RGB Light");
             RGBLight.SetColor(RGBColor.Off);
-            // Open Door
+            _logger.LogDebug("Open The Door");
             DoorStatus(DoorPin, true);
+            _logger.LogDebug("Turn BackGround SoundOff");
+            AudioPlayer.PIStopAudio();
             _logger.LogDebug("RoomSensorServices Stopped");
             _cts.Cancel();
             return Task.CompletedTask;
