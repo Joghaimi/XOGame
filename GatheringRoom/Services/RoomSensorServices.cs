@@ -19,6 +19,10 @@ namespace GatheringRoom.Services
         private bool isLightOn = false;
         private GPIOController _controller;
         private CancellationTokenSource _cts, cts2;
+        private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
+
+
+
         public RoomSensorServices(ILogger<RoomSensorServices> logger)
         {
             _logger = logger;
@@ -36,8 +40,8 @@ namespace GatheringRoom.Services
             _logger.LogInformation("RoomSensorServices Started");
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Gathering);
             MCP23Controller.Init(Room.Gathering);
-            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT7, PinMode.Output);
-            DoorStatus(MasterOutputPin.OUTPUT7, false);
+            MCP23Controller.PinModeSetup(DoorPin, PinMode.Output);
+            DoorStatus(DoorPin, false);
             Task.Run(() => CheckIFRoomIsEmpty(cts2.Token));
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
@@ -84,7 +88,7 @@ namespace GatheringRoom.Services
                 if (VariableControlService.EnableGoingToTheNextRoom)
                 {
                     _logger.LogDebug("Open The Door");
-                    DoorStatus(MasterOutputPin.OUTPUT7, true);
+                    DoorStatus(DoorPin, true);
                     while (PIR1 || PIR2 || PIR3 || PIR4)
                     {
                         PIR1 = _controller.Read(VariableControlService.PIRPin1);
@@ -92,7 +96,7 @@ namespace GatheringRoom.Services
                         PIR3 = _controller.Read(VariableControlService.PIRPin3);
                         PIR4 = _controller.Read(VariableControlService.PIRPin4);
                     }
-                    DoorStatus(MasterOutputPin.OUTPUT7, false);
+                    DoorStatus(DoorPin, false);
                     VariableControlService.EnableGoingToTheNextRoom = false;
                     VariableControlService.IsTheirAnyOneInTheRoom = false;
                     VariableControlService.IsTheGameStarted = false;
