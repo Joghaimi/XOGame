@@ -3,6 +3,7 @@ using Iot.Device.Board;
 using Iot.Device.Mcp3428;
 using Library;
 using Library.GPIOLib;
+using Library.Media;
 using Library.PinMapping;
 using Library.RFIDLib;
 using Library.RGBLib;
@@ -40,6 +41,7 @@ namespace GatheringRoom.Services
             _logger.LogInformation("RoomSensorServices Started");
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Gathering);
             MCP23Controller.Init(Room.Gathering);
+            AudioPlayer.Init(Room.Gathering);
             MCP23Controller.PinModeSetup(DoorPin, PinMode.Output);
             DoorStatus(DoorPin, false);
             Task.Run(() => CheckIFRoomIsEmpty(cts2.Token));
@@ -61,16 +63,20 @@ namespace GatheringRoom.Services
                 if (VariableControlService.IsTheirAnyOneInTheRoom && !isLightOn)
                 {
                     _logger.LogDebug("Some One In The Room");
-                    RGBLight.SetColor(RGBColor.White);
-                    Console.WriteLine("Switch Light On"); // To Do
+                    RGBLight.SetColor(RGBColor.Blue);
+                    _logger.LogDebug("Switch Light On"); // To Do
                     VariableControlService.IsTheirAnyOneInTheRoom = true;// rise a flag 
+                    _logger.LogDebug("Turn BackGround SoundOn");
+                    AudioPlayer.PIBackgroundSound(SoundType.Background);
                     isLightOn = true;
                 }
                 else if (!VariableControlService.IsTheirAnyOneInTheRoom && isLightOn)
                 {
                     _logger.LogInformation("No One In The Room");
-                    RGBLight.SetColor(RGBColor.Off);
                     Console.WriteLine("Switch Light Off"); // To Do
+                    RGBLight.SetColor(RGBColor.Off);
+                    _logger.LogDebug("Turn BackGround SoundOff");
+                    AudioPlayer.PIStopAudio();
                     isLightOn = false;
                 }
 
