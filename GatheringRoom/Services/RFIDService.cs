@@ -38,7 +38,7 @@ namespace GatheringRoom.Services
                 string playerId = rfid.GetRFIDUID();
                 if (!playerId.Contains("None"))
                 {
-                    AudioPlayer.PIStartAudio(SoundType.Descend);
+                    AudioPlayer.PIStartAudio(SoundType.ScanId);
                     if (VariableControlService.TeamScore.player.Count < 5 && !stop)
                     {
                         VariableControlService.IsTheGameStarted=true;

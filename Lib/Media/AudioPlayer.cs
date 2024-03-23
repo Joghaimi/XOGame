@@ -132,7 +132,9 @@ namespace Library.Media
                     break;
                 case SoundType.Background:
                     soundFilePath = $"{HomePath()}/audio/{BackgroundSound()}";
-
+                    break;
+                case SoundType.ScanId:
+                    soundFilePath = $"{HomePath()}/audio/ScanId.wav";
                     break;
                 default:
                     break;
@@ -176,7 +178,7 @@ namespace Library.Media
                 case Room.FloorIsLava:
                     return "FloorLava.mp3";
                 case Room.Gathering:
-                    return "/home/Gathering/XOGame";
+                    return "GatheringBG.wav";
                 case Room.Shooting:
                     return "FloorLava.mp3";
                 default:

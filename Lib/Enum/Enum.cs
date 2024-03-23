@@ -26,7 +26,8 @@ namespace Library
         WinSquare,
         Winner2,
         Winner1,
-        Background
+        Background,
+        ScanId
     }
     public enum Room {
         Fort,
