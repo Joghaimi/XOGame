@@ -42,18 +42,6 @@ namespace GatheringRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            while (true)
-            {
-                _logger.LogDebug("Open The Door");
-                DoorStatus(MasterOutputPin.OUTPUT7, true);
-                Thread.Sleep(5000);
-                _logger.LogDebug("Close The Door");
-                DoorStatus(MasterOutputPin.OUTPUT7, false);
-                Thread.Sleep(5000);
-            }
-
-
-
             while (!cancellationToken.IsCancellationRequested)
             {
                 PIR1 = _controller.Read(VariableControlService.PIRPin1);
@@ -82,7 +70,7 @@ namespace GatheringRoom.Services
                 if (VariableControlService.EnableGoingToTheNextRoom)
                 {
                     _logger.LogDebug("Open The Door");
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT7, PinState.High);
+                    DoorStatus(MasterOutputPin.OUTPUT7,true);
                     while (PIR1 || PIR2 || PIR3 || PIR4)
                     {
                         PIR1 = _controller.Read(VariableControlService.PIRPin1);
@@ -90,7 +78,7 @@ namespace GatheringRoom.Services
                         PIR3 = _controller.Read(VariableControlService.PIRPin3);
                         PIR4 = _controller.Read(VariableControlService.PIRPin4);
                     }
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT7, PinState.Low);
+                    DoorStatus(MasterOutputPin.OUTPUT7, false);
                     VariableControlService.EnableGoingToTheNextRoom = false;
                     isTheirAreSomeOneInTheRoom = false;
                     RGBLight.SetColor(RGBColor.Off);
