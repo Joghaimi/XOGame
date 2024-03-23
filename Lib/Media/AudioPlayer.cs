@@ -71,15 +71,6 @@ namespace Library.Media
             audioProcess.StartInfo.UseShellExecute = false;
             audioProcess.StartInfo.RedirectStandardOutput = false;
             audioProcess.StartInfo.RedirectStandardError = false;
-
-            //audioProcess.StartInfo.RedirectStandardOutput = true;
-            //audioProcess.StartInfo.RedirectStandardError = true;
-            //audioProcess.StartInfo.UseShellExecute = false;
-            //audioProcess.StartInfo.StandardOutputEncoding = System.Text.Encoding.UTF8;
-            //audioProcess.StartInfo.StandardErrorEncoding = System.Text.Encoding.UTF8;
-            //audioProcess.StartInfo.CreateNoWindow = true;
-
-
             audioProcess.Start();
             Console.WriteLine("Audio playback started.");
         }
