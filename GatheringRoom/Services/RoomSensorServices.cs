@@ -44,10 +44,10 @@ namespace GatheringRoom.Services
         {
             while (true)
             {
-                _logger.LogInformation("Open The Door");
+                _logger.LogDebug("Open The Door");
                 DoorStatus(MasterOutputPin.OUTPUT7, true);
                 Thread.Sleep(5000);
-                _logger.LogInformation("Close The Door");
+                _logger.LogDebug("Close The Door");
                 DoorStatus(MasterOutputPin.OUTPUT7, false);
                 Thread.Sleep(5000);
             }
@@ -64,7 +64,7 @@ namespace GatheringRoom.Services
                 //Console.WriteLine($"PIR1 {PIR1} PIR2 {PIR2} PIR3 {PIR3} PIR4 {PIR4}");
                 if (isAnyOfRIPSensorActive && !isLightOn)
                 {
-                    _logger.LogInformation("Some One In The Room");
+                    _logger.LogDebug("Some One In The Room");
                     RGBLight.SetColor(RGBColor.White);
                     Console.WriteLine("Switch Light On"); // To Do
                     isTheirAreSomeOneInTheRoom = true;// rise a flag 
@@ -81,7 +81,7 @@ namespace GatheringRoom.Services
                 // IF Enable Going To The Next room 
                 if (VariableControlService.EnableGoingToTheNextRoom)
                 {
-                    _logger.LogInformation("Open The Door");
+                    _logger.LogDebug("Open The Door");
                     MCP23Controller.Write(MasterOutputPin.OUTPUT7, PinState.High);
                     while (PIR1 || PIR2 || PIR3 || PIR4)
                     {
@@ -94,7 +94,7 @@ namespace GatheringRoom.Services
                     VariableControlService.EnableGoingToTheNextRoom = false;
                     isTheirAreSomeOneInTheRoom = false;
                     RGBLight.SetColor(RGBColor.Off);
-                    _logger.LogInformation("No One In The Room , All Gone To The Next Room");
+                    _logger.LogDebug("No One In The Room , All Gone To The Next Room");
 
                 }
                 await Task.Delay(TimeSpan.FromMilliseconds(500), cancellationToken);
@@ -107,13 +107,13 @@ namespace GatheringRoom.Services
             RGBLight.SetColor(RGBColor.Off);
             // Open Door
             DoorStatus(MasterOutputPin.OUTPUT7, true);
-            _logger.LogInformation("RoomSensorServices Stopped");
+            _logger.LogDebug("RoomSensorServices Stopped");
             _cts.Cancel();
             return Task.CompletedTask;
         }
         public void Dispose()
         {
-            _logger.LogInformation("RoomSensorServices Disposed");
+            _logger.LogDebug("RoomSensorServices Disposed");
             _cts.Dispose();
         }
 
