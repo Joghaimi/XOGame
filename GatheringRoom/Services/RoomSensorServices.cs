@@ -37,12 +37,23 @@ namespace GatheringRoom.Services
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Gathering);
             MCP23Controller.Init(Room.Gathering);
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT7, PinMode.Output);
+            DoorStatus(MasterOutputPin.OUTPUT7, false);
             Task.Run(() => CheckIFRoomIsEmpty(cts2.Token));
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
+            while (true)
+            {
+                RGBLight.SetColor(RGBColor.White);
+                Thread.Sleep(3000);
+                RGBLight.SetColor(RGBColor.Red);
+                Thread.Sleep(3000);
+                RGBLight.SetColor(RGBColor.Blue);
+                Thread.Sleep(3000);
+
+            }
             while (!cancellationToken.IsCancellationRequested)
             {
                 PIR1 = _controller.Read(VariableControlService.PIRPin1);
@@ -84,7 +95,7 @@ namespace GatheringRoom.Services
                     DoorStatus(MasterOutputPin.OUTPUT7, false);
                     VariableControlService.EnableGoingToTheNextRoom = false;
                     VariableControlService.IsTheirAnyOneInTheRoom = false;
-                    VariableControlService.IsTheGameStarted=false;
+                    VariableControlService.IsTheGameStarted = false;
                     RGBLight.SetColor(RGBColor.Off);
                     _logger.LogDebug("No One In The Room , All Gone To The Next Room");
 
@@ -128,8 +139,10 @@ namespace GatheringRoom.Services
             {
                 if (VariableControlService.IsTheirAnyOneInTheRoom && !VariableControlService.IsTheGameStarted)
                 {
+
                     Thread.Sleep(90000);
                     VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4;
+                    _logger.LogDebug($"Check if Their any in the Room {VariableControlService.IsTheirAnyOneInTheRoom}");
                 }
 
             }
