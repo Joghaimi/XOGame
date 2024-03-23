@@ -48,6 +48,19 @@ namespace GatheringRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
+            while (true)
+            {
+                Console.WriteLine("White");
+                RGBLight.SetColor(RGBColor.White);
+                Thread.Sleep(3000);
+                Console.WriteLine("Red");
+                RGBLight.SetColor(RGBColor.Red);
+                Thread.Sleep(3000);
+                Console.WriteLine("Blue");
+                RGBLight.SetColor(RGBColor.Blue);
+                Thread.Sleep(3000);
+
+            }
             while (!cancellationToken.IsCancellationRequested)
             {
                 PIR1 = _controller.Read(VariableControlService.PIRPin1);
