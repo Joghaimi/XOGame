@@ -105,7 +105,7 @@ namespace FortRoom.Services
                     thereAreBackgroundSoundPlays = true;
                     AudioPlayer.PIBackgroundSound(SoundType.Background);
                 }
-                else if (!VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && thereAreBackgroundSoundPlays)
+                else if (VariableControlService.IsTheGameFinished && !VariableControlService.IsTheGameStarted && thereAreBackgroundSoundPlays)
                 {
                     _logger.LogTrace("Stop Background Audio");
                     thereAreBackgroundSoundPlays = false;
