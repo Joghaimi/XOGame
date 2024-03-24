@@ -27,7 +27,8 @@ namespace Library
         Winner2,
         Winner1,
         Background,
-        ScanId
+        ScanId,
+        instruction
     }
     public enum Room {
         Fort,

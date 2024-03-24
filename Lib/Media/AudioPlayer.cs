@@ -72,7 +72,6 @@ namespace Library.Media
             audioProcess.StartInfo.RedirectStandardOutput = false;
             audioProcess.StartInfo.RedirectStandardError = false;
             audioProcess.Start();
-            Console.WriteLine("Audio playback started.");
         }
         private static string PISoundPath(SoundType soundType)
         {
@@ -127,6 +126,9 @@ namespace Library.Media
                 case SoundType.ScanId:
                     soundFilePath = $"{HomePath()}/audio/ScanId.wav";
                     break;
+                case SoundType.instruction:
+                    soundFilePath = $"{HomePath()}/audio/{instructionSound()}";
+                    break;
                 default:
                     break;
             }
@@ -157,6 +159,26 @@ namespace Library.Media
         }
 
         private static string BackgroundSound()
+        {
+            switch (_currentRoom)
+            {
+                case Room.Fort:
+                    return "Background.wav";
+                case Room.Dark:
+                    return "DarkRoom.wav";
+                case Room.Diving:
+                    return "FloorLava.mp3";
+                case Room.FloorIsLava:
+                    return "FloorLava.mp3";
+                case Room.Gathering:
+                    return "GatheringBG.wav";
+                case Room.Shooting:
+                    return "FloorLava.mp3";
+                default:
+                    return "/home/pi/XOGame";
+            }
+        }
+        private static string instructionSound()
         {
             switch (_currentRoom)
             {
