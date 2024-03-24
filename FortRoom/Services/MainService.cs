@@ -86,15 +86,29 @@ namespace FortRoom.Services
                 if (VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !thereAreBackgroundSoundPlays)
                 {
                     _logger.LogTrace("Start Instruction Audio");
-                    thereAreBackgroundSoundPlays = false;
+                    thereAreBackgroundSoundPlays = true;
                     AudioPlayer.PIBackgroundSound(SoundType.instruction);
                 }
+                else if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted && thereAreBackgroundSoundPlays)
+                {
+                    _logger.LogTrace("Stop Instruction Audio");
+                    thereAreBackgroundSoundPlays = false;
+                    AudioPlayer.PIStopAudio();
+                }
+
 
                 if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted && !thereAreBackgroundSoundPlays)
                 {
-                    _logger.LogTrace("Start Instruction Audio");
-                    thereAreBackgroundSoundPlays = false;
+                    _logger.LogTrace("Start Background Audio");
+                    thereAreBackgroundSoundPlays = true;
                     AudioPlayer.PIBackgroundSound(SoundType.Background);
+                }
+                else if (!VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && thereAreBackgroundSoundPlays)
+                {
+                    _logger.LogTrace("Stop Background Audio");
+                    thereAreBackgroundSoundPlays = false;
+                    AudioPlayer.PIStopAudio();
+
                 }
 
                 Thread.Sleep(1000);
