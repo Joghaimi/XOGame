@@ -26,9 +26,6 @@ namespace Library.Media
         {
             try
             {
-                //if (true)
-                //{
-                //audioBessy = true;
                 soundFilePath = PISoundPath(soundType);
                 Process audioProcess = new Process();
                 audioProcess.StartInfo.FileName = "/bin/bash";
@@ -61,6 +58,27 @@ namespace Library.Media
                 Console.WriteLine("No audio is currently playing.");
             }
         }
+        public static void PIForceStopAudio()
+        {
+            try
+            {
+                Process audioProcess = new Process();
+                audioProcess.StartInfo.FileName = "/bin/bash";
+                audioProcess.StartInfo.Arguments = $"sudo killall vlc";
+                audioProcess.StartInfo.RedirectStandardOutput = true;
+                audioProcess.StartInfo.RedirectStandardError = true;
+                audioProcess.StartInfo.UseShellExecute = false;
+                audioProcess.StartInfo.StandardOutputEncoding = System.Text.Encoding.UTF8;
+                audioProcess.StartInfo.StandardErrorEncoding = System.Text.Encoding.UTF8;
+                audioProcess.StartInfo.CreateNoWindow = true;
+                audioProcess.Start();
+            }
+            catch
+            {
+            }
+
+        }
+
         public static void PIBackgroundSound(SoundType soundType)
         {
 
