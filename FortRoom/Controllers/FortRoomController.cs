@@ -26,6 +26,7 @@ namespace FortRoom.Controllers
         public IActionResult StartGame(bool startGame)
         {
             VariableControlService.IsTheGameStarted = startGame;
+            VariableControlService.IsTheGameFinished = !startGame;
             return Ok(VariableControlService.IsTheGameStarted);
         }
         [HttpPost("ReceiveScore")]
