@@ -126,7 +126,7 @@ namespace FortRoom.Services
                     IsGameTimingStarted = true;
                     GameTiming.Restart();
                 }
-                if (GameTiming.ElapsedMilliseconds < 540000)
+                if (GameTiming.ElapsedMilliseconds > 540000)
                 {
                     stopGame();
                 }
