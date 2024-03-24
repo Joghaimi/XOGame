@@ -33,6 +33,7 @@ namespace FortRoom.Controllers
         {
             Console.WriteLine("Recived ..");
             VariableControlService.TeamScore = TeamScore;
+            VariableControlService.IsOccupied = true;
             return Ok();
         }
     }
