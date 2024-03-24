@@ -47,6 +47,8 @@ namespace FortRoom.Services
         private async Task RunService(CancellationToken cancellationToken)
         {
             bool thereAreBackgroundSoundPlays = false;
+            bool thereAreInstructionSoundPlays = false;
+
             bool lastRoomState = false;
             RGBLight.SetColor(RGBColor.Red);
             MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
@@ -83,16 +85,16 @@ namespace FortRoom.Services
 
 
 
-                if (VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !thereAreBackgroundSoundPlays)
+                if (VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !thereAreInstructionSoundPlays)
                 {
                     _logger.LogTrace("Start Instruction Audio");
-                    thereAreBackgroundSoundPlays = true;
+                    thereAreInstructionSoundPlays = true;
                     AudioPlayer.PIBackgroundSound(SoundType.instruction);
                 }
-                else if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted && thereAreBackgroundSoundPlays)
+                else if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted && thereAreInstructionSoundPlays)
                 {
                     _logger.LogTrace("Stop Instruction Audio");
-                    thereAreBackgroundSoundPlays = false;
+                    thereAreInstructionSoundPlays = false;
                     AudioPlayer.PIStopAudio();
                 }
 
