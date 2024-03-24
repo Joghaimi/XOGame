@@ -109,8 +109,7 @@ namespace FortRoom.Services
                 {
                     _logger.LogTrace("Stop Background Audio");
                     thereAreBackgroundSoundPlays = false;
-                    AudioPlayer.PIForceStopAudio();
-
+                    AudioPlayer.PIStopAudio();
                 }
 
                 Thread.Sleep(1000);
