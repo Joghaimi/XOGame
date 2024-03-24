@@ -66,53 +66,57 @@ namespace FortRoom.Services
             int level = 0;
             while (true)
             {
-                RGBColor selectedColor = (RGBColor)CurrentColor;
-                AudioPlayer.PIStartAudio(SoundType.Button);
-                // Add Extra Task
-                //Console.WriteLine("Enter Task ================");
-                StartGameTask(selectedColor, level);
-                //Console.WriteLine("Out From Task ================");
-                TurnRGBButtonWithColor(selectedColor);
-                byte numberOfClieckedButton = 0;
-                GameStopWatch.Restart();
-                //Console.WriteLine("New Round ================");
-                while (GameStopWatch.ElapsedMilliseconds < 30000)
+                if (VariableControlService.IsTheGameStarted)
                 {
-                    foreach (var item in RGBButtonList)
+                    RGBColor selectedColor = (RGBColor)CurrentColor;
+                    AudioPlayer.PIStartAudio(SoundType.Button);
+                    // Add Extra Task
+                    //Console.WriteLine("Enter Task ================");
+                    StartGameTask(selectedColor, level);
+                    //Console.WriteLine("Out From Task ================");
+                    TurnRGBButtonWithColor(selectedColor);
+                    byte numberOfClieckedButton = 0;
+                    GameStopWatch.Restart();
+                    //Console.WriteLine("New Round ================");
+                    while (GameStopWatch.ElapsedMilliseconds < 30000)
                     {
-                        bool itemSelected = !item.CurrentStatus() && item.CurrentColor() == selectedColor;
-                        if (itemSelected)
+                        foreach (var item in RGBButtonList)
                         {
-                            MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
-                            RGBLight.SetColor(RGBColor.Blue);
-                            AudioPlayer.PIStartAudio(SoundType.Bonus);
-                            item.TurnColorOn(RGBColor.Off);
-                            RGBLight.TurnRGBOffAfter1Sec();
-                            numberOfClieckedButton++;
-                            VariableControlService.ActiveButtonPressed++;
-                            //Console.WriteLine($"Score {VariableControlService.ActiveButtonPressed} numberOfPressed now {numberOfClieckedButton}");
+                            bool itemSelected = !item.CurrentStatus() && item.CurrentColor() == selectedColor;
+                            if (itemSelected)
+                            {
+                                MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
+                                RGBLight.SetColor(RGBColor.Blue);
+                                AudioPlayer.PIStartAudio(SoundType.Bonus);
+                                item.TurnColorOn(RGBColor.Off);
+                                RGBLight.TurnRGBOffAfter1Sec();
+                                numberOfClieckedButton++;
+                                VariableControlService.ActiveButtonPressed++;
+                                //Console.WriteLine($"Score {VariableControlService.ActiveButtonPressed} numberOfPressed now {numberOfClieckedButton}");
+                            }
                         }
+                        if (numberOfClieckedButton == RGBButtonList.Count())
+                            break;
+                        Thread.Sleep(10);
                     }
-                    if (numberOfClieckedButton == RGBButtonList.Count())
-                        break;
-                    Thread.Sleep(10);
-                }
-                TurnRGBButtonWithColor(RGBColor.Off);
-                if (CurrentColor < 2)
-                {
-                    CurrentColor++;
-                   
-                }
-                else
-                {
-                    CurrentColor = 0;
-                }
-                if (level < 4)
-                {
-                    level++;
-                }
-                else {
-                    level = 0;
+                    TurnRGBButtonWithColor(RGBColor.Off);
+                    if (CurrentColor < 2)
+                    {
+                        CurrentColor++;
+
+                    }
+                    else
+                    {
+                        CurrentColor = 0;
+                    }
+                    if (level < 4)
+                    {
+                        level++;
+                    }
+                    else
+                    {
+                        level = 0;
+                    }
                 }
             }
         }

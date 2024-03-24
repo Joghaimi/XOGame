@@ -38,32 +38,35 @@ namespace FortRoom.Services
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                try
+                if (VariableControlService.IsTheGameStarted)
                 {
-                    currentValue = MCP23Controller.Read(MasterDI.IN1);
-                    if (!currentValue && !scoreJustDecreased)
+                    try
                     {
-                        VariableControlService.TimeOfPressureHit++;
-                        MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
-                        AudioPlayer.PIStartAudio(SoundType.Descend);
-                        RGBLight.SetColor(RGBColor.Red);
-                        RGBLight.TurnRGBOffAfter1Sec();
-                        scoreJustDecreased = true;
-                        timer.Restart();
-                        //Console.WriteLine($"Pressure Mate Pressed {VariableControlService.TimeOfPressureHit}");
+                        currentValue = MCP23Controller.Read(MasterDI.IN1);
+                        if (!currentValue && !scoreJustDecreased)
+                        {
+                            VariableControlService.TimeOfPressureHit++;
+                            MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
+                            AudioPlayer.PIStartAudio(SoundType.Descend);
+                            RGBLight.SetColor(RGBColor.Red);
+                            RGBLight.TurnRGBOffAfter1Sec();
+                            scoreJustDecreased = true;
+                            timer.Restart();
+                            //Console.WriteLine($"Pressure Mate Pressed {VariableControlService.TimeOfPressureHit}");
+                        }
+                        //previousValue = currentValue;
+                        if (scoreJustDecreased && timer.ElapsedMilliseconds >= 3000)
+                        {
+                            scoreJustDecreased = false;
+                            timer.Restart();
+                        }
                     }
-                    //previousValue = currentValue;
-                    if (scoreJustDecreased && timer.ElapsedMilliseconds >= 3000)
+                    catch (Exception ex)
                     {
-                        scoreJustDecreased = false;
-                        timer.Restart();
+                        Console.WriteLine($"Error {ex.Message}");
                     }
+
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error {ex.Message}");
-                }
-                //Console.WriteLine($"Is Pressed {!currentValue} ScoredJust Decresed {scoreJustDecreased} Timer =====>{timer.ElapsedMilliseconds} isItMoreThan3 Sec {timer.ElapsedMilliseconds >= 3000} -- {VariableControlService.IsTheGameStarted}");
                 Thread.Sleep(500);
             }
         }
