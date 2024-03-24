@@ -104,10 +104,10 @@ namespace FortRoom.Services
 
 
                 }
-                else if (!VariableControlService.IsTheGameStarted && VariableControlService.IsTheGameFinished)
-                {
-                    Stopped();
-                }
+                //else if (!VariableControlService.IsTheGameStarted && VariableControlService.IsTheGameFinished)
+                //{
+                //    Stopped();
+                //}
 
                 Thread.Sleep(10);
             }
