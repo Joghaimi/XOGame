@@ -99,7 +99,7 @@ namespace FortRoom.Services
                 }
 
 
-                if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted && !thereAreBackgroundSoundPlays)
+                if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted && !thereAreBackgroundSoundPlays && !thereAreInstructionSoundPlays)
                 {
                     _logger.LogTrace("Start Background Audio");
                     thereAreBackgroundSoundPlays = true;
