@@ -15,8 +15,8 @@ namespace FortRoom.Services
         private ModbusLib Modbus = new ModbusLib();
         private readonly ILogger<ObstructionControlService> _logger;
         private CancellationTokenSource _cts1;
+        private bool gameStarted = false;
 
-        
         public ObstructionControlService(ILogger<ObstructionControlService> logger, IHostApplicationLifetime appLifetime)
         {
             //_appLifetime = appLifetime;
@@ -94,7 +94,7 @@ namespace FortRoom.Services
                         Thread.Sleep(500);
                         Console.WriteLine($"Motor 4 Started freq Meduim");
                         Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, 4000);  // Start As Mode #1 
-                          
+
                         //VariableControlService.IsTheGameStarted = false;
                     }
                     catch (Exception ex)
@@ -103,6 +103,10 @@ namespace FortRoom.Services
                     }
 
 
+                }
+                else if (!VariableControlService.IsTheGameStarted && VariableControlService.IsTheGameFinished)
+                {
+                    Stopped();
                 }
 
                 Thread.Sleep(10);

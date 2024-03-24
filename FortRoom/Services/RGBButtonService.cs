@@ -206,6 +206,11 @@ namespace FortRoom.Services
             VariableControlService.IsTheGameStarted = false;
             VariableControlService.IsTheGameFinished = true;
             IsGameTimingStarted = false;
+            foreach (var item in RGBButtonList)
+            {
+                item.TurnColorOn(RGBColor.Off);
+            }
+            AudioPlayer.PIStopAudio();
         }
 
 
