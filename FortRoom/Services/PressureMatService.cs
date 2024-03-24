@@ -52,7 +52,6 @@ namespace FortRoom.Services
                             RGBLight.TurnRGBOffAfter1Sec();
                             scoreJustDecreased = true;
                             timer.Restart();
-                            //Console.WriteLine($"Pressure Mate Pressed {VariableControlService.TimeOfPressureHit}");
                         }
                         //previousValue = currentValue;
                         if (scoreJustDecreased && timer.ElapsedMilliseconds >= 3000)

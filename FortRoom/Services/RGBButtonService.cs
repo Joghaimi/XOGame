@@ -13,10 +13,10 @@ namespace FortRoom.Services
     {
         List<RGBButton> RGBButtonList = new List<RGBButton>();
         private readonly ILogger<ObstructionControlService> _logger;
-        //private readonly IHostApplicationLifetime _appLifetime;
         Stopwatch GameStopWatch = new Stopwatch();
+        Stopwatch GameTiming = new Stopwatch();
         private CancellationTokenSource _cts, _cts2;
-        bool IsTimerStarted = false;
+        bool IsGameTimingStarted = false;
         List<(int, int)> ButtonTaskList = new List<(int, int)>
         {
             (2,3),
@@ -29,16 +29,11 @@ namespace FortRoom.Services
 
         int Score = 0;
 
-
-
-        int currentPeriod = 30000;
-
         int CurrentColor = 0;
 
 
         public RGBButtonService(ILogger<ObstructionControlService> logger, IHostApplicationLifetime appLifetime)
         {
-            //_appLifetime = appLifetime;
             _logger = logger;
         }
 
@@ -55,10 +50,11 @@ namespace FortRoom.Services
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR13, RGBButtonPin.RGBG13, RGBButtonPin.RGBB13, RGBButtonPin.RGBPB13));
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR14, RGBButtonPin.RGBG14, RGBButtonPin.RGBB14, RGBButtonPin.RGBPB14));
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR15, RGBButtonPin.RGBG15, RGBButtonPin.RGBB15, RGBButtonPin.RGBPB15));
-            //RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR16, RGBButtonPin.RGBG16, RGBButtonPin.RGBB16, RGBButtonPin.RGBPB16));
             GameStopWatch.Start();
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            Task task1 = Task.Run(() => RunService(_cts.Token));
+            _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            Task.Run(() => RunService(_cts.Token));
+            Task.Run(() => GameTimingService(_cts2.Token));
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
@@ -70,15 +66,11 @@ namespace FortRoom.Services
                 {
                     RGBColor selectedColor = (RGBColor)CurrentColor;
                     AudioPlayer.PIStartAudio(SoundType.Button);
-                    // Add Extra Task
-                    //Console.WriteLine("Enter Task ================");
                     StartGameTask(selectedColor, level);
-                    //Console.WriteLine("Out From Task ================");
                     TurnRGBButtonWithColor(selectedColor);
                     byte numberOfClieckedButton = 0;
                     GameStopWatch.Restart();
-                    //Console.WriteLine("New Round ================");
-                    while (GameStopWatch.ElapsedMilliseconds < 30000)
+                    while (GameStopWatch.ElapsedMilliseconds < 90000)
                     {
                         foreach (var item in RGBButtonList)
                         {
@@ -113,19 +105,31 @@ namespace FortRoom.Services
                     {
                         level++;
                     }
+                    //else
+                    //{
+                    //    level = 0;
+                    //}
                     else
                     {
-                        level = 0;
+                        stopGame();
                     }
                 }
             }
         }
-        private async Task TimingService(CancellationToken cancellationToken)
+        private async Task GameTimingService(CancellationToken cancellationToken)
         {
-            if (!IsTimerStarted)
+            while (true)
             {
-                GameStopWatch.Start();
-                IsTimerStarted = true;
+                if (VariableControlService.IsTheGameStarted && !IsGameTimingStarted)
+                {
+
+                    IsGameTimingStarted = true;
+                    GameTiming.Restart();
+                }
+                if (GameTiming.ElapsedMilliseconds < 540000)
+                {
+                    stopGame();
+                }
             }
         }
         public Task StopAsync(CancellationToken cancellationToken)
@@ -195,5 +199,15 @@ namespace FortRoom.Services
             }
             Thread.Sleep(400);
         }
+
+
+        public void stopGame()
+        {
+            VariableControlService.IsTheGameStarted = false;
+            VariableControlService.IsTheGameFinished = true;
+            IsGameTimingStarted = false;
+        }
+
+
     }
 }
