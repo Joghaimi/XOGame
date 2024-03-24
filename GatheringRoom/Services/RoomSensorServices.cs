@@ -87,6 +87,7 @@ namespace GatheringRoom.Services
                         PIR3 = _controller.Read(VariableControlService.PIRPin3);
                         PIR4 = _controller.Read(VariableControlService.PIRPin4);
                     }
+                    Thread.Sleep(30000);
                     DoorStatus(DoorPin, false);
                     VariableControlService.EnableGoingToTheNextRoom = false;
                     VariableControlService.IsTheirAnyOneInTheRoom = false;
