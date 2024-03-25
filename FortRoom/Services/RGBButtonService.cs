@@ -65,6 +65,7 @@ namespace FortRoom.Services
             {
                 if (VariableControlService.IsTheGameStarted)
                 {
+                    Console.WriteLine($"Game Round State {VariableControlService.IsTheGameStarted}");
                     started = true;
                     RGBColor selectedColor = (RGBColor)CurrentColor;
                     AudioPlayer.PIStartAudio(SoundType.Button);
