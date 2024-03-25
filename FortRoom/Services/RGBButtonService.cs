@@ -77,18 +77,21 @@ namespace FortRoom.Services
                     {
                         foreach (var item in RGBButtonList)
                         {
-                            bool itemSelected = !item.CurrentStatus() && item.CurrentColor() == selectedColor;
-                            if (itemSelected)
-                            {
-                                MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
-                                RGBLight.SetColor(RGBColor.Blue);
-                                AudioPlayer.PIStartAudio(SoundType.Bonus);
-                                item.TurnColorOn(RGBColor.Off);
-                                RGBLight.TurnRGBOffAfter1Sec();
-                                numberOfClieckedButton++;
-                                VariableControlService.ActiveButtonPressed++;
-                                //Console.WriteLine($"Score {VariableControlService.ActiveButtonPressed} numberOfPressed now {numberOfClieckedButton}");
+                            if (VariableControlService.IsTheGameStarted) {
+                                bool itemSelected = !item.CurrentStatus() && item.CurrentColor() == selectedColor;
+                                if (itemSelected)
+                                {
+                                    MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
+                                    RGBLight.SetColor(RGBColor.Blue);
+                                    AudioPlayer.PIStartAudio(SoundType.Bonus);
+                                    item.TurnColorOn(RGBColor.Off);
+                                    RGBLight.TurnRGBOffAfter1Sec();
+                                    numberOfClieckedButton++;
+                                    VariableControlService.ActiveButtonPressed++;
+                                    //Console.WriteLine($"Score {VariableControlService.ActiveButtonPressed} numberOfPressed now {numberOfClieckedButton}");
+                                }
                             }
+                           
                         }
                         if (numberOfClieckedButton == RGBButtonList.Count())
                             break;
