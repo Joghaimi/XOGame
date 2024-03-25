@@ -179,6 +179,8 @@ namespace FortRoom.Services
             RGBButtonList[button2Index].TurnColorOn(color);
             while (!Button1 || !Button2)
             {
+                if (!VariableControlService.IsTheGameStarted)
+                    break;
                 if (!Button1)
                 {
                     if (!RGBButtonList[button1Index].CurrentStatus() && RGBButtonList[button1Index].CurrentColor() == color)
