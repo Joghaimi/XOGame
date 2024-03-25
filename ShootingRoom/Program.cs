@@ -18,6 +18,7 @@ builder.Services.AddHostedService<AirTargetService>(); // The Main Flow ..
 
 
 var app = builder.Build();
+app.UseCors("corsapp");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
