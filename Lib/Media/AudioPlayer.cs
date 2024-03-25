@@ -191,7 +191,7 @@ namespace Library.Media
                 case Room.Gathering:
                     return "GatheringBG.wav";
                 case Room.Shooting:
-                    return "FloorLava.mp3";
+                    return "FloorLava.wav";
                 default:
                     return "/home/pi/XOGame";
             }
@@ -211,7 +211,7 @@ namespace Library.Media
                 case Room.Gathering:
                     return "GatheringBG.wav";
                 case Room.Shooting:
-                    return "FloorLava.mp3";
+                    return "FloorLava.wav";
                 default:
                     return "/home/pi/XOGame";
             }
