@@ -1,4 +1,6 @@
-﻿namespace ShootingRoom.Services
+﻿using Library.Model;
+
+namespace ShootingRoom.Services
 {
     public static class VariableControlService
     {
@@ -8,7 +10,10 @@
         public static int TimeOfGetTheTarget { get; set; } = 0;
         public static int ActiveTargetPressed { get; set; } = 0;
         // IR PIN OUT
-        //public static MCP23Pin MCP23Pin = new MCP23Pin { port = , Chip =, PinNumber =}
+        public static int TimeOfPressureHit { get; set; } = 0;
+        public static int ActiveButtonPressed { get; set; } = 0;
+        public static Team TeamScore { get; set; } = new Team();
+        public static bool IsOccupied { get; set; }
 
 
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Library.Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShootingRoom.Services;
 
@@ -8,24 +9,39 @@ namespace ShootingRoom.Controllers
     [ApiController]
     public class ShootingController : ControllerBase
     {
-        [HttpGet(Name = "IsOccupied")]
+
+        [HttpGet("IsOccupied")]
         public IActionResult Get()
         {
-            //return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            //{
-            //    Date = DateTime.Now.AddDays(index),
-            //    TemperatureC = Random.Shared.Next(-20, 55),
-            //    Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            //})
-            //.ToArray();
 
-            return Ok("");
+            return Ok(VariableControlService.IsOccupied);
         }
+        [HttpGet("SetAsOccupied")]
+        public IActionResult SetAsOccupied(bool IsOccupied)
+        {
+            VariableControlService.IsOccupied = IsOccupied;
+            // To Be Removed and added to  Send Score To the Next Room ..
+            if (IsOccupied)
+            {
+                VariableControlService.IsTheGameFinished = false;
+            }
+            return Ok(VariableControlService.IsOccupied);
+        }
+
         [HttpPost("StartStopGame")]
         public IActionResult StartGame(bool startGame)
         {
             VariableControlService.IsTheGameStarted = startGame;
+            VariableControlService.IsTheGameFinished = !startGame;
             return Ok(VariableControlService.IsTheGameStarted);
+        }
+        [HttpPost("ReceiveScore")]
+        public IActionResult ReceiveScore(Team TeamScore)
+        {
+            Console.WriteLine("Recived ..");
+            VariableControlService.TeamScore = TeamScore;
+            VariableControlService.IsOccupied = true;
+            return Ok();
         }
     }
 }

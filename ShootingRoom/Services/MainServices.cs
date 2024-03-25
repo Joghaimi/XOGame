@@ -1,4 +1,5 @@
-﻿using Library;
+﻿using Iot.Device.Mcp3428;
+using Library;
 using Library.Enum;
 using Library.GPIOLib;
 using Library.Media;
@@ -12,14 +13,20 @@ namespace ShootingRoom.Services
     {
         private GPIOController _controller;
         public bool isTheirAreSomeOneInTheRoom = false;
-        private CancellationTokenSource _cts;
+        private CancellationTokenSource _cts, cts2;
         private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
+        private readonly ILogger<MainServices> _logger;
+        bool thereAreBackgroundSoundPlays = false;
+        bool thereAreInstructionSoundPlays = false;
 
-
+        public MainServices(ILogger<MainServices> logger)
+        {
+            _logger = logger;
+        }
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _controller = new GPIOController();
-            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data ,Room.Shooting);
+            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Shooting);
             MCP23Controller.Init(Room.Shooting);
             AudioPlayer.Init(Room.Shooting);
             // Init the Pin's
@@ -28,12 +35,19 @@ namespace ShootingRoom.Services
             _controller.Setup(MasterDI.PIRPin3, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
 
+            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT6, PinMode.Output);
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
             Task.Run(() => RunService(_cts.Token));
+            Task.Run(() => CheckIFRoomIsEmpty(cts2.Token));
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
+
+            RGBLight.SetColor(RGBColor.Red);
+            MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
             while (!cancellationToken.IsCancellationRequested)
             {
 
@@ -41,18 +55,11 @@ namespace ShootingRoom.Services
                 PIR2 = _controller.Read(MasterDI.PIRPin2);
                 PIR3 = _controller.Read(MasterDI.PIRPin3);
                 PIR4 = _controller.Read(MasterDI.PIRPin4);
-                //Console.WriteLine($"PIR Status PIR1:{PIR1} PIR2:{PIR2} PIR3:{PIR3} PIR4:{PIR4}");
                 VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
-                bool DoneOneTimeFlage = false;
+                ControlRoomAudio();
                 if (VariableControlService.IsTheGameStarted)
                 {
-                    //if (!DoneOneTimeFlage)
-                    //{
-                    //    // Turn the Light Green
-                    //    RGBLight.SetColor(RGBColor.Green);
-                    //    //JQ8400AudioModule.PlayAudio((int)SoundType.Start);
-                    //    DoneOneTimeFlage = true;
-                    //}
+
                 }
 
                 Thread.Sleep(10);
@@ -68,5 +75,52 @@ namespace ShootingRoom.Services
         {
             //_cts.Dispose();
         }
+
+
+        private async Task CheckIFRoomIsEmpty(CancellationToken cancellationToken)
+        {
+            while (true)
+            {
+                if (VariableControlService.IsTheirAnyOneInTheRoom && !VariableControlService.IsTheGameStarted)
+                {
+                    VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4;
+                    Thread.Sleep(10000);
+                }
+
+            }
+        }
+
+        private void ControlRoomAudio()
+        {
+            // Control Background Audio
+            if (VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished && !thereAreInstructionSoundPlays)
+            {
+                _logger.LogTrace("Start Instruction Audio");
+                thereAreInstructionSoundPlays = true;
+                AudioPlayer.PIBackgroundSound(SoundType.instruction);
+            }
+            else if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted
+                && !VariableControlService.IsTheGameFinished
+                && thereAreInstructionSoundPlays && !thereAreBackgroundSoundPlays)
+            {
+                // Stop Background Audio 
+                _logger.LogTrace("Stop Instruction Audio");
+                thereAreInstructionSoundPlays = false;
+                AudioPlayer.PIStopAudio();
+                Thread.Sleep(500);
+                // Start Background Audio
+                _logger.LogTrace("Start Background Audio");
+                thereAreBackgroundSoundPlays = true;
+                AudioPlayer.PIBackgroundSound(SoundType.Background);
+            }
+            else if (VariableControlService.IsTheGameFinished && thereAreBackgroundSoundPlays)
+            {
+                // Game Finished .. 
+                _logger.LogTrace("Stop Background Audio");
+                thereAreBackgroundSoundPlays = false;
+                AudioPlayer.PIStopAudio();
+            }
+        }
+
     }
 }

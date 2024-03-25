@@ -48,8 +48,6 @@ namespace FortRoom.Services
         {
             bool thereAreBackgroundSoundPlays = false;
             bool thereAreInstructionSoundPlays = false;
-
-            bool lastRoomState = false;
             RGBLight.SetColor(RGBColor.Red);
             MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
             while (!cancellationToken.IsCancellationRequested)
@@ -59,32 +57,7 @@ namespace FortRoom.Services
                 PIR3 = _controller.Read(MasterDI.PIRPin3);
                 PIR4 = _controller.Read(MasterDI.PIRPin4);
                 VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
-                //MCP23Controller.Write(MasterOutputPin.OUTPUT8.Chip, MasterOutputPin.OUTPUT8.port, MasterOutputPin.OUTPUT8.PinNumber, PinState.Low);
-                //if (VariableControlService.IsTheirAnyOneInTheRoom != lastRoomState)
-                //{
-                //    lastRoomState = VariableControlService.IsTheirAnyOneInTheRoom;
-                //    if (VariableControlService.IsTheirAnyOneInTheRoom)
-                //        RGBLight.SetColor(RGBColor.Green);
-                //    else
-                //        RGBLight.SetColor(RGBColor.Red);
-
-                //}
-                //Thread.Sleep(1000);
-                bool DoneOneTimeFlage = false;
-                if (VariableControlService.IsTheGameStarted)
-                {
-                    if (!DoneOneTimeFlage)
-                    {
-                        // Turn the Light Green
-                        //RGBLight.SetColor(RGBColor.Green);
-                        //JQ8400AudioModule.PlayAudio((int)SoundType.Beeb);
-                        DoneOneTimeFlage = true;
-                    }
-                }
-
-
                 // Control Background Audio
-
                 if (VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished && !thereAreInstructionSoundPlays)
                 {
                     _logger.LogTrace("Start Instruction Audio");
@@ -112,7 +85,7 @@ namespace FortRoom.Services
                     thereAreBackgroundSoundPlays = false;
                     AudioPlayer.PIStopAudio();
                 }
-                
+
             }
         }
         private async Task CheckIFRoomIsEmpty(CancellationToken cancellationToken)
