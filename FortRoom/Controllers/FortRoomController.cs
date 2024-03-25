@@ -19,6 +19,12 @@ namespace FortRoom.Controllers
         public IActionResult SetAsOccupied(bool IsOccupied)
         {
             VariableControlService.IsOccupied = IsOccupied;
+
+            // To Be Removed and added to  Send Score To the Next Room ..
+            if (IsOccupied)
+            {
+                VariableControlService.IsTheGameFinished = false;
+            }
             return Ok(VariableControlService.IsOccupied);
         }
 

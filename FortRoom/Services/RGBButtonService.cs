@@ -60,10 +60,12 @@ namespace FortRoom.Services
         private async Task RunService(CancellationToken cancellationToken)
         {
             int level = 0;
+            bool started = false;
             while (true)
             {
                 if (VariableControlService.IsTheGameStarted)
                 {
+                    started = true;
                     RGBColor selectedColor = (RGBColor)CurrentColor;
                     AudioPlayer.PIStartAudio(SoundType.Button);
                     StartGameTask(selectedColor, level);
@@ -113,6 +115,10 @@ namespace FortRoom.Services
                     {
                         stopGame();
                     }
+                }
+                else if (!VariableControlService.IsTheGameStarted && VariableControlService.IsTheGameFinished && started) { 
+                    started = false;
+                    stopGame();
                 }
             }
         }

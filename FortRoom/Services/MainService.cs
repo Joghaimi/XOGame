@@ -83,36 +83,36 @@ namespace FortRoom.Services
                 }
 
 
+                // Control Background Audio
 
-
-                if (VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !thereAreInstructionSoundPlays)
+                if (VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished && !thereAreInstructionSoundPlays)
                 {
                     _logger.LogTrace("Start Instruction Audio");
                     thereAreInstructionSoundPlays = true;
                     AudioPlayer.PIBackgroundSound(SoundType.instruction);
                 }
-                else if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted && thereAreInstructionSoundPlays)
+                else if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted
+                    && !VariableControlService.IsTheGameFinished
+                    && thereAreInstructionSoundPlays && !thereAreBackgroundSoundPlays)
                 {
+                    // Stop Background Audio 
                     _logger.LogTrace("Stop Instruction Audio");
                     thereAreInstructionSoundPlays = false;
                     AudioPlayer.PIStopAudio();
-                }
-
-
-                if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted && !thereAreBackgroundSoundPlays && !thereAreInstructionSoundPlays)
-                {
+                    Thread.Sleep(500);
+                    // Start Background Audio
                     _logger.LogTrace("Start Background Audio");
                     thereAreBackgroundSoundPlays = true;
                     AudioPlayer.PIBackgroundSound(SoundType.Background);
                 }
-                else if (VariableControlService.IsTheGameFinished && !VariableControlService.IsTheGameStarted && thereAreBackgroundSoundPlays)
+                else if (VariableControlService.IsTheGameFinished && thereAreBackgroundSoundPlays)
                 {
+                    // Game Finished .. 
                     _logger.LogTrace("Stop Background Audio");
                     thereAreBackgroundSoundPlays = false;
                     AudioPlayer.PIStopAudio();
                 }
-
-                Thread.Sleep(1000);
+                
             }
         }
         private async Task CheckIFRoomIsEmpty(CancellationToken cancellationToken)
