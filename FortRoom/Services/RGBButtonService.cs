@@ -97,7 +97,6 @@ namespace FortRoom.Services
                     if (CurrentColor < 2)
                     {
                         CurrentColor++;
-
                     }
                     else
                     {
@@ -107,10 +106,6 @@ namespace FortRoom.Services
                     {
                         level++;
                     }
-                    //else
-                    //{
-                    //    level = 0;
-                    //}
                     else
                     {
                         stopGame();
@@ -135,6 +130,8 @@ namespace FortRoom.Services
                 if (GameTiming.ElapsedMilliseconds > 540000)
                 {
                     stopGame();
+                    VariableControlService.IsTheGameStarted = false;
+                    VariableControlService.IsTheGameFinished = true;
                 }
             }
         }
@@ -209,8 +206,8 @@ namespace FortRoom.Services
 
         public void stopGame()
         {
-            VariableControlService.IsTheGameStarted = false;
-            VariableControlService.IsTheGameFinished = true;
+            _logger.LogInformation("Stop RGB Button Service");
+
             IsGameTimingStarted = false;
             foreach (var item in RGBButtonList)
             {
