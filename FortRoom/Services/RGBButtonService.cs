@@ -92,6 +92,8 @@ namespace FortRoom.Services
                         }
                         if (numberOfClieckedButton == RGBButtonList.Count())
                             break;
+                        if(!VariableControlService.IsTheGameStarted)
+                            break;
                         Thread.Sleep(10);
                     }
                     TurnRGBButtonWithColor(RGBColor.Off);
