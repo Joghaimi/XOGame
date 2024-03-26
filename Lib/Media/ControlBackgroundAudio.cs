@@ -8,7 +8,7 @@ namespace Library.Media
 {
     public static class ControlBackgroundAudio
     {
-        public static void ControlRoomAudio(bool IsOccupied, bool IsTheGameStarted, bool IsTheGameFinished, bool thereAreInstructionSoundPlays, bool thereAreBackgroundSoundPlays)
+        public static (bool thereAreInstructionSoundPlays , bool thereAreBackgroundSoundPlays) ControlRoomAudio(bool IsOccupied, bool IsTheGameStarted, bool IsTheGameFinished, bool thereAreInstructionSoundPlays, bool thereAreBackgroundSoundPlays)
         {
             // Control Background Audio
             if (IsOccupied && !IsTheGameStarted && !IsTheGameFinished && !thereAreInstructionSoundPlays)
@@ -38,6 +38,7 @@ namespace Library.Media
                 thereAreBackgroundSoundPlays = false;
                 AudioPlayer.PIStopAudio();
             }
+            return (thereAreInstructionSoundPlays, thereAreBackgroundSoundPlays);
         }
     }
 }

@@ -56,10 +56,9 @@ namespace ShootingRoom.Services
                 PIR3 = _controller.Read(MasterDI.PIRPin3);
                 PIR4 = _controller.Read(MasterDI.PIRPin4);
                 VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
-                ControlBackgroundAudio.ControlRoomAudio(
-                    VariableControlService.IsOccupied, VariableControlService.IsTheGameStarted, VariableControlService.IsTheGameFinished,
-                    thereAreInstructionSoundPlays, thereAreBackgroundSoundPlays
-                    );
+                (bool thereAreInstructionSoundPlay, bool thereAreBackgroundSoundPlay) = ControlBackgroundAudio.ControlRoomAudio(VariableControlService.IsOccupied, VariableControlService.IsTheGameStarted, VariableControlService.IsTheGameFinished, thereAreInstructionSoundPlays, thereAreBackgroundSoundPlays);
+                thereAreInstructionSoundPlays = thereAreInstructionSoundPlay;
+                thereAreBackgroundSoundPlays = thereAreBackgroundSoundPlay;
                 if (VariableControlService.IsTheGameStarted)
                 {
 
