@@ -43,5 +43,14 @@ namespace ShootingRoom.Controllers
             VariableControlService.IsOccupied = true;
             return Ok();
         }
+        [HttpGet("GoToTheNextRoom")]
+        public async Task<IActionResult> NextRoom()
+        {
+            VariableControlService.IsTheGameStarted = false;
+            VariableControlService.TeamScore.Name = "";
+            VariableControlService.TeamScore.player.Clear();
+            VariableControlService.EnableGoingToTheNextRoom = true;
+            return Ok(VariableControlService.IsTheGameStarted);
+        }
     }
 }

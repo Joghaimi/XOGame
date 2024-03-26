@@ -18,6 +18,7 @@ namespace ShootingRoom.Services
         private readonly ILogger<MainServices> _logger;
         bool thereAreBackgroundSoundPlays = false;
         bool thereAreInstructionSoundPlays = false;
+        private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
 
         public MainServices(ILogger<MainServices> logger)
         {
@@ -34,8 +35,8 @@ namespace ShootingRoom.Services
             _controller.Setup(MasterDI.PIRPin2, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin3, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
+            DoorStatus(DoorPin, false);
 
-            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT6, PinMode.Output);
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
@@ -47,7 +48,6 @@ namespace ShootingRoom.Services
         {
 
             RGBLight.SetColor(RGBColor.Red);
-            MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
             while (!cancellationToken.IsCancellationRequested)
             {
 
@@ -61,9 +61,27 @@ namespace ShootingRoom.Services
                 {
 
                 }
+                if (VariableControlService.EnableGoingToTheNextRoom)
+                {
+                    _logger.LogDebug("Open The Door");
+                    DoorStatus(DoorPin, true);
+                    while (PIR1 || PIR2 || PIR3 || PIR4)
+                    {
+                        PIR1 = _controller.Read(MasterDI.PIRPin1);
+                        PIR2 = _controller.Read(MasterDI.PIRPin2);
+                        PIR3 = _controller.Read(MasterDI.PIRPin3);
+                        PIR4 = _controller.Read(MasterDI.PIRPin4);
+                    }
+                    Thread.Sleep(30000);
+                    DoorStatus(DoorPin, false);
+                    VariableControlService.EnableGoingToTheNextRoom = false;
+                    VariableControlService.IsTheirAnyOneInTheRoom = false;
+                    VariableControlService.IsTheGameStarted = false;
+                    //RGBLight.SetColor(RGBColor.Off);
+                    _logger.LogDebug("No One In The Room , All Gone To The Next Room");
+                }
 
 
-               
 
                 Thread.Sleep(10);
             }
@@ -122,6 +140,19 @@ namespace ShootingRoom.Services
                 _logger.LogTrace("Stop Background Audio");
                 thereAreBackgroundSoundPlays = false;
                 AudioPlayer.PIStopAudio();
+            }
+        }
+        public void DoorStatus(MCP23Pin doorPin, bool status)
+        {
+            if (!status)
+            {
+                MCP23Controller.PinModeSetup(doorPin, PinMode.Output);
+                MCP23Controller.Write(doorPin, PinState.High);
+            }
+            else
+            {
+                MCP23Controller.PinModeSetup(doorPin, PinMode.Input);
+                MCP23Controller.Write(doorPin, PinState.Low);
             }
         }
 

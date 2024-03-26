@@ -1,6 +1,5 @@
-
-
 using ShootingRoom.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {

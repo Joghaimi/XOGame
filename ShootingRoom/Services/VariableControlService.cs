@@ -9,6 +9,8 @@ namespace ShootingRoom.Services
         public static bool IsTheirAnyOneInTheRoom { get; set; } = false;
         public static int TimeOfGetTheTarget { get; set; } = 0;
         public static int ActiveTargetPressed { get; set; } = 0;
+        public static bool EnableGoingToTheNextRoom = false;
+
         // IR PIN OUT
         public static int TimeOfPressureHit { get; set; } = 0;
         public static int ActiveButtonPressed { get; set; } = 0;
