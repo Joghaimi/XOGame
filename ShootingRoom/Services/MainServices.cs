@@ -62,6 +62,9 @@ namespace ShootingRoom.Services
 
                 }
 
+
+               
+
                 Thread.Sleep(10);
             }
         }

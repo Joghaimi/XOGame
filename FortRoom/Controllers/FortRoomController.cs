@@ -9,10 +9,15 @@ namespace FortRoom.Controllers
     [ApiController]
     public class FortRoomController : ControllerBase
     {
+        private readonly ILogger<FortRoomController> _logger;
+        public FortRoomController(ILogger<FortRoomController> logger)
+        {
+            _logger = logger;
+        }
+
         [HttpGet("IsOccupied")]
         public IActionResult Get()
         {
-
             return Ok(VariableControlService.IsOccupied);
         }
         [HttpGet("SetAsOccupied")]
@@ -42,6 +47,16 @@ namespace FortRoom.Controllers
             VariableControlService.TeamScore = TeamScore;
             VariableControlService.IsOccupied = true;
             return Ok();
+        }
+        [HttpGet("GoToTheNextRoom")]
+        public async Task<IActionResult> NextRoom()
+        {
+            _logger.LogTrace("The Team Mover To the Next room , Reset this Room");
+            VariableControlService.IsTheGameStarted = false;
+            VariableControlService.TeamScore.Name = "";
+            VariableControlService.TeamScore.player.Clear();
+            VariableControlService.EnableGoingToTheNextRoom = true;
+            return Ok(VariableControlService.IsTheGameStarted);
         }
     }
 }

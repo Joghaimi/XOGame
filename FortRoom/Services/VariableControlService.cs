@@ -14,7 +14,7 @@ namespace FortRoom.Services
         public static int ActiveButtonPressed { get; set; } = 0;
         public static Team TeamScore { get; set; } = new Team();
         public static bool IsOccupied { get; set; }
-
+        public static bool EnableGoingToTheNextRoom = false;
 
 
         public static void ResetTheGame()
