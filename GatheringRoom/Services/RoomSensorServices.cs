@@ -2,6 +2,7 @@
 using Iot.Device.Board;
 using Iot.Device.Mcp3428;
 using Library;
+using Library.DoorControl;
 using Library.GPIOLib;
 using Library.Media;
 using Library.PinMapping;
@@ -42,7 +43,7 @@ namespace GatheringRoom.Services
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Gathering);
             MCP23Controller.Init(Room.Gathering);
             AudioPlayer.Init(Room.Gathering);
-            DoorStatus(DoorPin, false);
+            DoorControl.Status(DoorPin, false);
             Task.Run(() => CheckIFRoomIsEmpty(cts2.Token));
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
@@ -79,7 +80,7 @@ namespace GatheringRoom.Services
                 if (VariableControlService.EnableGoingToTheNextRoom)
                 {
                     _logger.LogDebug("Open The Door");
-                    DoorStatus(DoorPin, true);
+                    DoorControl.Status(DoorPin, true);
                     while (PIR1 || PIR2 || PIR3 || PIR4)
                     {
                         PIR1 = _controller.Read(VariableControlService.PIRPin1);
@@ -88,7 +89,7 @@ namespace GatheringRoom.Services
                         PIR4 = _controller.Read(VariableControlService.PIRPin4);
                     }
                     Thread.Sleep(30000);
-                    DoorStatus(DoorPin, false);
+                    DoorControl.Status(DoorPin, false);
                     VariableControlService.EnableGoingToTheNextRoom = false;
                     VariableControlService.IsTheirAnyOneInTheRoom = false;
                     VariableControlService.IsTheGameStarted = false;
@@ -105,7 +106,7 @@ namespace GatheringRoom.Services
             _logger.LogDebug("Turn Off RGB Light");
             RGBLight.SetColor(RGBColor.Off);
             _logger.LogDebug("Open The Door");
-            DoorStatus(DoorPin, true);
+            DoorControl.Status(DoorPin, true);
             _logger.LogDebug("RoomSensorServices Stopped");
             _cts.Cancel();
             return Task.CompletedTask;
@@ -117,19 +118,19 @@ namespace GatheringRoom.Services
         }
 
 
-        public void DoorStatus(MCP23Pin doorPin, bool status)
-        {
-            if (!status)
-            {
-                MCP23Controller.PinModeSetup(doorPin, PinMode.Output);
-                MCP23Controller.Write(doorPin, PinState.High);
-            }
-            else
-            {
-                MCP23Controller.PinModeSetup(doorPin, PinMode.Input);
-                MCP23Controller.Write(doorPin, PinState.Low);
-            }
-        }
+        //public void DoorStatus(MCP23Pin doorPin, bool status)
+        //{
+        //    if (!status)
+        //    {
+        //        MCP23Controller.PinModeSetup(doorPin, PinMode.Output);
+        //        MCP23Controller.Write(doorPin, PinState.High);
+        //    }
+        //    else
+        //    {
+        //        MCP23Controller.PinModeSetup(doorPin, PinMode.Input);
+        //        MCP23Controller.Write(doorPin, PinState.Low);
+        //    }
+        //}
         private async Task CheckIFRoomIsEmpty(CancellationToken cancellationToken)
         {
             while (true)

@@ -47,18 +47,6 @@ namespace DarkRoom.Services
             DarkRoomSensorList.Add(new DarkRoomSensorController(IN10));
             DarkRoomSensorList.Add(new DarkRoomSensorController(IN11));
             DarkRoomSensorList.Add(new DarkRoomSensorController(IN12));
-            //MCP23Controller.PinModeSetup(HatInputPin.IR1, PinMode.Input);
-            //MCP23Controller.PinModeSetup(HatInputPin.IR2, PinMode.Input);
-            //MCP23Controller.PinModeSetup(HatInputPin.IR3, PinMode.Input);
-            //MCP23Controller.PinModeSetup(HatInputPin.IR4, PinMode.Input);
-            //MCP23Controller.PinModeSetup(HatInputPin.IR5, PinMode.Input);
-            //MCP23Controller.PinModeSetup(HatInputPin.IR6, PinMode.Input);
-            //MCP23Controller.PinModeSetup(HatInputPin.IR7, PinMode.Input);
-            //MCP23Controller.PinModeSetup(HatInputPin.IR8, PinMode.Input);
-            //MCP23Controller.PinModeSetup(HatInputPin.IR9, PinMode.Input);
-            //MCP23Controller.PinModeSetup(HatInputPin.IR10, PinMode.Input);
-            //MCP23Controller.PinModeSetup(HatInputPin.IR11, PinMode.Input);
-            //MCP23Controller.PinModeSetup(HatInputPin.IR12, PinMode.Input);
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
@@ -66,59 +54,45 @@ namespace DarkRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            //while (true)
-            //{
-            //    Console.WriteLine($"" +
-            //        $"{MCP23Controller.Read(HatInputPin.IR1)} " +
-            //        $"{MCP23Controller.Read(HatInputPin.IR2)} " +
-            //        $"{MCP23Controller.Read(HatInputPin.IR3)} " +
-            //        $"{MCP23Controller.Read(HatInputPin.IR4)} " +
-            //        $"{MCP23Controller.Read(HatInputPin.IR5)} " +
-            //        $"{MCP23Controller.Read(HatInputPin.IR6)} " +
-            //        $"{MCP23Controller.Read(HatInputPin.IR7)} " +
-            //        $"{MCP23Controller.Read(HatInputPin.IR8)} " +
-            //        $"{MCP23Controller.Read(HatInputPin.IR9)} " +
-            //        $"{MCP23Controller.Read(HatInputPin.IR10)} " +
-            //        $"{MCP23Controller.Read(HatInputPin.IR11)} " +
-            //        $"{MCP23Controller.Read(HatInputPin.IR12)} "
-            //    );
-            //    Thread.Sleep(1000);
-            //}
 
             while (true)
             {
-                int i = 0;
-                foreach (var sensor in DarkRoomSensorList)
+                if (VariableControlService.IsTheGameStarted)
                 {
-                    bool status = sensor.stauts();
-
-
-                    if (status)
+                    int i = 0;
+                    foreach (var sensor in DarkRoomSensorList)
                     {
-                        Console.WriteLine($"Sensor #{i}");
-                        int addedScore = sensor._darkRoomSensor.Score;
-                        Score += addedScore;
-                        if (addedScore > 0)
+                        bool status = sensor.stauts();
+                        if (status)
                         {
-                            RGBLight.SetColor(RGBColor.Blue);
-                            RGBLight.TurnRGBColorDelayed(RGBColor.White);
-                            AudioPlayer.PIStartAudio(SoundType.Bonus);
-                            sensor.BlockScoreFor1Sec();
-                            Console.WriteLine($"Scored, Total {Score}");
+                            Console.WriteLine($"Sensor #{i}");
+                            int addedScore = sensor.sensor.Score;
+                            Score += addedScore;
+                            if (addedScore > 0)
+                            {
+                                RGBLight.SetColor(RGBColor.Blue);
+                                RGBLight.TurnRGBColorDelayed(RGBColor.White);
+                                AudioPlayer.PIStartAudio(SoundType.Bonus);
+                                sensor.BlockScoreFor1Sec();
+                                Console.WriteLine($"Scored, Total {Score}");
 
-                        }
-                        else
-                        {
-                            sensor.BlockScoreFor1Sec();
-                            RGBLight.SetColor(RGBColor.Red);
-                            RGBLight.TurnRGBColorDelayed(RGBColor.White);
-                            AudioPlayer.PIStartAudio(SoundType.Descend);
-                            Console.WriteLine($"Scored Wrong, Total {Score}");
+                            }
+                            else
+                            {
+                                sensor.BlockScoreFor1Sec();
+                                RGBLight.SetColor(RGBColor.Red);
+                                RGBLight.TurnRGBColorDelayed(RGBColor.White);
+                                AudioPlayer.PIStartAudio(SoundType.Descend);
+                                Console.WriteLine($"Scored Wrong, Total {Score}");
+                            }
+
                         }
 
                     }
-
                 }
+
+
+
                 Thread.Sleep(100);
             }
         }
@@ -130,6 +104,10 @@ namespace DarkRoom.Services
         public void Dispose()
         {
             //_cts.Dispose();
+        }
+        private void Reset()
+        {
+            Score = 0;
         }
     }
 }

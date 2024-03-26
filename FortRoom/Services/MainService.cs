@@ -1,5 +1,6 @@
 ﻿using Iot.Device.Mcp3428;
 using Library;
+using Library.DoorControl;
 using Library.Enum;
 using Library.GPIOLib;
 using Library.Media;
@@ -39,9 +40,8 @@ namespace FortRoom.Services
             _controller.Setup(MasterDI.PIRPin3, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
             //AudioPlayer.PIBackgroundSound(SoundType.Background);
-            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT6, PinMode.Output);
 
-            DoorStatus(DoorPin, false);
+            DoorControl.Status(DoorPin, false);
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -62,13 +62,16 @@ namespace FortRoom.Services
                 PIR4 = _controller.Read(MasterDI.PIRPin4);
                 VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
                 // Control Background Audio
-                ControlRoomAudio();
+                ControlBackgroundAudio.ControlRoomAudio(
+                     VariableControlService.IsOccupied, VariableControlService.IsTheGameStarted, VariableControlService.IsTheGameFinished,
+                     thereAreInstructionSoundPlays, thereAreBackgroundSoundPlays
+                     );
                 // IF Enable Going To The Next room 
-                
+
                 if (VariableControlService.EnableGoingToTheNextRoom)
                 {
                     _logger.LogDebug("Open The Door");
-                    DoorStatus(DoorPin, true);
+                    DoorControl.Status(DoorPin, true);
                     while (PIR1 || PIR2 || PIR3 || PIR4)
                     {
                         PIR1 = _controller.Read(MasterDI.PIRPin1);
@@ -77,7 +80,7 @@ namespace FortRoom.Services
                         PIR4 = _controller.Read(MasterDI.PIRPin4);
                     }
                     Thread.Sleep(30000);
-                    DoorStatus(DoorPin, false);
+                    DoorControl.Status(DoorPin, false);
                     VariableControlService.EnableGoingToTheNextRoom = false;
                     VariableControlService.IsTheirAnyOneInTheRoom = false;
                     VariableControlService.IsTheGameStarted = false;
@@ -85,41 +88,6 @@ namespace FortRoom.Services
                     _logger.LogDebug("No One In The Room , All Gone To The Next Room");
                 }
 
-
-
-
-
-
-
-
-
-                //if (VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished && !thereAreInstructionSoundPlays)
-                //{
-                //    _logger.LogTrace("Start Instruction Audio");
-                //    thereAreInstructionSoundPlays = true;
-                //    AudioPlayer.PIBackgroundSound(SoundType.instruction);
-                //}
-                //else if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted
-                //    && !VariableControlService.IsTheGameFinished
-                //    && thereAreInstructionSoundPlays && !thereAreBackgroundSoundPlays)
-                //{
-                //    // Stop Background Audio 
-                //    _logger.LogTrace("Stop Instruction Audio");
-                //    thereAreInstructionSoundPlays = false;
-                //    AudioPlayer.PIStopAudio();
-                //    Thread.Sleep(500);
-                //    // Start Background Audio
-                //    _logger.LogTrace("Start Background Audio");
-                //    thereAreBackgroundSoundPlays = true;
-                //    AudioPlayer.PIBackgroundSound(SoundType.Background);
-                //}
-                //else if (VariableControlService.IsTheGameFinished && thereAreBackgroundSoundPlays)
-                //{
-                //    // Game Finished .. 
-                //    _logger.LogTrace("Stop Background Audio");
-                //    thereAreBackgroundSoundPlays = false;
-                //    AudioPlayer.PIStopAudio();
-                //}
 
             }
         }
@@ -146,51 +114,51 @@ namespace FortRoom.Services
         }
 
 
-        private void ControlRoomAudio()
-        {
-            // Control Background Audio
-            if (VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished && !thereAreInstructionSoundPlays)
-            {
-                _logger.LogTrace("Start Instruction Audio");
-                thereAreInstructionSoundPlays = true;
-                AudioPlayer.PIBackgroundSound(SoundType.instruction);
-            }
-            else if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted
-                && !VariableControlService.IsTheGameFinished
-                && thereAreInstructionSoundPlays && !thereAreBackgroundSoundPlays)
-            {
-                // Stop Background Audio 
-                _logger.LogTrace("Stop Instruction Audio");
-                thereAreInstructionSoundPlays = false;
-                AudioPlayer.PIStopAudio();
-                Thread.Sleep(500);
-                // Start Background Audio
-                _logger.LogTrace("Start Background Audio");
-                thereAreBackgroundSoundPlays = true;
-                AudioPlayer.PIBackgroundSound(SoundType.Background);
-            }
-            else if (VariableControlService.IsTheGameFinished && thereAreBackgroundSoundPlays)
-            {
-                // Game Finished .. 
-                _logger.LogTrace("Stop Background Audio");
-                thereAreBackgroundSoundPlays = false;
-                AudioPlayer.PIStopAudio();
-            }
-        }
+        //private void ControlRoomAudio()
+        //{
+        //    // Control Background Audio
+        //    if (VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished && !thereAreInstructionSoundPlays)
+        //    {
+        //        _logger.LogTrace("Start Instruction Audio");
+        //        thereAreInstructionSoundPlays = true;
+        //        AudioPlayer.PIBackgroundSound(SoundType.instruction);
+        //    }
+        //    else if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted
+        //        && !VariableControlService.IsTheGameFinished
+        //        && thereAreInstructionSoundPlays && !thereAreBackgroundSoundPlays)
+        //    {
+        //        // Stop Background Audio 
+        //        _logger.LogTrace("Stop Instruction Audio");
+        //        thereAreInstructionSoundPlays = false;
+        //        AudioPlayer.PIStopAudio();
+        //        Thread.Sleep(500);
+        //        // Start Background Audio
+        //        _logger.LogTrace("Start Background Audio");
+        //        thereAreBackgroundSoundPlays = true;
+        //        AudioPlayer.PIBackgroundSound(SoundType.Background);
+        //    }
+        //    else if (VariableControlService.IsTheGameFinished && thereAreBackgroundSoundPlays)
+        //    {
+        //        // Game Finished .. 
+        //        _logger.LogTrace("Stop Background Audio");
+        //        thereAreBackgroundSoundPlays = false;
+        //        AudioPlayer.PIStopAudio();
+        //    }
+        //}
 
-        public void DoorStatus(MCP23Pin doorPin, bool status)
-        {
-            if (!status)
-            {
-                MCP23Controller.PinModeSetup(doorPin, PinMode.Output);
-                MCP23Controller.Write(doorPin, PinState.High);
-            }
-            else
-            {
-                MCP23Controller.PinModeSetup(doorPin, PinMode.Input);
-                MCP23Controller.Write(doorPin, PinState.Low);
-            }
-        }
+        //public void DoorStatus(MCP23Pin doorPin, bool status)
+        //{
+        //    if (!status)
+        //    {
+        //        MCP23Controller.PinModeSetup(doorPin, PinMode.Output);
+        //        MCP23Controller.Write(doorPin, PinState.High);
+        //    }
+        //    else
+        //    {
+        //        MCP23Controller.PinModeSetup(doorPin, PinMode.Input);
+        //        MCP23Controller.Write(doorPin, PinState.Low);
+        //    }
+        //}
 
 
     }

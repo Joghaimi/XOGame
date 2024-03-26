@@ -1,7 +1,10 @@
 using DarkRoom.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+{
+    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+}));
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -11,16 +14,18 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHostedService<MainService>();
 builder.Services.AddHostedService<DarkRoomService>();
 //builder.Services.AddHostedService<LedMatrixService>();
+builder.Services.AddLogging(builder => builder.AddConsole().SetMinimumLevel(LogLevel.Trace));
 
 
 var app = builder.Build();
+app.UseCors("corsapp");
 // Configure CORS
-app.UseCors(options =>
-{
-    options.AllowAnyOrigin()
-           .AllowAnyMethod()
-           .AllowAnyHeader();
-});
+//app.UseCors(options =>
+//{
+//    options.AllowAnyOrigin()
+//           .AllowAnyMethod()
+//           .AllowAnyHeader();
+//});
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

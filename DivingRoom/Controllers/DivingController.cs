@@ -1,16 +1,16 @@
-﻿using FortRoom.Services;
-using Microsoft.AspNetCore.Cors;
+﻿using DivingRoom.Services;
+using Library.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FortRoom.Controllers
+namespace DivingRoom.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FortRoomController : ControllerBase
+    public class DivingController : ControllerBase
     {
-        private readonly ILogger<FortRoomController> _logger;
-        public FortRoomController(ILogger<FortRoomController> logger)
+        private readonly ILogger<DivingController> _logger;
+        public DivingController(ILogger<DivingController> logger)
         {
             _logger = logger;
         }
@@ -47,11 +47,6 @@ namespace FortRoom.Controllers
             VariableControlService.TeamScore = TeamScore;
             VariableControlService.IsOccupied = true;
             return Ok();
-        }
-        [HttpGet("ReturnScore")]
-        public IActionResult ReturnScore()
-        {
-            return Ok(VariableControlService.TeamScore);
         }
         [HttpGet("GoToTheNextRoom")]
         public async Task<IActionResult> NextRoom()

@@ -11,33 +11,33 @@ namespace Library.DarkRoomSensor
 {
     public class DarkRoomSensorController
     {
-        public DarkRoomSensor _darkRoomSensor;
-        private bool falseForKnow =false;
-        public DarkRoomSensorController(DarkRoomSensor darkRoomSensor)
+        public DarkRoomSensor sensor;
+        private bool falseFornow =false;
+        public DarkRoomSensorController(DarkRoomSensor sensor)
         {
-            _darkRoomSensor = darkRoomSensor;
-            MCP23Controller.PinModeSetup(darkRoomSensor.Pin, PinMode.Input);
+            this.sensor = sensor;
+            MCP23Controller.PinModeSetup(this.sensor.Pin, PinMode.Input);
         }
         public bool stauts()
         {
-            if(falseForKnow)
+            if(falseFornow)
                 return false;
-            if (_darkRoomSensor.isInverted)
-                return (!MCP23Controller.Read(_darkRoomSensor.Pin));
+            if (sensor.isInverted)
+                return (!MCP23Controller.Read(sensor.Pin));
             else
-                return (MCP23Controller.Read(_darkRoomSensor.Pin));
+                return (MCP23Controller.Read(sensor.Pin));
 
         }
 
         public (bool status, int score) SensorStatus()
         {
-            if (!_darkRoomSensor.isShoot)
+            if (!sensor.isShoot)
             {
-                _darkRoomSensor.isShoot = true;
-                if (_darkRoomSensor.isInverted)
-                    return (!MCP23Controller.Read(_darkRoomSensor.Pin), _darkRoomSensor.Score);
+                sensor.isShoot = true;
+                if (sensor.isInverted)
+                    return (!MCP23Controller.Read(sensor.Pin), sensor.Score);
                 else
-                    return (MCP23Controller.Read(_darkRoomSensor.Pin), _darkRoomSensor.Score);
+                    return (MCP23Controller.Read(sensor.Pin), sensor.Score);
 
             }
             return (false, 0);
@@ -47,9 +47,9 @@ namespace Library.DarkRoomSensor
 
             Task.Run(async () =>
             {
-                falseForKnow = true;
+                falseFornow = true;
                 await Task.Delay(1000);
-                falseForKnow = false;
+                falseFornow = false;
             });
         }
     }

@@ -1,7 +1,10 @@
 using FloorIsLava.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+{
+    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+}));
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -15,12 +18,7 @@ builder.Services.AddHostedService<RGBButtonService>(); // The Main Flow ..
 
 var app = builder.Build();
 // Configure CORS
-app.UseCors(options =>
-{
-    options.AllowAnyOrigin()
-           .AllowAnyMethod()
-           .AllowAnyHeader();
-});
+app.UseCors("corsapp");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

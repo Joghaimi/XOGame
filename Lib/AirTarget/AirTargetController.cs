@@ -33,6 +33,12 @@ namespace Library.AirTarget
             _Target3 = Target3;
             _Target4 = Target4;
             _Target5 = Target5;
+            MCP23Controller.PinModeSetup(_ShelfLight.Pin, PinMode.Output);
+            MCP23Controller.PinModeSetup(_Target1.Pin, PinMode.Input);
+            MCP23Controller.PinModeSetup(_Target2.Pin, PinMode.Input);
+            MCP23Controller.PinModeSetup(_Target3.Pin, PinMode.Input);
+            MCP23Controller.PinModeSetup(_Target4.Pin, PinMode.Input);
+            MCP23Controller.PinModeSetup(_Target5.Pin, PinMode.Input);
 
         }
         public void Init()

@@ -30,7 +30,7 @@ namespace Library.RGBLib
         {
             CLKPin = _clkPin;
             DataPin = _dataPin;
-            _room=room;
+            _room = room;
 
         }
         public static async void SetColor(RGBColor selectedColor)
@@ -120,7 +120,16 @@ namespace Library.RGBLib
                     return "/home/pi/XOGame";
             }
         }
+        [Obsolete("Don't Use This Function")]
         public static async Task TurnRGBColorDelayed(RGBColor rGBColor)
+        {
+            Task.Run(async () =>
+            {
+                await Task.Delay(1000);
+                SetColor(rGBColor);
+            });
+        }
+        public static void TurnRGBColorDelayedASec(RGBColor rGBColor)
         {
             Task.Run(async () =>
             {

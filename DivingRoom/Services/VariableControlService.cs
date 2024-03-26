@@ -1,9 +1,10 @@
 ﻿using Iot.Device.Mcp23xxx;
 using Library;
 using Library.GPIOLib;
+using Library.Model;
 using Library.RGBLib;
 
-namespace RGBButtonService.Services
+namespace DivingRoom.Services
 {
     public static class VariableControlService
     {
@@ -12,7 +13,8 @@ namespace RGBButtonService.Services
         public static bool IsTheirAnyOneInTheRoom { get; set; } = false;
         public static int TimeOfPressureHit { get; set; } = 0;
         public static int ActiveButtonPressed { get; set; } = 0;
-        //public static Team TeamScore { get; set; } = new Team();
         public static bool IsOccupied { get; set; }
+        public static Team TeamScore { get; set; } = new Team();
+        public static bool EnableGoingToTheNextRoom = false;
     }
 }

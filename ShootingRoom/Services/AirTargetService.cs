@@ -63,18 +63,18 @@ namespace ShootingRoom.Services
         {
             _controller = new GPIOController();
             GameStopWatch.Start();
-            var airTarget1 = new AirTargetController(ShelfLight, Target1, Target2, Target3, Target4, Target5);
-            var airTarget2 = new AirTargetController(ShelfLight2, Target6, Target7, Target8, Target9, Target10);
-            var airTarget3 = new AirTargetController(ShelfLight3, Target11, Target12, Target13, Target14, Target15);
-            var airTarget4 = new AirTargetController(ShelfLight4, Target16, Target17, Target18, Target19, Target20);
-            airTarget1.Init();
-            airTarget2.Init();
-            airTarget3.Init();
-            airTarget4.Init();
-            AirTargetList.Add(airTarget1);
-            AirTargetList.Add(airTarget2);
-            AirTargetList.Add(airTarget3);
-            AirTargetList.Add(airTarget4);
+            //var airTarget1 = new AirTargetController(ShelfLight, Target1, Target2, Target3, Target4, Target5);
+            //var airTarget2 = new AirTargetController(ShelfLight2, Target6, Target7, Target8, Target9, Target10);
+            //var airTarget3 = new AirTargetController(ShelfLight3, Target11, Target12, Target13, Target14, Target15);
+            //var airTarget4 = new AirTargetController(ShelfLight4, Target16, Target17, Target18, Target19, Target20);
+            //airTarget1.Init();
+            //airTarget2.Init();
+            //airTarget3.Init();
+            //airTarget4.Init();
+            AirTargetList.Add(new AirTargetController(ShelfLight, Target1, Target2, Target3, Target4, Target5));
+            AirTargetList.Add(new AirTargetController(ShelfLight2, Target6, Target7, Target8, Target9, Target10));
+            AirTargetList.Add(new AirTargetController(ShelfLight3, Target11, Target12, Target13, Target14, Target15));
+            AirTargetList.Add(new AirTargetController(ShelfLight4, Target16, Target17, Target18, Target19, Target20));
             MCP23Controller.PinModeSetup(TargetMotorControl, PinMode.Output);
             MCP23Controller.PinModeSetup(BigTargetIRSensor, PinMode.Input);
             _controller.Setup(BigTargetRelay, PinMode.Output);
@@ -99,39 +99,14 @@ namespace ShootingRoom.Services
 
             Stopwatch Shelftimer = new Stopwatch();
             Stopwatch LevelTimer = new Stopwatch();
-            Stopwatch BigTargetTimer = new Stopwatch();
+            
 
             while (true)
             {
                 if (VariableControlService.IsTheGameStarted)
                 {
-
-                    ControlPin(BigTargetRelay, true);
                     ControlPin(GunShootRelay, true);
-                    BigTargetTimer.Start();
-                    BigTargetTimer.Restart();
-                    while (true && BigTargetTimer.ElapsedMilliseconds < 60000)
-                    {
-                        if (!VariableControlService.IsTheGameStarted)
-                            break;
-                        if (MCP23Controller.Read(MasterDI.IN1))
-                        {
-                            bigTargetHitScore++;
-                            Console.WriteLine($"Target Hit # {bigTargetHitScore}");
-                            RGBLight.SetColor(RGBColor.Blue);
-                            RGBLight.TurnRGBColorDelayed(RGBColor.White);
-                            Thread.Sleep(500);
-                        }
-                        if (bigTargetHitScore == 5)
-                        {
-                            Score += 100;
-                            Console.WriteLine($"Remove Big Target and start the game");
-                            break;
-                        }
-                        Thread.Sleep(10);
-                    }
-                    ControlPin(BigTargetRelay, false);
-                    Console.WriteLine($"Big Target Finished");
+                    BigTargetTask();
                     ReturnAllTargets();
 
                     while (!cancellationToken.IsCancellationRequested)
@@ -308,6 +283,45 @@ namespace ShootingRoom.Services
             RGBLight.SetColor(RGBColor.Red);
             RGBLight.TurnRGBColorDelayed(RGBColor.White);
         }
+
+        // ====== Big Target Task
+
+        private void BigTargetTask()
+        {
+            Stopwatch BigTargetTimer = new Stopwatch();
+            ControlPin(BigTargetRelay, true);
+            BigTargetTimer.Start();
+            BigTargetTimer.Restart();
+            while (true && BigTargetTimer.ElapsedMilliseconds < 60000)
+            {
+                if (!VariableControlService.IsTheGameStarted)
+                    break;
+                if (MCP23Controller.Read(MasterDI.IN1))
+                {
+                    bigTargetHitScore++;
+                    Console.WriteLine($"Target Hit # {bigTargetHitScore}");
+                    RGBLight.SetColor(RGBColor.Blue);
+                    RGBLight.TurnRGBColorDelayed(RGBColor.White);
+                    Thread.Sleep(500);
+                }
+                if (bigTargetHitScore == 5)
+                {
+                    Score += 100;
+                    Console.WriteLine($"Remove Big Target and start the game");
+                    break;
+                }
+                Thread.Sleep(10);
+            }
+            ControlPin(BigTargetRelay, false);
+            Console.WriteLine($"Big Target Finished");
+        }
+
+
+
+
+
+
+
         public Task StopAsync(CancellationToken cancellationToken)
         {
             //_cts.Cancel();
