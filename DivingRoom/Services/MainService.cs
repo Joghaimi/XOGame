@@ -60,8 +60,7 @@ namespace DivingRoom.Services
                 PIR4 = _controller.Read(MasterDI.PIRPin4);
                 VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
 
-                ControlBackgroundAudio.ControlRoomAudio(VariableControlService.IsOccupied, VariableControlService.IsTheGameStarted, VariableControlService.IsTheGameFinished,thereAreInstructionSoundPlays, thereAreBackgroundSoundPlays);
-
+                ControlRoomAudio();
                 if (VariableControlService.EnableGoingToTheNextRoom)
                 {
                     _logger.LogDebug("Open The Door");
@@ -109,36 +108,36 @@ namespace DivingRoom.Services
             }
         }
 
-        //private void ControlRoomAudio()
-        //{
-        //    if (VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished && !thereAreInstructionSoundPlays)
-        //    {
-        //        _logger.LogTrace("Start Instruction Audio");
-        //        thereAreInstructionSoundPlays = true;
-        //        AudioPlayer.PIBackgroundSound(SoundType.instruction);
-        //    }
-        //    else if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted
-        //        && !VariableControlService.IsTheGameFinished
-        //        && thereAreInstructionSoundPlays && !thereAreBackgroundSoundPlays)
-        //    {
-        //        // Stop Background Audio 
-        //        _logger.LogTrace("Stop Instruction Audio");
-        //        thereAreInstructionSoundPlays = false;
-        //        AudioPlayer.PIStopAudio();
-        //        Thread.Sleep(500);
-        //        // Start Background Audio
-        //        _logger.LogTrace("Start Background Audio");
-        //        thereAreBackgroundSoundPlays = true;
-        //        AudioPlayer.PIBackgroundSound(SoundType.Background);
-        //    }
-        //    else if (VariableControlService.IsTheGameFinished && thereAreBackgroundSoundPlays)
-        //    {
-        //        // Game Finished .. 
-        //        _logger.LogTrace("Stop Background Audio");
-        //        thereAreBackgroundSoundPlays = false;
-        //        AudioPlayer.PIStopAudio();
-        //    }
-        //}
+        private void ControlRoomAudio()
+        {
+            if (VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished && !thereAreInstructionSoundPlays)
+            {
+                _logger.LogTrace("Start Instruction Audio");
+                thereAreInstructionSoundPlays = true;
+                AudioPlayer.PIBackgroundSound(SoundType.instruction);
+            }
+            else if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted
+                && !VariableControlService.IsTheGameFinished
+                && thereAreInstructionSoundPlays && !thereAreBackgroundSoundPlays)
+            {
+                // Stop Background Audio 
+                _logger.LogTrace("Stop Instruction Audio");
+                thereAreInstructionSoundPlays = false;
+                AudioPlayer.PIStopAudio();
+                Thread.Sleep(500);
+                // Start Background Audio
+                _logger.LogTrace("Start Background Audio");
+                thereAreBackgroundSoundPlays = true;
+                AudioPlayer.PIBackgroundSound(SoundType.Background);
+            }
+            else if (VariableControlService.IsTheGameFinished && thereAreBackgroundSoundPlays)
+            {
+                // Game Finished .. 
+                _logger.LogTrace("Stop Background Audio");
+                thereAreBackgroundSoundPlays = false;
+                AudioPlayer.PIStopAudio();
+            }
+        }
         //public void DoorStatus(MCP23Pin doorPin, bool status)
         //{
         //    if (!status)
