@@ -42,7 +42,7 @@ namespace FloorIsLava.Services
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT4, PinMode.Output);
             GameStopWatch.Start();
             MotorStopWatch.Start();
-            AudioPlayer.PIBackgroundSound(SoundType.Background);
+            
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task task1 = Task.Run(() => RunService(_cts.Token));
