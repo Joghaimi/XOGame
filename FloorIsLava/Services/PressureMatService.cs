@@ -18,7 +18,7 @@ namespace FloorIsLava.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            MCP23Controller.PinModeSetup(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
@@ -35,7 +35,7 @@ namespace FloorIsLava.Services
             {
                 if (VariableControlService.IsTheGameStarted)
                 {
-                    currentValue = !MCP23Controller.Read(MasterDI.IN1.Chip, MasterDI.IN1.port, MasterDI.IN1.PinNumber);
+                    currentValue = !MCP23Controller.Read(MasterDI.IN1,MasterDI.IN1.PinNumber);
                     if (currentValue && !scoreJustDecreased)
                     {
 
