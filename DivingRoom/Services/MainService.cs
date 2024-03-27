@@ -33,6 +33,7 @@ namespace DivingRoom.Services
             _controller = new GPIOController();
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Diving);
             MCP23Controller.Init(Room.Diving);
+            AudioPlayer.Init(Room.Diving);
 
             // Init the Pin's
             _controller.Setup(MasterDI.PIRPin1, PinMode.InputPullDown);

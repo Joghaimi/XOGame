@@ -34,19 +34,11 @@ namespace DivingRoom.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            //RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Diving);
-            //MCP23Controller.Init(Room.Diving);
-            //MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
-            //MCP23Controller.PinModeSetup(MasterDI.IN2, PinMode.Input);
-            //MCP23Controller.PinModeSetup(MasterDI.IN3, PinMode.Input);
-
-
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT6, PinMode.Output);
             MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
 
             _appLifetime.ApplicationStopping.Register(Stopped);
             _logger.LogWarning("Start RGBButtonService");
-            //AudioPlayer.PIBackgroundSound(SoundType.Background);
 
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1));
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR2, RGBButtonPin.RGBG2, RGBButtonPin.RGBB2, RGBButtonPin.RGBPB2));
@@ -69,11 +61,7 @@ namespace DivingRoom.Services
         {
             while (true)
             {
-                //bool isIntered =
-                //        MCP23Controller.Read(MasterDI.IN1) ||
-                //        MCP23Controller.Read(MasterDI.IN2) ||
-                //        MCP23Controller.Read(MasterDI.IN3);
-                //MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
+                
                 Reset();
                 if (VariableControlService.IsTheGameStarted)
                 {
