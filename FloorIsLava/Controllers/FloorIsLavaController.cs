@@ -48,6 +48,11 @@ namespace FloorIsLava.Controllers
             VariableControlService.IsOccupied = true;
             return Ok();
         }
+        [HttpGet("ReturnScore")]
+        public IActionResult ReturnScore()
+        {
+            return Ok(VariableControlService.TeamScore);
+        }
         [HttpGet("GoToTheNextRoom")]
         public async Task<IActionResult> NextRoom()
         {
