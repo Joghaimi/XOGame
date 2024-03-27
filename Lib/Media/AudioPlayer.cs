@@ -106,7 +106,7 @@ namespace Library.Media
                 case SoundType.Done:
                     break;
                 case SoundType.Bonus:
-                    soundFilePath = $"{HomePath()}/audio/GameBonus.mp3";
+                    soundFilePath = $"{HomePath()}/audio/SuccessButton.wav";
                     break;
                 case SoundType.Finish:
                     soundFilePath = $"{HomePath()}/audio/Gamefinish.mp3";
@@ -122,11 +122,12 @@ namespace Library.Media
                 case SoundType.MarioJump:
                     break;
                 case SoundType.MissionCompleted:
+                    soundFilePath = $"{HomePath()}/audio/MissionAccomplished.wav";
                     break;
                 case SoundType.Descend2:
                     break;
                 case SoundType.Descend:
-                    soundFilePath = $"{HomePath()}/audio/GameBonus.mp3";
+                    soundFilePath = $"{HomePath()}/audio/FailureIndicator.wav";
                     break;
                 case SoundType.GameOver:
                     break;
@@ -142,7 +143,7 @@ namespace Library.Media
                     soundFilePath = $"{HomePath()}/audio/{BackgroundSound()}";
                     break;
                 case SoundType.ScanId:
-                    soundFilePath = $"{HomePath()}/audio/ScanId.wav";
+                    soundFilePath = $"{HomePath()}/audio/SuccessButton.wav";
                     break;
                 case SoundType.instruction:
                     soundFilePath = $"{HomePath()}/audio/{instructionSound()}";
@@ -181,17 +182,17 @@ namespace Library.Media
             switch (_currentRoom)
             {
                 case Room.Fort:
-                    return "Background.wav";
+                    return "FortBackTrack.wav";
                 case Room.Dark:
-                    return "DarkRoom.wav";
+                    return "DarkBackTrack.wav";
                 case Room.Diving:
-                    return "FloorLava.mp3";
+                    return "DivingBackTrack.wav";
                 case Room.FloorIsLava:
-                    return "FloorLava.mp3";
+                    return "FloorIsLavaBackTrack.wav";
                 case Room.Gathering:
                     return "GatheringBG.wav";
                 case Room.Shooting:
-                    return "FloorLava.wav";
+                    return "ShootingBackTrack.wav";
                 default:
                     return "/home/pi/XOGame";
             }
@@ -201,17 +202,17 @@ namespace Library.Media
             switch (_currentRoom)
             {
                 case Room.Fort:
-                    return "Background.wav";
+                    return "Instruction.wav";
                 case Room.Dark:
-                    return "DarkRoom.wav";
+                    return "DivingInstruction.wav";
                 case Room.Diving:
-                    return "FloorLava.mp3";
+                    return "DivingInstruction.wav";
                 case Room.FloorIsLava:
-                    return "FloorLava.mp3";
+                    return "FloorIsLavaInstruction.wav";
                 case Room.Gathering:
                     return "GatheringBG.wav";
                 case Room.Shooting:
-                    return "FloorLava.wav";
+                    return "ShootingInstruction.wav";
                 default:
                     return "/home/pi/XOGame";
             }
