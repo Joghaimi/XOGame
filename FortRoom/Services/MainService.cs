@@ -7,6 +7,7 @@ using Library.Media;
 using Library.PinMapping;
 using Library.RGBLib;
 using System.Device.Gpio;
+using System.Diagnostics;
 
 namespace FortRoom.Services
 {
@@ -16,14 +17,13 @@ namespace FortRoom.Services
     public class MainService : IHostedService, IDisposable
     {
         private readonly ILogger<MainService> _logger;
+        private GPIOController _controller;
+        private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
+        private CancellationTokenSource _cts, cts2;
+        public bool isTheirAreSomeOneInTheRoom = false;
+        private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
         bool thereAreBackgroundSoundPlays = false;
         bool thereAreInstructionSoundPlays = false;
-        private GPIOController _controller;
-        public bool isTheirAreSomeOneInTheRoom = false;
-        private CancellationTokenSource _cts, cts2;
-        private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
-        private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
-
         public MainService(ILogger<MainService> logger)
         {
             _logger = logger;
@@ -33,7 +33,7 @@ namespace FortRoom.Services
             _controller = new GPIOController();
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Fort);
             AudioPlayer.Init(Room.Fort);
-            MCP23Controller.Init(true);
+            MCP23Controller.Init(Room.Fort);
             // Init the Pin's
             _controller.Setup(MasterDI.PIRPin1, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin2, PinMode.InputPullDown);
@@ -51,7 +51,7 @@ namespace FortRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            
+
             RGBLight.SetColor(RGBColor.Red);
             MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
             while (!cancellationToken.IsCancellationRequested)
@@ -111,7 +111,7 @@ namespace FortRoom.Services
             //_cts.Dispose();
         }
 
-
+        // To Do Next Time
         private void ControlRoomAudio()
         {
             // Control Background Audio
@@ -144,20 +144,7 @@ namespace FortRoom.Services
             }
         }
 
-        //public void DoorStatus(MCP23Pin doorPin, bool status)
-        //{
-        //    if (!status)
-        //    {
-        //        MCP23Controller.PinModeSetup(doorPin, PinMode.Output);
-        //        MCP23Controller.Write(doorPin, PinState.High);
-        //    }
-        //    else
-        //    {
-        //        MCP23Controller.PinModeSetup(doorPin, PinMode.Input);
-        //        MCP23Controller.Write(doorPin, PinState.Low);
-        //    }
-        //}
-
+      
 
     }
 }

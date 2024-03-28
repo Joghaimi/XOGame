@@ -25,10 +25,6 @@ namespace FortRoom.Services
             (7,4),
             (2,6),
         };
-
-
-        int Score = 0;
-
         int CurrentColor = 0;
 
 
@@ -39,7 +35,6 @@ namespace FortRoom.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            //_appLifetime.ApplicationStopping.Register(Stopped);
             _logger.LogWarning("Start RGBButtonService");
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR5, RGBButtonPin.RGBG5, RGBButtonPin.RGBB5, RGBButtonPin.RGBPB5));
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR6, RGBButtonPin.RGBG6, RGBButtonPin.RGBB6, RGBButtonPin.RGBPB6));
@@ -63,6 +58,16 @@ namespace FortRoom.Services
             bool started = false;
             while (true)
             {
+
+                // Control Level Timer
+
+                if (VariableControlService.IsTheGameStarted && !IsGameTimingStarted)
+                {
+                    IsGameTimingStarted = true;
+                    GameTiming.Restart();
+                }
+
+
                 if (VariableControlService.IsTheGameStarted)
                 {
                     Console.WriteLine($"Game Round State {VariableControlService.IsTheGameStarted}");
@@ -77,7 +82,8 @@ namespace FortRoom.Services
                     {
                         foreach (var item in RGBButtonList)
                         {
-                            if (VariableControlService.IsTheGameStarted) {
+                            if (VariableControlService.IsTheGameStarted)
+                            {
                                 bool itemSelected = !item.CurrentStatus() && item.CurrentColor() == selectedColor;
                                 if (itemSelected)
                                 {
@@ -91,11 +97,11 @@ namespace FortRoom.Services
                                     //Console.WriteLine($"Score {VariableControlService.ActiveButtonPressed} numberOfPressed now {numberOfClieckedButton}");
                                 }
                             }
-                           
+
                         }
                         if (numberOfClieckedButton == RGBButtonList.Count())
                             break;
-                        if(!VariableControlService.IsTheGameStarted)
+                        if (!VariableControlService.IsTheGameStarted)
                             break;
                         Thread.Sleep(10);
                     }
@@ -117,7 +123,8 @@ namespace FortRoom.Services
                         stopGame();
                     }
                 }
-                else if (!VariableControlService.IsTheGameStarted && VariableControlService.IsTheGameFinished && started) { 
+                else if (!VariableControlService.IsTheGameStarted && VariableControlService.IsTheGameFinished && started)
+                {
                     started = false;
                     stopGame();
                 }
@@ -133,7 +140,7 @@ namespace FortRoom.Services
                     IsGameTimingStarted = true;
                     GameTiming.Restart();
                 }
-                if (GameTiming.ElapsedMilliseconds > 540000)
+                if (GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming)
                 {
                     stopGame();
                     VariableControlService.IsTheGameStarted = false;
@@ -144,12 +151,10 @@ namespace FortRoom.Services
         public Task StopAsync(CancellationToken cancellationToken)
         {
             Stopped();
-            //_cts.Cancel();
             return Task.CompletedTask;
         }
         public void Dispose()
         {
-            //_cts.Dispose();
         }
         public void Stopped()
         {

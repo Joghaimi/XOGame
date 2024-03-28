@@ -24,7 +24,6 @@ namespace FortRoom.Services
         public Task StartAsync(CancellationToken cancellationToken)
         {
             MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
-
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
