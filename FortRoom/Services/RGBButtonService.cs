@@ -86,21 +86,19 @@ namespace FortRoom.Services
                     {
                         foreach (var item in RGBButtonList)
                         {
-                            if (VariableControlService.IsTheGameStarted)
+                            if (!VariableControlService.IsTheGameStarted)
+                                break;
+                            bool itemSelected = !item.CurrentStatus() && item.CurrentColor() == selectedColor;
+                            if (itemSelected)
                             {
-                                bool itemSelected = !item.CurrentStatus() && item.CurrentColor() == selectedColor;
-                                if (itemSelected)
-                                {
-                                    MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
-                                    RGBLight.SetColor(RGBColor.Blue);
-                                    AudioPlayer.PIStartAudio(SoundType.Bonus);
-                                    item.TurnColorOn(RGBColor.Off);
-                                    RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
-                                    numberOfClieckedButton++;
-                                    VariableControlService.ActiveButtonPressed++;
-                                    //Console.WriteLine($"Score {VariableControlService.ActiveButtonPressed} numberOfPressed now {numberOfClieckedButton}");
-                                    VariableControlService.TeamScore.FortRoomScore += 10; 
-                                }
+                                MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
+                                RGBLight.SetColor(RGBColor.Blue);
+                                AudioPlayer.PIStartAudio(SoundType.Bonus);
+                                item.TurnColorOn(RGBColor.Off);
+                                RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
+                                numberOfClieckedButton++;
+                                VariableControlService.ActiveButtonPressed++;
+                                VariableControlService.TeamScore.FortRoomScore += 10;
                             }
 
                         }
