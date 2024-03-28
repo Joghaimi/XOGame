@@ -48,7 +48,7 @@ namespace FortRoom.Services
                             MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
                             AudioPlayer.PIStartAudio(SoundType.Descend);
                             RGBLight.SetColor(RGBColor.Red);
-                            RGBLight.TurnRGBOffAfter1Sec();
+                            RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
                             scoreJustDecreased = true;
                             timer.Restart();
                             VariableControlService.TeamScore.FortRoomScore -= 5;

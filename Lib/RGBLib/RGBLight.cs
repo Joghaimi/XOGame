@@ -137,6 +137,7 @@ namespace Library.RGBLib
                 SetColor(rGBColor);
             });
         }
+    
 
         public static async Task TurnRGBOFFDelayed()
         {

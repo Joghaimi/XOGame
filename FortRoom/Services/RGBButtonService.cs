@@ -46,6 +46,8 @@ namespace FortRoom.Services
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR14, RGBButtonPin.RGBG14, RGBButtonPin.RGBB14, RGBButtonPin.RGBPB14));
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR15, RGBButtonPin.RGBG15, RGBButtonPin.RGBB15, RGBButtonPin.RGBPB15));
             GameStopWatch.Start();
+            // Default Color For RGB IS White
+            RGBLight.SetColor(RGBColor.White);
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
@@ -93,7 +95,7 @@ namespace FortRoom.Services
                                     RGBLight.SetColor(RGBColor.Blue);
                                     AudioPlayer.PIStartAudio(SoundType.Bonus);
                                     item.TurnColorOn(RGBColor.Off);
-                                    RGBLight.TurnRGBOffAfter1Sec();
+                                    RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
                                     numberOfClieckedButton++;
                                     VariableControlService.ActiveButtonPressed++;
                                     //Console.WriteLine($"Score {VariableControlService.ActiveButtonPressed} numberOfPressed now {numberOfClieckedButton}");
@@ -199,7 +201,7 @@ namespace FortRoom.Services
                         RGBLight.SetColor(RGBColor.Blue);
                         AudioPlayer.PIStartAudio(SoundType.Bonus);
                         RGBButtonList[button1Index].TurnColorOn(RGBColor.Off);
-                        RGBLight.TurnRGBOffAfter1Sec();
+                        RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
                     }
                 }
                 if (!Button2)
@@ -211,7 +213,8 @@ namespace FortRoom.Services
                         RGBLight.SetColor(RGBColor.Blue);
                         AudioPlayer.PIStartAudio(SoundType.Bonus);
                         RGBButtonList[button2Index].TurnColorOn(RGBColor.Off);
-                        RGBLight.TurnRGBOffAfter1Sec();
+                        RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
+
 
                     }
                 }
