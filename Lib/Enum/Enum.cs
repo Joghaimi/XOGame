@@ -34,6 +34,7 @@ namespace Library
         RoundThree,
         RoundFour,
         RoundFive,
+        MissionAccomplished
     }
     public enum Room {
         Fort,

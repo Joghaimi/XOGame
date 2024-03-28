@@ -106,7 +106,6 @@ namespace FortRoom.Services
                 }
                 else if (!VariableControlService.IsTheGameStarted && VariableControlService.IsTheGameFinished && gameStarted)
                 {
-                    _logger.LogError($"Stop Obstraction");
 
                     stopObstruction();
                     gameStarted =false;
@@ -153,7 +152,7 @@ namespace FortRoom.Services
 
         void stopObstruction()
         {
-            _logger.LogInformation("Obstruction Stopped");
+            _logger.LogInformation("Obstruction Stopped ***");
             Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
             Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Stop);
             Thread.Sleep(500);

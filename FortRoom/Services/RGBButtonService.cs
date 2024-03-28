@@ -12,7 +12,7 @@ namespace FortRoom.Services
     public class RGBButtonService : IHostedService, IDisposable
     {
         List<RGBButton> RGBButtonList = new List<RGBButton>();
-        private readonly ILogger<ObstructionControlService> _logger;
+        private readonly ILogger<RGBButtonService> _logger;
         Stopwatch GameStopWatch = new Stopwatch();
         Stopwatch GameTiming = new Stopwatch();
         private CancellationTokenSource _cts, _cts2;
@@ -28,7 +28,7 @@ namespace FortRoom.Services
         int CurrentColor = 0;
 
 
-        public RGBButtonService(ILogger<ObstructionControlService> logger, IHostApplicationLifetime appLifetime)
+        public RGBButtonService(ILogger<RGBButtonService> logger, IHostApplicationLifetime appLifetime)
         {
             _logger = logger;
         }
@@ -236,6 +236,8 @@ namespace FortRoom.Services
             {
                 item.TurnColorOn(RGBColor.Off);
             }
+            AudioPlayer.PIStartAudio(SoundType.MissionAccomplished);
+            Thread.Sleep(1000);
             AudioPlayer.PIStopAudio();
         }
 

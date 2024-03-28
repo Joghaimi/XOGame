@@ -160,6 +160,9 @@ namespace Library.Media
                 case SoundType.RoundFive:
                     soundFilePath = $"{HomePath()}/audio/Round5.wav";
                     break;
+                case SoundType.MissionAccomplished:
+                    soundFilePath = $"{HomePath()}/audio/MissionAccomplished.wav";
+                    break;
                 default:
                     break;
             }
