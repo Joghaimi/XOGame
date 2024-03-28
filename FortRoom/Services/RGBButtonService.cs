@@ -73,7 +73,9 @@ namespace FortRoom.Services
                     Console.WriteLine($"Game Round State {VariableControlService.IsTheGameStarted}");
                     started = true;
                     RGBColor selectedColor = (RGBColor)CurrentColor;
-                    AudioPlayer.PIStartAudio(SoundType.Button);
+                    ControlRoundSound(level);
+
+                    //AudioPlayer.PIStartAudio(SoundType.Button);
                     StartGameTask(selectedColor, level);
                     TurnRGBButtonWithColor(selectedColor);
                     byte numberOfClieckedButton = 0;
@@ -95,6 +97,7 @@ namespace FortRoom.Services
                                     numberOfClieckedButton++;
                                     VariableControlService.ActiveButtonPressed++;
                                     //Console.WriteLine($"Score {VariableControlService.ActiveButtonPressed} numberOfPressed now {numberOfClieckedButton}");
+                                    VariableControlService.TeamScore.FortRoomScore += 10; 
                                 }
                             }
 
@@ -230,5 +233,23 @@ namespace FortRoom.Services
         }
 
 
+
+
+        private void ControlRoundSound(int roundNumber)
+        {
+
+            if (roundNumber == 0)
+                AudioPlayer.PIStartAudio(SoundType.RoundOne);
+            if (roundNumber == 1)
+                AudioPlayer.PIStartAudio(SoundType.RoundTwo);
+            if (roundNumber == 2)
+                AudioPlayer.PIStartAudio(SoundType.RoundThree);
+            if (roundNumber == 3)
+                AudioPlayer.PIStartAudio(SoundType.RoundFour);
+            if (roundNumber == 4)
+                AudioPlayer.PIStartAudio(SoundType.RoundFive);
+
+        }
     }
+
 }

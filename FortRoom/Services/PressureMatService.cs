@@ -51,6 +51,8 @@ namespace FortRoom.Services
                             RGBLight.TurnRGBOffAfter1Sec();
                             scoreJustDecreased = true;
                             timer.Restart();
+                            VariableControlService.TeamScore.FortRoomScore -= 5;
+
                         }
                         //previousValue = currentValue;
                         if (scoreJustDecreased && timer.ElapsedMilliseconds >= 3000)

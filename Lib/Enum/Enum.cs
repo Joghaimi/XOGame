@@ -28,7 +28,12 @@ namespace Library
         Winner1,
         Background,
         ScanId,
-        instruction
+        instruction,
+        RoundOne,
+        RoundTwo,
+        RoundThree,
+        RoundFour,
+        RoundFive,
     }
     public enum Room {
         Fort,

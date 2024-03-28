@@ -148,6 +148,21 @@ namespace Library.Media
                 case SoundType.instruction:
                     soundFilePath = $"{HomePath()}/audio/{instructionSound()}";
                     break;
+                case SoundType.RoundOne:
+                    soundFilePath = $"{HomePath()}/audio/Round1.wav";
+                    break;
+                case SoundType.RoundTwo:
+                    soundFilePath = $"{HomePath()}/audio/Round2.wav";
+                    break;
+                case SoundType.RoundThree:
+                    soundFilePath = $"{HomePath()}/audio/Round3.wav";
+                    break;
+                case SoundType.RoundFour:
+                    soundFilePath = $"{HomePath()}/audio/Round4.wav";
+                    break;
+                case SoundType.RoundFive:
+                    soundFilePath = $"{HomePath()}/audio/Round5.wav";
+                    break;
                 default:
                     break;
             }
