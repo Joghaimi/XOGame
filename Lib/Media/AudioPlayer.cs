@@ -47,16 +47,14 @@ namespace Library.Media
         }
         public static void PIStopAudio()
         {
+
             if (audioProcess != null && !audioProcess.HasExited)
             {
                 audioProcess.Kill();
                 audioProcess.WaitForExit();
                 Console.WriteLine("Audio playback stopped.");
             }
-            else
-            {
-                Console.WriteLine("No audio is currently playing.");
-            }
+
         }
         public static void PIForceStopAudio()
         {
@@ -81,7 +79,6 @@ namespace Library.Media
 
         public static void PIBackgroundSound(SoundType soundType)
         {
-
             soundFilePath = PISoundPath(soundType);
             audioProcess = new Process();
             audioProcess.StartInfo.FileName = "/bin/bash";

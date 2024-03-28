@@ -24,6 +24,9 @@ namespace FortRoom.Services
         private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
         bool thereAreBackgroundSoundPlays = false;
         bool thereAreInstructionSoundPlays = false;
+
+
+
         public MainService(ILogger<MainService> logger)
         {
             _logger = logger;
@@ -34,12 +37,11 @@ namespace FortRoom.Services
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Fort);
             AudioPlayer.Init(Room.Fort);
             MCP23Controller.Init(Room.Fort);
-            // Init the Pin's
+            
             _controller.Setup(MasterDI.PIRPin1, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin2, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin3, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
-            //AudioPlayer.PIBackgroundSound(SoundType.Background);
 
             DoorControl.Status(DoorPin, false);
 

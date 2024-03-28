@@ -100,13 +100,14 @@ namespace FortRoom.Services
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError($"Obstruction RunService1 {ex.Message}");
                     }
 
 
                 }
                 else if (!VariableControlService.IsTheGameStarted && VariableControlService.IsTheGameFinished && gameStarted)
                 {
+                    _logger.LogError($"Stop Obstraction");
+
                     stopObstruction();
                     gameStarted =false;
                 }

@@ -128,6 +128,7 @@ namespace FortRoom.Services
                 }
                 else if (!VariableControlService.IsTheGameStarted && VariableControlService.IsTheGameFinished && started)
                 {
+                    _logger.LogInformation("RGB Service Stopeed");
                     started = false;
                     stopGame();
                 }
@@ -214,6 +215,13 @@ namespace FortRoom.Services
 
                     }
                 }
+
+
+
+
+
+
+
                 Thread.Sleep(10);
             }
             Thread.Sleep(400);
@@ -222,7 +230,6 @@ namespace FortRoom.Services
 
         public void stopGame()
         {
-            _logger.LogInformation("Stop RGB Button Service");
 
             IsGameTimingStarted = false;
             foreach (var item in RGBButtonList)
