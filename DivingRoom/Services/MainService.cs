@@ -150,7 +150,7 @@ namespace DivingRoom.Services
 
         private void ControlRoomAudio()
         {
-            Console.Write($"" +
+            Console.WriteLine($"" +
                 $"{VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished && !thereAreInstructionSoundPlays}" +
                 $"VariableControlService.IsOccupied {VariableControlService.IsOccupied}" +
                 $"VariableControlService.IsTheGameStarted {VariableControlService.IsTheGameStarted}" +
