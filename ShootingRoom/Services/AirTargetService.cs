@@ -70,6 +70,7 @@ namespace ShootingRoom.Services
             MCP23Controller.PinModeSetup(BigTargetIRSensor, PinMode.Input);
             _controller.Setup(BigTargetRelay, PinMode.Output);
             _controller.Setup(GunShootRelay, PinMode.Output);
+            ControlPin(BigTargetRelay,false)
             _controller.Setup(UVLight, PinMode.Output);
             ControlPin(UVLight, false);
             RGBLight.SetColor(RGBColor.White);
