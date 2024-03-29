@@ -167,6 +167,7 @@ namespace DivingRoom.Services
                     _logger.LogInformation("RGB Service Stopeed");
                     StopRGBButtonService();
                 }
+                Thread.Sleep(10);
 
 
 
