@@ -14,9 +14,7 @@ namespace FortRoom.Services
         List<RGBButton> RGBButtonList = new List<RGBButton>();
         private readonly ILogger<RGBButtonService> _logger;
         Stopwatch GameStopWatch = new Stopwatch();
-        //Stopwatch GameTiming = new Stopwatch();
         private CancellationTokenSource _cts;
-        //bool IsGameTimingStarted = false;
         List<(int, int)> ButtonTaskList = new List<(int, int)>
         {
             (2,3),
@@ -49,9 +47,7 @@ namespace FortRoom.Services
             // Default Color For RGB IS White
             RGBLight.SetColor(RGBColor.White);
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            //_cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
-            //Task.Run(() => GameTimingService(_cts2.Token));
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
@@ -223,16 +219,6 @@ namespace FortRoom.Services
                 default:
                     break;
             }
-            //if (roundNumber == 0)
-            //    AudioPlayer.PIStartAudio(SoundType.RoundOne);
-            //if (roundNumber == 1)
-            //    AudioPlayer.PIStartAudio(SoundType.RoundTwo);
-            //if (roundNumber == 2)
-            //    AudioPlayer.PIStartAudio(SoundType.RoundThree);
-            //if (roundNumber == 3)
-            //    AudioPlayer.PIStartAudio(SoundType.RoundFour);
-            //if (roundNumber == 4)
-            //    AudioPlayer.PIStartAudio(SoundType.RoundFive);
         }
 
         private void StopRGBButton()

@@ -99,149 +99,157 @@ namespace ShootingRoom.Services
 
             Stopwatch Shelftimer = new Stopwatch();
             Stopwatch LevelTimer = new Stopwatch();
-            
+
 
             while (true)
             {
-                if (VariableControlService.IsTheGameStarted)
+                if (IsGameStartedOrInGoing())
                 {
+
+                    if (!VariableControlService.IsAirTargetServiceStarted)
+                        VariableControlService.IsAirTargetServiceStarted = true;
+
                     ControlPin(GunShootRelay, true);
                     BigTargetTask();
                     ReturnAllTargets();
 
-                    while (!cancellationToken.IsCancellationRequested)
+                    if (!IsGameStartedOrInGoing())
+                        break;
+                    int level = 0;
+                    foreach (var LevelScore in scoreList)
                     {
-                        if (!VariableControlService.IsTheGameStarted)
-                            break;
-                        int level = 0;
-                        foreach (var LevelScore in scoreList)
+                        if (IsGameStartedOrInGoing())
                         {
-                            if (VariableControlService.IsTheGameStarted)
+                            level++;
+                            int ActualLevelScore = 0;
+                            int numberOfRightHits = 0;
+                            int numberOfWrongHits = 0;
+                            LevelTimer.Restart();
+                            while (LevelScore > ActualLevelScore && LevelTimer.ElapsedMilliseconds < 96000)
                             {
-                                level++;
-                                int ActualLevelScore = 0;
-                                int numberOfRightHits = 0;
-                                int numberOfWrongHits = 0;
-                                LevelTimer.Restart();
-                                while (LevelScore > ActualLevelScore && LevelTimer.ElapsedMilliseconds < 96000)
+                                if (!IsGameStartedOrInGoing())
+                                    break;
+                                int i = 1;
+                                int numberOfHit = 0;
+                                foreach (var item in AirTargetList)
                                 {
-                                    if (!VariableControlService.IsTheGameStarted)
-                                        break;
-                                    int i = 1;
-                                    int numberOfHit = 0;
-                                    foreach (var item in AirTargetList)
+                                    if (item.isAllDown())
+                                        continue;
+                                    Shelftimer.Restart();
+                                    item.Select();
+                                    Console.WriteLine($" Shelf #{i}");
+                                    i++;
+                                    while (Shelftimer.ElapsedMilliseconds <= (10000 - 2000 * (level - 1)))
                                     {
-                                        if (item.isAllDown())
-                                            continue;
-                                        Shelftimer.Restart();
-                                        item.Select();
-                                        Console.WriteLine($" Shelf #{i}");
-                                        i++;
-                                        while (Shelftimer.ElapsedMilliseconds <= (10000 - 2000 * (level - 1)))
+                                        if (!IsGameStartedOrInGoing())
+                                            break;
+                                        int inShelf = 1;
+                                        foreach (var element in AirTargetList)
                                         {
-
-                                            int inShelf = 1;
-                                            foreach (var element in AirTargetList)
+                                            if (!IsGameStartedOrInGoing())
+                                                break;
+                                            (bool state, int itemScore, numberOfHit, int targetNumber) = element.TargetStatus();
+                                            ActualLevelScore += itemScore;
+                                            if (itemScore > 0 && state)
                                             {
-                                                (bool state, int itemScore, numberOfHit, int targetNumber) = element.TargetStatus();
-                                                ActualLevelScore += itemScore;
-                                                if (itemScore > 0 && state)
-                                                {
-                                                    Console.WriteLine($"Target {targetNumber} Right in {inShelf}");
-                                                    Scored();
-                                                    numberOfRightHits++;
-                                                }
-                                                else if (itemScore < 0 && state)
-                                                {
-                                                    Console.WriteLine($"Target {targetNumber} Wrong {inShelf}");
-                                                    WrongScored();
-                                                    numberOfWrongHits++;
-                                                }
-                                                if (numberOfHit == 20)
-                                                {
-                                                    break;
-                                                }
-                                                inShelf++;
-                                                Thread.Sleep(10);
+                                                Console.WriteLine($"Target {targetNumber} Right in {inShelf}");
+                                                Scored();
+                                                numberOfRightHits++;
                                             }
+                                            else if (itemScore < 0 && state)
+                                            {
+                                                Console.WriteLine($"Target {targetNumber} Wrong {inShelf}");
+                                                WrongScored();
+                                                numberOfWrongHits++;
+                                            }
+                                            if (numberOfHit == 20)
+                                            {
+                                                break;
+                                            }
+                                            inShelf++;
+                                            Thread.Sleep(10);
+                                        }
 
 
-                                        }
-                                        if (numberOfHit == 20)
-                                        {
-                                            Console.WriteLine("All Target Down Go Next Level");
-                                            break;
-                                        }
-                                        Console.WriteLine($"ActualLevelScore {ActualLevelScore}");
-                                        Console.WriteLine($"numberOfRightHits {numberOfRightHits}");
-                                        Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
-                                        item.UnSelectTarget(false);
-                                        if (numberOfHit == 20 || ActualLevelScore >= LevelScore)
-                                        {
-                                            Console.WriteLine("All Target Down Go Next Level");
-                                            break;
-                                        }
                                     }
+                                    if (numberOfHit == 20)
+                                    {
+                                        Console.WriteLine("All Target Down Go Next Level");
+                                        break;
+                                    }
+                                    Console.WriteLine($"ActualLevelScore {ActualLevelScore}");
+                                    Console.WriteLine($"numberOfRightHits {numberOfRightHits}");
+                                    Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
+                                    item.UnSelectTarget(false);
                                     if (numberOfHit == 20 || ActualLevelScore >= LevelScore)
                                     {
                                         Console.WriteLine("All Target Down Go Next Level");
                                         break;
                                     }
-
                                 }
-                                Console.WriteLine("================= Next Level");
-                                Console.WriteLine($"ActualLevelScore {ActualLevelScore}");
-                                Console.WriteLine($"numberOfRightHits {numberOfRightHits}");
-                                Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
-
-
-                                // Calculate The Score 
-
-                                // actualScore != recuired -> numberOfRightHits*5 - numberOfWrongHits*3 
-                                // If mession1 and 2 turn uvlight -> if done *2 
-                                if (level == 5)
+                                if (numberOfHit == 20 || ActualLevelScore >= LevelScore)
                                 {
-                                    Score += (numberOfRightHits * 10 - numberOfWrongHits * 10);
-                                    numberOfAchivedInRow = 0;
-                                    Console.WriteLine($"================= Final Level {Score}");
-                                    ControlPin(UVLight, false);
-
-                                }
-                                else if (ActualLevelScore == LevelScore && numberOfAchivedInRow == 2)
-                                {
-                                    Score += (LevelScore * 2);
-                                    numberOfAchivedInRow = 0;
-                                    ControlPin(UVLight, true);
-                                    Console.WriteLine($"================= Double Score {Score}");
-                                }
-                                else if (ActualLevelScore == LevelScore)
-                                {
-                                    Score += (LevelScore);
-                                    numberOfAchivedInRow++;
-                                    Console.WriteLine($"================= Achived Score {Score}");
-                                    ControlPin(UVLight, false);
-                                }
-                                else
-                                {
-                                    numberOfAchivedInRow = 0;
-                                    Score += (numberOfRightHits * 5 - numberOfWrongHits * 3);
-                                    Console.WriteLine($"================= Less Score {Score}");
-                                    ControlPin(UVLight, false);
+                                    Console.WriteLine("All Target Down Go Next Level");
+                                    break;
                                 }
 
-                                ReturnAllTargets();
-                                foreach (var item in AirTargetList)
-                                {
-                                    item.UnSelectTarget(true);
-                                }
+                            }
+                            Console.WriteLine("================= Next Level");
+                            Console.WriteLine($"ActualLevelScore {ActualLevelScore}");
+                            Console.WriteLine($"numberOfRightHits {numberOfRightHits}");
+                            Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
+
+
+                            // Calculate The Score 
+
+                            // actualScore != recuired -> numberOfRightHits*5 - numberOfWrongHits*3 
+                            // If mession1 and 2 turn uvlight -> if done *2 
+                            if (level == 5)
+                            {
+                                Score += (numberOfRightHits * 10 - numberOfWrongHits * 10);
+                                numberOfAchivedInRow = 0;
+                                Console.WriteLine($"================= Final Level {Score}");
+                                ControlPin(UVLight, false);
+
+                            }
+                            else if (ActualLevelScore == LevelScore && numberOfAchivedInRow == 2)
+                            {
+                                Score += (LevelScore * 2);
+                                numberOfAchivedInRow = 0;
+                                ControlPin(UVLight, true);
+                                Console.WriteLine($"================= Double Score {Score}");
+                            }
+                            else if (ActualLevelScore == LevelScore)
+                            {
+                                Score += (LevelScore);
+                                numberOfAchivedInRow++;
+                                Console.WriteLine($"================= Achived Score {Score}");
+                                ControlPin(UVLight, false);
+                            }
+                            else
+                            {
+                                numberOfAchivedInRow = 0;
+                                Score += (numberOfRightHits * 5 - numberOfWrongHits * 3);
+                                Console.WriteLine($"================= Less Score {Score}");
+                                ControlPin(UVLight, false);
                             }
 
+                            ReturnAllTargets();
+                            foreach (var item in AirTargetList)
+                            {
+                                item.UnSelectTarget(true);
+                            }
                         }
-                        ControlPin(GunShootRelay, false);
 
-                        Console.WriteLine($"All Game Finished");
-                        break;
                     }
+                    ControlPin(GunShootRelay, false);
+
+
+                    StopAirTargetService();
+                }
+                else if (!IsGameStartedOrInGoing() && VariableControlService.IsAirTargetServiceStarted)
+                {
+                    StopAirTargetService();
                 }
                 Thread.Sleep(1);
             }
@@ -249,7 +257,17 @@ namespace ShootingRoom.Services
 
 
         }
-
+        private void StopAirTargetService()
+        {
+            //StopRGBButton();
+            //VariableControlService.GameRound = Round.Round1;
+            ControlPin(GunShootRelay, false);
+            VariableControlService.IsAirTargetServiceStarted = false;
+            VariableControlService.IsTheGameFinished = true;
+            AudioPlayer.PIStartAudio(SoundType.MissionAccomplished);
+            Thread.Sleep(1000);
+            AudioPlayer.PIStopAudio();
+        }
         private void ControlPin(int pinNumber, bool state)
         {
             if (state)
@@ -263,6 +281,10 @@ namespace ShootingRoom.Services
                 _controller.Write(pinNumber, true);
             }
 
+        }
+        private bool IsGameStartedOrInGoing()
+        {
+            return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
         }
         private void ReturnAllTargets()
         {
@@ -294,7 +316,7 @@ namespace ShootingRoom.Services
             BigTargetTimer.Restart();
             while (true && BigTargetTimer.ElapsedMilliseconds < 60000)
             {
-                if (!VariableControlService.IsTheGameStarted)
+                if (!IsGameStartedOrInGoing())
                     break;
                 if (MCP23Controller.Read(MasterDI.IN1))
                 {

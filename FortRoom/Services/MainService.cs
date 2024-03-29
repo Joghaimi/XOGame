@@ -11,9 +11,6 @@ using System.Diagnostics;
 
 namespace FortRoom.Services
 {
-
-    // The Main Part of the game
-
     public class MainService : IHostedService, IDisposable
     {
         private readonly ILogger<MainService> _logger;
@@ -56,7 +53,7 @@ namespace FortRoom.Services
         {
 
             RGBLight.SetColor(RGBColor.Red);
-            MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
+            //MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
             while (!cancellationToken.IsCancellationRequested)
             {
                 PIR1 = _controller.Read(MasterDI.PIRPin1);

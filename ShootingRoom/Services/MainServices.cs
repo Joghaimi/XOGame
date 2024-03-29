@@ -7,19 +7,21 @@ using Library.Media;
 using Library.PinMapping;
 using Library.RGBLib;
 using System.Device.Gpio;
+using System.Diagnostics;
 
 namespace ShootingRoom.Services
 {
     public class MainServices : IHostedService, IDisposable
     {
+        private readonly ILogger<MainServices> _logger;
         private GPIOController _controller;
         public bool isTheirAreSomeOneInTheRoom = false;
         private CancellationTokenSource _cts, cts2;
         private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
-        private readonly ILogger<MainServices> _logger;
         bool thereAreBackgroundSoundPlays = false;
         bool thereAreInstructionSoundPlays = false;
         private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
+        Stopwatch GameTiming = new Stopwatch();
 
         public MainServices(ILogger<MainServices> logger)
         {
@@ -37,6 +39,7 @@ namespace ShootingRoom.Services
             _controller.Setup(MasterDI.PIRPin3, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
             DoorControl.Status(DoorPin, false);
+
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
@@ -55,13 +58,12 @@ namespace ShootingRoom.Services
                 PIR2 = _controller.Read(MasterDI.PIRPin2);
                 PIR3 = _controller.Read(MasterDI.PIRPin3);
                 PIR4 = _controller.Read(MasterDI.PIRPin4);
+                VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
                 ControlRoomAudio();
-                if (VariableControlService.IsTheGameStarted)
-                {
-
-                }
                 if (VariableControlService.EnableGoingToTheNextRoom)
                 {
+
+
                     _logger.LogDebug("Open The Door");
                     DoorControl.Status(DoorPin, true);
                     while (PIR1 || PIR2 || PIR3 || PIR4)
@@ -73,29 +75,33 @@ namespace ShootingRoom.Services
                     }
                     Thread.Sleep(30000);
                     DoorControl.Status(DoorPin, false);
-                    VariableControlService.EnableGoingToTheNextRoom = false;
-                    VariableControlService.IsTheirAnyOneInTheRoom = false;
-                    VariableControlService.IsTheGameStarted = false;
-                    //RGBLight.SetColor(RGBColor.Off);
+                    ResetTheGame();
                     _logger.LogDebug("No One In The Room , All Gone To The Next Room");
+                    _logger.LogDebug("Open The Door");
+                    DoorControl.Status(DoorPin, true);
                 }
-
-
 
                 Thread.Sleep(10);
             }
         }
 
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            //_cts.Cancel();
-            return Task.CompletedTask;
-        }
-        public void Dispose()
-        {
-            //_cts.Dispose();
-        }
 
+        private void StartTheGame()
+        {
+
+        }
+        private void StopTheGame()
+        {
+            VariableControlService.IsTheGameStarted = false;
+            VariableControlService.IsTheGameFinished = true;
+        }
+        private void ResetTheGame()
+        {
+            VariableControlService.EnableGoingToTheNextRoom = false;
+            VariableControlService.IsTheirAnyOneInTheRoom = false;
+            VariableControlService.IsTheGameStarted = false;
+            VariableControlService.IsGameTimerStarted = false;
+        }
 
         private async Task CheckIFRoomIsEmpty(CancellationToken cancellationToken)
         {
@@ -109,10 +115,25 @@ namespace ShootingRoom.Services
 
             }
         }
+        // Control Starting All the Threads
+        private async Task GameTimingService(CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                if (VariableControlService.IsTheGameStarted && !VariableControlService.IsGameTimerStarted)
+                {
+                    GameTiming.Restart();
+                    VariableControlService.IsGameTimerStarted = true;
+                }
+                bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming;
+                bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.IsGameTimerStarted;
 
+                if (GameFinishedByTimer || VariableControlService.IsTheGameFinished)
+                    StopTheGame();
+            }
+        }
         private void ControlRoomAudio()
         {
-            // Control Background Audio
             if (VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished && !thereAreInstructionSoundPlays)
             {
                 _logger.LogTrace("Start Instruction Audio");
@@ -123,12 +144,10 @@ namespace ShootingRoom.Services
                 && !VariableControlService.IsTheGameFinished
                 && thereAreInstructionSoundPlays && !thereAreBackgroundSoundPlays)
             {
-                // Stop Background Audio 
                 _logger.LogTrace("Stop Instruction Audio");
                 thereAreInstructionSoundPlays = false;
                 AudioPlayer.PIStopAudio();
                 Thread.Sleep(500);
-                // Start Background Audio
                 _logger.LogTrace("Start Background Audio");
                 thereAreBackgroundSoundPlays = true;
                 AudioPlayer.PIBackgroundSound(SoundType.Background);
@@ -141,19 +160,19 @@ namespace ShootingRoom.Services
                 AudioPlayer.PIStopAudio();
             }
         }
-        //public void DoorStatus(MCP23Pin doorPin, bool status)
-        //{
-        //    if (!status)
-        //    {
-        //        MCP23Controller.PinModeSetup(doorPin, PinMode.Output);
-        //        MCP23Controller.Write(doorPin, PinState.High);
-        //    }
-        //    else
-        //    {
-        //        MCP23Controller.PinModeSetup(doorPin, PinMode.Input);
-        //        MCP23Controller.Write(doorPin, PinState.Low);
-        //    }
-        //}
+
+
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            _cts.Cancel();
+            return Task.CompletedTask;
+        }
+        public void Dispose()
+        {
+            _cts.Dispose();
+        }
+
 
     }
 }
