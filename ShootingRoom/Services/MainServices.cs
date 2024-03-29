@@ -16,7 +16,7 @@ namespace ShootingRoom.Services
         private readonly ILogger<MainServices> _logger;
         private GPIOController _controller;
         public bool isTheirAreSomeOneInTheRoom = false;
-        private CancellationTokenSource _cts, cts2;
+        private CancellationTokenSource _cts, _cts2, _cts3;
         private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
         bool thereAreBackgroundSoundPlays = false;
         bool thereAreInstructionSoundPlays = false;
@@ -41,10 +41,13 @@ namespace ShootingRoom.Services
             DoorControl.Status(DoorPin, false);
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
             Task.Run(() => RunService(_cts.Token));
-            Task.Run(() => CheckIFRoomIsEmpty(cts2.Token));
+            Task.Run(() => CheckIFRoomIsEmpty(_cts2.Token));
+            Task.Run(() => GameTimingService(_cts3.Token));
+
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)

@@ -61,6 +61,8 @@ namespace DivingRoom.Services
                 Reset();
                 if (IsGameStartedOrInGoing())
                 {
+                    if (!VariableControlService.IsRGBButtonServiceStarted)
+                        VariableControlService.IsRGBButtonServiceStarted = true;
                     while (difficulty >= 2)
                     {
                         GameStopWatch.Restart();
@@ -160,7 +162,11 @@ namespace DivingRoom.Services
                     }
                     //RGBLight.SetColor(RGBColor.Off);
                 }
-                StopRGBButtonService();
+                else if (!IsGameStartedOrInGoing() && VariableControlService.IsRGBButtonServiceStarted)
+                {
+                    _logger.LogInformation("RGB Service Stopeed");
+                    StopRGBButtonService();
+                }
 
 
 
@@ -170,6 +176,7 @@ namespace DivingRoom.Services
         private void StopRGBButtonService()
         {
             Reset();
+            VariableControlService.IsRGBButtonServiceStarted = false;
             VariableControlService.IsTheGameFinished = true;
             TurnRGBButtonWithColor(RGBColor.Off);
             AudioPlayer.PIStartAudio(SoundType.MissionAccomplished);
