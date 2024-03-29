@@ -122,7 +122,7 @@ namespace ShootingRoom.Services
                                         continue;
                                     ShelfTimer.Restart();
                                     item.Select();
-                                    Console.WriteLine("Start Shelf Loop");
+                                    Console.WriteLine($"Start Shelf Loop {numberOfHit}");
                                     while (ShelfTimer.ElapsedMilliseconds <= (10000 - 2000 * (level - 1)))
                                     {
                                         if (!IsGameStartedOrInGoing())
@@ -150,8 +150,6 @@ namespace ShootingRoom.Services
                                         }
 
                                     }
-                                    //if (numberOfHit == 20)
-                                    //    break;
                                     item.UnSelectTarget(false);
                                     if (numberOfHit == 20 || ActualLevelScore >= LevelScore)
                                         break;
@@ -224,6 +222,7 @@ namespace ShootingRoom.Services
                 if (MCP23Controller.Read(MasterDI.IN1))
                 {
                     bigTargetHitScore++;
+                    AudioPlayer.PIStartAudio(SoundType.Bonus);
                     Console.WriteLine($"Target Hit # {bigTargetHitScore}");
                     RGBLight.SetColor(RGBColor.Blue);
                     RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
@@ -354,12 +353,12 @@ namespace ShootingRoom.Services
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            //_cts.Cancel();
+            _cts.Cancel();
             return Task.CompletedTask;
         }
         public void Dispose()
         {
-            //_cts.Dispose();
+            _cts.Dispose();
         }
 
     }
