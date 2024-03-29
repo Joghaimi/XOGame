@@ -63,5 +63,10 @@ namespace DivingRoom.Controllers
             VariableControlService.EnableGoingToTheNextRoom = true;
             return Ok(VariableControlService.IsTheGameStarted);
         }
+        [HttpGet("GetScore")]
+        public IActionResult GetScore()
+        {
+            return Ok(VariableControlService.TeamScore.DivingRoomScore);
+        }
     }
 }

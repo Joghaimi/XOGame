@@ -140,7 +140,7 @@ namespace ShootingRoom.Services
                                             {
                                                 Scored(true, IsItUV, 0);
                                                 numberOfRightHits++;
-                                                Console.WriteLine($"+ Score {ActualLevelScore} , #{numberOfWrongHits}");
+                                                Console.WriteLine($"+ Score {ActualLevelScore} , #{numberOfRightHits}");
                                             }
                                             else if (itemScore < 0 && state)
                                             {
@@ -183,38 +183,7 @@ namespace ShootingRoom.Services
                                 IsItUV = ControlUVLight(false);
                             }
 
-                            //if (level == 4)
-                            //{
-                            //    VariableControlService.TeamScore.ShootingRoomScore += (numberOfRightHits * 10 - numberOfWrongHits * 10);
-                            //    numberOfAchivedInRow = 0;
-                            //    RGBLight.SetColor(RGBColor.Off);
-                            //    IsItUV = ControlUVLight(true);
-                            //    AudioPlayer.PIStartAudio(SoundType.DoubleScore);
-
-                            //}
-                            //else if (ActualLevelScore >= LevelScore && numberOfAchivedInRow == 1)
-                            //{
-                            //    VariableControlService.TeamScore.ShootingRoomScore += (LevelScore * 2);
-                            //    numberOfAchivedInRow = 0;
-                            //    RGBLight.SetColor(RGBColor.Off);
-                            //    IsItUV = ControlUVLight(true);
-                            //    AudioPlayer.PIStartAudio(SoundType.DoubleScore);
-                            //}
-                            //else if (ActualLevelScore >= LevelScore)
-                            //{
-                            //    VariableControlService.TeamScore.ShootingRoomScore += (LevelScore);
-                            //    numberOfAchivedInRow++;
-                            //    RGBLight.SetColor(RGBColor.White);
-                            //    IsItUV = ControlUVLight(false);
-                            //}
-                            //else
-                            //{
-                            //    numberOfAchivedInRow = 0;
-                            //    VariableControlService.TeamScore.ShootingRoomScore += (numberOfRightHits * 5 - numberOfWrongHits * 3);
-                            //    RGBLight.SetColor(RGBColor.White);
-                            //    IsItUV = ControlUVLight(false);
-
-                            //}
+                            
                             ReturnAllTargets();
                             ResetAllTarget();
                         }

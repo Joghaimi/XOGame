@@ -75,20 +75,12 @@ namespace DivingRoom.Services
                             {
                                 numberOfPressedButton = 0;
                                 numberOfSelectedButton = 0;
-                                var index = 0;
-                                unSelectedPushButton.Clear();
-                                foreach (var item in RGBButtonList)
-                                {
-                                    Console.WriteLine(index);
-                                    item.Set(false);
-                                    item.TurnColorOn(RGBColor.Off);
-                                    unSelectedPushButton.Add(index);
-                                    index++;
-                                }
+                                UnselectAllPB();
+
                                 RGBColor selectedColor = (RGBColor)CurrentColor;
                                 Console.WriteLine($"Game Started {selectedColor.ToString()}");
-
                                 RGBLight.SetColor(selectedColor);
+
                                 var PrimaryColor = RGBColorMapping.GetRGBColors(selectedColor);
                                 Console.WriteLine(PrimaryColor[0]);
                                 Console.WriteLine(PrimaryColor[1]);
@@ -97,6 +89,7 @@ namespace DivingRoom.Services
                                 {
                                     int randomNumber = random.Next(0, unSelectedPushButton.Count);
                                     int selectedButtonIndex = unSelectedPushButton[randomNumber];
+
                                     RGBButtonList[selectedButtonIndex].TurnColorOn(PrimaryColor[0]);
                                     RGBButtonList[selectedButtonIndex].Set(true);
                                     Console.WriteLine($"Button #{selectedButtonIndex} color is {PrimaryColor[0].ToString()}");
@@ -132,7 +125,8 @@ namespace DivingRoom.Services
                                 if (!item.CurrentStatus() && item.isSet())
                                 {
                                     numberOfPressedButton++;
-                                    Score++;
+                                    VariableControlService.TeamScore.DivingRoomScore++;
+                                    //Score++;
                                     item.TurnColorOn(RGBColor.Off);
                                     item.Set(false);
                                     AudioPlayer.PIStartAudio(SoundType.Bonus);
@@ -141,6 +135,7 @@ namespace DivingRoom.Services
                                 else if (!item.CurrentStatus() && !item.isSet())
                                 {
                                     Score--;
+                                    VariableControlService.TeamScore.DivingRoomScore--;
                                     AudioPlayer.PIStartAudio(SoundType.Descend);
                                 }
                             }
@@ -163,16 +158,37 @@ namespace DivingRoom.Services
                             CurrentColor = 5;
                         difficulty -= 2;
                     }
-                    TurnRGBButtonWithColor(RGBColor.Off);
-                    RGBLight.SetColor(RGBColor.Off);
+                    //RGBLight.SetColor(RGBColor.Off);
                 }
-
+                StopRGBButtonService();
 
 
 
             }
         }
-      
+
+        private void StopRGBButtonService()
+        {
+            Reset();
+            VariableControlService.IsTheGameFinished = true;
+            TurnRGBButtonWithColor(RGBColor.Off);
+            AudioPlayer.PIStartAudio(SoundType.MissionAccomplished);
+            Thread.Sleep(1000);
+            AudioPlayer.PIStopAudio();
+        }
+        private void UnselectAllPB()
+        {
+            var index = 0;
+            unSelectedPushButton.Clear();
+            foreach (var item in RGBButtonList)
+            {
+                item.Set(false);
+                item.TurnColorOn(RGBColor.Off);
+                unSelectedPushButton.Add(index);
+                index++;
+            }
+        }
+
         private void Reset()
         {
             Score = 0;
