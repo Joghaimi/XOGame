@@ -139,7 +139,8 @@ namespace ShootingRoom.Services
                                                 numberOfRightHits = Scored(true, IsItUV, numberOfRightHits);
                                                 Console.WriteLine($"Score {ActualLevelScore}");
                                             }
-                                            else if (itemScore < 0 && state) {
+                                            else if (itemScore < 0 && state)
+                                            {
                                                 numberOfWrongHits = Scored(false, IsItUV, numberOfWrongHits);
                                                 Console.WriteLine($"Score {ActualLevelScore}");
                                             }
@@ -169,15 +170,14 @@ namespace ShootingRoom.Services
 
                             // Calculate The Score 
 
-                            // actualScore != recuired -> numberOfRightHits*5 - numberOfWrongHits*3 
-                            // If mession1 and 2 turn uvlight -> if done *2 
+
                             if (level == 5)
                             {
                                 VariableControlService.TeamScore.ShootingRoomScore += (numberOfRightHits * 10 - numberOfWrongHits * 10);
                                 numberOfAchivedInRow = 0;
-                                ControlPin(UVLight, false);
-                                RGBLight.SetColor(RGBColor.White);
-                                IsItUV = false;
+                                ControlPin(UVLight, true);
+                                RGBLight.SetColor(RGBColor.Off);
+                                IsItUV = true;
 
                             }
                             else if (ActualLevelScore >= LevelScore && numberOfAchivedInRow == 1)
@@ -220,6 +220,38 @@ namespace ShootingRoom.Services
                 Thread.Sleep(1);
             }
         }
+
+        private void BigTargetTask()
+        {
+            Stopwatch BigTargetTimer = new Stopwatch();
+            ControlPin(BigTargetRelay, true);
+            BigTargetTimer.Start();
+            BigTargetTimer.Restart();
+            while (true && BigTargetTimer.ElapsedMilliseconds < 60000)
+            {
+                if (!IsGameStartedOrInGoing())
+                    break;
+                if (MCP23Controller.Read(MasterDI.IN1))
+                {
+                    bigTargetHitScore++;
+                    Console.WriteLine($"Target Hit # {bigTargetHitScore}");
+                    RGBLight.SetColor(RGBColor.Blue);
+                    RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
+                    Thread.Sleep(500);
+                }
+                if (bigTargetHitScore == 5)
+                {
+                    VariableControlService.TeamScore.ShootingRoomScore += 100;
+                    Console.WriteLine($"Remove Big Target and start the game");
+                    break;
+                }
+                Thread.Sleep(10);
+            }
+            ControlPin(BigTargetRelay, false);
+            Console.WriteLine($"Big Target Finished");
+        }
+
+
         private void StopAirTargetService()
         {
             ControlPin(GunShootRelay, false);
@@ -284,37 +316,8 @@ namespace ShootingRoom.Services
 
 
 
-        // ====== Big Target Task
 
-        private void BigTargetTask()
-        {
-            Stopwatch BigTargetTimer = new Stopwatch();
-            ControlPin(BigTargetRelay, true);
-            BigTargetTimer.Start();
-            BigTargetTimer.Restart();
-            while (true && BigTargetTimer.ElapsedMilliseconds < 60000)
-            {
-                if (!IsGameStartedOrInGoing())
-                    break;
-                if (MCP23Controller.Read(MasterDI.IN1))
-                {
-                    bigTargetHitScore++;
-                    Console.WriteLine($"Target Hit # {bigTargetHitScore}");
-                    RGBLight.SetColor(RGBColor.Blue);
-                    RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
-                    Thread.Sleep(500);
-                }
-                if (bigTargetHitScore == 5)
-                {
-                    VariableControlService.TeamScore.ShootingRoomScore += 100;
-                    Console.WriteLine($"Remove Big Target and start the game");
-                    break;
-                }
-                Thread.Sleep(10);
-            }
-            ControlPin(BigTargetRelay, false);
-            Console.WriteLine($"Big Target Finished");
-        }
+
         private Round NextRound(Round round)
         {
             return (Round)((int)round + 1);
