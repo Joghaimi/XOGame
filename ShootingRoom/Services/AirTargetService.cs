@@ -69,8 +69,6 @@ namespace ShootingRoom.Services
             AirTargetList.Add(new AirTargetController(ShelfLight4, Target16, Target17, Target18, Target19, Target20));
             MCP23Controller.PinModeSetup(TargetMotorControl, PinMode.Output);
             MCP23Controller.PinModeSetup(BigTargetIRSensor, PinMode.Input);
-            //_controller.Setup(BigTargetRelay, PinMode.Output);
-            //_controller.Setup(GunShootRelay, PinMode.Output);
             ControlPin(BigTargetRelay, false);
             ControlPin(BigTargetRelay, false);
             ControlPin(UVLight, false);
@@ -103,6 +101,7 @@ namespace ShootingRoom.Services
                     foreach (var LevelScore in LevelsRequiredScoreList)
                     {
                         ControlRoundSound(VariableControlService.GameRound);
+                        Console.WriteLine(VariableControlService.GameRound.ToString());
                         if (IsGameStartedOrInGoing())
                         {
 
@@ -111,6 +110,7 @@ namespace ShootingRoom.Services
                             int numberOfRightHits = 0;
                             int numberOfWrongHits = 0;
                             LevelTimer.Restart();
+                            Console.WriteLine("Start The Level");
                             while (LevelScore > ActualLevelScore && LevelTimer.ElapsedMilliseconds < 96000)
                             {
                                 if (!IsGameStartedOrInGoing())
@@ -122,6 +122,7 @@ namespace ShootingRoom.Services
                                         continue;
                                     ShelfTimer.Restart();
                                     item.Select();
+                                    Console.WriteLine("Start Shelf Loop");
                                     while (ShelfTimer.ElapsedMilliseconds <= (10000 - 2000 * (level - 1)))
                                     {
                                         if (!IsGameStartedOrInGoing())
@@ -135,14 +136,13 @@ namespace ShootingRoom.Services
 
                                             if (itemScore > 0 && state)
                                             {
-
                                                 numberOfRightHits = Scored(true, IsItUV, numberOfRightHits);
-                                                Console.WriteLine($"Score {ActualLevelScore}");
+                                                Console.WriteLine($"+ Score {ActualLevelScore}");
                                             }
                                             else if (itemScore < 0 && state)
                                             {
                                                 numberOfWrongHits = Scored(false, IsItUV, numberOfWrongHits);
-                                                Console.WriteLine($"Score {ActualLevelScore}");
+                                                Console.WriteLine($"- Score {ActualLevelScore}");
                                             }
                                             if (numberOfHit == 20)
                                                 break;
@@ -150,25 +150,23 @@ namespace ShootingRoom.Services
                                         }
 
                                     }
-                                    if (numberOfHit == 20)
-
-                                        break;
+                                    //if (numberOfHit == 20)
+                                    //    break;
                                     item.UnSelectTarget(false);
                                     if (numberOfHit == 20 || ActualLevelScore >= LevelScore)
                                         break;
                                 }
                                 if (numberOfHit == 20 || ActualLevelScore >= LevelScore)
-
                                     break;
 
                             }
+                            Console.WriteLine("End The Level");
 
 
                             if (level == 5)
                             {
                                 VariableControlService.TeamScore.ShootingRoomScore += (numberOfRightHits * 10 - numberOfWrongHits * 10);
                                 numberOfAchivedInRow = 0;
-                                //ControlPin(UVLight, true);
                                 RGBLight.SetColor(RGBColor.Off);
                                 IsItUV = ControlUVLight(true);
                                 AudioPlayer.PIStartAudio(SoundType.DoubleScore);
@@ -178,7 +176,6 @@ namespace ShootingRoom.Services
                             {
                                 VariableControlService.TeamScore.ShootingRoomScore += (LevelScore * 2);
                                 numberOfAchivedInRow = 0;
-                                //ControlPin(UVLight, true);
                                 RGBLight.SetColor(RGBColor.Off);
                                 IsItUV = ControlUVLight(true);
                                 AudioPlayer.PIStartAudio(SoundType.DoubleScore);
@@ -187,22 +184,17 @@ namespace ShootingRoom.Services
                             {
                                 VariableControlService.TeamScore.ShootingRoomScore += (LevelScore);
                                 numberOfAchivedInRow++;
-                                //ControlPin(UVLight, false);
                                 RGBLight.SetColor(RGBColor.White);
-                                //IsItUV = false;
                                 IsItUV = ControlUVLight(false);
                             }
                             else
                             {
                                 numberOfAchivedInRow = 0;
                                 VariableControlService.TeamScore.ShootingRoomScore += (numberOfRightHits * 5 - numberOfWrongHits * 3);
-                                //ControlPin(UVLight, false);
                                 RGBLight.SetColor(RGBColor.White);
-                                //IsItUV = false;
                                 IsItUV = ControlUVLight(false);
 
                             }
-
                             ReturnAllTargets();
                             ResetAllTarget();
                         }

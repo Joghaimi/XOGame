@@ -43,6 +43,8 @@ namespace DivingRoom.Services
             _controller.Setup(MasterDI.PIRPin3, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
             DoorControl.Status(DoorPin, false);
+            RGBLight.SetColor(RGBColor.White);
+
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 

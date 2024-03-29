@@ -16,7 +16,7 @@ namespace DivingRoom.Services
         private readonly ILogger<RGBButtonServices> _logger;
         private readonly IHostApplicationLifetime _appLifetime;
         Stopwatch GameStopWatch = new Stopwatch();
-        private CancellationTokenSource _cts;//, _cts2;
+        private CancellationTokenSource _cts;
         bool IsTimerStarted = false;
         Random random = new Random();
         int numberOfSelectedButton = 0;
@@ -29,16 +29,15 @@ namespace DivingRoom.Services
         {
             _appLifetime = appLifetime;
             _logger = logger;
-
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT6, PinMode.Output);
-            MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
+            //MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT6, PinMode.Output);
+            //MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
 
             _appLifetime.ApplicationStopping.Register(Stopped);
-            _logger.LogWarning("Start RGBButtonService");
+            _logger.LogInformation("Start RGBButtonService");
 
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1));
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR2, RGBButtonPin.RGBG2, RGBButtonPin.RGBB2, RGBButtonPin.RGBPB2));
@@ -54,23 +53,26 @@ namespace DivingRoom.Services
             GameStopWatch.Start();
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task task1 = Task.Run(() => RunService(_cts.Token));
-            //Task task2 = Task.Run(() => TimingService(_cts2.Token));
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
             while (true)
             {
-                
+
                 Reset();
-                if (VariableControlService.IsTheGameStarted)
+                if (IsGameStartedOrInGoing())
                 {
                     while (difficulty >= 2)
                     {
                         GameStopWatch.Restart();
                         bool isSelected = false;
+                        if (IsGameStartedOrInGoing())
+                            break;
                         while (GameStopWatch.ElapsedMilliseconds < 60000)
                         {
+                            if (IsGameStartedOrInGoing())
+                                break;
                             if (!isSelected)
                             {
                                 numberOfPressedButton = 0;
@@ -163,12 +165,8 @@ namespace DivingRoom.Services
                             CurrentColor = 5;
                         difficulty -= 2;
                     }
-                    foreach (var item in RGBButtonList)
-                    {
-                        item.TurnColorOn(RGBColor.Off);
-                    }
+                    TurnRGBButtonWithColor(RGBColor.Off);
                     RGBLight.SetColor(RGBColor.Off);
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
                 }
 
 
@@ -184,15 +182,15 @@ namespace DivingRoom.Services
         //        IsTimerStarted = true;
         //    }
         //}
-        public Task StopAsync(CancellationToken cancellationToken)
+        // Reset The Game 
+        private void Reset()
         {
-            //_cts.Cancel();
-            return Task.CompletedTask;
+            Score = 0;
+            CurrentColor = 5;
+            difficulty = 6;
         }
-        public void Dispose()
-        {
-            //_cts.Dispose();
-        }
+
+
         public void Stopped()
         {
             MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
@@ -212,40 +210,20 @@ namespace DivingRoom.Services
             foreach (var item in RGBButtonList)
                 item.TurnColorOn(color);
         }
-
-        // Reset The Game 
-        private void Reset()
+        private bool IsGameStartedOrInGoing()
         {
-            Score = 0;
-            CurrentColor = 5;
-            difficulty = 6;
+            return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
         }
 
 
-        // This Part For Test Function Only
-        private void Test()
+        public Task StopAsync(CancellationToken cancellationToken)
         {
-            //foreach (var item in RGBButtonList)
-            //{
-            //    item.TurnColorOn(RGBColor.Blue);
-            //}
-            //while (true)
-            //{
-            //    Console.Write($"Status");
-            //    foreach (var item in RGBButtonList)
-            //    {
-            //        Console.Write(!item.CurrentStatus());
-            //        if (!item.CurrentStatus())
-            //        {
-            //            item.TurnColorOn(RGBColor.Off);
-            //            //AudioPlayer.PIStartAudio(SoundType.Bonus);
-            //            Console.WriteLine($"score {Score}");
-            //        }
-            //    }
-            //    Console.WriteLine();
-            //    Thread.Sleep(1000);
-            //}
+            //_cts.Cancel();
+            return Task.CompletedTask;
         }
-
+        public void Dispose()
+        {
+            //_cts.Dispose();
+        }
     }
 }
