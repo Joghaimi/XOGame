@@ -50,27 +50,18 @@ namespace ShootingRoom.Services
         int GunShootRelay = MasterOutputPin.GPIO24;
         int UVLight = MasterOutputPin.GPIO17;
 
-
         private CancellationTokenSource _cts;
         Stopwatch GameStopWatch = new Stopwatch();
         private GPIOController _controller;
         int bigTargetHitScore = 0;
 
-        int Score = 0;
+        //int Score = 0;
         int numberOfAchivedInRow = 0;
-        List<int> scoreList = new List<int>();
+        List<int> LevelsRequiredScoreList = new List<int>() { 75, 100, 125, 150, 300 };
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _controller = new GPIOController();
             GameStopWatch.Start();
-            //var airTarget1 = new AirTargetController(ShelfLight, Target1, Target2, Target3, Target4, Target5);
-            //var airTarget2 = new AirTargetController(ShelfLight2, Target6, Target7, Target8, Target9, Target10);
-            //var airTarget3 = new AirTargetController(ShelfLight3, Target11, Target12, Target13, Target14, Target15);
-            //var airTarget4 = new AirTargetController(ShelfLight4, Target16, Target17, Target18, Target19, Target20);
-            //airTarget1.Init();
-            //airTarget2.Init();
-            //airTarget3.Init();
-            //airTarget4.Init();
             AirTargetList.Add(new AirTargetController(ShelfLight, Target1, Target2, Target3, Target4, Target5));
             AirTargetList.Add(new AirTargetController(ShelfLight2, Target6, Target7, Target8, Target9, Target10));
             AirTargetList.Add(new AirTargetController(ShelfLight3, Target11, Target12, Target13, Target14, Target15));
@@ -82,12 +73,7 @@ namespace ShootingRoom.Services
             _controller.Setup(UVLight, PinMode.Output);
             ControlPin(UVLight, false);
             RGBLight.SetColor(RGBColor.White);
-            // Big Target Score === 100 > 1 Min
-            scoreList.Add(75); // 2 Min
-            scoreList.Add(100); // 2 Min
-            scoreList.Add(125); // 2 Min
-            scoreList.Add(150); // 2 Min
-            scoreList.Add(300); // 2 Min
+
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
@@ -95,8 +81,6 @@ namespace ShootingRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            Console.WriteLine($"Game Started");
-
             Stopwatch Shelftimer = new Stopwatch();
             Stopwatch LevelTimer = new Stopwatch();
 
@@ -115,11 +99,15 @@ namespace ShootingRoom.Services
 
                     if (!IsGameStartedOrInGoing())
                         break;
+
+                    ControlRoundSound(VariableControlService.GameRound);
+                    VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
                     int level = 0;
-                    foreach (var LevelScore in scoreList)
+                    foreach (var LevelScore in LevelsRequiredScoreList)
                     {
                         if (IsGameStartedOrInGoing())
                         {
+
                             level++;
                             int ActualLevelScore = 0;
                             int numberOfRightHits = 0;
@@ -129,21 +117,19 @@ namespace ShootingRoom.Services
                             {
                                 if (!IsGameStartedOrInGoing())
                                     break;
-                                int i = 1;
+                                //int i = 1;
                                 int numberOfHit = 0;
                                 foreach (var item in AirTargetList)
                                 {
                                     if (item.isAllDown())
                                         continue;
+
                                     Shelftimer.Restart();
                                     item.Select();
-                                    Console.WriteLine($" Shelf #{i}");
-                                    i++;
                                     while (Shelftimer.ElapsedMilliseconds <= (10000 - 2000 * (level - 1)))
                                     {
                                         if (!IsGameStartedOrInGoing())
                                             break;
-                                        int inShelf = 1;
                                         foreach (var element in AirTargetList)
                                         {
                                             if (!IsGameStartedOrInGoing())
@@ -152,46 +138,39 @@ namespace ShootingRoom.Services
                                             ActualLevelScore += itemScore;
                                             if (itemScore > 0 && state)
                                             {
-                                                Console.WriteLine($"Target {targetNumber} Right in {inShelf}");
-                                                Scored();
+                                                Scored(true);
                                                 numberOfRightHits++;
                                             }
                                             else if (itemScore < 0 && state)
                                             {
-                                                Console.WriteLine($"Target {targetNumber} Wrong {inShelf}");
-                                                WrongScored();
+                                                Scored(false);
                                                 numberOfWrongHits++;
                                             }
                                             if (numberOfHit == 20)
-                                            {
                                                 break;
-                                            }
-                                            inShelf++;
                                             Thread.Sleep(10);
                                         }
 
 
                                     }
                                     if (numberOfHit == 20)
-                                    {
-                                        Console.WriteLine("All Target Down Go Next Level");
+
                                         break;
-                                    }
-                                    Console.WriteLine($"ActualLevelScore {ActualLevelScore}");
-                                    Console.WriteLine($"numberOfRightHits {numberOfRightHits}");
-                                    Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
+                                    //Console.WriteLine($"ActualLevelScore {ActualLevelScore}");
+                                    //Console.WriteLine($"numberOfRightHits {numberOfRightHits}");
+                                    //Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
                                     item.UnSelectTarget(false);
                                     if (numberOfHit == 20 || ActualLevelScore >= LevelScore)
-                                    {
-                                        Console.WriteLine("All Target Down Go Next Level");
+                                        //{
+                                        //Console.WriteLine("All Target Down Go Next Level");
                                         break;
-                                    }
+                                    //}
                                 }
                                 if (numberOfHit == 20 || ActualLevelScore >= LevelScore)
-                                {
-                                    Console.WriteLine("All Target Down Go Next Level");
+                                    //{
+                                    //Console.WriteLine("All Target Down Go Next Level");
                                     break;
-                                }
+                                //}
 
                             }
                             Console.WriteLine("================= Next Level");
@@ -206,41 +185,41 @@ namespace ShootingRoom.Services
                             // If mession1 and 2 turn uvlight -> if done *2 
                             if (level == 5)
                             {
-                                Score += (numberOfRightHits * 10 - numberOfWrongHits * 10);
+                                VariableControlService.TeamScore.ShootingRoomScore += (numberOfRightHits * 10 - numberOfWrongHits * 10);
                                 numberOfAchivedInRow = 0;
-                                Console.WriteLine($"================= Final Level {Score}");
                                 ControlPin(UVLight, false);
+                                RGBLight.SetColor(RGBColor.White);
 
                             }
-                            else if (ActualLevelScore == LevelScore && numberOfAchivedInRow == 2)
+                            else if (ActualLevelScore >= LevelScore && numberOfAchivedInRow == 2)
                             {
-                                Score += (LevelScore * 2);
+                                VariableControlService.TeamScore.ShootingRoomScore += (LevelScore * 2);
                                 numberOfAchivedInRow = 0;
                                 ControlPin(UVLight, true);
-                                Console.WriteLine($"================= Double Score {Score}");
+                                RGBLight.SetColor(RGBColor.Off);
                             }
-                            else if (ActualLevelScore == LevelScore)
+                            else if (ActualLevelScore >= LevelScore)
                             {
-                                Score += (LevelScore);
+                                VariableControlService.TeamScore.ShootingRoomScore += (LevelScore);
                                 numberOfAchivedInRow++;
-                                Console.WriteLine($"================= Achived Score {Score}");
                                 ControlPin(UVLight, false);
+                                RGBLight.SetColor(RGBColor.White);
                             }
                             else
                             {
                                 numberOfAchivedInRow = 0;
-                                Score += (numberOfRightHits * 5 - numberOfWrongHits * 3);
-                                Console.WriteLine($"================= Less Score {Score}");
+                                VariableControlService.TeamScore.ShootingRoomScore += (numberOfRightHits * 5 - numberOfWrongHits * 3);
                                 ControlPin(UVLight, false);
+                                RGBLight.SetColor(RGBColor.White);
                             }
 
                             ReturnAllTargets();
-                            foreach (var item in AirTargetList)
-                            {
-                                item.UnSelectTarget(true);
-                            }
+                            ResetAllTarget();
+                            //foreach (var item in AirTargetList)
+                            //{
+                            //    item.UnSelectTarget(true);
+                            //}
                         }
-
                     }
                     ControlPin(GunShootRelay, false);
 
@@ -259,8 +238,6 @@ namespace ShootingRoom.Services
         }
         private void StopAirTargetService()
         {
-            //StopRGBButton();
-            //VariableControlService.GameRound = Round.Round1;
             ControlPin(GunShootRelay, false);
             VariableControlService.IsAirTargetServiceStarted = false;
             VariableControlService.IsTheGameFinished = true;
@@ -292,19 +269,27 @@ namespace ShootingRoom.Services
             Thread.Sleep(3000);
             MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
         }
-        private void Scored()
+        private void ResetAllTarget()
         {
-            AudioPlayer.PIStartAudio(SoundType.Bonus);
-            RGBLight.SetColor(RGBColor.Blue);
-            RGBLight.TurnRGBColorDelayed(RGBColor.White);
+            foreach (var item in AirTargetList)
+                item.UnSelectTarget(true);
+        }
+        private void Scored(bool inTheRightTarget)
+        {
+            if (inTheRightTarget)
+            {
+                AudioPlayer.PIStartAudio(SoundType.Bonus);
+                RGBLight.SetColor(RGBColor.Blue);
+            }
+            else
+            {
+                AudioPlayer.PIStartAudio(SoundType.Descend);
+                RGBLight.SetColor(RGBColor.Red);
+            }
+            RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
         }
 
-        private void WrongScored()
-        {
-            AudioPlayer.PIStartAudio(SoundType.Descend);
-            RGBLight.SetColor(RGBColor.Red);
-            RGBLight.TurnRGBColorDelayed(RGBColor.White);
-        }
+
 
         // ====== Big Target Task
 
@@ -323,12 +308,12 @@ namespace ShootingRoom.Services
                     bigTargetHitScore++;
                     Console.WriteLine($"Target Hit # {bigTargetHitScore}");
                     RGBLight.SetColor(RGBColor.Blue);
-                    RGBLight.TurnRGBColorDelayed(RGBColor.White);
+                    RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
                     Thread.Sleep(500);
                 }
                 if (bigTargetHitScore == 5)
                 {
-                    Score += 100;
+                    VariableControlService.TeamScore.ShootingRoomScore += 100;
                     Console.WriteLine($"Remove Big Target and start the game");
                     break;
                 }
@@ -337,9 +322,34 @@ namespace ShootingRoom.Services
             ControlPin(BigTargetRelay, false);
             Console.WriteLine($"Big Target Finished");
         }
+        private Round NextRound(Round round)
+        {
+            return (Round)((int)round + 1);
+        }
 
-
-
+        private void ControlRoundSound(Round round)
+        {
+            switch (round)
+            {
+                case Round.Round1:
+                    AudioPlayer.PIStartAudio(SoundType.RoundOne);
+                    break;
+                case Round.Round2:
+                    AudioPlayer.PIStartAudio(SoundType.RoundTwo);
+                    break;
+                case Round.Round3:
+                    AudioPlayer.PIStartAudio(SoundType.RoundThree);
+                    break;
+                case Round.Round4:
+                    AudioPlayer.PIStartAudio(SoundType.RoundFour);
+                    break;
+                case Round.Round5:
+                    AudioPlayer.PIStartAudio(SoundType.RoundFive);
+                    break;
+                default:
+                    break;
+            }
+        }
 
 
 

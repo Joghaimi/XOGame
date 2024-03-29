@@ -1,4 +1,5 @@
-﻿using Library.Model;
+﻿using Library;
+using Library.Model;
 
 namespace ShootingRoom.Services
 {
@@ -17,10 +18,12 @@ namespace ShootingRoom.Services
         public static int TimeOfPressureHit { get; set; } = 0;
         public static int ActiveButtonPressed { get; set; } = 0;
         public static Team TeamScore { get; set; } = new Team();
+
         public static bool IsOccupied { get; set; }
         public static int GameScore { get; set; } = 0;
         public static bool IsGameTimerStarted = false;
         public static int RoomTiming = 540000;// Time in Mill
+        public static Round GameRound = Round.Round1;
 
 
 

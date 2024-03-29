@@ -13,7 +13,6 @@ namespace ShootingRoom.Controllers
         [HttpGet("IsOccupied")]
         public IActionResult Get()
         {
-
             return Ok(VariableControlService.IsOccupied);
         }
         [HttpGet("SetAsOccupied")]
@@ -56,6 +55,11 @@ namespace ShootingRoom.Controllers
             VariableControlService.TeamScore.player.Clear();
             VariableControlService.EnableGoingToTheNextRoom = true;
             return Ok(VariableControlService.IsTheGameStarted);
+        }
+        [HttpGet("GetScore")]
+        public IActionResult GetScore()
+        {
+            return Ok(VariableControlService.TeamScore.ShootingRoomScore);
         }
     }
 }
