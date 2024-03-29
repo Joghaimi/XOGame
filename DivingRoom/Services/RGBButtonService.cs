@@ -58,11 +58,13 @@ namespace DivingRoom.Services
             while (true)
             {
 
-                Reset();
+                
                 if (IsGameStartedOrInGoing())
                 {
-                    if (!VariableControlService.IsRGBButtonServiceStarted)
+                    if (!VariableControlService.IsRGBButtonServiceStarted) {
+                        Reset();
                         VariableControlService.IsRGBButtonServiceStarted = true;
+                    }
                     while (difficulty >= 2)
                     {
                         GameStopWatch.Restart();
@@ -166,6 +168,7 @@ namespace DivingRoom.Services
                 {
                     _logger.LogInformation("RGB Service Stopeed");
                     StopRGBButtonService();
+                    Reset();
                 }
                 Thread.Sleep(10);
 
