@@ -51,6 +51,7 @@ namespace ShootingRoom.Services
         int UVLight = MasterOutputPin.GPIO17;
 
         bool IsItUV = false;
+        bool IsItDoubleScore = false;
         private CancellationTokenSource _cts;
         Stopwatch GameStopWatch = new Stopwatch();
         private GPIOController _controller;
@@ -122,7 +123,7 @@ namespace ShootingRoom.Services
                                         continue;
                                     ShelfTimer.Restart();
                                     item.Select();
-                                    Console.WriteLine($"Start Shelf Loop {numberOfHit}");
+                                    Console.WriteLine($"Start Shelf Loop number OF Hits{numberOfHit}");
                                     while (ShelfTimer.ElapsedMilliseconds <= (10000 - 2000 * (level - 1)))
                                     {
                                         if (!IsGameStartedOrInGoing())
@@ -160,39 +161,57 @@ namespace ShootingRoom.Services
                             }
                             Console.WriteLine("End The Level");
 
-
-                            if (level == 4)
-                            {
-                                VariableControlService.TeamScore.ShootingRoomScore += (numberOfRightHits * 10 - numberOfWrongHits * 10);
-                                numberOfAchivedInRow = 0;
-                                RGBLight.SetColor(RGBColor.Off);
-                                IsItUV = ControlUVLight(true);
-                                AudioPlayer.PIStartAudio(SoundType.DoubleScore);
-
-                            }
-                            else if (ActualLevelScore >= LevelScore && numberOfAchivedInRow == 1)
-                            {
-                                VariableControlService.TeamScore.ShootingRoomScore += (LevelScore * 2);
-                                numberOfAchivedInRow = 0;
-                                RGBLight.SetColor(RGBColor.Off);
-                                IsItUV = ControlUVLight(true);
-                                AudioPlayer.PIStartAudio(SoundType.DoubleScore);
-                            }
-                            else if (ActualLevelScore >= LevelScore)
-                            {
-                                VariableControlService.TeamScore.ShootingRoomScore += (LevelScore);
+                            // Calcaulate Score
+                            bool roundAchieved =
+                                CalculateTheScore(IsItDoubleScore, ActualLevelScore >= LevelScore, LevelScore, numberOfRightHits, numberOfWrongHits);
+                            if (roundAchieved)
                                 numberOfAchivedInRow++;
-                                RGBLight.SetColor(RGBColor.White);
-                                IsItUV = ControlUVLight(false);
+                            else
+                                numberOfAchivedInRow = 0;
+                            if (VariableControlService.GameRound == Round.Round4 || numberOfAchivedInRow == 2)
+                            {
+                                IsItDoubleScore = true;
+                                IsItUV = ControlUVLight(true);
+                                AudioPlayer.PIStartAudio(SoundType.DoubleScore);
                             }
                             else
                             {
-                                numberOfAchivedInRow = 0;
-                                VariableControlService.TeamScore.ShootingRoomScore += (numberOfRightHits * 5 - numberOfWrongHits * 3);
                                 RGBLight.SetColor(RGBColor.White);
                                 IsItUV = ControlUVLight(false);
-
                             }
+
+                            //if (level == 4)
+                            //{
+                            //    VariableControlService.TeamScore.ShootingRoomScore += (numberOfRightHits * 10 - numberOfWrongHits * 10);
+                            //    numberOfAchivedInRow = 0;
+                            //    RGBLight.SetColor(RGBColor.Off);
+                            //    IsItUV = ControlUVLight(true);
+                            //    AudioPlayer.PIStartAudio(SoundType.DoubleScore);
+
+                            //}
+                            //else if (ActualLevelScore >= LevelScore && numberOfAchivedInRow == 1)
+                            //{
+                            //    VariableControlService.TeamScore.ShootingRoomScore += (LevelScore * 2);
+                            //    numberOfAchivedInRow = 0;
+                            //    RGBLight.SetColor(RGBColor.Off);
+                            //    IsItUV = ControlUVLight(true);
+                            //    AudioPlayer.PIStartAudio(SoundType.DoubleScore);
+                            //}
+                            //else if (ActualLevelScore >= LevelScore)
+                            //{
+                            //    VariableControlService.TeamScore.ShootingRoomScore += (LevelScore);
+                            //    numberOfAchivedInRow++;
+                            //    RGBLight.SetColor(RGBColor.White);
+                            //    IsItUV = ControlUVLight(false);
+                            //}
+                            //else
+                            //{
+                            //    numberOfAchivedInRow = 0;
+                            //    VariableControlService.TeamScore.ShootingRoomScore += (numberOfRightHits * 5 - numberOfWrongHits * 3);
+                            //    RGBLight.SetColor(RGBColor.White);
+                            //    IsItUV = ControlUVLight(false);
+
+                            //}
                             ReturnAllTargets();
                             ResetAllTarget();
                         }
@@ -240,10 +259,37 @@ namespace ShootingRoom.Services
             Console.WriteLine($"Big Target Finished");
         }
 
-        private void ControlDoubleScore(Round round)
-        {
 
+        private bool CalculateTheScore(
+            bool isItDoubleScore, bool achieveTargetScore, int levelScore,
+            int numberOfRightHit, int numberOfWrongHit)
+        {
+            if (isItDoubleScore && achieveTargetScore)
+            {
+                VariableControlService.TeamScore.ShootingRoomScore += (levelScore * 2);
+                return false;
+            }
+            else if (achieveTargetScore)
+            {
+                VariableControlService.TeamScore.ShootingRoomScore += (levelScore);
+                return true;
+            }
+            else
+            {
+                VariableControlService.TeamScore.ShootingRoomScore += (numberOfRightHit * 5 - numberOfWrongHit * 3);
+                return false;
+            }
         }
+
+
+
+
+        //private void ControlDoubleScore(Round round)
+        //{
+        //    if ()
+        //    {
+        //    }
+        //}
 
         private void StopAirTargetService()
         {
