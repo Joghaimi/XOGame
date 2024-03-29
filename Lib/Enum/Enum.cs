@@ -36,7 +36,8 @@ namespace Library
         RoundFive,
         MissionAccomplished
     }
-    public enum Room {
+    public enum Room
+    {
         Fort,
         Dark,
         Diving,
@@ -90,6 +91,32 @@ namespace Library
     public enum MotorSpeed
     {
         Stop = 0,
+        Motor1Round1 = 1000,
+        Motor1Round2 = 1250,
+        Motor1Round3 = 1500,
+        Motor1Round4 = 1750,
+        Motor1Round5 = 2000,
+
+        Motor2Round1 = 1000,
+        Motor2Round2 = 1250,
+        Motor2Round3 = 1500,
+        Motor2Round4 = 1750,
+        Motor2Round5 = 2000,
+
+        Motor3Round1 = 1000,
+        Motor3Round2 = 1500,
+        Motor3Round3 = 2000,
+        Motor3Round4 = 2500,
+        Motor3Round5 = 3000,
+
+        Motor4Round1 = 2000,
+        Motor4Round2 = 2500,
+        Motor4Round3 = 3000,
+        Motor4Round4 = 3500,
+        Motor4Round5 = 4000,
+
+
+
         Slow = 1000,
         Medium = 1500,
         High = 2000,
@@ -115,4 +142,12 @@ namespace Library
         Target5 = 5,
     }
 
+    public enum Round
+    {
+        Round1 = 0,
+        Round2 = 1,
+        Round3 = 2,
+        Round4 = 3,
+        Round5 = 4
+    }
 }

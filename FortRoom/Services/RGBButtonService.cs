@@ -60,24 +60,16 @@ namespace FortRoom.Services
             //bool started = false;
             while (true)
             {
-                // Control Level Timer
-                //if (VariableControlService.IsTheGameStarted && !IsGameTimingStarted)
-                //{
-                //    IsGameTimingStarted = true;
-                //    //GameTiming.Restart();
-                //}
-
                 if (IsGameStartedOrInGoing())
                 {
                     if (!VariableControlService.IsRGBButtonServiceStarted)
                         VariableControlService.IsRGBButtonServiceStarted = true;
-
-                    //Console.WriteLine($"Game Round State {VariableControlService.IsTheGameStarted}");
-                    //started = true;
                     RGBColor selectedColor = (RGBColor)CurrentColor;
-                    ControlRoundSound(level);
-                    StartTheGameTask(selectedColor, level);
+
+                    ControlRoundSound(VariableControlService.GameRound);
+                    StartTheGameTask(selectedColor, VariableControlService.GameRound);
                     TurnRGBButtonWithColor(selectedColor);
+
                     byte numberOfClickedButton = 0;
                     GameStopWatch.Restart();
                     while (GameStopWatch.ElapsedMilliseconds < 90000)
@@ -111,7 +103,11 @@ namespace FortRoom.Services
                     else
                         CurrentColor = 0;
                     if (level < 4)
+                    {
                         level++;
+                        VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
+                        ApplyChangesForTheNextRound();
+                    }
                     else
                         StopRGBButtonService();
                 }
@@ -119,16 +115,15 @@ namespace FortRoom.Services
                 {
                     _logger.LogInformation("RGB Service Stopeed");
                     StopRGBButtonService();
-                    //started = false;
-                    //stopGame();
                 }
             }
         }
 
 
 
-        public void StartTheGameTask(RGBColor color, int level)
+        public void StartTheGameTask(RGBColor color, Round round)
         {
+            int level = (int)round;
             if (level > RGBButtonList.Count)
                 return;
             bool Button1 = false; bool Button2 = false;
@@ -177,43 +172,22 @@ namespace FortRoom.Services
         }
         private void StopRGBButtonService()
         {
-            // Turn Of RGBButtons 
             StopRGBButton();
+            VariableControlService.GameRound = Round.Round1;
             VariableControlService.IsRGBButtonServiceStarted = false;
             VariableControlService.IsTheGameFinished = true;
-            // Stop The Audio
             AudioPlayer.PIStartAudio(SoundType.MissionAccomplished);
             Thread.Sleep(1000);
             AudioPlayer.PIStopAudio();
-
         }
-        //private async Task GameTimingService(CancellationToken cancellationToken)
-        //{
-        //    //while (true)
-        //    //{
-        //    //    if (VariableControlService.IsTheGameStarted && !IsGameTimingStarted)
-        //    //    {
-
-        //    //        IsGameTimingStarted = true;
-        //    //        GameTiming.Restart();
-        //    //    }
-        //    //    if (GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming)
-        //    //    {
-        //    //        stopGame();
-        //    //        VariableControlService.IsTheGameStarted = false;
-        //    //        VariableControlService.IsTheGameFinished = true;
-        //    //    }
-        //    //}
-        //}
-
-        //public void Stopped()
-        //{
-        //    _logger.LogInformation("Stop RGB Button Service");
-        //    StopRGBButton();
-        //    _logger.LogInformation("Stop Background Audio");
-        //    AudioPlayer.PIStopAudio();
-        //}
-
+        private Round NextRound(Round round)
+        {
+            return (Round)((int)round + 1);
+        }
+        private void ApplyChangesForTheNextRound()
+        {
+            VariableControlService.IsThingsChangedForTheNewRound = false;
+        }
 
         public void TurnRGBButtonWithColor(RGBColor color)
         {
@@ -223,31 +197,42 @@ namespace FortRoom.Services
 
 
 
-        //public void stopGame()
-        //{
-
-        //    //IsGameTimingStarted = false;
-        //    StopRGBButton();
-        //    AudioPlayer.PIStartAudio(SoundType.MissionAccomplished);
-        //    Thread.Sleep(1000);
-        //    AudioPlayer.PIStopAudio();
-        //}
 
 
 
 
-        private void ControlRoundSound(int roundNumber)
+        private void ControlRoundSound(Round round)
         {
-            if (roundNumber == 0)
-                AudioPlayer.PIStartAudio(SoundType.RoundOne);
-            if (roundNumber == 1)
-                AudioPlayer.PIStartAudio(SoundType.RoundTwo);
-            if (roundNumber == 2)
-                AudioPlayer.PIStartAudio(SoundType.RoundThree);
-            if (roundNumber == 3)
-                AudioPlayer.PIStartAudio(SoundType.RoundFour);
-            if (roundNumber == 4)
-                AudioPlayer.PIStartAudio(SoundType.RoundFive);
+            switch (round)
+            {
+                case Round.Round1:
+                    AudioPlayer.PIStartAudio(SoundType.RoundOne);
+                    break;
+                case Round.Round2:
+                    AudioPlayer.PIStartAudio(SoundType.RoundTwo);
+                    break;
+                case Round.Round3:
+                    AudioPlayer.PIStartAudio(SoundType.RoundThree);
+                    break;
+                case Round.Round4:
+                    AudioPlayer.PIStartAudio(SoundType.RoundFour);
+                    break;
+                case Round.Round5:
+                    AudioPlayer.PIStartAudio(SoundType.RoundFive);
+                    break;
+                default:
+                    break;
+            }
+            //if (roundNumber == 0)
+            //    AudioPlayer.PIStartAudio(SoundType.RoundOne);
+            //if (roundNumber == 1)
+            //    AudioPlayer.PIStartAudio(SoundType.RoundTwo);
+            //if (roundNumber == 2)
+            //    AudioPlayer.PIStartAudio(SoundType.RoundThree);
+            //if (roundNumber == 3)
+            //    AudioPlayer.PIStartAudio(SoundType.RoundFour);
+            //if (roundNumber == 4)
+            //    AudioPlayer.PIStartAudio(SoundType.RoundFive);
         }
 
         private void StopRGBButton()

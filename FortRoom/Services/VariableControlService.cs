@@ -22,7 +22,8 @@ namespace FortRoom.Services
         public static bool IsObstructionServiceStarted = false;
         public static bool IsGameTimerStarted = false;
 
-
+        public static Round GameRound = Round.Round1;
+        public static bool IsThingsChangedForTheNewRound = false;
 
 
 

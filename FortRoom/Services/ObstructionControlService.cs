@@ -39,116 +39,122 @@ namespace FortRoom.Services
                 {
                     if (!VariableControlService.IsObstructionServiceStarted)
                         VariableControlService.IsObstructionServiceStarted = true;
-                    //gameStarted = true;
                     try
                     {
-                        if (IsGameStartedOrInGoing())
+                        if (!VariableControlService.IsThingsChangedForTheNewRound)
                         {
-                            Console.WriteLine($"Motor 1 Started freq Slow");
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
-                            Thread.Sleep(500);
+                            _logger.LogInformation("Change Motor Speed For the New Round");
+                            ControlObstructionSpeed(VariableControlService.GameRound);
                         }
-                        if (IsGameStartedOrInGoing())
-                        {
-                            Console.WriteLine($"Motor 2 Started freq Slow");
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
-                            Thread.Sleep(500);
-                        }
-                        if (IsGameStartedOrInGoing())
-                        {
 
-                            Console.WriteLine($"Motor 3 Started freq Slow");
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, 1000);  // Start As Mode #1 
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
-                            Thread.Sleep(500);
-                        }
-                        if (IsGameStartedOrInGoing())
-                        {
-                            Console.WriteLine($"Motor 4 Started freq Slow");
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, 2000);  // Start As Mode #1 
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
-                        }
-                        if (IsGameStartedOrInGoing())
-                            Thread.Sleep(1000);
-                        if (IsGameStartedOrInGoing())
-                            Thread.Sleep(1000);
-                        if (IsGameStartedOrInGoing())
-                            Thread.Sleep(1000);
-                        if (IsGameStartedOrInGoing())
-                            Thread.Sleep(1000);
-                        if (IsGameStartedOrInGoing())
-                            Thread.Sleep(1000);
 
-                        if (IsGameStartedOrInGoing())
-                        {
-                            Console.WriteLine($"Motor 1 Started freq Meduim");
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);  // Start As Mode #1 
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
-                            Thread.Sleep(500);
-                        }
-                        if (IsGameStartedOrInGoing())
-                        {
-                            Console.WriteLine($"Motor 2 Started freq Meduim");
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);  // Start As Mode #1 
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
-                            Thread.Sleep(500);
-                        }
-                        if (IsGameStartedOrInGoing())
-                        {
-                            Console.WriteLine($"Motor 3 Started freq Meduim");
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, 3000);  // Start As Mode #1 
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
-                            Thread.Sleep(500);
-                        }
-                        if (IsGameStartedOrInGoing())
-                        {
-                            Console.WriteLine($"Motor 4 Started freq Meduim");
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, /*(int)MotorSpeed.Medium*/ 3000);  // Start As Mode #1 
-                        }
-                        if (IsGameStartedOrInGoing())
-                            Thread.Sleep(1000);
-                        if (IsGameStartedOrInGoing())
-                            Thread.Sleep(1000);
-                        if (IsGameStartedOrInGoing())
-                            Thread.Sleep(1000);
-                        if (IsGameStartedOrInGoing())
-                            Thread.Sleep(1000);
-                        if (IsGameStartedOrInGoing())
-                            Thread.Sleep(1000);
-                        if (IsGameStartedOrInGoing())
-                            Thread.Sleep(1000);
-                        if (IsGameStartedOrInGoing())
-                            Thread.Sleep(1000);
-                        if (IsGameStartedOrInGoing())
-                            Thread.Sleep(1000);
-                        if (IsGameStartedOrInGoing())
-                        {
-                            Console.WriteLine($"Motor 1 Started freq Heigh");
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.High);  // Start As Mode #1 
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
-                            Thread.Sleep(500);
-                        }
-                        if (IsGameStartedOrInGoing())
-                        {
-                            Console.WriteLine($"Motor 2 Started freq Meduim");
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.High);  // Start As Mode #1 
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
-                            Thread.Sleep(500);
-                        }
-                        if (IsGameStartedOrInGoing())
-                        {
-                            Console.WriteLine($"Motor 3 Started freq Meduim");
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, 3000);  // Start As Mode #1 
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
-                            Thread.Sleep(500);
-                        }
-                        if (IsGameStartedOrInGoing())
-                        {
-                            Console.WriteLine($"Motor 4 Started freq Meduim");
-                            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, 4000);  // Start As Mode #1 
-                        }
+                        //if (IsGameStartedOrInGoing())
+                        //{
+                        //    Console.WriteLine($"Motor 1 Started freq Slow");
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+                        //    Thread.Sleep(500);
+                        //}
+                        //if (IsGameStartedOrInGoing())
+                        //{
+                        //    Console.WriteLine($"Motor 2 Started freq Slow");
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.Slow);  // Start As Mode #1 
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
+                        //    Thread.Sleep(500);
+                        //}
+                        //if (IsGameStartedOrInGoing())
+                        //{
+
+                        //    Console.WriteLine($"Motor 3 Started freq Slow");
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, 1000);  // Start As Mode #1 
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
+                        //    Thread.Sleep(500);
+                        //}
+                        //if (IsGameStartedOrInGoing())
+                        //{
+                        //    Console.WriteLine($"Motor 4 Started freq Slow");
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, 2000);  // Start As Mode #1 
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+                        //}
+                        //if (IsGameStartedOrInGoing())
+                        //    Thread.Sleep(1000);
+                        //if (IsGameStartedOrInGoing())
+                        //    Thread.Sleep(1000);
+                        //if (IsGameStartedOrInGoing())
+                        //    Thread.Sleep(1000);
+                        //if (IsGameStartedOrInGoing())
+                        //    Thread.Sleep(1000);
+                        //if (IsGameStartedOrInGoing())
+                        //    Thread.Sleep(1000);
+
+                        //if (IsGameStartedOrInGoing())
+                        //{
+                        //    Console.WriteLine($"Motor 1 Started freq Meduim");
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);  // Start As Mode #1 
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+                        //    Thread.Sleep(500);
+                        //}
+                        //if (IsGameStartedOrInGoing())
+                        //{
+                        //    Console.WriteLine($"Motor 2 Started freq Meduim");
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.Medium);  // Start As Mode #1 
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
+                        //    Thread.Sleep(500);
+                        //}
+                        //if (IsGameStartedOrInGoing())
+                        //{
+                        //    Console.WriteLine($"Motor 3 Started freq Meduim");
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, 3000);  // Start As Mode #1 
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
+                        //    Thread.Sleep(500);
+                        //}
+                        //if (IsGameStartedOrInGoing())
+                        //{
+                        //    Console.WriteLine($"Motor 4 Started freq Meduim");
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, /*(int)MotorSpeed.Medium*/ 3000);  // Start As Mode #1 
+                        //}
+                        //if (IsGameStartedOrInGoing())
+                        //    Thread.Sleep(1000);
+                        //if (IsGameStartedOrInGoing())
+                        //    Thread.Sleep(1000);
+                        //if (IsGameStartedOrInGoing())
+                        //    Thread.Sleep(1000);
+                        //if (IsGameStartedOrInGoing())
+                        //    Thread.Sleep(1000);
+                        //if (IsGameStartedOrInGoing())
+                        //    Thread.Sleep(1000);
+                        //if (IsGameStartedOrInGoing())
+                        //    Thread.Sleep(1000);
+                        //if (IsGameStartedOrInGoing())
+                        //    Thread.Sleep(1000);
+                        //if (IsGameStartedOrInGoing())
+                        //    Thread.Sleep(1000);
+                        //if (IsGameStartedOrInGoing())
+                        //{
+                        //    Console.WriteLine($"Motor 1 Started freq Heigh");
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.High);  // Start As Mode #1 
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Run);
+                        //    Thread.Sleep(500);
+                        //}
+                        //if (IsGameStartedOrInGoing())
+                        //{
+                        //    Console.WriteLine($"Motor 2 Started freq Meduim");
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.High);  // Start As Mode #1 
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
+                        //    Thread.Sleep(500);
+                        //}
+                        //if (IsGameStartedOrInGoing())
+                        //{
+                        //    Console.WriteLine($"Motor 3 Started freq Meduim");
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, 3000);  // Start As Mode #1 
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Reverse);
+                        //    Thread.Sleep(500);
+                        //}
+                        //if (IsGameStartedOrInGoing())
+                        //{
+                        //    Console.WriteLine($"Motor 4 Started freq Meduim");
+                        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, 4000);  // Start As Mode #1 
+                        //}
                         //VariableControlService.IsTheGameStarted = false;
                     }
                     catch (Exception ex)
@@ -168,6 +174,64 @@ namespace FortRoom.Services
             }
 
         }
+
+
+        private void ControlObstructionSpeed(Round round)
+        {
+            switch (round)
+            {
+                case Round.Round1:
+                    if (IsGameStartedOrInGoing())
+                        RunCommand(ModbusSlave.Slave1, MotorSpeed.Motor1Round1, MotorStatus.Run);
+                    if (IsGameStartedOrInGoing())
+                        RunCommand(ModbusSlave.Slave2, MotorSpeed.Motor2Round1, MotorStatus.Reverse);
+                    if (IsGameStartedOrInGoing())
+                        RunCommand(ModbusSlave.Slave3, MotorSpeed.Motor3Round1, MotorStatus.Reverse);
+                    if (IsGameStartedOrInGoing())
+                        RunCommand(ModbusSlave.Slave4, MotorSpeed.Motor4Round1, MotorStatus.Reverse);
+                    break;
+                case Round.Round2:
+                    if (IsGameStartedOrInGoing())
+                        RunCommand(ModbusSlave.Slave1, MotorSpeed.Motor1Round2, MotorStatus.Run);
+                    if (IsGameStartedOrInGoing())
+                        RunCommand(ModbusSlave.Slave2, MotorSpeed.Motor2Round2, MotorStatus.Reverse);
+                    if (IsGameStartedOrInGoing())
+                        RunCommand(ModbusSlave.Slave3, MotorSpeed.Motor3Round2, MotorStatus.Reverse);
+                    if (IsGameStartedOrInGoing())
+                        RunCommand(ModbusSlave.Slave4, MotorSpeed.Motor4Round2, MotorStatus.Reverse);
+                    break;
+                case Round.Round3:
+                    if (IsGameStartedOrInGoing())
+                        RunCommand(ModbusSlave.Slave1, MotorSpeed.Motor1Round3, MotorStatus.Run);
+                    if (IsGameStartedOrInGoing())
+                        RunCommand(ModbusSlave.Slave2, MotorSpeed.Motor2Round3, MotorStatus.Reverse);
+                    if (IsGameStartedOrInGoing())
+                        RunCommand(ModbusSlave.Slave3, MotorSpeed.Motor3Round3, MotorStatus.Reverse);
+                    if (IsGameStartedOrInGoing())
+                        RunCommand(ModbusSlave.Slave4, MotorSpeed.Motor4Round3, MotorStatus.Reverse);
+                    break;
+                case Round.Round4:
+                    if (IsGameStartedOrInGoing())
+                        RunCommand(ModbusSlave.Slave1, MotorSpeed.Motor1Round4, MotorStatus.Run);
+                    if (IsGameStartedOrInGoing())
+                        RunCommand(ModbusSlave.Slave2, MotorSpeed.Motor2Round4, MotorStatus.Reverse);
+                    if (IsGameStartedOrInGoing())
+                        RunCommand(ModbusSlave.Slave3, MotorSpeed.Motor3Round4, MotorStatus.Reverse);
+                    if (IsGameStartedOrInGoing())
+                        RunCommand(ModbusSlave.Slave4, MotorSpeed.Motor4Round4, MotorStatus.Reverse);
+                    break;
+            }
+            VariableControlService.IsThingsChangedForTheNewRound = true;
+
+        }
+        private void RunCommand(ModbusSlave slave, MotorSpeed speed, MotorStatus status)
+        {
+            Modbus.WriteSingleRegister((byte)slave, (int)ModbusAddress.Speed, (ushort)speed);  // Start As Mode #1 
+            Modbus.WriteSingleRegister((byte)slave, (int)ModbusAddress.startStop, (ushort)status);
+            Thread.Sleep(500);
+        }
+
+
         private bool IsGameStartedOrInGoing()
         {
             return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
@@ -208,45 +272,11 @@ namespace FortRoom.Services
         {
             _logger.LogInformation("Obstruction Stopped");
             StopObstructionService();
-
-            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
-            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Stop);
-            //Thread.Sleep(500);
-            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
-            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.Stop);
-            //Thread.Sleep(500);
-
-            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
-            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, (int)MotorSpeed.Stop);
-            //Thread.Sleep(500);
-
-            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
-            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, (int)MotorSpeed.Stop);
-
-            //Thread.Sleep(500);
             Modbus.ReleasePort();
             _logger.LogInformation("Obstruction - Port Released");
         }
 
-        //void stopObstruction()
-        //{
-        //    _logger.LogInformation("Obstruction Stopped ***");
-        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
-        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Stop);
-        //    Thread.Sleep(500);
-        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
-        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.Stop);
-        //    Thread.Sleep(500);
-
-        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
-        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, (int)MotorSpeed.Stop);
-        //    Thread.Sleep(500);
-
-        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
-        //    Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, (int)MotorSpeed.Stop);
-
-        //    Thread.Sleep(500);
-        //}
+        
 
     }
 }
