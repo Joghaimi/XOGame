@@ -14,7 +14,6 @@ namespace FortRoom.Services
         private ModbusLib Modbus = new ModbusLib();
         private readonly ILogger<ObstructionControlService> _logger;
         private CancellationTokenSource _cts1;
-        //private bool gameStarted = false;
 
         public ObstructionControlService(ILogger<ObstructionControlService> logger)
         {
@@ -167,7 +166,6 @@ namespace FortRoom.Services
                 {
 
                     StopObstructionService();
-                    //gameStarted = false;
                 }
 
                 Thread.Sleep(10);
@@ -240,21 +238,25 @@ namespace FortRoom.Services
         {
             _logger.LogInformation("Obstruction Stopped ***");
             VariableControlService.IsObstructionServiceStarted = false;
-            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
-            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Stop);
-            Thread.Sleep(500);
-            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
-            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.Stop);
-            Thread.Sleep(500);
+            RunCommand(ModbusSlave.Slave1, MotorSpeed.Stop, MotorStatus.Stop);
+            RunCommand(ModbusSlave.Slave2, MotorSpeed.Stop, MotorStatus.Stop);
+            RunCommand(ModbusSlave.Slave3, MotorSpeed.Stop, MotorStatus.Stop);
+            RunCommand(ModbusSlave.Slave4, MotorSpeed.Stop, MotorStatus.Stop);
+            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
+            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave1, (int)ModbusAddress.Speed, (int)MotorSpeed.Stop);
+            //Thread.Sleep(500);
+            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
+            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave2, (int)ModbusAddress.Speed, (int)MotorSpeed.Stop);
+            //Thread.Sleep(500);
 
-            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
-            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, (int)MotorSpeed.Stop);
-            Thread.Sleep(500);
+            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
+            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave3, (int)ModbusAddress.Speed, (int)MotorSpeed.Stop);
+            //Thread.Sleep(500);
 
-            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
-            Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, (int)MotorSpeed.Stop);
+            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.startStop, (int)MotorStatus.Stop);
+            //Modbus.WriteSingleRegister((byte)ModbusSlave.Slave4, (int)ModbusAddress.Speed, (int)MotorSpeed.Stop);
 
-            Thread.Sleep(500);
+            //Thread.Sleep(500);
         }
 
 

@@ -83,7 +83,7 @@ namespace FortRoom.Services
                     //VariableControlService.EnableGoingToTheNextRoom = false;
                     //VariableControlService.IsTheirAnyOneInTheRoom = false;
                     //VariableControlService.IsTheGameStarted = false;
-                    RGBLight.SetColor(RGBColor.Off);
+                    //RGBLight.SetColor(RGBColor.Off);
                     _logger.LogDebug("No One In The Room , All Gone To The Next Room");
                 }
 
@@ -166,7 +166,7 @@ namespace FortRoom.Services
         {
             VariableControlService.IsTheGameStarted = false;
             VariableControlService.IsTheGameFinished = true;
-            VariableControlService.EnableGoingToTheNextRoom = true;
+            //VariableControlService.EnableGoingToTheNextRoom = true;
 
         }
         private void ResetTheGame()
