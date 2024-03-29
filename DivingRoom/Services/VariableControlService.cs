@@ -16,5 +16,7 @@ namespace DivingRoom.Services
         public static bool IsOccupied { get; set; }
         public static Team TeamScore { get; set; } = new Team();
         public static bool EnableGoingToTheNextRoom = false;
+        public static bool IsGameTimerStarted = false;
+        
     }
 }

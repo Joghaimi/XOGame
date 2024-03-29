@@ -77,12 +77,9 @@ namespace FortRoom.Services
                     Thread.Sleep(30000);
                     DoorControl.Status(DoorPin, false);
                     ResetTheGame();
-                    //VariableControlService.EnableGoingToTheNextRoom = false;
-                    //VariableControlService.IsTheirAnyOneInTheRoom = false;
-                    //VariableControlService.IsTheGameStarted = false;
-                    //RGBLight.SetColor(RGBColor.Off);
                     _logger.LogDebug("No One In The Room , All Gone To The Next Room");
                 }
+                Thread.Sleep(10);
 
 
             }
