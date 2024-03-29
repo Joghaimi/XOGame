@@ -175,34 +175,37 @@ namespace ShootingRoom.Services
                             {
                                 VariableControlService.TeamScore.ShootingRoomScore += (numberOfRightHits * 10 - numberOfWrongHits * 10);
                                 numberOfAchivedInRow = 0;
-                                ControlPin(UVLight, true);
+                                //ControlPin(UVLight, true);
                                 RGBLight.SetColor(RGBColor.Off);
-                                IsItUV = true;
+                                IsItUV = ControlUVLight(true);
 
                             }
                             else if (ActualLevelScore >= LevelScore && numberOfAchivedInRow == 1)
                             {
                                 VariableControlService.TeamScore.ShootingRoomScore += (LevelScore * 2);
                                 numberOfAchivedInRow = 0;
-                                ControlPin(UVLight, true);
+                                //ControlPin(UVLight, true);
                                 RGBLight.SetColor(RGBColor.Off);
-                                IsItUV = true;
+                                IsItUV = ControlUVLight(true);
                             }
                             else if (ActualLevelScore >= LevelScore)
                             {
                                 VariableControlService.TeamScore.ShootingRoomScore += (LevelScore);
                                 numberOfAchivedInRow++;
-                                ControlPin(UVLight, false);
+                                //ControlPin(UVLight, false);
                                 RGBLight.SetColor(RGBColor.White);
-                                IsItUV = false;
+                                //IsItUV = false;
+                                IsItUV = ControlUVLight(false);
                             }
                             else
                             {
                                 numberOfAchivedInRow = 0;
                                 VariableControlService.TeamScore.ShootingRoomScore += (numberOfRightHits * 5 - numberOfWrongHits * 3);
-                                ControlPin(UVLight, false);
+                                //ControlPin(UVLight, false);
                                 RGBLight.SetColor(RGBColor.White);
-                                IsItUV = false;
+                                //IsItUV = false;
+                                IsItUV = ControlUVLight(false);
+
                             }
 
                             ReturnAllTargets();
@@ -275,6 +278,13 @@ namespace ShootingRoom.Services
             }
 
         }
+
+        private bool ControlUVLight(bool state)
+        {
+            ControlPin(UVLight, state);
+            return state;
+        }
+
         private bool IsGameStartedOrInGoing()
         {
             return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
