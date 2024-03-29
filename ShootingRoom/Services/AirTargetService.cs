@@ -274,7 +274,7 @@ namespace ShootingRoom.Services
             }
             else
             {
-                Console.WriteLine($"Not All The Target shooted right{numberOfRightHit} , wrong {numberOfWrongHit}")
+                Console.WriteLine($"Not All The Target shooted right{numberOfRightHit} , wrong {numberOfWrongHit}");
                 VariableControlService.TeamScore.ShootingRoomScore += (numberOfRightHit * 5 - numberOfWrongHit * 3);
                 return false;
             }
@@ -285,6 +285,7 @@ namespace ShootingRoom.Services
             ControlPin(GunShootRelay, false);
             VariableControlService.IsAirTargetServiceStarted = false;
             VariableControlService.IsTheGameFinished = true;
+            bigTargetHitScore = 0;
             AudioPlayer.PIStartAudio(SoundType.MissionAccomplished);
             Thread.Sleep(1000);
             AudioPlayer.PIStopAudio();
