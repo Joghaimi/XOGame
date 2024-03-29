@@ -33,8 +33,6 @@ namespace DivingRoom.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            //MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT6, PinMode.Output);
-            //MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
 
             _appLifetime.ApplicationStopping.Register(Stopped);
             _logger.LogInformation("Start RGBButtonService");

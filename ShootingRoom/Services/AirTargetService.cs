@@ -163,7 +163,7 @@ namespace ShootingRoom.Services
                             Console.WriteLine("End The Level");
 
 
-                            if (level == 5)
+                            if (level == 4)
                             {
                                 VariableControlService.TeamScore.ShootingRoomScore += (numberOfRightHits * 10 - numberOfWrongHits * 10);
                                 numberOfAchivedInRow = 0;
@@ -241,6 +241,10 @@ namespace ShootingRoom.Services
             Console.WriteLine($"Big Target Finished");
         }
 
+        private void ControlDoubleScore(Round round)
+        {
+
+        }
 
         private void StopAirTargetService()
         {
@@ -251,6 +255,7 @@ namespace ShootingRoom.Services
             Thread.Sleep(1000);
             AudioPlayer.PIStopAudio();
         }
+
         private void ControlPin(int pinNumber, bool state)
         {
             if (state)
