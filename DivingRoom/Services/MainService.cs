@@ -150,6 +150,13 @@ namespace DivingRoom.Services
 
         private void ControlRoomAudio()
         {
+            Console.Write($"" +
+                $"{VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished && !thereAreInstructionSoundPlays}" +
+                $"VariableControlService.IsOccupied {VariableControlService.IsOccupied}" +
+                $"VariableControlService.IsTheGameStarted {VariableControlService.IsTheGameStarted}" +
+                $"VariableControlService.IsTheGameFinished {VariableControlService.IsTheGameFinished}" +
+                $"thereAreInstructionSoundPlays {thereAreInstructionSoundPlays}");
+            Thread.Sleep(1000);
             if (VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished && !thereAreInstructionSoundPlays)
             {
                 _logger.LogTrace("Start Instruction Audio");
