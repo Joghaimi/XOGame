@@ -162,13 +162,6 @@ namespace ShootingRoom.Services
                                     break;
 
                             }
-                            //Console.WriteLine("================= Next Level");
-                            //Console.WriteLine($"ActualLevelScore {ActualLevelScore}");
-                            //Console.WriteLine($"numberOfRightHits {numberOfRightHits}");
-                            //Console.WriteLine($"numberOfWrongHits {numberOfWrongHits}");
-
-
-                            // Calculate The Score 
 
 
                             if (level == 5)
@@ -178,6 +171,7 @@ namespace ShootingRoom.Services
                                 //ControlPin(UVLight, true);
                                 RGBLight.SetColor(RGBColor.Off);
                                 IsItUV = ControlUVLight(true);
+                                AudioPlayer.PIStartAudio(SoundType.DoubleScore);
 
                             }
                             else if (ActualLevelScore >= LevelScore && numberOfAchivedInRow == 1)
@@ -187,6 +181,7 @@ namespace ShootingRoom.Services
                                 //ControlPin(UVLight, true);
                                 RGBLight.SetColor(RGBColor.Off);
                                 IsItUV = ControlUVLight(true);
+                                AudioPlayer.PIStartAudio(SoundType.DoubleScore);
                             }
                             else if (ActualLevelScore >= LevelScore)
                             {

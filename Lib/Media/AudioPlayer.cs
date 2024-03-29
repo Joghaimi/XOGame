@@ -110,16 +110,6 @@ namespace Library.Media
                 case SoundType.Finish:
                     soundFilePath = $"{HomePath()}/audio/Gamefinish.mp3";
                     break;
-                case SoundType.Start:
-                    break;
-                case SoundType.Start2:
-                    break;
-                case SoundType.LaserScan:
-                    break;
-                case SoundType.LevelWin:
-                    break;
-                case SoundType.MarioJump:
-                    break;
                 case SoundType.MissionCompleted:
                     soundFilePath = $"{HomePath()}/audio/MissionAccomplished.wav";
                     break;
@@ -127,16 +117,6 @@ namespace Library.Media
                     break;
                 case SoundType.Descend:
                     soundFilePath = $"{HomePath()}/audio/FailureIndicator.wav";
-                    break;
-                case SoundType.GameOver:
-                    break;
-                case SoundType.GameScoreTally:
-                    break;
-                case SoundType.WinSquare:
-                    break;
-                case SoundType.Winner2:
-                    break;
-                case SoundType.Winner1:
                     break;
                 case SoundType.Background:
                     soundFilePath = $"{HomePath()}/audio/{BackgroundSound()}";
@@ -164,6 +144,9 @@ namespace Library.Media
                     break;
                 case SoundType.MissionAccomplished:
                     soundFilePath = $"{HomePath()}/audio/MissionAccomplished.wav";
+                    break;
+                case SoundType.DoubleScore:
+                    soundFilePath = $"{HomePath()}/audio/ShootingDoubleScore.wav";
                     break;
                 default:
                     break;

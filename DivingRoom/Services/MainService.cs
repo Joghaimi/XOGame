@@ -87,12 +87,12 @@ namespace DivingRoom.Services
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            //_cts.Cancel();
+            _cts.Cancel();
             return Task.CompletedTask;
         }
         public void Dispose()
         {
-            //_cts.Dispose();
+            _cts.Dispose();
         }
 
 
@@ -105,7 +105,6 @@ namespace DivingRoom.Services
                     VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4;
                     Thread.Sleep(10000);
                 }
-
             }
         }
 
@@ -139,18 +138,6 @@ namespace DivingRoom.Services
                 AudioPlayer.PIStopAudio();
             }
         }
-        //public void DoorStatus(MCP23Pin doorPin, bool status)
-        //{
-        //    if (!status)
-        //    {
-        //        MCP23Controller.PinModeSetup(doorPin, PinMode.Output);
-        //        MCP23Controller.Write(doorPin, PinState.High);
-        //    }
-        //    else
-        //    {
-        //        MCP23Controller.PinModeSetup(doorPin, PinMode.Input);
-        //        MCP23Controller.Write(doorPin, PinState.Low);
-        //    }
-        //}
+
     }
 }
