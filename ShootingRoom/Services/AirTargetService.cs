@@ -90,7 +90,10 @@ namespace ShootingRoom.Services
                 {
 
                     if (!VariableControlService.IsAirTargetServiceStarted)
+                    {
                         VariableControlService.IsAirTargetServiceStarted = true;
+                        VariableControlService.GameRound = Round.Round1;
+                    }
                     ControlPin(GunShootRelay, true);
                     BigTargetTask();
                     ReturnAllTargets();
