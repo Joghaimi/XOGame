@@ -68,10 +68,10 @@ namespace ShootingRoom.Services
             AirTargetList.Add(new AirTargetController(ShelfLight4, Target16, Target17, Target18, Target19, Target20));
             MCP23Controller.PinModeSetup(TargetMotorControl, PinMode.Output);
             MCP23Controller.PinModeSetup(BigTargetIRSensor, PinMode.Input);
-            _controller.Setup(BigTargetRelay, PinMode.Output);
-            _controller.Setup(GunShootRelay, PinMode.Output);
+            //_controller.Setup(BigTargetRelay, PinMode.Output);
+            //_controller.Setup(GunShootRelay, PinMode.Output);
             ControlPin(BigTargetRelay, false);
-            _controller.Setup(UVLight, PinMode.Output);
+            ControlPin(BigTargetRelay, false);
             ControlPin(UVLight, false);
             RGBLight.SetColor(RGBColor.White);
 
@@ -82,7 +82,7 @@ namespace ShootingRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            Stopwatch Shelftimer = new Stopwatch();
+            Stopwatch ShelfTimer = new Stopwatch();
             Stopwatch LevelTimer = new Stopwatch();
 
 
@@ -125,9 +125,9 @@ namespace ShootingRoom.Services
                                     if (item.isAllDown())
                                         continue;
 
-                                    Shelftimer.Restart();
+                                    ShelfTimer.Restart();
                                     item.Select();
-                                    while (Shelftimer.ElapsedMilliseconds <= (10000 - 2000 * (level - 1)))
+                                    while (ShelfTimer.ElapsedMilliseconds <= (10000 - 2000 * (level - 1)))
                                     {
                                         if (!IsGameStartedOrInGoing())
                                             break;

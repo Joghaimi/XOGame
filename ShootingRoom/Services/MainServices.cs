@@ -50,7 +50,6 @@ namespace ShootingRoom.Services
         private async Task RunService(CancellationToken cancellationToken)
         {
 
-            RGBLight.SetColor(RGBColor.Red);
             while (!cancellationToken.IsCancellationRequested)
             {
 
