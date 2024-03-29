@@ -177,8 +177,6 @@ namespace FortRoom.Services
             VariableControlService.IsGameTimerStarted = false;
         }
 
-
-
         // Stop The Service
         public Task StopAsync(CancellationToken cancellationToken)
         {

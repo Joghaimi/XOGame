@@ -15,8 +15,8 @@ namespace FortRoom.Services
     public class PressureMatService : IHostedService, IDisposable
     {
         private CancellationTokenSource _cts;
-        private readonly ILogger<ObstructionControlService> _logger;
-        public PressureMatService(ILogger<ObstructionControlService> logger)
+        private readonly ILogger<PressureMatService> _logger;
+        public PressureMatService(ILogger<PressureMatService> logger)
         {
             _logger = logger;
         }
@@ -30,8 +30,8 @@ namespace FortRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            bool currentValue = false;
-            bool previousValue = false;
+            //bool currentValue = false;
+            //bool previousValue = false;
             bool scoreJustDecreased = false;
             Stopwatch timer = new Stopwatch();
 
@@ -41,7 +41,7 @@ namespace FortRoom.Services
                 {
                     try
                     {
-                        currentValue = MCP23Controller.Read(MasterDI.IN1);
+                        bool currentValue = MCP23Controller.Read(MasterDI.IN1);
                         if (!currentValue && !scoreJustDecreased)
                         {
                             VariableControlService.TimeOfPressureHit++;
@@ -63,7 +63,7 @@ namespace FortRoom.Services
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Error {ex.Message}");
+                        _logger.LogError($"Error {ex.Message}");
                     }
 
                 }
