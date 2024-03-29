@@ -17,6 +17,7 @@ namespace DivingRoom.Services
         public static Team TeamScore { get; set; } = new Team();
         public static bool EnableGoingToTheNextRoom = false;
         public static bool IsGameTimerStarted = false;
-        
+        public static int RoomTiming = 540000;// Time in Mill
+
     }
 }
