@@ -84,8 +84,6 @@ namespace ShootingRoom.Services
         {
             Stopwatch ShelfTimer = new Stopwatch();
             Stopwatch LevelTimer = new Stopwatch();
-
-
             while (true)
             {
                 if (IsGameStartedOrInGoing())
@@ -161,7 +159,6 @@ namespace ShootingRoom.Services
                             }
                             Console.WriteLine("End The Level");
 
-                            // Calcaulate Score
                             bool roundAchieved =
                                 CalculateTheScore(IsItDoubleScore, ActualLevelScore >= LevelScore, LevelScore, numberOfRightHits, numberOfWrongHits);
                             if (roundAchieved)
@@ -173,6 +170,7 @@ namespace ShootingRoom.Services
                                 IsItDoubleScore = true;
                                 IsItUV = ControlUVLight(true);
                                 AudioPlayer.PIStartAudio(SoundType.DoubleScore);
+                                RGBLight.SetColor(RGBColor.Off);
                             }
                             else
                             {
@@ -276,20 +274,11 @@ namespace ShootingRoom.Services
             }
             else
             {
+                Console.WriteLine($"Not All The Target shooted right{numberOfRightHit} , wrong {numberOfWrongHit}")
                 VariableControlService.TeamScore.ShootingRoomScore += (numberOfRightHit * 5 - numberOfWrongHit * 3);
                 return false;
             }
         }
-
-
-
-
-        //private void ControlDoubleScore(Round round)
-        //{
-        //    if ()
-        //    {
-        //    }
-        //}
 
         private void StopAirTargetService()
         {

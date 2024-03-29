@@ -65,27 +65,7 @@ namespace DivingRoom.Services
                 PIR3 = _controller.Read(MasterDI.PIRPin3);
                 PIR4 = _controller.Read(MasterDI.PIRPin4);
                 VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
-
                 ControlRoomAudio();
-                //if (VariableControlService.EnableGoingToTheNextRoom)
-                //{
-                //    _logger.LogDebug("Open The Door");
-                //    DoorControl.Status(DoorPin, true);
-                //    while (PIR1 || PIR2 || PIR3 || PIR4)
-                //    {
-                //        PIR1 = _controller.Read(MasterDI.PIRPin1);
-                //        PIR2 = _controller.Read(MasterDI.PIRPin2);
-                //        PIR3 = _controller.Read(MasterDI.PIRPin3);
-                //        PIR4 = _controller.Read(MasterDI.PIRPin4);
-                //    }
-                //    Thread.Sleep(30000);
-                //    DoorControl.Status(DoorPin, false);
-                //    VariableControlService.EnableGoingToTheNextRoom = false;
-                //    VariableControlService.IsTheirAnyOneInTheRoom = false;
-                //    VariableControlService.IsTheGameStarted = false;
-                //    RGBLight.SetColor(RGBColor.Off);
-                //    _logger.LogDebug("No One In The Room , All Gone To The Next Room");
-                //}
                 if (VariableControlService.EnableGoingToTheNextRoom)
                 {
                     _logger.LogDebug("Open The Door");

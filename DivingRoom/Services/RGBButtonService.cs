@@ -172,15 +172,7 @@ namespace DivingRoom.Services
 
             }
         }
-        //private async Task TimingService(CancellationToken cancellationToken)
-        //{
-        //    if (!IsTimerStarted)
-        //    {
-        //        GameStopWatch.Start();
-        //        IsTimerStarted = true;
-        //    }
-        //}
-        // Reset The Game 
+      
         private void Reset()
         {
             Score = 0;
