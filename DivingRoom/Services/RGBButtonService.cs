@@ -64,6 +64,7 @@ namespace DivingRoom.Services
                     if (!VariableControlService.IsRGBButtonServiceStarted) {
                         Reset();
                         VariableControlService.IsRGBButtonServiceStarted = true;
+                        Console.WriteLine("****************** Game Started");
                     }
                     while (difficulty >= 2)
                     {
