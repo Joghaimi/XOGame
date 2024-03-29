@@ -138,13 +138,15 @@ namespace ShootingRoom.Services
 
                                             if (itemScore > 0 && state)
                                             {
-                                                numberOfRightHits = Scored(true, IsItUV, numberOfRightHits);
-                                                Console.WriteLine($"+ Score {ActualLevelScore}");
+                                                Scored(true, IsItUV, 0);
+                                                numberOfRightHits++;
+                                                Console.WriteLine($"+ Score {ActualLevelScore} , #{numberOfWrongHits}");
                                             }
                                             else if (itemScore < 0 && state)
                                             {
-                                                numberOfWrongHits = Scored(false, IsItUV, numberOfWrongHits);
-                                                Console.WriteLine($"- Score {ActualLevelScore}");
+                                                Scored(false, IsItUV, numberOfWrongHits);
+                                                numberOfWrongHits++;
+                                                Console.WriteLine($"- Score {ActualLevelScore} , #{numberOfWrongHits}");
                                             }
                                             if (numberOfHit == 20)
                                                 break;
