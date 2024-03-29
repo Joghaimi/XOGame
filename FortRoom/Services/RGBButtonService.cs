@@ -14,9 +14,9 @@ namespace FortRoom.Services
         List<RGBButton> RGBButtonList = new List<RGBButton>();
         private readonly ILogger<RGBButtonService> _logger;
         Stopwatch GameStopWatch = new Stopwatch();
-        Stopwatch GameTiming = new Stopwatch();
-        private CancellationTokenSource _cts, _cts2;
-        bool IsGameTimingStarted = false;
+        //Stopwatch GameTiming = new Stopwatch();
+        private CancellationTokenSource _cts;
+        //bool IsGameTimingStarted = false;
         List<(int, int)> ButtonTaskList = new List<(int, int)>
         {
             (2,3),
@@ -49,136 +49,85 @@ namespace FortRoom.Services
             // Default Color For RGB IS White
             RGBLight.SetColor(RGBColor.White);
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            //_cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
-            Task.Run(() => GameTimingService(_cts2.Token));
+            //Task.Run(() => GameTimingService(_cts2.Token));
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
             int level = 0;
-            bool started = false;
+            //bool started = false;
             while (true)
             {
-
                 // Control Level Timer
+                //if (VariableControlService.IsTheGameStarted && !IsGameTimingStarted)
+                //{
+                //    IsGameTimingStarted = true;
+                //    //GameTiming.Restart();
+                //}
 
-                if (VariableControlService.IsTheGameStarted && !IsGameTimingStarted)
+                if (IsGameStartedOrInGoing())
                 {
-                    IsGameTimingStarted = true;
-                    GameTiming.Restart();
-                }
+                    if (!VariableControlService.IsRGBButtonServiceStarted)
+                        VariableControlService.IsRGBButtonServiceStarted = true;
 
-
-                if (VariableControlService.IsTheGameStarted)
-                {
-                    Console.WriteLine($"Game Round State {VariableControlService.IsTheGameStarted}");
-                    started = true;
+                    //Console.WriteLine($"Game Round State {VariableControlService.IsTheGameStarted}");
+                    //started = true;
                     RGBColor selectedColor = (RGBColor)CurrentColor;
                     ControlRoundSound(level);
-
-                    //AudioPlayer.PIStartAudio(SoundType.Button);
-                    StartGameTask(selectedColor, level);
+                    StartTheGameTask(selectedColor, level);
                     TurnRGBButtonWithColor(selectedColor);
-                    byte numberOfClieckedButton = 0;
+                    byte numberOfClickedButton = 0;
                     GameStopWatch.Restart();
                     while (GameStopWatch.ElapsedMilliseconds < 90000)
                     {
                         foreach (var item in RGBButtonList)
                         {
-                            if (!VariableControlService.IsTheGameStarted)
+                            if (!IsGameStartedOrInGoing())
                                 break;
                             bool itemSelected = !item.CurrentStatus() && item.CurrentColor() == selectedColor;
                             if (itemSelected)
                             {
-                                MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
-                                RGBLight.SetColor(RGBColor.Blue);
                                 AudioPlayer.PIStartAudio(SoundType.Bonus);
+                                RGBLight.SetColor(RGBColor.Blue);
                                 item.TurnColorOn(RGBColor.Off);
                                 RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
-                                numberOfClieckedButton++;
+                                numberOfClickedButton++;
                                 VariableControlService.ActiveButtonPressed++;
                                 VariableControlService.TeamScore.FortRoomScore += 10;
                             }
 
                         }
-                        if (numberOfClieckedButton == RGBButtonList.Count())
+                        if (numberOfClickedButton == RGBButtonList.Count())
                             break;
-                        if (!VariableControlService.IsTheGameStarted)
+                        if (!IsGameStartedOrInGoing())
                             break;
                         Thread.Sleep(10);
                     }
                     TurnRGBButtonWithColor(RGBColor.Off);
                     if (CurrentColor < 2)
-                    {
                         CurrentColor++;
-                    }
                     else
-                    {
                         CurrentColor = 0;
-                    }
                     if (level < 4)
-                    {
                         level++;
-                    }
                     else
-                    {
-                        stopGame();
-                    }
+                        StopRGBButtonService();
                 }
-                else if (!VariableControlService.IsTheGameStarted && VariableControlService.IsTheGameFinished && started)
+                else if (!IsGameStartedOrInGoing() && VariableControlService.IsRGBButtonServiceStarted)
                 {
                     _logger.LogInformation("RGB Service Stopeed");
-                    started = false;
-                    stopGame();
+                    StopRGBButtonService();
+                    //started = false;
+                    //stopGame();
                 }
             }
         }
-        private async Task GameTimingService(CancellationToken cancellationToken)
-        {
-            while (true)
-            {
-                if (VariableControlService.IsTheGameStarted && !IsGameTimingStarted)
-                {
-
-                    IsGameTimingStarted = true;
-                    GameTiming.Restart();
-                }
-                if (GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming)
-                {
-                    stopGame();
-                    VariableControlService.IsTheGameStarted = false;
-                    VariableControlService.IsTheGameFinished = true;
-                }
-            }
-        }
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            Stopped();
-            return Task.CompletedTask;
-        }
-        public void Dispose()
-        {
-        }
-        public void Stopped()
-        {
-            MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
-            _logger.LogInformation("Stop RGB Button Service");
-            foreach (var item in RGBButtonList)
-            {
-                item.TurnColorOn(RGBColor.Off);
-            }
-            _logger.LogInformation("Stop Background Audio");
-            AudioPlayer.PIStopAudio();
-        }
 
 
-        public void TurnRGBButtonWithColor(RGBColor color)
-        {
-            foreach (var item in RGBButtonList)
-                item.TurnColorOn(color);
-        }
-        public void StartGameTask(RGBColor color, int level)
+
+        public void StartTheGameTask(RGBColor color, int level)
         {
             if (level > RGBButtonList.Count)
                 return;
@@ -188,7 +137,7 @@ namespace FortRoom.Services
             RGBButtonList[button2Index].TurnColorOn(color);
             while (!Button1 || !Button2)
             {
-                if (!VariableControlService.IsTheGameStarted)
+                if (!IsGameStartedOrInGoing())
                     break;
                 if (!Button1)
                 {
@@ -212,42 +161,83 @@ namespace FortRoom.Services
                         AudioPlayer.PIStartAudio(SoundType.Bonus);
                         RGBButtonList[button2Index].TurnColorOn(RGBColor.Off);
                         RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
-
-
                     }
                 }
 
-
-
-
-
-
-
                 Thread.Sleep(10);
             }
+            if (!IsGameStartedOrInGoing())
+                return;
             Thread.Sleep(400);
         }
 
-
-        public void stopGame()
+        private bool IsGameStartedOrInGoing()
         {
-
-            IsGameTimingStarted = false;
-            foreach (var item in RGBButtonList)
-            {
-                item.TurnColorOn(RGBColor.Off);
-            }
+            return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
+        }
+        private void StopRGBButtonService()
+        {
+            // Turn Of RGBButtons 
+            StopRGBButton();
+            VariableControlService.IsRGBButtonServiceStarted = false;
+            VariableControlService.IsTheGameFinished = true;
+            // Stop The Audio
             AudioPlayer.PIStartAudio(SoundType.MissionAccomplished);
             Thread.Sleep(1000);
             AudioPlayer.PIStopAudio();
+
         }
+        //private async Task GameTimingService(CancellationToken cancellationToken)
+        //{
+        //    //while (true)
+        //    //{
+        //    //    if (VariableControlService.IsTheGameStarted && !IsGameTimingStarted)
+        //    //    {
+
+        //    //        IsGameTimingStarted = true;
+        //    //        GameTiming.Restart();
+        //    //    }
+        //    //    if (GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming)
+        //    //    {
+        //    //        stopGame();
+        //    //        VariableControlService.IsTheGameStarted = false;
+        //    //        VariableControlService.IsTheGameFinished = true;
+        //    //    }
+        //    //}
+        //}
+
+        //public void Stopped()
+        //{
+        //    _logger.LogInformation("Stop RGB Button Service");
+        //    StopRGBButton();
+        //    _logger.LogInformation("Stop Background Audio");
+        //    AudioPlayer.PIStopAudio();
+        //}
+
+
+        public void TurnRGBButtonWithColor(RGBColor color)
+        {
+            foreach (var item in RGBButtonList)
+                item.TurnColorOn(color);
+        }
+
+
+
+        //public void stopGame()
+        //{
+
+        //    //IsGameTimingStarted = false;
+        //    StopRGBButton();
+        //    AudioPlayer.PIStartAudio(SoundType.MissionAccomplished);
+        //    Thread.Sleep(1000);
+        //    AudioPlayer.PIStopAudio();
+        //}
 
 
 
 
         private void ControlRoundSound(int roundNumber)
         {
-
             if (roundNumber == 0)
                 AudioPlayer.PIStartAudio(SoundType.RoundOne);
             if (roundNumber == 1)
@@ -258,7 +248,23 @@ namespace FortRoom.Services
                 AudioPlayer.PIStartAudio(SoundType.RoundFour);
             if (roundNumber == 4)
                 AudioPlayer.PIStartAudio(SoundType.RoundFive);
+        }
 
+        private void StopRGBButton()
+        {
+            foreach (var item in RGBButtonList)
+                item.TurnColorOn(RGBColor.Off);
+        }
+
+
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            StopRGBButtonService();
+            return Task.CompletedTask;
+        }
+        public void Dispose()
+        {
         }
     }
 

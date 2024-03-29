@@ -37,7 +37,7 @@ namespace FortRoom.Services
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                if (VariableControlService.IsTheGameStarted)
+                if (IsGameStartedOrInGoing())
                 {
                     try
                     {
@@ -80,6 +80,10 @@ namespace FortRoom.Services
         public void Dispose()
         {
             _cts.Dispose();
+        }
+        private bool IsGameStartedOrInGoing()
+        {
+            return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
         }
     }
 }

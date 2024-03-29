@@ -8,7 +8,7 @@ namespace FortRoom.Services
     public static class VariableControlService
     {
         public static bool IsTheGameStarted { get; set; } = false;
-        public static bool IsTheGameFinished { get; set; } = false;
+        public static bool IsTheGameFinished { get; set; } = false; // Make It True Will stop the game and enable going to the next room
         public static bool IsTheirAnyOneInTheRoom { get; set; } = false;
         public static int TimeOfPressureHit { get; set; } = 0;
         public static int ActiveButtonPressed { get; set; } = 0;
@@ -16,6 +16,15 @@ namespace FortRoom.Services
         public static bool IsOccupied { get; set; }
         public static bool EnableGoingToTheNextRoom = false;
         public static int RoomTiming = 120000;// Time in Mill
+
+        public static bool IsRGBButtonServiceStarted = false;
+        public static bool IsMatServiceStarted = false;
+        public static bool IsObstructionServiceStarted = false;
+        public static bool IsGameTimerStarted = false;
+
+
+
+
 
 
         public static void ResetTheGame()

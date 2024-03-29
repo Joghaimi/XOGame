@@ -19,12 +19,12 @@ namespace FortRoom.Services
         private readonly ILogger<MainService> _logger;
         private GPIOController _controller;
         private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
-        private CancellationTokenSource _cts, cts2;
+        private CancellationTokenSource _cts, _cts2, _cts3;
         public bool isTheirAreSomeOneInTheRoom = false;
         private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
         bool thereAreBackgroundSoundPlays = false;
         bool thereAreInstructionSoundPlays = false;
-
+        Stopwatch GameTiming = new Stopwatch();
 
 
         public MainService(ILogger<MainService> logger)
@@ -37,18 +37,19 @@ namespace FortRoom.Services
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Fort);
             AudioPlayer.Init(Room.Fort);
             MCP23Controller.Init(Room.Fort);
-            
             _controller.Setup(MasterDI.PIRPin1, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin2, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin3, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
-
             DoorControl.Status(DoorPin, false);
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
-            Task.Run(() => CheckIFRoomIsEmpty(cts2.Token));
+            Task.Run(() => CheckIFRoomIsEmpty(_cts2.Token));
+            Task.Run(() => GameTimingService(_cts3.Token));
+
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
@@ -63,11 +64,8 @@ namespace FortRoom.Services
                 PIR3 = _controller.Read(MasterDI.PIRPin3);
                 PIR4 = _controller.Read(MasterDI.PIRPin4);
                 VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
-                // Control Background Audio
-                ControlRoomAudio();
-
+                ControlRoomAudio();// Control Background Audio
                 // IF Enable Going To The Next room 
-
                 if (VariableControlService.EnableGoingToTheNextRoom)
                 {
                     _logger.LogDebug("Open The Door");
@@ -81,9 +79,10 @@ namespace FortRoom.Services
                     }
                     Thread.Sleep(30000);
                     DoorControl.Status(DoorPin, false);
-                    VariableControlService.EnableGoingToTheNextRoom = false;
-                    VariableControlService.IsTheirAnyOneInTheRoom = false;
-                    VariableControlService.IsTheGameStarted = false;
+                    ResetTheGame();
+                    //VariableControlService.EnableGoingToTheNextRoom = false;
+                    //VariableControlService.IsTheirAnyOneInTheRoom = false;
+                    //VariableControlService.IsTheGameStarted = false;
                     RGBLight.SetColor(RGBColor.Off);
                     _logger.LogDebug("No One In The Room , All Gone To The Next Room");
                 }
@@ -93,7 +92,7 @@ namespace FortRoom.Services
         }
         private async Task CheckIFRoomIsEmpty(CancellationToken cancellationToken)
         {
-            while (true)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 if (VariableControlService.IsTheirAnyOneInTheRoom && !VariableControlService.IsTheGameStarted)
                 {
@@ -103,15 +102,7 @@ namespace FortRoom.Services
 
             }
         }
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            //_cts.Cancel();
-            return Task.CompletedTask;
-        }
-        public void Dispose()
-        {
-            //_cts.Dispose();
-        }
+
 
         // To Do Next Time
         private void ControlRoomAudio()
@@ -146,7 +137,63 @@ namespace FortRoom.Services
             }
         }
 
-      
+
+        // Control Starting All the Threads
+        private async Task GameTimingService(CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                if (VariableControlService.IsTheGameStarted && !VariableControlService.IsGameTimerStarted)
+                {
+                    GameTiming.Restart();
+                    VariableControlService.IsGameTimerStarted = true;
+                }
+                bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming;
+                bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.IsGameTimerStarted;
+
+                if (GameFinishedByTimer || VariableControlService.IsTheGameFinished)
+                    StopTheGame();
+            }
+        }
+
+
+
+        private void StartTheGame()
+        {
+
+        }
+        private void StopTheGame()
+        {
+            VariableControlService.IsTheGameStarted = false;
+            VariableControlService.IsTheGameFinished = true;
+            VariableControlService.EnableGoingToTheNextRoom = true;
+
+        }
+        private void ResetTheGame()
+        {
+            VariableControlService.EnableGoingToTheNextRoom = false;
+            VariableControlService.IsTheirAnyOneInTheRoom = false;
+            VariableControlService.IsTheGameStarted = false;
+            VariableControlService.IsGameTimerStarted = false;
+        }
+
+
+
+        // Stop The Service
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            _cts.Cancel();
+            _cts2.Cancel();
+            _cts3.Cancel();
+            return Task.CompletedTask;
+        }
+        public void Dispose()
+        {
+            _cts.Dispose();
+            _cts2.Dispose();
+            _cts3.Dispose();
+        }
+
 
     }
 }
