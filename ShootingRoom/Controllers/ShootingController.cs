@@ -61,5 +61,11 @@ namespace ShootingRoom.Controllers
         {
             return Ok(VariableControlService.TeamScore.ShootingRoomScore);
         }
+        [HttpGet("GetRoundNumber")]
+        public IActionResult GetRoundNumber()
+        {
+            var returnArray = new List<int>(){ (int)VariableControlService.GameRound, VariableControlService.LevelScore };
+            return Ok(returnArray);
+        }
     }
 }

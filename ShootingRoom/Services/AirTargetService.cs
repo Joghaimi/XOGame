@@ -108,12 +108,13 @@ namespace ShootingRoom.Services
                         {
 
                             level++;
-                            int ActualLevelScore = 0;
+                            VariableControlService.LevelScore = 0;
+                            //int ActualLevelScore = 0;
                             int numberOfRightHits = 0;
                             int numberOfWrongHits = 0;
                             LevelTimer.Restart();
                             Console.WriteLine("Start The Level");
-                            while (LevelScore > ActualLevelScore && LevelTimer.ElapsedMilliseconds < 96000)
+                            while (LevelScore > VariableControlService.LevelScore && LevelTimer.ElapsedMilliseconds < 96000)
                             {
                                 if (!IsGameStartedOrInGoing())
                                     break;
@@ -134,19 +135,19 @@ namespace ShootingRoom.Services
                                             if (!IsGameStartedOrInGoing())
                                                 break;
                                             (bool state, int itemScore, numberOfHit, int targetNumber) = element.TargetStatus();
-                                            ActualLevelScore += itemScore;
+                                            VariableControlService.LevelScore += itemScore;
 
                                             if (itemScore > 0 && state)
                                             {
                                                 Scored(true, IsItUV, 0);
                                                 numberOfRightHits++;
-                                                Console.WriteLine($"+ Score {ActualLevelScore} , #{numberOfRightHits}");
+                                                Console.WriteLine($"+ Score {VariableControlService.LevelScore} , #{numberOfRightHits}");
                                             }
                                             else if (itemScore < 0 && state)
                                             {
                                                 Scored(false, IsItUV, numberOfWrongHits);
                                                 numberOfWrongHits++;
-                                                Console.WriteLine($"- Score {ActualLevelScore} , #{numberOfWrongHits}");
+                                                Console.WriteLine($"- Score {VariableControlService.LevelScore} , #{numberOfWrongHits}");
                                             }
                                             if (numberOfHit == 20)
                                                 break;
@@ -155,17 +156,17 @@ namespace ShootingRoom.Services
 
                                     }
                                     item.UnSelectTarget(false);
-                                    if (numberOfHit == 20 || ActualLevelScore >= LevelScore)
+                                    if (numberOfHit == 20 || VariableControlService.LevelScore >= LevelScore)
                                         break;
                                 }
-                                if (numberOfHit == 20 || ActualLevelScore >= LevelScore)
+                                if (numberOfHit == 20 || VariableControlService.LevelScore >= LevelScore)
                                     break;
 
                             }
                             Console.WriteLine("End The Level");
 
                             bool roundAchieved =
-                                CalculateTheScore(IsItDoubleScore, ActualLevelScore >= LevelScore, LevelScore, numberOfRightHits, numberOfWrongHits);
+                                CalculateTheScore(IsItDoubleScore, VariableControlService.LevelScore >= LevelScore, LevelScore, numberOfRightHits, numberOfWrongHits);
                             if (roundAchieved)
                                 numberOfAchivedInRow++;
                             else

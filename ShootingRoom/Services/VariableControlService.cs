@@ -25,7 +25,7 @@ namespace ShootingRoom.Services
         public static int RoomTiming = 540000;// Time in Mill
         public static Round GameRound = Round.Round1;
 
-
+        public static int LevelScore = 0;
 
 
 
