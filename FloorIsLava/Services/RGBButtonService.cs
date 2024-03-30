@@ -42,8 +42,8 @@ namespace FloorIsLava.Services
             MCP23Controller.PinModeSetup(MasterDI.IN4, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterDI.IN5, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterDI.IN7, PinMode.Input);
-            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT1, PinMode.Output);
-            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT5, PinMode.Output);
+            MCP23Controller.PinModeSetup(CellingUPRelay, PinMode.Output);
+            MCP23Controller.PinModeSetup(CellingDownRelay, PinMode.Output);
             MCP23Controller.PinModeSetup(MagnetRelay, PinMode.Output);
             GameStopWatch.Start();
             MotorStopWatch.Start();
@@ -72,7 +72,8 @@ namespace FloorIsLava.Services
                     if (!IN4)
                         IN4 = CeilingButton(!MCP23Controller.Read(MasterDI.IN4));
                     pressureMat();
-
+                    Console.WriteLine($"#1 {CeilingButton(!MCP23Controller.Read(MasterDI.IN2))} #2 {CeilingButton(!MCP23Controller.Read(MasterDI.IN3))} #3 {CeilingButton(!MCP23Controller.Read(MasterDI.IN4))}");
+                    Thread.Sleep(1000);
                     // Test 
                     if (IN2 && IN3 && IN4 && !ceilingMotorDown)
                     {
@@ -95,7 +96,7 @@ namespace FloorIsLava.Services
                         AudioPlayer.PIStartAudio(SoundType.Bonus);
                         RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
                         Console.WriteLine("Magnet Start");
-                        MCP23Controller.Write(MasterOutputPin.OUTPUT4, PinState.High);
+                        MCP23Controller.Write(MagnetRelay, PinState.High);
                         while (true)
                         {
                             if (!IsGameStartedOrInGoing())
@@ -345,23 +346,23 @@ namespace FloorIsLava.Services
                 if (ceilingMotorDown)
                 {
                     Console.WriteLine("Start Ceiling down");
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
+                    MCP23Controller.Write(CellingDownRelay, PinState.High);
                     Thread.Sleep(3000);
                     //while (MotorStopWatch.ElapsedMilliseconds < motorTiming) { }
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
+                    MCP23Controller.Write(CellingDownRelay, PinState.Low);
                     ceilingMotorDown = false;
                     Console.WriteLine("stop Ceiling down");
                 }
                 if (ceilingMotoruUp)
                 {
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
+                    MCP23Controller.Write(CellingDownRelay, PinState.Low);
                     Console.WriteLine("Start Ceiling up");
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.High);
+                    MCP23Controller.Write(CellingUPRelay, PinState.High);
                     while (MotorStopWatch.ElapsedMilliseconds < motorTiming) { }
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.Low);
+                    MCP23Controller.Write(CellingUPRelay, PinState.Low);
                     Console.WriteLine("stop Ceiling up");
                     ceilingMotoruUp = false;
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
+                    MCP23Controller.Write(CellingDownRelay, PinState.Low);
                 }
             }
         }
@@ -370,13 +371,13 @@ namespace FloorIsLava.Services
         {
             if (IsUp)
             {
-                MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
-                MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.High);
+                MCP23Controller.Write(CellingDownRelay, PinState.Low);
+                MCP23Controller.Write(CellingUPRelay, PinState.High);
                 Task.Run(async () =>
                 {
                     await Task.Delay(Timing);
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.Low);
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
+                    MCP23Controller.Write(CellingUPRelay, PinState.Low);
+                    MCP23Controller.Write(CellingDownRelay, PinState.Low);
                 });
             }
             else
