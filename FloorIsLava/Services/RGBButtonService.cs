@@ -15,7 +15,7 @@ namespace FloorIsLava.Services
     {
         List<RGBButton> RGBButtonList = new List<RGBButton>();
         private CancellationTokenSource _cts, _cts2;
-        bool IN4, IN2, IN3, IN5, IN6 = false;
+        bool IN4, IN2, IN3, IN5, IN7 = false;
         bool PressureMatPressed = false;
         bool IsTimerStarted = false;
         Stopwatch GameStopWatch = new Stopwatch();
@@ -101,9 +101,9 @@ namespace FloorIsLava.Services
                             if (!MCP23Controller.Read(MasterDI.IN5) && !IN5)
                             {
                                 IN5 = true;
-                                AudioPlayer.PIStartAudio(SoundType.Bonus);
+                                AudioPlayer.PIStartAudio(SoundType.Charge);
                                 RGBLight.SetColor(RGBColor.Blue);
-                                if (!IN6)
+                                if (!IN7)
                                     RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
                                 Console.WriteLine("IN5 PRESSED ====");
                             }
@@ -115,10 +115,10 @@ namespace FloorIsLava.Services
                                     Console.WriteLine("IN5 bREAK ====");
 
                             }
-                            if (!MCP23Controller.Read(MasterDI.IN7) && !IN6)
+                            if (!MCP23Controller.Read(MasterDI.IN7) && !IN7)
                             {
-                                IN6 = true;
-                                AudioPlayer.PIStartAudio(SoundType.Bonus);
+                                IN7 = true;
+                                AudioPlayer.PIStartAudio(SoundType.Charge);
                                 RGBLight.SetColor(RGBColor.Blue);
                                 if (!IN5)
                                     RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
@@ -126,14 +126,14 @@ namespace FloorIsLava.Services
 
                             }
                             pressureMat();
-                            if (IN6)
+                            if (IN7)
                             {
-                                IN6 = !MCP23Controller.Read(MasterDI.IN7);
-                                if (!IN6)
+                                IN7 = !MCP23Controller.Read(MasterDI.IN7);
+                                if (!IN7)
                                     Console.WriteLine("IN6 bREAK ====");
 
                             }
-                            if (IN6 && IN5)
+                            if (IN7 && IN5)
                                 break;
 
                         }

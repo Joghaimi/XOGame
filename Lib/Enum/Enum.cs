@@ -36,7 +36,8 @@ namespace Library
         RoundFive,
         MissionAccomplished,
         DoubleScore,
-        LightsChange
+        LightsChange,
+        Charge,
     }
     public enum Room
     {

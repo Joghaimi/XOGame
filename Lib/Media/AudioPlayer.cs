@@ -176,6 +176,9 @@ namespace Library.Media
                 case SoundType.LightsChange:
                     soundFilePath = $"{HomePath()}/audio/LightsCahnge.wav";
                     break;
+                case SoundType.Charge:
+                    soundFilePath = $"{HomePath()}/audio/Charg.wav";
+                    break;
                 default:
                     break;
             }
