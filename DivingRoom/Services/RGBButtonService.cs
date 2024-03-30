@@ -58,10 +58,11 @@ namespace DivingRoom.Services
             while (true)
             {
 
-                
+
                 if (IsGameStartedOrInGoing())
                 {
-                    if (!VariableControlService.IsRGBButtonServiceStarted) {
+                    if (!VariableControlService.IsRGBButtonServiceStarted)
+                    {
                         Reset();
                         VariableControlService.IsRGBButtonServiceStarted = true;
                         Console.WriteLine("****************** Game Started");
@@ -80,6 +81,7 @@ namespace DivingRoom.Services
                             {
                                 numberOfPressedButton = 0;
                                 numberOfSelectedButton = 0;
+
                                 UnselectAllPB();
 
                                 RGBColor selectedColor = (RGBColor)CurrentColor;
@@ -89,7 +91,9 @@ namespace DivingRoom.Services
                                 var PrimaryColor = RGBColorMapping.GetRGBColors(selectedColor);
                                 Console.WriteLine(PrimaryColor[0]);
                                 Console.WriteLine(PrimaryColor[1]);
+
                                 AudioPlayer.PIStartAudio(SoundType.Button);
+
                                 for (int i = 0; i < difficulty; i += 2)
                                 {
                                     int randomNumber = random.Next(0, unSelectedPushButton.Count);
@@ -135,13 +139,16 @@ namespace DivingRoom.Services
                                     item.TurnColorOn(RGBColor.Off);
                                     item.Set(false);
                                     AudioPlayer.PIStartAudio(SoundType.Bonus);
-                                    Console.WriteLine($"score {Score}");
+                                    Console.WriteLine($"+ score {VariableControlService.TeamScore.DivingRoomScore}");
+                                    Thread.Sleep(200);
                                 }
                                 else if (!item.CurrentStatus() && !item.isSet())
                                 {
-                                    Score--;
+                                    //Score--;
                                     VariableControlService.TeamScore.DivingRoomScore--;
                                     AudioPlayer.PIStartAudio(SoundType.Descend);
+                                    Console.WriteLine($"- score {VariableControlService.TeamScore.DivingRoomScore}");
+                                    Thread.Sleep(200);
                                 }
                             }
                             if (numberOfPressedButton == numberOfSelectedButton)

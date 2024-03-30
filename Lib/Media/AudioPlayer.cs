@@ -21,32 +21,32 @@ namespace Library.Media
             _currentRoom = currentRoom;
         }
 
-        public static void PIStartAudio(SoundType soundType, bool isLowVolum)
-        {
-            try
-            {
-                soundFilePath = PISoundPath(soundType);
-                Process audioProcess = new Process();
-                audioProcess.StartInfo.FileName = "/bin/bash";
-                if (isLowVolum)
-                    audioProcess.StartInfo.Arguments = $"cvlc --gain +0.9 --vout none --play-and-exit {soundFilePath}";
-                else
-                    audioProcess.StartInfo.Arguments = $"cvlc --vout none --play-and-exit {soundFilePath}";
-                audioProcess.StartInfo.RedirectStandardOutput = true;
-                audioProcess.StartInfo.RedirectStandardError = true;
-                audioProcess.StartInfo.UseShellExecute = false;
-                audioProcess.StartInfo.StandardOutputEncoding = System.Text.Encoding.UTF8;
-                audioProcess.StartInfo.StandardErrorEncoding = System.Text.Encoding.UTF8;
-                audioProcess.StartInfo.CreateNoWindow = true;
-                audioProcess.Start();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Excepton ==>" + ex.Message);
+        //public static void PIStartAudio(SoundType soundType, bool isLowVolum)
+        //{
+        //    try
+        //    {
+        //        soundFilePath = PISoundPath(soundType);
+        //        Process audioProcess = new Process();
+        //        audioProcess.StartInfo.FileName = "/bin/bash";
+        //        if (isLowVolum)
+        //            audioProcess.StartInfo.Arguments = $"cvlc --gain +0.9 --vout none --play-and-exit {soundFilePath}";
+        //        else
+        //            audioProcess.StartInfo.Arguments = $"cvlc --vout none --play-and-exit {soundFilePath}";
+        //        audioProcess.StartInfo.RedirectStandardOutput = true;
+        //        audioProcess.StartInfo.RedirectStandardError = true;
+        //        audioProcess.StartInfo.UseShellExecute = false;
+        //        audioProcess.StartInfo.StandardOutputEncoding = System.Text.Encoding.UTF8;
+        //        audioProcess.StartInfo.StandardErrorEncoding = System.Text.Encoding.UTF8;
+        //        audioProcess.StartInfo.CreateNoWindow = true;
+        //        audioProcess.Start();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine("Excepton ==>" + ex.Message);
 
-            }
+        //    }
 
-        }
+        //}
 
 
 
@@ -104,7 +104,6 @@ namespace Library.Media
             }
 
         }
-        [Obsolete("Use PIStartAudio instead")]
         public static void PIBackgroundSound(SoundType soundType)
         {
             soundFilePath = PISoundPath(soundType);
