@@ -157,7 +157,7 @@ namespace DivingRoom.Services
                 AudioPlayer.PIStartAudio(SoundType.Bonus);
                 VariableControlService.TeamScore.DivingRoomScore++;
                 numberOfPressedButton++;
-                Console.WriteLine($"+ score {VariableControlService.TeamScore.DivingRoomScore}");
+                _logger.LogInformation($"+ score {VariableControlService.TeamScore.DivingRoomScore}");
             }
         }
         private void RemoveFromScore(bool removeScore, int index)
@@ -263,7 +263,7 @@ namespace DivingRoom.Services
         public void Stopped()
         {
             MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
-            RGBLight.SetColor(RGBColor.Off);
+            RGBLight.SetColor(RGBColor.White);
             _logger.LogInformation("Stop RGB Button Service");
             foreach (var item in RGBButtonList)
             {
