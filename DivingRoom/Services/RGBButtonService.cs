@@ -7,6 +7,7 @@ using Library.PinMapping;
 using Library.GPIOLib;
 using Iot.Device.Mcp3428;
 using Library.Enum;
+using Microsoft.Extensions.Logging;
 
 namespace DivingRoom.Services
 {
@@ -47,7 +48,9 @@ namespace DivingRoom.Services
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR8, RGBButtonPin.RGBG8, RGBButtonPin.RGBB8, RGBButtonPin.RGBPB8));
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR9, RGBButtonPin.RGBG9, RGBButtonPin.RGBB9, RGBButtonPin.RGBPB9));
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR10, RGBButtonPin.RGBG10, RGBButtonPin.RGBB10, RGBButtonPin.RGBPB10));
-
+            MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN2, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN3, PinMode.Input);
             GameStopWatch.Start();
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task task1 = Task.Run(() => RunService(_cts.Token));
@@ -57,6 +60,16 @@ namespace DivingRoom.Services
         {
             while (true)
             {
+
+                while (true)
+                {
+                    Console.WriteLine($"IR1 {!MCP23Controller.Read(MasterDI.IN1)}");
+                    Console.WriteLine($"IR2 {!MCP23Controller.Read(MasterDI.IN2)}");
+                    Console.WriteLine($"IR3 {!MCP23Controller.Read(MasterDI.IN3)}");
+                    Thread.Sleep(1000);
+                }
+
+
 
 
                 if (IsGameStartedOrInGoing())
@@ -73,7 +86,7 @@ namespace DivingRoom.Services
                         bool isSelected = false;
                         if (!IsGameStartedOrInGoing())
                             break;
-                        while (GameStopWatch.ElapsedMilliseconds < 60000)
+                        while (GameStopWatch.ElapsedMilliseconds < 150000)
                         {
                             if (!IsGameStartedOrInGoing())
                                 break;
@@ -84,55 +97,14 @@ namespace DivingRoom.Services
                                 numberOfSelectedButton = 0;
                                 UnselectAllPB();
                                 var PrimaryColor = SelectColor((RGBColor)CurrentColor);
-                                Console.WriteLine(PrimaryColor[0]);
-                                Console.WriteLine(PrimaryColor[1]);
                                 TurnSelectiveRGBButtonWithColorRandom(PrimaryColor);
-                                Console.WriteLine($"Finished number of Selected button {numberOfSelectedButton} number of pressed {numberOfPressedButton} unSelectedPushButton {unSelectedPushButton.Count}");
                                 TurnUnSelectedRGBButtonWithColorRandom(PrimaryColor);
                                 AudioPlayer.PIStartAudio(SoundType.LightsChange);
                                 isSelected = true;
-
-                                //RGBColor selectedColor = (RGBColor)CurrentColor;
-                                //Console.WriteLine($"Game Started {selectedColor.ToString()}");
-                                //RGBLight.SetColor(selectedColor);
-                                //AudioPlayer.PIStartAudio(SoundType.Button);
-
-                                //for (int i = 0; i < difficulty; i += 2)
-                                //{
-                                //    int randomNumber = random.Next(0, unSelectedPushButton.Count);
-                                //    int selectedButtonIndex = unSelectedPushButton[randomNumber];
-
-                                //    RGBButtonList[selectedButtonIndex].TurnColorOn(PrimaryColor[0]);
-                                //    RGBButtonList[selectedButtonIndex].Set(true);
-                                //    Console.WriteLine($"Button #{selectedButtonIndex} color is {PrimaryColor[0].ToString()}");
-                                //    numberOfSelectedButton++;
-                                //    unSelectedPushButton.Remove(selectedButtonIndex);//= unSelectedPushButton.Where(val => val != selectedButtonIndex).ToArray();
-                                //    randomNumber = random.Next(0, unSelectedPushButton.Count);
-                                //    selectedButtonIndex = unSelectedPushButton[randomNumber];
-                                //    RGBButtonList[selectedButtonIndex].TurnColorOn(PrimaryColor[1]);
-                                //    RGBButtonList[selectedButtonIndex].Set(true);
-                                //    Console.WriteLine($"Button #{selectedButtonIndex} color is {PrimaryColor[1].ToString()}");
-                                //    numberOfSelectedButton++;
-                                //    unSelectedPushButton.Remove(selectedButtonIndex);
-                                //}
-
-                                //Console.WriteLine($"Finished number of Selected button {numberOfSelectedButton} number of pressed {numberOfPressedButton} unSelectedPushButton {unSelectedPushButton.Count}");
-
-                                //RGBColor[] unSelectedColorArray = { RGBColor.Green, RGBColor.Red, RGBColor.Blue };
-                                //unSelectedColorArray = unSelectedColorArray.Where(val => val != PrimaryColor[0] && val != PrimaryColor[1]).ToArray();
-                                //if (unSelectedColorArray.Length > 0)
-                                //{
-                                //    Console.WriteLine($"unselected {unSelectedColorArray[0].ToString()}");
-                                //    foreach (var item in unSelectedPushButton)
-                                //    {
-                                //        Console.WriteLine($"other color {item}");
-                                //        RGBButtonList[item].TurnColorOn(unSelectedColorArray[0]);
-                                //    }
-                                //}
-
-
-                                //isSelected = true;
-
+                                _logger.LogTrace("Select RGB Color");
+                                _logger.LogTrace($"Color#1 {PrimaryColor[0]}");
+                                _logger.LogTrace($"Color#2 {PrimaryColor[1]}");
+                                _logger.LogTrace($"Finished number of Selected button {numberOfSelectedButton} number of pressed {numberOfPressedButton} unSelectedPushButton {unSelectedPushButton.Count}");
                             }
                             // Loop Inside The Button To Allow 
                             int index = 0;
@@ -140,61 +112,11 @@ namespace DivingRoom.Services
                             {
                                 bool PressSelectedButton = !item.CurrentStatusWithCheckForDelay() && item.isSet();
                                 AddToScore(PressSelectedButton, index);
-                                //if (PressSelectedButton)//(!item.CurrentStatusWithCheckForDelay() && item.isSet())
-                                //{
-                                //    item.BlockForASec();
-                                //    numberOfPressedButton++;
-                                //    VariableControlService.TeamScore.DivingRoomScore++;
-                                //    //Score++;
-                                //    item.TurnColorOn(RGBColor.Off);
-                                //    item.Set(false);
-                                //    AudioPlayer.PIStartAudio(SoundType.Bonus);
-                                //    Console.WriteLine($"+ score {VariableControlService.TeamScore.DivingRoomScore}");
-                                //    Thread.Sleep(200);
-                                //}
                                 bool PressUnselectedButton = !item.CurrentStatusWithCheckForDelay() && !item.isSet();
                                 RemoveFromScore(PressUnselectedButton, index);
-                                //if (PressUnselectedButton)//(!item.CurrentStatusWithCheckForDelay() && !item.isSet())
-                                //{
-                                //    //Score--;
-                                //    item.BlockForASec();
-                                //    VariableControlService.TeamScore.DivingRoomScore--;
-                                //    AudioPlayer.PIStartAudio(SoundType.Descend);
-                                //    Console.WriteLine($"- score {VariableControlService.TeamScore.DivingRoomScore}");
-                                //    Thread.Sleep(200);
-                                //}
                                 index++;
                             }
 
-
-
-
-                            //foreach (var item in RGBButtonList)
-                            //{
-                            //    bool PressSelectedButton = !item.CurrentStatusWithCheckForDelay() && item.isSet();
-                            //    if (PressSelectedButton)//(!item.CurrentStatusWithCheckForDelay() && item.isSet())
-                            //    {
-                            //        item.BlockForASec();
-                            //        numberOfPressedButton++;
-                            //        VariableControlService.TeamScore.DivingRoomScore++;
-                            //        //Score++;
-                            //        item.TurnColorOn(RGBColor.Off);
-                            //        item.Set(false);
-                            //        AudioPlayer.PIStartAudio(SoundType.Bonus);
-                            //        Console.WriteLine($"+ score {VariableControlService.TeamScore.DivingRoomScore}");
-                            //        Thread.Sleep(200);
-                            //    }
-                            //    bool PressUnselectedButton = !item.CurrentStatusWithCheckForDelay() && !item.isSet();
-                            //    if (PressUnselectedButton)//(!item.CurrentStatusWithCheckForDelay() && !item.isSet())
-                            //    {
-                            //        //Score--;
-                            //        item.BlockForASec();
-                            //        VariableControlService.TeamScore.DivingRoomScore--;
-                            //        AudioPlayer.PIStartAudio(SoundType.Descend);
-                            //        Console.WriteLine($"- score {VariableControlService.TeamScore.DivingRoomScore}");
-                            //        Thread.Sleep(200);
-                            //    }
-                            //}
                             if (numberOfPressedButton == numberOfSelectedButton)
                             {
                                 numberOfPressedButton = 0;
@@ -207,7 +129,7 @@ namespace DivingRoom.Services
                                 await Task.Delay(1000); // Delay for 1 second
                             }
                         }
-                        Console.WriteLine("Game Ended");
+                        _logger.LogTrace("Game Ended");
                         if (CurrentColor < 7)
                             CurrentColor++;
                         else
@@ -223,8 +145,6 @@ namespace DivingRoom.Services
                     Reset();
                 }
                 Thread.Sleep(10);
-
-
 
             }
         }
