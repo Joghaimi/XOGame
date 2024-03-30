@@ -47,6 +47,7 @@ namespace DivingRoom.Services
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             
             _logger.LogInformation("Start Main Service");
             Task.Run(() => RunService(_cts.Token));
