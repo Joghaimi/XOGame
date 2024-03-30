@@ -8,6 +8,7 @@ using Library.PinMapping;
 using Library.RGBLib;
 using Microsoft.VisualBasic;
 using System.Device.Gpio;
+using System.Diagnostics;
 
 namespace FloorIsLava.Services
 {
@@ -15,12 +16,14 @@ namespace FloorIsLava.Services
     {
 
         private GPIOController _controller;
-        private CancellationTokenSource _cts, cts2;
+        private CancellationTokenSource _cts, _cts2, _cts3;
         private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
         private readonly ILogger<MainService> _logger;
         bool thereAreBackgroundSoundPlays = false;
         bool thereAreInstructionSoundPlays = false;
         private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
+        Stopwatch GameTiming = new Stopwatch();
+
         public MainService(ILogger<MainService> logger)
         {
             _logger = logger;
@@ -31,16 +34,25 @@ namespace FloorIsLava.Services
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.FloorIsLava);
             AudioPlayer.Init(Room.FloorIsLava);
             MCP23Controller.Init(Room.FloorIsLava);
+
+
             // Init the Pin's
             _controller.Setup(MasterDI.PIRPin1, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin2, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin3, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
             DoorControl.Status(DoorPin, false);
+
+
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            Task.Run(() => CheckIFRoomIsEmpty(cts2.Token));
+            _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
+            _logger.LogInformation("Start Main Service");
+            Task.Run(() => CheckIFRoomIsEmpty(_cts2.Token));
             Task.Run(() => RunService(_cts.Token));
+            Task.Run(() => GameTimingService(_cts3.Token));
+
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
@@ -67,11 +79,9 @@ namespace FloorIsLava.Services
                     }
                     Thread.Sleep(30000);
                     DoorControl.Status(DoorPin, false);
-                    VariableControlService.EnableGoingToTheNextRoom = false;
-                    VariableControlService.IsTheirAnyOneInTheRoom = false;
-                    VariableControlService.IsTheGameStarted = false;
-                    RGBLight.SetColor(RGBColor.Off);
+                    ResetTheGame();
                     _logger.LogDebug("No One In The Room , All Gone To The Next Room");
+
                 }
 
                 Thread.Sleep(10);
@@ -129,6 +139,39 @@ namespace FloorIsLava.Services
                 AudioPlayer.PIStopAudio();
             }
         }
+        // Control Starting All the Threads
+        private async Task GameTimingService(CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                if (VariableControlService.IsTheGameStarted && !VariableControlService.IsGameTimerStarted)
+                {
+                    GameTiming.Restart();
+                    VariableControlService.IsGameTimerStarted = true;
+                }
+                bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming;
+                bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.IsGameTimerStarted;
+
+                if (GameFinishedByTimer || VariableControlService.IsTheGameFinished)
+                    StopTheGame();
+            }
+        }
+        private void StopTheGame()
+        {
+            VariableControlService.IsTheGameStarted = false;
+            VariableControlService.IsTheGameFinished = true;
+            //VariableControlService.EnableGoingToTheNextRoom = true;
+
+        }
+        private void ResetTheGame()
+        {
+            VariableControlService.EnableGoingToTheNextRoom = false;
+            VariableControlService.IsTheirAnyOneInTheRoom = false;
+            VariableControlService.IsTheGameStarted = false;
+            VariableControlService.IsGameTimerStarted = false;
+        }
+
+
 
     }
 }

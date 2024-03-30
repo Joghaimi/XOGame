@@ -27,10 +27,10 @@ namespace FloorIsLava.Services
         {
             // TO DO Init The RGB Light .. 
             // Init RGB
-            //RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data);
             Console.WriteLine("Init Button#1");
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR7, RGBButtonPin.RGBG7, RGBButtonPin.RGBB7, RGBButtonPin.RGBPB7));
             RGBButtonList[0].TurnColorOn(RGBColor.Off);
+
             MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterDI.IN2, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterDI.IN3, PinMode.Input);
@@ -42,7 +42,7 @@ namespace FloorIsLava.Services
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT4, PinMode.Output);
             GameStopWatch.Start();
             MotorStopWatch.Start();
-            
+
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task task1 = Task.Run(() => RunService(_cts.Token));
@@ -51,49 +51,20 @@ namespace FloorIsLava.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            //if (!ceilingMotorDown)
-            //{
-            //    motorTiming = MotorStopWatch.ElapsedMilliseconds;
-            //    MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
-            //}
-            //motorTiming += 5000;
-            //ceilingMotorDown = true;
-            //Thread.Sleep(1000);
 
-            //if (!ceilingMotorDown)
-            //{
-            //    motorTiming = MotorStopWatch.ElapsedMilliseconds;
-            //    MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
-            //}
-            //motorTiming += 5000;
-            //Thread.Sleep(1000);
-
-            //ceilingMotorDown = true;
-            //if (!ceilingMotorDown)
-            //{
-            //    motorTiming = MotorStopWatch.ElapsedMilliseconds;
-            //    MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
-            //}
-            //motorTiming += 5000;
-            //ceilingMotorDown = true;
-            //Thread.Sleep(15000);
-
-            ////==================
-            //motorTiming = MotorStopWatch.ElapsedMilliseconds + 15000;
-            //ceilingMotoruUp = true;
-
-            //Console.WriteLine("Main");
             RGBLight.SetColor(RGBColor.Red);
             while (true)
             {
-                if (VariableControlService.IsTheGameStarted)
+                if (IsGameStartedOrInGoing())
                 {
+                    if (!IsGameStartedOrInGoing())
+                        break;
                     if (!MCP23Controller.Read(MasterDI.IN2) && !IN2)
                     {
                         IN2 = true;
                         AudioPlayer.PIStartAudio(SoundType.Bonus);
                         RGBLight.SetColor(RGBColor.Blue);
-                        RGBLight.TurnRGBRedDelayed();
+                        RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
                         Console.WriteLine("====");
                         if (!ceilingMotorDown)
                         {
@@ -110,7 +81,7 @@ namespace FloorIsLava.Services
                         IN3 = true;
                         AudioPlayer.PIStartAudio(SoundType.Bonus);
                         RGBLight.SetColor(RGBColor.Blue);
-                        RGBLight.TurnRGBRedDelayed();
+                        RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
                         Console.WriteLine("====");
                         if (!ceilingMotorDown)
                         {
@@ -128,7 +99,7 @@ namespace FloorIsLava.Services
                         IN4 = true;
                         AudioPlayer.PIStartAudio(SoundType.Bonus);
                         RGBLight.SetColor(RGBColor.Blue);
-                        RGBLight.TurnRGBRedDelayed();
+                        RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
                         Console.WriteLine("====");
                         if (!ceilingMotorDown)
                         {
@@ -143,8 +114,6 @@ namespace FloorIsLava.Services
                     pressureMat();
                     if (IN2 && IN3 && IN4 && numberOfPressedMotor == 3 && !ceilingMotorDown)
                     {
-
-
                         Console.WriteLine("Pressed all 3");
                         RGBButtonList[0].TurnColorOn(RGBColor.Red);
                         pressureMAtCount = true;
@@ -161,11 +130,14 @@ namespace FloorIsLava.Services
                         RGBButtonList[0].TurnColorOn(RGBColor.Blue);
                         RGBLight.SetColor(RGBColor.Blue);
                         AudioPlayer.PIStartAudio(SoundType.Bonus);
-                        RGBLight.TurnRGBRedDelayed();
+                        RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
                         Console.WriteLine("Magnet Start");
                         MCP23Controller.Write(MasterOutputPin.OUTPUT4, PinState.High);
                         while (true)
                         {
+
+                            if (!IsGameStartedOrInGoing())
+                                break;
                             pressureMat();
                             if (!MCP23Controller.Read(MasterDI.IN5) && !IN5)
                             {
@@ -173,7 +145,7 @@ namespace FloorIsLava.Services
                                 AudioPlayer.PIStartAudio(SoundType.Bonus);
                                 RGBLight.SetColor(RGBColor.Blue);
                                 if (!IN6)
-                                    RGBLight.TurnRGBRedDelayed();
+                                    RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
                                 Console.WriteLine("IN5 PRESSED ====");
                             }
                             pressureMat();
@@ -190,7 +162,7 @@ namespace FloorIsLava.Services
                                 AudioPlayer.PIStartAudio(SoundType.Bonus);
                                 RGBLight.SetColor(RGBColor.Blue);
                                 if (!IN5)
-                                    RGBLight.TurnRGBRedDelayed();
+                                    RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
                                 Console.WriteLine("IN6 PRESSED ====");
 
                             }
@@ -206,7 +178,7 @@ namespace FloorIsLava.Services
                                 break;
 
                         }
-                        Console.WriteLine("Game Endded");
+                        Console.WriteLine("Game Ended");
                         RGBLight.SetColor(RGBColor.Blue);
                         Console.WriteLine("Magnet Stop");
 
@@ -230,6 +202,10 @@ namespace FloorIsLava.Services
 
         }
         bool justDecrease = false;
+        private bool IsGameStartedOrInGoing()
+        {
+            return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
+        }
         private void pressureMat()
         {
             bool currentValue = MCP23Controller.Read(MasterDI.IN1);
@@ -294,3 +270,45 @@ namespace FloorIsLava.Services
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+//if (!ceilingMotorDown)
+//{
+//    motorTiming = MotorStopWatch.ElapsedMilliseconds;
+//    MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
+//}
+//motorTiming += 5000;
+//ceilingMotorDown = true;
+//Thread.Sleep(1000);
+
+//if (!ceilingMotorDown)
+//{
+//    motorTiming = MotorStopWatch.ElapsedMilliseconds;
+//    MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
+//}
+//motorTiming += 5000;
+//Thread.Sleep(1000);
+
+//ceilingMotorDown = true;
+//if (!ceilingMotorDown)
+//{
+//    motorTiming = MotorStopWatch.ElapsedMilliseconds;
+//    MCP23Controller.Write(MasterOutputPin.OUTPUT5.Chip, MasterOutputPin.OUTPUT5.port, MasterOutputPin.OUTPUT5.PinNumber, PinState.High);
+//}
+//motorTiming += 5000;
+//ceilingMotorDown = true;
+//Thread.Sleep(15000);
+
+////==================
+//motorTiming = MotorStopWatch.ElapsedMilliseconds + 15000;
+//ceilingMotoruUp = true;
+
+//Console.WriteLine("Main");
