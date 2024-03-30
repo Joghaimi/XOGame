@@ -12,10 +12,10 @@ namespace Library.RGBLib
 {
     public class RGBButton
     {
-
         public static bool IsMCP23ControllerInit = false;
         RGBColor _CurrnetColor;
         bool _isSet = false;
+        bool _isBlocked = false;
         MCP23Pin _PushButtonPin, _RGBRPin, _RGBGPin, _RGBBPin;
         public RGBButton(MCP23Pin RPin, MCP23Pin GPin, MCP23Pin BPin, MCP23Pin Button)
         {
@@ -77,6 +77,23 @@ namespace Library.RGBLib
         {
             return MCP23Controller.Read(_PushButtonPin);
         }
+
+        public bool CurrentStatusWithCheckForDelay()
+        {
+            if (_isBlocked)
+                return true;
+            return MCP23Controller.Read(_PushButtonPin);
+        }
+        public void BlockForASec()
+        {
+            Task.Run(async () =>
+            {
+                _isBlocked = true;
+                await Task.Delay(1000);
+                _isBlocked = false;
+            });
+        }
+
         public bool isSet()
         {
             return _isSet;

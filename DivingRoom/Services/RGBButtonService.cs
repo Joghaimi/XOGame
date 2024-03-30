@@ -131,8 +131,10 @@ namespace DivingRoom.Services
 
                             foreach (var item in RGBButtonList)
                             {
-                                if (!item.CurrentStatus() && item.isSet())
+                                if (!item.CurrentStatusWithCheckForDelay() && item.isSet())
                                 {
+
+                                    item.BlockForASec();
                                     numberOfPressedButton++;
                                     VariableControlService.TeamScore.DivingRoomScore++;
                                     //Score++;
@@ -142,9 +144,11 @@ namespace DivingRoom.Services
                                     Console.WriteLine($"+ score {VariableControlService.TeamScore.DivingRoomScore}");
                                     Thread.Sleep(200);
                                 }
-                                else if (!item.CurrentStatus() && !item.isSet())
+                                else if (!item.CurrentStatusWithCheckForDelay() && !item.isSet())
                                 {
                                     //Score--;
+                                    item.BlockForASec();
+
                                     VariableControlService.TeamScore.DivingRoomScore--;
                                     AudioPlayer.PIStartAudio(SoundType.Descend);
                                     Console.WriteLine($"- score {VariableControlService.TeamScore.DivingRoomScore}");
