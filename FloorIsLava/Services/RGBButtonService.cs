@@ -25,6 +25,9 @@ namespace FloorIsLava.Services
         bool ceilingMotoruUp = false;
         int numberOfPressedMotor = 0;
         long motorTiming = 0;
+        MCP23Pin MagnetRelay = MasterOutputPin.OUTPUT4;
+        MCP23Pin CellingUPRelay = MasterOutputPin.OUTPUT1;
+        MCP23Pin CellingDownRelay = MasterOutputPin.OUTPUT5;
         public Task StartAsync(CancellationToken cancellationToken)
         {
             // TO DO Init The RGB Light .. 
@@ -41,7 +44,7 @@ namespace FloorIsLava.Services
             MCP23Controller.PinModeSetup(MasterDI.IN7, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT1, PinMode.Output);
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT5, PinMode.Output);
-            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT4, PinMode.Output);
+            MCP23Controller.PinModeSetup(MagnetRelay, PinMode.Output);
             GameStopWatch.Start();
             MotorStopWatch.Start();
             CellingDirection(true, 10000);
@@ -141,7 +144,7 @@ namespace FloorIsLava.Services
                         RGBLight.SetColor(RGBColor.Blue);
                         Console.WriteLine("Magnet Stop");
 
-                        MCP23Controller.Write(MasterOutputPin.OUTPUT4, PinState.Low);
+                        MCP23Controller.Write(MagnetRelay, PinState.Low);
                         AudioPlayer.PIStopAudio();
                         Thread.Sleep(300);
                         AudioPlayer.PIStartAudio(SoundType.Finish);
@@ -365,21 +368,28 @@ namespace FloorIsLava.Services
 
         private void CellingDirection(bool IsUp, int Timing)
         {
-            MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
-            MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.High);
-            Task.Run(async () =>
+            if (IsUp)
             {
-                await Task.Delay(Timing);
-                MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.Low);
                 MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
-            });
+                MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.High);
+                Task.Run(async () =>
+                {
+                    await Task.Delay(Timing);
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.Low);
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
+                });
+            }
+            else
+            {
+            }
+
 
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
             AudioPlayer.PIStopAudio();
-
+            MCP23Controller.Write(MagnetRelay, PinState.Low);
             _cts.Cancel();
             return Task.CompletedTask;
         }
@@ -406,24 +416,6 @@ namespace FloorIsLava.Services
             }
             return false;
         }
-
-        //     if (!MCP23Controller.Read(MasterDI.IN2) && !IN2)
-        //                {
-        //                    IN2 = true;
-        //                    AudioPlayer.PIStartAudio(SoundType.Bonus);
-        //                    RGBLight.SetColor(RGBColor.Blue);
-        //                    RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
-        //                    Console.WriteLine("====");
-        //                    if (!ceilingMotorDown)
-        //                    {
-        //                        motorTiming = MotorStopWatch.ElapsedMilliseconds;
-        //                        MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.High);
-        //                    }
-        //                    motorTiming += 3000;
-        //                    numberOfPressedMotor++;
-        //                    ceilingMotorDown = true;
-
-        //                }
     }
 }
 
