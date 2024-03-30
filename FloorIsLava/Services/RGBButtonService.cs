@@ -72,8 +72,8 @@ namespace FloorIsLava.Services
                     if (!IN4)
                         IN4 = CeilingButton(!MCP23Controller.Read(MasterDI.IN4));
                     pressureMat();
-                    Console.WriteLine($"#1 {CeilingButton(!MCP23Controller.Read(MasterDI.IN2))} #2 {CeilingButton(!MCP23Controller.Read(MasterDI.IN3))} #3 {CeilingButton(!MCP23Controller.Read(MasterDI.IN4))}");
-                    Thread.Sleep(1000);
+                    //Console.WriteLine($"#1 {CeilingButton(!MCP23Controller.Read(MasterDI.IN2))} #2 {CeilingButton(!MCP23Controller.Read(MasterDI.IN3))} #3 {CeilingButton(!MCP23Controller.Read(MasterDI.IN4))}");
+                    //Thread.Sleep(1000);
                     // Test 
                     if (IN2 && IN3 && IN4 && !ceilingMotorDown)
                     {
@@ -139,6 +139,8 @@ namespace FloorIsLava.Services
                             }
                             if (IN7 && IN5)
                                 break;
+                            Thread.Sleep(10);
+
 
                         }
                         Console.WriteLine("Game Ended");
@@ -301,6 +303,7 @@ namespace FloorIsLava.Services
                     //    IN4 = false;
                     //    break;
                     //}
+                    Thread.Sleep(10);
                 }
                 Thread.Sleep(10);
 
