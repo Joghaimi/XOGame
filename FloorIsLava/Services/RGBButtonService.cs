@@ -44,7 +44,7 @@ namespace FloorIsLava.Services
             MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT4, PinMode.Output);
             GameStopWatch.Start();
             MotorStopWatch.Start();
-
+            CellingDirection(true, 10000);
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task task1 = Task.Run(() => RunService(_cts.Token));
@@ -86,7 +86,7 @@ namespace FloorIsLava.Services
 
                         pressureMAtCount = false;
                         Console.WriteLine("Button Pressed");
-                        
+
                         RGBButtonList[0].TurnColorOn(RGBColor.Blue);
                         RGBLight.SetColor(RGBColor.Blue);
                         AudioPlayer.PIStartAudio(SoundType.Bonus);
@@ -361,7 +361,18 @@ namespace FloorIsLava.Services
                     MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
                 }
             }
+        }
 
+        private void CellingDirection(bool IsUp, int Timing)
+        {
+            MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
+            MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.High);
+            Task.Run(async () =>
+            {
+                await Task.Delay(Timing);
+                MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.Low);
+                MCP23Controller.Write(MasterOutputPin.OUTPUT5, PinState.Low);
+            });
 
         }
 
