@@ -150,11 +150,12 @@ namespace DivingRoom.Services
 
         private void ControlRoomAudio()
         {
+            // Control Background Audio
             if (VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished && !thereAreInstructionSoundPlays)
             {
                 _logger.LogTrace("Start Instruction Audio");
                 thereAreInstructionSoundPlays = true;
-                AudioPlayer.PIStartAudio(SoundType.instruction, true);
+                AudioPlayer.PIBackgroundSound(SoundType.instruction);
             }
             else if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted
                 && !VariableControlService.IsTheGameFinished
@@ -168,7 +169,7 @@ namespace DivingRoom.Services
                 // Start Background Audio
                 _logger.LogTrace("Start Background Audio");
                 thereAreBackgroundSoundPlays = true;
-                AudioPlayer.PIStartAudio(SoundType.Background, true);
+                AudioPlayer.PIBackgroundSound(SoundType.Background);
             }
             else if (VariableControlService.IsTheGameFinished && thereAreBackgroundSoundPlays)
             {
