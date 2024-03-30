@@ -45,6 +45,8 @@ namespace FloorIsLava.Services
             MCP23Controller.PinModeSetup(CellingUPRelay, PinMode.Output);
             MCP23Controller.PinModeSetup(CellingDownRelay, PinMode.Output);
             MCP23Controller.PinModeSetup(MagnetRelay, PinMode.Output);
+
+            MCP23Controller.Write(MagnetRelay, PinState.Low); // Relese Magnet
             GameStopWatch.Start();
             MotorStopWatch.Start();
             CellingDirection(true, 10000);
