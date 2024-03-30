@@ -23,6 +23,7 @@ namespace FloorIsLava.Services
         bool thereAreInstructionSoundPlays = false;
         private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
         Stopwatch GameTiming = new Stopwatch();
+        MCP23Pin MagnetRelay = MasterOutputPin.OUTPUT4;
 
         public MainService(ILogger<MainService> logger)
         {
@@ -79,6 +80,7 @@ namespace FloorIsLava.Services
                     }
                     Thread.Sleep(30000);
                     DoorControl.Status(DoorPin, false);
+                    MCP23Controller.Write(MagnetRelay, PinState.Low); // Relese Magnet
                     ResetTheGame();
                     _logger.LogDebug("No One In The Room , All Gone To The Next Room");
 

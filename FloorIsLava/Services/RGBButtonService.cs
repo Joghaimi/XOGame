@@ -145,7 +145,7 @@ namespace FloorIsLava.Services
                         RGBLight.SetColor(RGBColor.Blue);
                         Console.WriteLine("Magnet Stop");
 
-                        MCP23Controller.Write(MagnetRelay, PinState.Low);
+                        //MCP23Controller.Write(MagnetRelay, PinState.Low);
                         AudioPlayer.PIStopAudio();
                         Thread.Sleep(300);
                         AudioPlayer.PIStartAudio(SoundType.Finish);
