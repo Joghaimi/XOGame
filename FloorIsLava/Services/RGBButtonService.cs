@@ -75,7 +75,7 @@ namespace FloorIsLava.Services
                     //Console.WriteLine($"#1 {CeilingButton(!MCP23Controller.Read(MasterDI.IN2))} #2 {CeilingButton(!MCP23Controller.Read(MasterDI.IN3))} #3 {CeilingButton(!MCP23Controller.Read(MasterDI.IN4))}");
                     //Thread.Sleep(1000);
                     // Test 
-                    if (IN2 && IN3 && IN4 && !ceilingMotorDown)
+                    if (IN2 && IN3 && IN4 && numberOfPressedMotor == 3 && !ceilingMotorDown)
                     {
                         Console.WriteLine("Pressed all 3");
                         RGBButtonList[0].TurnColorOn(RGBColor.Red);
@@ -140,8 +140,6 @@ namespace FloorIsLava.Services
                             if (IN7 && IN5)
                                 break;
                             Thread.Sleep(10);
-
-
                         }
                         Console.WriteLine("Game Ended");
                         RGBLight.SetColor(RGBColor.Blue);
