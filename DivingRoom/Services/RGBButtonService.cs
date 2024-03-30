@@ -83,35 +83,34 @@ namespace DivingRoom.Services
                                 numberOfSelectedButton = 0;
 
                                 UnselectAllPB();
-
-                                RGBColor selectedColor = (RGBColor)CurrentColor;
-                                Console.WriteLine($"Game Started {selectedColor.ToString()}");
-                                RGBLight.SetColor(selectedColor);
-
-                                var PrimaryColor = RGBColorMapping.GetRGBColors(selectedColor);
+                                var PrimaryColor = SelectColor((RGBColor)CurrentColor);
                                 Console.WriteLine(PrimaryColor[0]);
                                 Console.WriteLine(PrimaryColor[1]);
+                                TurnRGBButtonWithColorRandom(PrimaryColor);
+                                //RGBColor selectedColor = (RGBColor)CurrentColor;
+                                //Console.WriteLine($"Game Started {selectedColor.ToString()}");
+                                //RGBLight.SetColor(selectedColor);
+                                //AudioPlayer.PIStartAudio(SoundType.Button);
 
-                                AudioPlayer.PIStartAudio(SoundType.Button);
+                                //for (int i = 0; i < difficulty; i += 2)
+                                //{
+                                //    int randomNumber = random.Next(0, unSelectedPushButton.Count);
+                                //    int selectedButtonIndex = unSelectedPushButton[randomNumber];
 
-                                for (int i = 0; i < difficulty; i += 2)
-                                {
-                                    int randomNumber = random.Next(0, unSelectedPushButton.Count);
-                                    int selectedButtonIndex = unSelectedPushButton[randomNumber];
+                                //    RGBButtonList[selectedButtonIndex].TurnColorOn(PrimaryColor[0]);
+                                //    RGBButtonList[selectedButtonIndex].Set(true);
+                                //    Console.WriteLine($"Button #{selectedButtonIndex} color is {PrimaryColor[0].ToString()}");
+                                //    numberOfSelectedButton++;
+                                //    unSelectedPushButton.Remove(selectedButtonIndex);//= unSelectedPushButton.Where(val => val != selectedButtonIndex).ToArray();
+                                //    randomNumber = random.Next(0, unSelectedPushButton.Count);
+                                //    selectedButtonIndex = unSelectedPushButton[randomNumber];
+                                //    RGBButtonList[selectedButtonIndex].TurnColorOn(PrimaryColor[1]);
+                                //    RGBButtonList[selectedButtonIndex].Set(true);
+                                //    Console.WriteLine($"Button #{selectedButtonIndex} color is {PrimaryColor[1].ToString()}");
+                                //    numberOfSelectedButton++;
+                                //    unSelectedPushButton.Remove(selectedButtonIndex);
+                                //}
 
-                                    RGBButtonList[selectedButtonIndex].TurnColorOn(PrimaryColor[0]);
-                                    RGBButtonList[selectedButtonIndex].Set(true);
-                                    Console.WriteLine($"Button #{selectedButtonIndex} color is {PrimaryColor[0].ToString()}");
-                                    numberOfSelectedButton++;
-                                    unSelectedPushButton.Remove(selectedButtonIndex);//= unSelectedPushButton.Where(val => val != selectedButtonIndex).ToArray();
-                                    randomNumber = random.Next(0, unSelectedPushButton.Count);
-                                    selectedButtonIndex = unSelectedPushButton[randomNumber];
-                                    RGBButtonList[selectedButtonIndex].TurnColorOn(PrimaryColor[1]);
-                                    RGBButtonList[selectedButtonIndex].Set(true);
-                                    Console.WriteLine($"Button #{selectedButtonIndex} color is {PrimaryColor[1].ToString()}");
-                                    numberOfSelectedButton++;
-                                    unSelectedPushButton.Remove(selectedButtonIndex);
-                                }
                                 Console.WriteLine($"Finished number of Selected button {numberOfSelectedButton} number of pressed {numberOfPressedButton} unSelectedPushButton {unSelectedPushButton.Count}");
 
                                 RGBColor[] unSelectedColorArray = { RGBColor.Green, RGBColor.Red, RGBColor.Blue };
@@ -211,6 +210,35 @@ namespace DivingRoom.Services
                 index++;
             }
         }
+        private RGBColor[] SelectColor(RGBColor selectedColor)
+        {
+            Console.WriteLine($"Game Started {selectedColor.ToString()}");
+            RGBLight.SetColor(selectedColor);
+            AudioPlayer.PIStartAudio(SoundType.LightsChange);
+            return RGBColorMapping.GetRGBColors(selectedColor);
+        }
+        private void TurnRGBButtonWithColorRandom(RGBColor[] colorArray)
+        {
+            for (int i = 0; i < difficulty; i += 2)
+            {
+                int randomNumber = random.Next(0, unSelectedPushButton.Count);
+                int selectedButtonIndex = unSelectedPushButton[randomNumber];
+
+                RGBButtonList[selectedButtonIndex].TurnColorOn(colorArray[0]);
+                RGBButtonList[selectedButtonIndex].Set(true);
+                Console.WriteLine($"Button #{selectedButtonIndex} color is {colorArray[0].ToString()}");
+                numberOfSelectedButton++;
+                unSelectedPushButton.Remove(selectedButtonIndex);//= unSelectedPushButton.Where(val => val != selectedButtonIndex).ToArray();
+                randomNumber = random.Next(0, unSelectedPushButton.Count);
+                selectedButtonIndex = unSelectedPushButton[randomNumber];
+                RGBButtonList[selectedButtonIndex].TurnColorOn(colorArray[1]);
+                RGBButtonList[selectedButtonIndex].Set(true);
+                Console.WriteLine($"Button #{selectedButtonIndex} color is {colorArray[1].ToString()}");
+                numberOfSelectedButton++;
+                unSelectedPushButton.Remove(selectedButtonIndex);
+            }
+        }
+
 
         private void Reset()
         {
