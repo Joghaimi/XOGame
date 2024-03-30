@@ -86,7 +86,7 @@ namespace DivingRoom.Services
                         if (!IsGameStartedOrInGoing())
                             break;
                         ControlRoundSound(VariableControlService.GameRound);
-                        while (GameStopWatch.ElapsedMilliseconds < 30000 || VariableControlService.GameRound == Round.Round3)
+                        while (GameStopWatch.ElapsedMilliseconds < 10000 || VariableControlService.GameRound == Round.Round3)
                         {
                             if (!IsGameStartedOrInGoing())
                                 break;
