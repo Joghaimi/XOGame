@@ -26,6 +26,8 @@ namespace DivingRoom.Services
         int CurrentColor = 5;
         int difficulty = 6;
         List<int> unSelectedPushButton = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+        bool IsEnterdTheRoom = false;
         public RGBButtonServices(ILogger<RGBButtonServices> logger, IHostApplicationLifetime appLifetime)
         {
             _appLifetime = appLifetime;
@@ -61,19 +63,16 @@ namespace DivingRoom.Services
             while (true)
             {
 
-                while (true)
-                {
-                    Console.WriteLine($"IR1 {!MCP23Controller.Read(MasterDI.IN1)}");
-                    Console.WriteLine($"IR2 {!MCP23Controller.Read(MasterDI.IN2)}");
-                    Console.WriteLine($"IR3 {!MCP23Controller.Read(MasterDI.IN3)}");
-                    Thread.Sleep(1000);
-                }
-
-
-
-
                 if (IsGameStartedOrInGoing())
                 {
+                    while (!IsEnterdTheRoom)
+                    {
+                        IsEnterdTheRoom = MCP23Controller.Read(MasterDI.IN1) ||
+                                          MCP23Controller.Read(MasterDI.IN2) ||
+                                          MCP23Controller.Read(MasterDI.IN3);
+                        if (!IsGameStartedOrInGoing())
+                            break;
+                    }
                     if (!VariableControlService.IsRGBButtonServiceStarted)
                     {
                         Reset();
@@ -136,13 +135,13 @@ namespace DivingRoom.Services
                             CurrentColor = 5;
                         difficulty -= 2;
                     }
-                    //RGBLight.SetColor(RGBColor.Off);
                 }
                 else if (!IsGameStartedOrInGoing() && VariableControlService.IsRGBButtonServiceStarted)
                 {
                     _logger.LogInformation("RGB Service Stopped");
                     StopRGBButtonService();
                     Reset();
+                    IsEnterdTheRoom = false;
                 }
                 Thread.Sleep(10);
 
@@ -199,11 +198,9 @@ namespace DivingRoom.Services
         }
         private RGBColor[] SelectColor(RGBColor selectedColor)
         {
-            Console.WriteLine($"Game Started {selectedColor.ToString()}");
+            _logger.LogTrace($"Selected Color {selectedColor.ToString()}");
             RGBLight.SetColor(selectedColor);
             AudioPlayer.PIStartAudio(SoundType.LightsChange);
-
-
             return RGBColorMapping.GetRGBColors(selectedColor);
         }
 
@@ -214,10 +211,10 @@ namespace DivingRoom.Services
             unSelectedColorArray = unSelectedColorArray.Where(val => val != colorArray[0] && val != colorArray[1]).ToArray();
             if (unSelectedColorArray.Length > 0)
             {
-                Console.WriteLine($"unselected {unSelectedColorArray[0].ToString()}");
+                _logger.LogTrace($"unselected {unSelectedColorArray[0].ToString()}");
                 foreach (var item in unSelectedPushButton)
                 {
-                    Console.WriteLine($"other color {item}");
+                    _logger.LogTrace($"other color {item}");
                     RGBButtonList[item].TurnColorOn(unSelectedColorArray[0]);
                 }
             }
@@ -228,30 +225,12 @@ namespace DivingRoom.Services
         {
             for (int i = 0; i < difficulty; i += 2)
             {
-                //int randomNumber = random.Next(0, unSelectedPushButton.Count);
-                //int selectedButtonIndex = unSelectedPushButton[randomNumber];
-
-                //RGBButtonList[selectedButtonIndex].TurnColorOn(colorArray[0]);
-                //RGBButtonList[selectedButtonIndex].Set(true);
-                //unSelectedPushButton.Remove(selectedButtonIndex);//= unSelectedPushButton.Where(val => val != selectedButtonIndex).ToArray();
                 int RGBButtonIndex = GetRandomRGBButtonIndexFormUnselectedList();
                 SelectRGBButton(RGBButtonIndex, colorArray[0]);
                 numberOfSelectedButton++;
-
-
-
-                //randomNumber = random.Next(0, unSelectedPushButton.Count);
-                //selectedButtonIndex = unSelectedPushButton[randomNumber];
-
                 RGBButtonIndex = GetRandomRGBButtonIndexFormUnselectedList();
                 SelectRGBButton(RGBButtonIndex, colorArray[1]);
                 numberOfSelectedButton++;
-
-                //RGBButtonList[selectedButtonIndex].TurnColorOn(colorArray[1]);
-                //RGBButtonList[selectedButtonIndex].Set(true);
-                //Console.WriteLine($"Button #{selectedButtonIndex} color is {colorArray[1].ToString()}");
-                //numberOfSelectedButton++;
-                //unSelectedPushButton.Remove(selectedButtonIndex);
             }
         }
         private int GetRandomRGBButtonIndexFormUnselectedList()
@@ -266,7 +245,7 @@ namespace DivingRoom.Services
             RGBButtonList[index].TurnColorOn(rGBColor);
             RGBButtonList[index].Set(true);
             unSelectedPushButton.Remove(index);
-            Console.WriteLine($"Button #{index} color is {rGBColor.ToString()}");
+            _logger.LogTrace($"Button #{index} color is {rGBColor.ToString()}");
         }
 
 
