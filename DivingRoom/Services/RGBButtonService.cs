@@ -70,14 +70,11 @@ namespace DivingRoom.Services
                     {
                         GameStopWatch.Restart();
                         bool isSelected = false;
-                        if (IsGameStartedOrInGoing())
+                        if (!IsGameStartedOrInGoing())
                             break;
-                        Console.WriteLine($"{difficulty} is selected"); 
-                        Console.WriteLine($"GameStopWatch.ElapsedMilliseconds < 60000 {GameStopWatch.ElapsedMilliseconds < 60000}");
-                        Thread.Sleep(1000);
                         while (GameStopWatch.ElapsedMilliseconds < 60000)
                         {
-                            if (IsGameStartedOrInGoing())
+                            if (!IsGameStartedOrInGoing())
                                 break;
                             if (!isSelected)
                             {
