@@ -138,6 +138,7 @@ namespace DivingRoom.Services
             VariableControlService.IsTheGameStarted = false;
             VariableControlService.IsTheGameFinished = true;
             //VariableControlService.EnableGoingToTheNextRoom = true;
+            _logger.LogInformation("Stop The Game");
 
         }
         private void ResetTheGame()
