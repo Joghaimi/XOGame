@@ -85,6 +85,7 @@ namespace DivingRoom.Services
                         bool isSelected = false;
                         if (!IsGameStartedOrInGoing())
                             break;
+                        ControlRoundSound(VariableControlService.GameRound);
                         while (GameStopWatch.ElapsedMilliseconds < 150000)
                         {
                             if (!IsGameStartedOrInGoing())
@@ -134,6 +135,7 @@ namespace DivingRoom.Services
                         else
                             CurrentColor = 5;
                         difficulty -= 2;
+                        VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
                     }
                 }
                 else if (!IsGameStartedOrInGoing() && VariableControlService.IsRGBButtonServiceStarted)
@@ -169,7 +171,6 @@ namespace DivingRoom.Services
                 VariableControlService.TeamScore.DivingRoomScore--;
                 AudioPlayer.PIStartAudio(SoundType.Descend);
                 Console.WriteLine($"- score {VariableControlService.TeamScore.DivingRoomScore}");
-                //Thread.Sleep(200);
             }
 
         }
@@ -181,8 +182,9 @@ namespace DivingRoom.Services
             VariableControlService.IsTheGameFinished = true;
             TurnRGBButtonWithColor(RGBColor.Off);
             AudioPlayer.PIStartAudio(SoundType.MissionAccomplished);
-            Thread.Sleep(1000);
             AudioPlayer.PIStopAudio();
+            RGBLight.SetColor(RGBColor.White);
+            Thread.Sleep(1000);
         }
         private void UnselectAllPB()
         {
@@ -248,8 +250,33 @@ namespace DivingRoom.Services
             _logger.LogTrace($"Button #{index} color is {rGBColor.ToString()}");
         }
 
-
-
+        private Round NextRound(Round round)
+        {
+            return (Round)((int)round + 1);
+        }
+        private void ControlRoundSound(Round round)
+        {
+            switch (round)
+            {
+                case Round.Round1:
+                    AudioPlayer.PIStartAudio(SoundType.RoundOne);
+                    break;
+                case Round.Round2:
+                    AudioPlayer.PIStartAudio(SoundType.RoundTwo);
+                    break;
+                case Round.Round3:
+                    AudioPlayer.PIStartAudio(SoundType.RoundThree);
+                    break;
+                case Round.Round4:
+                    AudioPlayer.PIStartAudio(SoundType.RoundFour);
+                    break;
+                case Round.Round5:
+                    AudioPlayer.PIStartAudio(SoundType.RoundFive);
+                    break;
+                default:
+                    break;
+            }
+        }
 
 
         private void Reset()
