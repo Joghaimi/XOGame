@@ -82,7 +82,6 @@ namespace DivingRoom.Services
                             {
                                 numberOfPressedButton = 0;
                                 numberOfSelectedButton = 0;
-
                                 UnselectAllPB();
                                 var PrimaryColor = SelectColor((RGBColor)CurrentColor);
                                 Console.WriteLine(PrimaryColor[0]);
@@ -90,6 +89,7 @@ namespace DivingRoom.Services
                                 TurnSelectiveRGBButtonWithColorRandom(PrimaryColor);
                                 Console.WriteLine($"Finished number of Selected button {numberOfSelectedButton} number of pressed {numberOfPressedButton} unSelectedPushButton {unSelectedPushButton.Count}");
                                 TurnUnSelectedRGBButtonWithColorRandom(PrimaryColor);
+                                AudioPlayer.PIStartAudio(SoundType.LightsChange);
                                 isSelected = true;
 
                                 //RGBColor selectedColor = (RGBColor)CurrentColor;
