@@ -74,7 +74,7 @@ namespace DarkRoom.Services
                             if (addedScore > 0)
                             {
                                 RGBLight.SetColor(RGBColor.Blue);
-                                RGBLight.TurnRGBColorDelayed(RGBColor.White);
+                                RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
                                 AudioPlayer.PIStartAudio(SoundType.Bonus);
                                 sensor.BlockScoreFor1Sec();
                                 Console.WriteLine($"Scored, Total {Score}");
@@ -84,7 +84,7 @@ namespace DarkRoom.Services
                             {
                                 sensor.BlockScoreFor1Sec();
                                 RGBLight.SetColor(RGBColor.Red);
-                                RGBLight.TurnRGBColorDelayed(RGBColor.White);
+                                RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
                                 AudioPlayer.PIStartAudio(SoundType.Descend);
                                 Console.WriteLine($"Scored Wrong, Total {Score}");
                             }
