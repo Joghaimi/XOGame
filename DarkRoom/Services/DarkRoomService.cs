@@ -57,12 +57,14 @@ namespace DarkRoom.Services
 
             while (true)
             {
-                if (VariableControlService.IsTheGameStarted)
+                if (IsGameStartedOrInGoing())
                 {
                     Console.WriteLine($"Is Game Started {VariableControlService.IsTheGameStarted}");
                     int i = 0;
                     foreach (var sensor in DarkRoomSensorList)
                     {
+                        if (!IsGameStartedOrInGoing())
+                            break;
                         bool status = sensor.stauts();
                         if (status)
                         {
@@ -109,6 +111,10 @@ namespace DarkRoom.Services
         private void Reset()
         {
             Score = 0;
+        }
+        private bool IsGameStartedOrInGoing()
+        {
+            return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
         }
     }
 }
