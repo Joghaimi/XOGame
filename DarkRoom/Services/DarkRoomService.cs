@@ -59,7 +59,7 @@ namespace DarkRoom.Services
             {
                 if (IsGameStartedOrInGoing())
                 {
-                    Console.WriteLine($"Is Game Started {VariableControlService.IsTheGameStarted}");
+                    //Console.WriteLine($"Is Game Started {VariableControlService.IsTheGameStarted}");
                     int i = 0;
                     foreach (var sensor in DarkRoomSensorList)
                     {
