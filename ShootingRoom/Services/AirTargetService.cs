@@ -55,11 +55,11 @@ namespace ShootingRoom.Services
         private CancellationTokenSource _cts;
         Stopwatch GameStopWatch = new Stopwatch();
         private GPIOController _controller;
-        int bigTargetHitScore = 0;
+        //int bigTargetHitScore = 0;
 
         //int Score = 0;
         int numberOfAchivedInRow = 0;
-        List<int> LevelsRequiredScoreList = new List<int>() { 75, 100, 125, 150, 300 };
+        List<int> LevelsRequiredScoreList = new List<int>() { 75, 100, 125, 150, 180 };
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _controller = new GPIOController();
@@ -92,7 +92,7 @@ namespace ShootingRoom.Services
                     if (!VariableControlService.IsAirTargetServiceStarted)
                     {
                         VariableControlService.IsAirTargetServiceStarted = true;
-                        VariableControlService.GameRound = Round.Round1;
+                        VariableControlService.GameRound = Round.Round0;
                     }
                     ControlPin(GunShootRelay, true);
                     BigTargetTask();
@@ -149,7 +149,7 @@ namespace ShootingRoom.Services
                                                 numberOfWrongHits++;
                                                 Console.WriteLine($"- Score {VariableControlService.LevelScore} , #{numberOfWrongHits}");
                                             }
-                                            if (numberOfHit == 20)
+                                            if (numberOfHit == 20 || VariableControlService.LevelScore >= level)
                                                 break;
                                             Thread.Sleep(10);
                                         }
@@ -184,7 +184,7 @@ namespace ShootingRoom.Services
                                 IsItUV = ControlUVLight(false);
                             }
 
-                            
+
                             ReturnAllTargets();
                             ResetAllTarget();
                         }
@@ -213,14 +213,15 @@ namespace ShootingRoom.Services
                     break;
                 if (MCP23Controller.Read(MasterDI.IN1))
                 {
-                    bigTargetHitScore++;
+                    VariableControlService.LevelScore++;
+                    //bigTargetHitScore++;
                     AudioPlayer.PIStartAudio(SoundType.Bonus);
-                    Console.WriteLine($"Target Hit # {bigTargetHitScore}");
+                    Console.WriteLine($"Target Hit # {VariableControlService.LevelScore}");
                     RGBLight.SetColor(RGBColor.Blue);
                     RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
                     Thread.Sleep(500);
                 }
-                if (bigTargetHitScore == 5)
+                if (VariableControlService.LevelScore == 5)
                 {
                     VariableControlService.TeamScore.ShootingRoomScore += 100;
                     Console.WriteLine($"Remove Big Target and start the game");
@@ -228,6 +229,7 @@ namespace ShootingRoom.Services
                 }
                 Thread.Sleep(10);
             }
+            VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
             ControlPin(BigTargetRelay, false);
             Console.WriteLine($"Big Target Finished");
         }
