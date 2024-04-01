@@ -130,6 +130,8 @@ namespace ShootingRoom.Services
                                     {
                                         if (!IsGameStartedOrInGoing())
                                             break;
+                                        if (VariableControlService.LevelScore >= LevelScore)
+                                            break;
                                         foreach (var element in AirTargetList)
                                         {
                                             if (!IsGameStartedOrInGoing())
