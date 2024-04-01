@@ -262,7 +262,7 @@ namespace ShootingRoom.Services
             ControlPin(GunShootRelay, false);
             VariableControlService.IsAirTargetServiceStarted = false;
             VariableControlService.IsTheGameFinished = true;
-            bigTargetHitScore = 0;
+            VariableControlService.LevelScore = 0;
             AudioPlayer.PIStartAudio(SoundType.MissionAccomplished);
             Thread.Sleep(1000);
             AudioPlayer.PIStopAudio();
