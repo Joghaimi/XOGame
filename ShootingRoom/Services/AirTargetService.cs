@@ -149,7 +149,7 @@ namespace ShootingRoom.Services
                                                 numberOfWrongHits++;
                                                 Console.WriteLine($"- Score {VariableControlService.LevelScore} , #{numberOfWrongHits}");
                                             }
-                                            if (numberOfHit == 20 || VariableControlService.LevelScore >= level)
+                                            if (numberOfHit == 20 )
                                                 break;
                                             Thread.Sleep(10);
                                         }
