@@ -230,6 +230,7 @@ namespace ShootingRoom.Services
                 Thread.Sleep(10);
             }
             VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
+            VariableControlService.LevelScore = 0;
             ControlPin(BigTargetRelay, false);
             Console.WriteLine($"Big Target Finished");
         }
