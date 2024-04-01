@@ -93,7 +93,11 @@ namespace DarkRoom.Services
 
                     }
                 }
-                VariableControlService.TeamScore.DarkRoomScore = 0;
+                else
+                {
+                    VariableControlService.TeamScore.DarkRoomScore = 0;
+
+                }
 
                 Thread.Sleep(100);
             }
