@@ -53,6 +53,11 @@ namespace DarkRoom.Controllers
         {
             return Ok(VariableControlService.TeamScore);
         }
+        [HttpGet("GetScore")]
+        public IActionResult GetScore()
+        {
+            return Ok(VariableControlService.TeamScore.DarkRoomScore);
+        }
         [HttpGet("GoToTheNextRoom")]
         public async Task<IActionResult> NextRoom()
         {

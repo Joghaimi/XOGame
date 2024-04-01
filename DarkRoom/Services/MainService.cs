@@ -7,6 +7,7 @@ using Library.PinMapping;
 using Library.RGBLib;
 using Microsoft.VisualBasic;
 using System.Device.Gpio;
+using System.Diagnostics;
 
 namespace DarkRoom.Services
 {
@@ -14,12 +15,14 @@ namespace DarkRoom.Services
     {
 
         private GPIOController _controller;
-        private CancellationTokenSource _cts, cts2;
+        private CancellationTokenSource _cts, _cts2, _cts3;
         private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
         private readonly ILogger<MainService> _logger;
         bool thereAreBackgroundSoundPlays = false;
         bool thereAreInstructionSoundPlays = false;
         private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
+        Stopwatch GameTiming = new Stopwatch();
+
         public MainService(ILogger<MainService> logger)
         {
             _logger = logger;
@@ -39,9 +42,13 @@ namespace DarkRoom.Services
             DoorControl.Status(DoorPin, false);
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            Task.Run(() => CheckIFRoomIsEmpty(cts2.Token));
+            _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
+            Task.Run(() => CheckIFRoomIsEmpty(_cts2.Token));
             Task.Run(() => RunService(_cts.Token));
+            Task.Run(() => GameTimingService(_cts3.Token));
+
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
@@ -89,7 +96,23 @@ namespace DarkRoom.Services
         {
             //_cts.Dispose();
         }
+        // Control Starting All the Threads
+        private async Task GameTimingService(CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                if (VariableControlService.IsTheGameStarted && !VariableControlService.IsGameTimerStarted)
+                {
+                    GameTiming.Restart();
+                    VariableControlService.IsGameTimerStarted = true;
+                }
+                bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming;
+                bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.IsGameTimerStarted;
 
+                if (GameFinishedByTimer || VariableControlService.IsTheGameFinished)
+                    StopTheGame();
+            }
+        }
 
         private async Task CheckIFRoomIsEmpty(CancellationToken cancellationToken)
         {
@@ -133,19 +156,19 @@ namespace DarkRoom.Services
                 AudioPlayer.PIStopAudio();
             }
         }
-        //public void DoorStatus(MCP23Pin doorPin, bool status)
-        //{
-        //    if (!status)
-        //    {
-        //        MCP23Controller.PinModeSetup(doorPin, PinMode.Output);
-        //        MCP23Controller.Write(doorPin, PinState.High);
-        //    }
-        //    else
-        //    {
-        //        MCP23Controller.PinModeSetup(doorPin, PinMode.Input);
-        //        MCP23Controller.Write(doorPin, PinState.Low);
-        //    }
-        //}
+        private void StopTheGame()
+        {
+            VariableControlService.IsTheGameStarted = false;
+            VariableControlService.IsTheGameFinished = true;
+        }
+        private void ResetTheGame()
+        {
+            VariableControlService.EnableGoingToTheNextRoom = false;
+            VariableControlService.IsTheirAnyOneInTheRoom = false;
+            VariableControlService.IsTheGameStarted = false;
+            VariableControlService.IsGameTimerStarted = false;
+        }
+        
     }
 
 }

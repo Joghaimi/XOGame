@@ -70,14 +70,14 @@ namespace DarkRoom.Services
                         {
                             Console.WriteLine($"Sensor #{i}");
                             int addedScore = sensor.sensor.Score;
-                            Score += addedScore;
+                            VariableControlService.TeamScore.DarkRoomScore += addedScore;
                             if (addedScore > 0)
                             {
                                 RGBLight.SetColor(RGBColor.Blue);
                                 RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
                                 AudioPlayer.PIStartAudio(SoundType.Bonus);
                                 sensor.BlockScoreFor1Sec();
-                                Console.WriteLine($"Scored, Total {Score}");
+                                Console.WriteLine($"Scored, Total {VariableControlService.TeamScore.DarkRoomScore}");
 
                             }
                             else
@@ -86,15 +86,14 @@ namespace DarkRoom.Services
                                 RGBLight.SetColor(RGBColor.Red);
                                 RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
                                 AudioPlayer.PIStartAudio(SoundType.Descend);
-                                Console.WriteLine($"Scored Wrong, Total {Score}");
+                                Console.WriteLine($"Scored Wrong, Total {VariableControlService.TeamScore.DarkRoomScore}");
                             }
 
                         }
 
                     }
                 }
-
-
+                VariableControlService.TeamScore.DarkRoomScore = 0;
 
                 Thread.Sleep(100);
             }

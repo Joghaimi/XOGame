@@ -17,6 +17,18 @@ namespace DarkRoom.Services
         public static Team TeamScore { get; set; } = new Team();
         public static bool EnableGoingToTheNextRoom = false;
 
+        public static int RoomTiming = 540000;// Time in Mill
+        public static int TimeOfGetTheTarget { get; set; } = 0;
+        public static int ActiveTargetPressed { get; set; } = 0;
+
+        public static bool IsAirTargetServiceStarted = false;
+
+        // IR PIN OUT
+
+        public static int GameScore { get; set; } = 0;
+        public static bool IsGameTimerStarted = false;
+        public static Round GameRound = Round.Round1;
+
 
     }
 }
