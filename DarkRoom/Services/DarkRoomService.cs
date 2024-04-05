@@ -1,4 +1,5 @@
 ﻿using DarkRoom.Controllers;
+using Iot.Device.Mcp3428;
 using Library;
 using Library.AirTarget;
 using Library.DarkRoomSensor;
@@ -7,6 +8,7 @@ using Library.GPIOLib;
 using Library.Media;
 using Library.PinMapping;
 using Library.RGBLib;
+using Microsoft.AspNetCore.Mvc;
 using System.Device.Gpio;
 using System.Diagnostics;
 
@@ -15,7 +17,7 @@ namespace DarkRoom.Services
     public class DarkRoomService : IHostedService, IDisposable
     {
         private List<DarkRoomSensorController> DarkRoomSensorList = new List<DarkRoomSensorController>();
-        private CancellationTokenSource _cts;
+        private CancellationTokenSource _cts, _cts2;
         Stopwatch GameStopWatch = new Stopwatch();
         private int Score = 0;
 
@@ -47,8 +49,14 @@ namespace DarkRoom.Services
             DarkRoomSensorList.Add(new DarkRoomSensorController(IN10));
             DarkRoomSensorList.Add(new DarkRoomSensorController(IN11));
             DarkRoomSensorList.Add(new DarkRoomSensorController(IN12));
+
+            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT1, PinMode.Output);
+
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
+            Task.Run(() => BallLockService(_cts2.Token));
+
             return Task.CompletedTask;
 
         }
@@ -100,6 +108,21 @@ namespace DarkRoom.Services
                 }
 
                 Thread.Sleep(100);
+            }
+        }
+        private async Task BallLockService(CancellationToken cancellationToken)
+        {
+            while (true)
+            {
+                if (IsGameStartedOrInGoing())
+                {
+                    MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT1, PinMode.Output);
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.High);
+                    Thread.Sleep(1000);
+                    MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT1, PinMode.Input);
+                    MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.Low);
+                    Thread.Sleep(1000);
+                }
             }
         }
         public Task StopAsync(CancellationToken cancellationToken)
