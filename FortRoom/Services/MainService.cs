@@ -52,7 +52,7 @@ namespace FortRoom.Services
         private async Task RunService(CancellationToken cancellationToken)
         {
 
-            RGBLight.SetColor(RGBColor.Red);
+            //RGBLight.SetColor(RGBColor.Red);
             //MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
             while (!cancellationToken.IsCancellationRequested)
             {
