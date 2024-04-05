@@ -87,15 +87,7 @@ namespace DarkRoom.Services
             }
         }
 
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            //_cts.Cancel();
-            return Task.CompletedTask;
-        }
-        public void Dispose()
-        {
-            //_cts.Dispose();
-        }
+      
         // Control Starting All the Threads
         private async Task GameTimingService(CancellationToken cancellationToken)
         {
@@ -158,6 +150,7 @@ namespace DarkRoom.Services
         }
         private void StopTheGame()
         {
+
             VariableControlService.IsTheGameStarted = false;
             VariableControlService.IsTheGameFinished = true;
         }
@@ -168,7 +161,20 @@ namespace DarkRoom.Services
             VariableControlService.IsTheGameStarted = false;
             VariableControlService.IsGameTimerStarted = false;
         }
-        
+
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            _logger.LogInformation("Stop Dark Room  ***");
+            DoorControl.Status(DoorPin, false);
+            _cts.Cancel();
+            return Task.CompletedTask;
+        }
+        public void Dispose()
+        {
+            _cts.Dispose();
+        }
+
     }
 
 }
