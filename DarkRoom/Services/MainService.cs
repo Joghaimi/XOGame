@@ -166,7 +166,7 @@ namespace DarkRoom.Services
         public Task StopAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Stop Dark Room  ***");
-            DoorControl.Status(DoorPin, false);
+            DoorControl.Status(DoorPin, true);
             _cts.Cancel();
             return Task.CompletedTask;
         }
