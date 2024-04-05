@@ -274,6 +274,7 @@ namespace FortRoom.Services
         {
             _logger.LogInformation("Obstruction Stopped");
             StopObstructionService();
+            RGBLight.SetColor(RGBColor.White);
             Modbus.ReleasePort();
             _logger.LogInformation("Obstruction - Port Released");
         }
