@@ -118,10 +118,14 @@ namespace DarkRoom.Services
                 {
                     MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT1, PinMode.Output);
                     MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.High);
-                    Thread.Sleep(1000);
-                    MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT1, PinMode.Input);
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.Low);
-                    Thread.Sleep(1000);
+                    Thread.Sleep(30000);
+                    if (IsGameStartedOrInGoing())
+                    {
+                        MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT1, PinMode.Input);
+                        MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.Low);
+                        Thread.Sleep(30000);
+                    }
+                        
                 }
             }
         }
