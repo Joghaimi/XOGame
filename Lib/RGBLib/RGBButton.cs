@@ -33,6 +33,8 @@ namespace Library.RGBLib
         }
         public void TurnColorOn(RGBColor selectedColor)
         {
+            if (_CurrnetColor == selectedColor)
+                return;
             _CurrnetColor = selectedColor;
             switch (_CurrnetColor)
             {

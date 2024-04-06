@@ -146,7 +146,7 @@ namespace FortRoom.Services
                                         Console.WriteLine("UnSelected ");
                                     }
                                 }
-                                else if (!isRGBButtonTurnedOffBecauseThePressureMate)
+                                else
                                 {
                                     isRGBButtonTurnedOffBecauseThePressureMate = true;
                                     ControlTheColorOfAllSetRGBButton(RGBColor.Off);
@@ -355,7 +355,7 @@ namespace FortRoom.Services
                         Button2 = true;
                     }
                 }
-                else if (!isRGBButtonTurnedOffBecauseThePressureMate)
+                else
                 {
                     isRGBButtonTurnedOffBecauseThePressureMate = true;
                     ControlTheColorOfAllSetRGBButton(RGBColor.Off);
