@@ -157,7 +157,7 @@ namespace FortRoom.Services
                         Console.WriteLine("Out From For While 1");
 
 
-                        gameLevel = NextLevel(gameLevel);
+                        //gameLevel = NextLevel(gameLevel);
                         //if (gameLevel > Level.Level5)
 
 
