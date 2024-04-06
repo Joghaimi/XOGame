@@ -116,6 +116,7 @@ namespace FortRoom.Services
                                     {
                                         isRGBButtonTurnedOffBecauseThePressureMate = false;
                                         ControlTheColorOfAllSetRGBButton(selectedColor);
+                                        TurnUnSelectedRGBButtonWithColor(RGBColor.Red);
                                     }
 
                                     bool itemSelected = !item.CurrentStatusWithCheckForDelay() && item.isSet();// item.CurrentColor() == selectedColor;
@@ -148,6 +149,7 @@ namespace FortRoom.Services
                                 {
                                     isRGBButtonTurnedOffBecauseThePressureMate = true;
                                     ControlTheColorOfAllSetRGBButton(RGBColor.Off);
+                                    TurnUnSelectedRGBButtonWithColor(RGBColor.Off);
                                 }
                             }
 
