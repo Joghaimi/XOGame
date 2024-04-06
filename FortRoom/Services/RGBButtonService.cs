@@ -23,6 +23,10 @@ namespace FortRoom.Services
             (7,4),
             (2,6),
         };
+
+        List<int> buttonGroupOne = new List<int> { 0, 1, 2, 3, 4 };
+        List<int> buttonGroupTwo = new List<int> { 0, 6, 7, 8, 9 };
+
         int CurrentColor = 0;
 
 
@@ -73,25 +77,6 @@ namespace FortRoom.Services
                         {
                             if (!IsGameStartedOrInGoing())
                                 break;
-
-                            // Test ===== >>>
-                            //bool itemSelected = !item.CurrentStatus() && item.isSet();// item.CurrentColor() == selectedColor;
-                            //if (itemSelected)
-                            //{
-                            //    AudioPlayer.PIStartAudio(SoundType.Bonus);
-                            //    RGBLight.SetColor(RGBColor.Yellow);
-                            //    item.TurnColorOn(RGBColor.Off);
-                            //    item.Set(false);
-                            //    RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
-                            //    numberOfClickedButton++;
-                            //    VariableControlService.ActiveButtonPressed++;
-                            //    VariableControlService.TeamScore.FortRoomScore += 10;
-                            //}
-
-                            // Test ===== >>>
-
-
-
                             if (!VariableControlService.IsPressureMateActive)
                             {
                                 if (isRGBButtonTurnedOffBecauseThePressureMate)
@@ -156,8 +141,12 @@ namespace FortRoom.Services
             int level = (int)round;
             if (level > RGBButtonList.Count)
                 return;
+            Random random = new Random();
+            int button1Index = random.Next(0, 5);
+            int button2Index = random.Next(5, 9);
+
             bool Button1 = false; bool Button2 = false;
-            (int button1Index, int button2Index) = ButtonTaskList[level];
+            //(int button1Index, int button2Index) = ButtonTaskList[level];
             RGBButtonList[button1Index].TurnColorOn(color);
             RGBButtonList[button2Index].TurnColorOn(color);
             RGBButtonList[button1Index].Set(true);
@@ -165,38 +154,12 @@ namespace FortRoom.Services
 
             bool isRGBButtonTurnedOffBecauseThePressureMate = false;
 
+
             while (!Button1 || !Button2)
             {
 
                 if (!IsGameStartedOrInGoing())
                     break;
-                // Test Before ====>>>
-                //if (!Button1)
-                //{
-                //    if (!RGBButtonList[button1Index].CurrentStatus() && RGBButtonList[button1Index].isSet())//&& RGBButtonList[button1Index].CurrentColor() == color)
-                //    {
-                //        Button1 = true;
-                //        Console.WriteLine("Button #1 Pressed");
-                //        RGBLight.SetColor(RGBColor.Yellow);
-                //        AudioPlayer.PIStartAudio(SoundType.Bonus);
-                //        RGBButtonList[button1Index].Set(false);
-                //        RGBButtonList[button1Index].TurnColorOn(RGBColor.Off);
-                //        RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
-                //    }
-                //}
-                //if (!Button2)
-                //{
-                //    if (!RGBButtonList[button2Index].CurrentStatus() && RGBButtonList[button2Index].isSet())//&& RGBButtonList[button2Index].CurrentColor() == color)
-                //    {
-                //        Button2 = true;
-                //        Console.WriteLine("Button #2 Pressed");
-                //        RGBLight.SetColor(RGBColor.Yellow);
-                //        RGBButtonList[button2Index].Set(false);
-                //        AudioPlayer.PIStartAudio(SoundType.Bonus);
-                //        RGBButtonList[button2Index].TurnColorOn(RGBColor.Off);
-                //        RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
-                //    }
-                //}
 
 
 
@@ -207,32 +170,43 @@ namespace FortRoom.Services
                         isRGBButtonTurnedOffBecauseThePressureMate = false;
                         ControlTheColorOfAllSetRGBButton(color);
                     }
-                    if (!Button1)
+                    bool button1Status = !RGBButtonList[button1Index].CurrentStatus() && RGBButtonList[button1Index].isSet();
+                    bool button2Status = !RGBButtonList[button2Index].CurrentStatus() && RGBButtonList[button2Index].isSet();
+                    if (button1Status && button2Status)
                     {
-                        if (!RGBButtonList[button1Index].CurrentStatus() && RGBButtonList[button1Index].isSet())//&& RGBButtonList[button1Index].CurrentColor() == color)
-                        {
-                            Button1 = true;
-                            Console.WriteLine("Button #1 Pressed");
-                            RGBLight.SetColor(RGBColor.Yellow);
-                            AudioPlayer.PIStartAudio(SoundType.Bonus);
-                            RGBButtonList[button1Index].Set(false);
-                            RGBButtonList[button1Index].TurnColorOn(RGBColor.Off);
-                            RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
-                        }
+                        //if (!RGBButtonList[button1Index].CurrentStatus() && RGBButtonList[button1Index].isSet())//&& RGBButtonList[button1Index].CurrentColor() == color)
+                        //{
+                        //    Button1 = true;
+                        //    Console.WriteLine("Button #1 Pressed");
+                        //    RGBLight.SetColor(RGBColor.Yellow);
+                        //    AudioPlayer.PIStartAudio(SoundType.Bonus);
+                        //    RGBButtonList[button1Index].Set(false);
+                        //    RGBButtonList[button1Index].TurnColorOn(RGBColor.Off);
+                        //    RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
+                        //}
+                        RGBLight.SetColor(RGBColor.Yellow);
+                        AudioPlayer.PIStartAudio(SoundType.Bonus);
+                        RGBButtonList[button1Index].Set(false);
+                        RGBButtonList[button2Index].Set(false);
+                        RGBButtonList[button1Index].TurnColorOn(RGBColor.Off);
+
+                        RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
+                        Button1 = true;
+                        Button2 = true;
                     }
-                    if (!Button2)
-                    {
-                        if (!RGBButtonList[button2Index].CurrentStatus() && RGBButtonList[button2Index].isSet())//&& RGBButtonList[button2Index].CurrentColor() == color)
-                        {
-                            Button2 = true;
-                            Console.WriteLine("Button #2 Pressed");
-                            RGBLight.SetColor(RGBColor.Yellow);
-                            RGBButtonList[button2Index].Set(false);
-                            AudioPlayer.PIStartAudio(SoundType.Bonus);
-                            RGBButtonList[button2Index].TurnColorOn(RGBColor.Off);
-                            RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
-                        }
-                    }
+                    //if (!Button2)
+                    //{
+                    //    if (!RGBButtonList[button2Index].CurrentStatus() && RGBButtonList[button2Index].isSet())//&& RGBButtonList[button2Index].CurrentColor() == color)
+                    //    {
+                    //        Button2 = true;
+                    //        Console.WriteLine("Button #2 Pressed");
+                    //        RGBLight.SetColor(RGBColor.Yellow);
+                    //        RGBButtonList[button2Index].Set(false);
+                    //        AudioPlayer.PIStartAudio(SoundType.Bonus);
+                    //        RGBButtonList[button2Index].TurnColorOn(RGBColor.Off);
+                    //        RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
+                    //    }
+                    //}
 
                 }
 
