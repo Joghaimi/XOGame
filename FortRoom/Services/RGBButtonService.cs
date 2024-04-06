@@ -44,8 +44,7 @@ namespace FortRoom.Services
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR14, RGBButtonPin.RGBG14, RGBButtonPin.RGBB14, RGBButtonPin.RGBPB14));
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR15, RGBButtonPin.RGBG15, RGBButtonPin.RGBB15, RGBButtonPin.RGBPB15));
             GameStopWatch.Start();
-            // Default Color For RGB IS White
-            RGBLight.SetColor(RGBColor.White);
+
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
@@ -69,21 +68,38 @@ namespace FortRoom.Services
                     GameStopWatch.Restart();
                     while (GameStopWatch.ElapsedMilliseconds < 90000)
                     {
+                        bool isRGBButtonTurnedOffBecauseThePressureMate = false;
                         foreach (var item in RGBButtonList)
                         {
                             if (!IsGameStartedOrInGoing())
                                 break;
-                            bool itemSelected = !item.CurrentStatus() && item.CurrentColor() == selectedColor;
-                            if (itemSelected)
+                            if (!VariableControlService.IsPressureMateActive)
                             {
-                                AudioPlayer.PIStartAudio(SoundType.Bonus);
-                                RGBLight.SetColor(RGBColor.Blue);
-                                item.TurnColorOn(RGBColor.Off);
-                                RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
-                                numberOfClickedButton++;
-                                VariableControlService.ActiveButtonPressed++;
-                                VariableControlService.TeamScore.FortRoomScore += 10;
+                                if (isRGBButtonTurnedOffBecauseThePressureMate)
+                                {
+                                    isRGBButtonTurnedOffBecauseThePressureMate = false;
+                                    ControlTheColorOfAllSetRGBButton(selectedColor);
+
+                                }
+                                bool itemSelected = !item.CurrentStatus() && item.isSet();// item.CurrentColor() == selectedColor;
+                                if (itemSelected)
+                                {
+                                    AudioPlayer.PIStartAudio(SoundType.Bonus);
+                                    RGBLight.SetColor(RGBColor.Blue);
+                                    item.TurnColorOn(RGBColor.Off);
+                                    item.Set(false);
+                                    RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
+                                    numberOfClickedButton++;
+                                    VariableControlService.ActiveButtonPressed++;
+                                    VariableControlService.TeamScore.FortRoomScore += 10;
+                                }
                             }
+                            else if (!isRGBButtonTurnedOffBecauseThePressureMate)
+                            {
+                                isRGBButtonTurnedOffBecauseThePressureMate = true;
+                                ControlTheColorOfAllSetRGBButton(RGBColor.Off);
+                            }
+
 
                         }
                         if (numberOfClickedButton == RGBButtonList.Count())
@@ -108,7 +124,7 @@ namespace FortRoom.Services
                 }
                 else if (!IsGameStartedOrInGoing() && VariableControlService.IsRGBButtonServiceStarted)
                 {
-                    _logger.LogInformation("RGB Service Stopeed");
+                    _logger.LogInformation("RGB Service Stopped");
                     StopRGBButtonService();
                 }
             }
@@ -138,7 +154,7 @@ namespace FortRoom.Services
                         RGBLight.SetColor(RGBColor.Blue);
                         AudioPlayer.PIStartAudio(SoundType.Bonus);
                         RGBButtonList[button1Index].TurnColorOn(RGBColor.Off);
-                        RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
+                        RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
                     }
                 }
                 if (!Button2)
@@ -150,7 +166,7 @@ namespace FortRoom.Services
                         RGBLight.SetColor(RGBColor.Blue);
                         AudioPlayer.PIStartAudio(SoundType.Bonus);
                         RGBButtonList[button2Index].TurnColorOn(RGBColor.Off);
-                        RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
+                        RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
                     }
                 }
 
@@ -187,9 +203,27 @@ namespace FortRoom.Services
         public void TurnRGBButtonWithColor(RGBColor color)
         {
             foreach (var item in RGBButtonList)
+            {
                 item.TurnColorOn(color);
+                item.Set(true); ;
+            }
         }
-
+        private void StopRGBButton()
+        {
+            foreach (var item in RGBButtonList)
+            {
+                item.TurnColorOn(RGBColor.Off);
+                item.Set(false);
+            }
+        }
+        public void ControlTheColorOfAllSetRGBButton(RGBColor color)
+        {
+            foreach (var item in RGBButtonList)
+            {
+                if (item.isSet())
+                    item.TurnColorOn(color);
+            }
+        }
 
 
 
@@ -220,11 +254,7 @@ namespace FortRoom.Services
             }
         }
 
-        private void StopRGBButton()
-        {
-            foreach (var item in RGBButtonList)
-                item.TurnColorOn(RGBColor.Off);
-        }
+
 
 
 

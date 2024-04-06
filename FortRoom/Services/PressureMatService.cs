@@ -30,8 +30,6 @@ namespace FortRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            //bool currentValue = false;
-            //bool previousValue = false;
             bool scoreJustDecreased = false;
             Stopwatch timer = new Stopwatch();
 
@@ -42,13 +40,14 @@ namespace FortRoom.Services
                     try
                     {
                         bool currentValue = MCP23Controller.Read(MasterDI.IN1);
+                        VariableControlService.IsPressureMateActive = !currentValue;
                         if (!currentValue && !scoreJustDecreased)
                         {
                             VariableControlService.TimeOfPressureHit++;
                             MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
                             AudioPlayer.PIStartAudio(SoundType.Descend);
                             RGBLight.SetColor(RGBColor.Red);
-                            RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
+                            RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
                             scoreJustDecreased = true;
                             timer.Restart();
                             VariableControlService.TeamScore.FortRoomScore -= 5;

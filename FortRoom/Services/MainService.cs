@@ -38,6 +38,9 @@ namespace FortRoom.Services
             _controller.Setup(MasterDI.PIRPin2, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin3, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
+            // In Main Service Run All Default and common things 
+            RGBLight.SetColor(VariableControlService.DefaultColor);
+
             DoorControl.Status(DoorPin, false);
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -52,8 +55,6 @@ namespace FortRoom.Services
         private async Task RunService(CancellationToken cancellationToken)
         {
 
-            //RGBLight.SetColor(RGBColor.Red);
-            //MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
             while (!cancellationToken.IsCancellationRequested)
             {
                 PIR1 = _controller.Read(MasterDI.PIRPin1);
