@@ -27,6 +27,7 @@ namespace Library.RGBLib
         private static Queue<(RGBColor, int)> _rgbLightQueue = new Queue<(RGBColor, int)>();
         private static Room _room;
         private static RGBColor _roomLight;
+        private static bool ThereArePriorityOn = false;
         public static void Init(int _clkPin, int _dataPin, Room room)
         {
             CLKPin = _clkPin;
@@ -135,10 +136,23 @@ namespace Library.RGBLib
         }
         public static void TurnRGBColorDelayedASec(RGBColor rGBColor)
         {
+            if (ThereArePriorityOn)
+                return;
             Task.Run(async () =>
             {
                 await Task.Delay(1000);
                 SetColor(rGBColor);
+            });
+        }
+        public static void TurnRGBColorDelayedASecWithPriority(RGBColor rGBColor)
+        {
+
+            ThereArePriorityOn = true;
+            Task.Run(async () =>
+            {
+                await Task.Delay(1000);
+                SetColor(rGBColor);
+                ThereArePriorityOn = false;
             });
         }
 
