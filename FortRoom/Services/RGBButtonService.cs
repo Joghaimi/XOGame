@@ -395,7 +395,7 @@ namespace FortRoom.Services
                 case Level.Level4:
                     return Level.Level5;
                 case Level.Level5:
-                    return Level.Level1;
+                    return Level.Finished;
                 default:
                     return Level.Level1;
             }

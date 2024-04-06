@@ -160,7 +160,8 @@ namespace Library
         Level2 = 1,
         Level3 = 2,
         Level4 = 3,
-        Level5 = 4
+        Level5 = 4,
+        Finished = 5,
     }
 
 }
