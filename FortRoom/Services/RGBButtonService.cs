@@ -74,23 +74,25 @@ namespace FortRoom.Services
                 {
                     if (!VariableControlService.IsRGBButtonServiceStarted)
                         VariableControlService.IsRGBButtonServiceStarted = true;
+                    // Select Color 
+
                     Random random = new Random();
-
                     int randomColorIndex = random.Next(0, RGBColors.Count());
-
-
-
                     var selectedColor = RGBColors[randomColorIndex];
                     RGBColors.RemoveAt(randomColorIndex);
+                    Console.WriteLine(selectedColor);
 
-                    ControlRoundSound(VariableControlService.GameRound);
-                    StartTheGameTask(selectedColor, VariableControlService.GameRound);
+
+                    //ControlRoundSound(VariableControlService.GameRound);
+                    //StartTheGameTask(selectedColor, VariableControlService.GameRound);
                     //TurnRGBButtonWithColor(selectedColor);
-                    TurnRGBButtonWithColor(RGBColor.Off);
+                    //TurnRGBButtonWithColor(RGBColor.Off);
 
                     TurnRandomRGBButtonWithColor(selectedColor);
 
-
+                    while (true)
+                    {
+                    }
 
                     byte numberOfClickedButton = 0;
                     GameStopWatch.Restart();
@@ -338,7 +340,7 @@ namespace FortRoom.Services
                 if (!RGBButtonList[button1Index].isSet())
                 {
                     RGBButtonList[button1Index].TurnColorOn(color);
-                    RGBButtonList[button1Index].Set(true);    
+                    RGBButtonList[button1Index].Set(true);
                     break;
                 }
             }
