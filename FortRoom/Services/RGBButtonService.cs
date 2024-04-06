@@ -79,7 +79,7 @@ namespace FortRoom.Services
 
                     //ControlRoundSound(VariableControlService.GameRound);
                     //StartTheGameTask(selectedColor, VariableControlService.GameRound);
-                    //TurnRGBButtonWithColor(RGBColor.Off);
+                    TurnRGBButtonWithColor(RGBColor.Off,false);
 
 
 
@@ -413,6 +413,14 @@ namespace FortRoom.Services
             {
                 item.TurnColorOn(color);
                 item.Set(true); ;
+            }
+        }
+        public void TurnRGBButtonWithColor(RGBColor color ,bool isSet)
+        {
+            foreach (var item in RGBButtonList)
+            {
+                item.TurnColorOn(color);
+                item.Set(isSet); ;
             }
         }
         public RGBColor SelectRandomRGBColorForLevel()
