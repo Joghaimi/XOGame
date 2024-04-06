@@ -134,7 +134,9 @@ namespace FortRoom.Services
                                         //VariableControlService.ActiveButtonPressed++;
                                         VariableControlService.TeamScore.FortRoomScore += 10;
                                         numberOfTurenedOnButton--;
-                                        Console.WriteLine("Selected ");
+                                        Console.WriteLine(
+
+                                            $"Selected {numberOfTurenedOnButton} ");
                                     }
                                     else if (itemOnButNotSelected)
                                     {
