@@ -119,8 +119,8 @@ namespace FortRoom.Services
                                         ControlTheColorOfAllSetRGBButton(selectedColor);
                                     }
 
-                                    bool itemSelected = !item.CurrentStatus() && item.isSet();// item.CurrentColor() == selectedColor;
-                                    bool itemOnButNotSelected = !item.CurrentStatus();
+                                    bool itemSelected = !item.CurrentStatusWithCheckForDelay() && item.isSet();// item.CurrentColor() == selectedColor;
+                                    bool itemOnButNotSelected = !item.CurrentStatusWithCheckForDelay();
                                     if (itemSelected)
                                     {
                                         AudioPlayer.PIStartAudio(SoundType.Bonus);
@@ -129,6 +129,7 @@ namespace FortRoom.Services
                                         item.Set(false);
                                         RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
                                         numberOfClickedButton++;
+                                        item.BlockForASec();
                                         //VariableControlService.ActiveButtonPressed++;
                                         VariableControlService.TeamScore.FortRoomScore += 10;
                                         numberOfTurenedOnButton--;
