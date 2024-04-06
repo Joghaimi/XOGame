@@ -41,6 +41,9 @@ namespace FortRoom.Services
                     {
                         bool currentValue = MCP23Controller.Read(MasterDI.IN1);
                         VariableControlService.IsPressureMateActive = !currentValue;
+                        if(!VariableControlService.IsPressureMateActive)
+                            RGBLight.SetColor(VariableControlService.DefaultColor);
+
                         if (!currentValue && !scoreJustDecreased)
                         {
                             VariableControlService.TimeOfPressureHit++;
@@ -52,10 +55,6 @@ namespace FortRoom.Services
                             timer.Restart();
                             VariableControlService.TeamScore.FortRoomScore -= 20;
 
-                        }
-                        else
-                        {
-                            RGBLight.SetColor(VariableControlService.DefaultColor);
                         }
                         //previousValue = currentValue;
                         if (scoreJustDecreased && timer.ElapsedMilliseconds >= 3000)
