@@ -118,6 +118,7 @@ namespace FortRoom.Services
                                         isRGBButtonTurnedOffBecauseThePressureMate = false;
                                         ControlTheColorOfAllSetRGBButton(selectedColor);
                                         TurnUnSelectedRGBButtonWithColor(RGBColor.Red);
+                                        _logger.LogTrace("Turn On All RGB Button");
                                     }
 
                                     bool itemSelected = !item.CurrentStatusWithCheckForDelay() && item.isSet();// item.CurrentColor() == selectedColor;
@@ -148,11 +149,13 @@ namespace FortRoom.Services
                                         Console.WriteLine("UnSelected ");
                                     }
                                 }
-                                else
+                                else if(!isRGBButtonTurnedOffBecauseThePressureMate)
                                 {
                                     isRGBButtonTurnedOffBecauseThePressureMate = true;
                                     ControlTheColorOfAllSetRGBButton(RGBColor.Off);
                                     TurnUnSelectedRGBButtonWithColor(RGBColor.Off);
+                                    _logger.LogTrace("TurnOff All RGB Button");
+
                                 }
                             }
 
@@ -163,128 +166,10 @@ namespace FortRoom.Services
                         Thread.Sleep(1000);
                         if (gameLevel != Level.Level5)
                             gameLevel = NextLevel(gameLevel);
-                        //if (gameLevel == Level.Finished)
-                        //    break;
                         Console.WriteLine("Level Selected");
-
-                        //if (gameLevel > Level.Level5)
-
-
-
-                        //if (!IsGameStartedOrInGoing())
-                        //    break;
-                        //TurnRGBButtonWithColor(RGBColor.Off);
-                        //// Level Number
-                        //int numberOfTurenedOnButton = 0;
-                        //for (int i = 0; i < (int)gameLevel; i++)
-                        //{
-                        //    if (!IsGameStartedOrInGoing())
-                        //        break;
-                        //    TurnRandomRGBButtonWithColor(selectedColor);
-                        //    numberOfTurenedOnButton++;
-                        //}
-
-                        //TurnUnSelectedRGBButtonWithColor(RGBColor.Red);
-                        //while (true)
-                        //{
-                        //    if (!IsGameStartedOrInGoing())
-                        //        break;
-                        //    foreach (var item in RGBButtonList)
-                        //    {
-
-                        //        if (!VariableControlService.IsPressureMateActive)
-                        //        {
-                        //            if (isRGBButtonTurnedOffBecauseThePressureMate)
-                        //            {
-                        //                isRGBButtonTurnedOffBecauseThePressureMate = false;
-                        //                ControlTheColorOfAllSetRGBButton(selectedColor);
-                        //            }
-
-                        //            bool itemSelected = !item.CurrentStatus() && item.isSet();// item.CurrentColor() == selectedColor;
-                        //            bool itemOnButNotSelected = !item.CurrentStatus();
-                        //            if (itemSelected)
-                        //            {
-                        //                AudioPlayer.PIStartAudio(SoundType.Bonus);
-                        //                RGBLight.SetColor(RGBColor.Yellow);
-                        //                item.TurnColorOn(RGBColor.Off);
-                        //                item.Set(false);
-                        //                RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
-                        //                numberOfClickedButton++;
-                        //                //VariableControlService.ActiveButtonPressed++;
-                        //                VariableControlService.TeamScore.FortRoomScore += 10;
-                        //                numberOfTurenedOnButton--;
-                        //            }
-                        //            else if (itemOnButNotSelected)
-                        //            {
-                        //                RGBLight.SetColor(RGBColor.Red);
-                        //                RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
-                        //                item.TurnColorOn(RGBColor.Off);
-                        //                VariableControlService.TeamScore.FortRoomScore -= 5;
-                        //            }
-                        //        }
-                        //        else if (!isRGBButtonTurnedOffBecauseThePressureMate)
-                        //        {
-                        //            isRGBButtonTurnedOffBecauseThePressureMate = true;
-                        //            ControlTheColorOfAllSetRGBButton(RGBColor.Off);
-                        //        }
-                        //        if (numberOfTurenedOnButton == 0)
-                        //            break;
-
-
-                        //    }
-                        //    if (numberOfTurenedOnButton == 0)
-                        //        break;
-                        //}
-
-                        //gameLevel = NextLevel(gameLevel);
-                        //if (gameLevel > Level.Level5)
-
-
-
-
-                        //foreach (var item in RGBButtonList)
-                        //{
-                        //    if (!IsGameStartedOrInGoing())
-                        //        break;
-                        //    if (!VariableControlService.IsPressureMateActive)
-                        //    {
-                        //        if (isRGBButtonTurnedOffBecauseThePressureMate)
-                        //        {
-                        //            isRGBButtonTurnedOffBecauseThePressureMate = false;
-                        //            ControlTheColorOfAllSetRGBButton(selectedColor);
-
-                        //        }
-                        //        bool itemSelected = !item.CurrentStatus() && item.isSet();// item.CurrentColor() == selectedColor;
-                        //        if (itemSelected)
-                        //        {
-                        //            AudioPlayer.PIStartAudio(SoundType.Bonus);
-                        //            RGBLight.SetColor(RGBColor.Yellow);
-                        //            item.TurnColorOn(RGBColor.Off);
-                        //            item.Set(false);
-                        //            RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
-                        //            numberOfClickedButton++;
-                        //            VariableControlService.ActiveButtonPressed++;
-                        //            VariableControlService.TeamScore.FortRoomScore += 10;
-                        //        }
-                        //    }
-                        //    else if (!isRGBButtonTurnedOffBecauseThePressureMate)
-                        //    {
-                        //        isRGBButtonTurnedOffBecauseThePressureMate = true;
-                        //        ControlTheColorOfAllSetRGBButton(RGBColor.Off);
-                        //    }
-
-
-                        //}
-                        //if (numberOfClickedButton == RGBButtonList.Count())
-                        //    break;
-                        //if (!IsGameStartedOrInGoing())
-                        //    break;
                         Thread.Sleep(10);
                     }
                     Console.WriteLine("Out From While 2");
-
-
-                    //TurnRGBButtonWithColor(RGBColor.Off);
                     if (CurrentColor < 2)
                         CurrentColor++;
                     else
@@ -316,16 +201,12 @@ namespace FortRoom.Services
             Random random = new Random();
             int button1Index = random.Next(0, 5);
             int button2Index = random.Next(5, 9);
-
             bool Button1 = false; bool Button2 = false;
-            //(int button1Index, int button2Index) = ButtonTaskList[level];
             RGBButtonList[button1Index].TurnColorOn(color);
             RGBButtonList[button2Index].TurnColorOn(color);
             RGBButtonList[button1Index].Set(true);
             RGBButtonList[button2Index].Set(true);
-
             bool isRGBButtonTurnedOffBecauseThePressureMate = false;
-
 
             while (!Button1 || !Button2)
             {
@@ -370,6 +251,16 @@ namespace FortRoom.Services
                 return;
             Thread.Sleep(400);
         }
+
+
+
+
+
+
+
+
+
+
 
         private bool IsGameStartedOrInGoing()
         {
@@ -526,3 +417,118 @@ namespace FortRoom.Services
     }
 
 }
+
+
+
+//if (gameLevel > Level.Level5)
+
+
+
+//if (!IsGameStartedOrInGoing())
+//    break;
+//TurnRGBButtonWithColor(RGBColor.Off);
+//// Level Number
+//int numberOfTurenedOnButton = 0;
+//for (int i = 0; i < (int)gameLevel; i++)
+//{
+//    if (!IsGameStartedOrInGoing())
+//        break;
+//    TurnRandomRGBButtonWithColor(selectedColor);
+//    numberOfTurenedOnButton++;
+//}
+
+//TurnUnSelectedRGBButtonWithColor(RGBColor.Red);
+//while (true)
+//{
+//    if (!IsGameStartedOrInGoing())
+//        break;
+//    foreach (var item in RGBButtonList)
+//    {
+
+//        if (!VariableControlService.IsPressureMateActive)
+//        {
+//            if (isRGBButtonTurnedOffBecauseThePressureMate)
+//            {
+//                isRGBButtonTurnedOffBecauseThePressureMate = false;
+//                ControlTheColorOfAllSetRGBButton(selectedColor);
+//            }
+
+//            bool itemSelected = !item.CurrentStatus() && item.isSet();// item.CurrentColor() == selectedColor;
+//            bool itemOnButNotSelected = !item.CurrentStatus();
+//            if (itemSelected)
+//            {
+//                AudioPlayer.PIStartAudio(SoundType.Bonus);
+//                RGBLight.SetColor(RGBColor.Yellow);
+//                item.TurnColorOn(RGBColor.Off);
+//                item.Set(false);
+//                RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
+//                numberOfClickedButton++;
+//                //VariableControlService.ActiveButtonPressed++;
+//                VariableControlService.TeamScore.FortRoomScore += 10;
+//                numberOfTurenedOnButton--;
+//            }
+//            else if (itemOnButNotSelected)
+//            {
+//                RGBLight.SetColor(RGBColor.Red);
+//                RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
+//                item.TurnColorOn(RGBColor.Off);
+//                VariableControlService.TeamScore.FortRoomScore -= 5;
+//            }
+//        }
+//        else if (!isRGBButtonTurnedOffBecauseThePressureMate)
+//        {
+//            isRGBButtonTurnedOffBecauseThePressureMate = true;
+//            ControlTheColorOfAllSetRGBButton(RGBColor.Off);
+//        }
+//        if (numberOfTurenedOnButton == 0)
+//            break;
+
+
+//    }
+//    if (numberOfTurenedOnButton == 0)
+//        break;
+//}
+
+//gameLevel = NextLevel(gameLevel);
+//if (gameLevel > Level.Level5)
+
+
+
+
+//foreach (var item in RGBButtonList)
+//{
+//    if (!IsGameStartedOrInGoing())
+//        break;
+//    if (!VariableControlService.IsPressureMateActive)
+//    {
+//        if (isRGBButtonTurnedOffBecauseThePressureMate)
+//        {
+//            isRGBButtonTurnedOffBecauseThePressureMate = false;
+//            ControlTheColorOfAllSetRGBButton(selectedColor);
+
+//        }
+//        bool itemSelected = !item.CurrentStatus() && item.isSet();// item.CurrentColor() == selectedColor;
+//        if (itemSelected)
+//        {
+//            AudioPlayer.PIStartAudio(SoundType.Bonus);
+//            RGBLight.SetColor(RGBColor.Yellow);
+//            item.TurnColorOn(RGBColor.Off);
+//            item.Set(false);
+//            RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
+//            numberOfClickedButton++;
+//            VariableControlService.ActiveButtonPressed++;
+//            VariableControlService.TeamScore.FortRoomScore += 10;
+//        }
+//    }
+//    else if (!isRGBButtonTurnedOffBecauseThePressureMate)
+//    {
+//        isRGBButtonTurnedOffBecauseThePressureMate = true;
+//        ControlTheColorOfAllSetRGBButton(RGBColor.Off);
+//    }
+
+
+//}
+//if (numberOfClickedButton == RGBButtonList.Count())
+//    break;
+//if (!IsGameStartedOrInGoing())
+//    break;
