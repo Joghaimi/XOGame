@@ -77,6 +77,7 @@ namespace FortRoom.Services
                     // Select Color 
                     var selectedColor = SelectRandomRGBColorForLevel();
                     ControlRoundSound(VariableControlService.GameRound);
+                    TurnRGBButtonWithColor(RGBColor.Off, false);
                     StartTheGameTask(selectedColor, VariableControlService.GameRound);
                     TurnRGBButtonWithColor(RGBColor.Off, false);
 
@@ -157,11 +158,11 @@ namespace FortRoom.Services
                                 break;
                         }
                         Console.WriteLine("Out From For While 1");
-
-
-                        gameLevel = NextLevel(gameLevel);
-                        if (gameLevel == Level.Finished)
-                            break;
+                        Thread.Sleep(1000);
+                        if (gameLevel != Level.Level5)
+                            gameLevel = NextLevel(gameLevel);
+                        //if (gameLevel == Level.Finished)
+                        //    break;
                         Console.WriteLine("Level Selected");
 
                         //if (gameLevel > Level.Level5)
@@ -358,6 +359,7 @@ namespace FortRoom.Services
                 {
                     isRGBButtonTurnedOffBecauseThePressureMate = true;
                     ControlTheColorOfAllSetRGBButton(RGBColor.Off);
+                    ControlTheColorOfAllSetRGBButton
                 }
 
                 Thread.Sleep(10);
