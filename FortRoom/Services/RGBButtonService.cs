@@ -88,24 +88,28 @@ namespace FortRoom.Services
                     //TurnRGBButtonWithColor(selectedColor);
                     TurnRGBButtonWithColor(RGBColor.Off);
 
+                    TurnRandomRGBButtonWithColor(selectedColor);
+
+
+
                     byte numberOfClickedButton = 0;
                     GameStopWatch.Restart();
                     bool isRGBButtonTurnedOffBecauseThePressureMate = false;
                     Level gameLevel = Level.Level1;
                     while (GameStopWatch.ElapsedMilliseconds < 90000)
                     {
-                        if (!IsGameStartedOrInGoing())
-                            break;
-                        TurnRGBButtonWithColor(RGBColor.Off);
-                        // Level Number
-                        int numberOfTurenedOnButton = 0;
-                        for (int i = 0; i < (int)gameLevel; i++)
-                        {
-                            if (!IsGameStartedOrInGoing())
-                                break;
-                            TurnRandomRGBButtonWithColor(selectedColor);
-                            numberOfTurenedOnButton++;
-                        }
+                        //if (!IsGameStartedOrInGoing())
+                        //    break;
+                        //TurnRGBButtonWithColor(RGBColor.Off);
+                        //// Level Number
+                        //int numberOfTurenedOnButton = 0;
+                        //for (int i = 0; i < (int)gameLevel; i++)
+                        //{
+                        //    if (!IsGameStartedOrInGoing())
+                        //        break;
+                        //    TurnRandomRGBButtonWithColor(selectedColor);
+                        //    numberOfTurenedOnButton++;
+                        //}
 
                         //TurnUnSelectedRGBButtonWithColor(RGBColor.Red);
                         //while (true)
