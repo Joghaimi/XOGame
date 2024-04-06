@@ -88,6 +88,7 @@ namespace FortRoom.Services
                     GameStopWatch.Restart();
                     bool isRGBButtonTurnedOffBecauseThePressureMate = false;
                     Level gameLevel = Level.Level1;
+
                     while (GameStopWatch.ElapsedMilliseconds < 90000)
                     {
 
@@ -149,7 +150,7 @@ namespace FortRoom.Services
                                         Console.WriteLine("UnSelected ");
                                     }
                                 }
-                                else if(!isRGBButtonTurnedOffBecauseThePressureMate)
+                                else if (!isRGBButtonTurnedOffBecauseThePressureMate)
                                 {
                                     isRGBButtonTurnedOffBecauseThePressureMate = true;
                                     ControlTheColorOfAllSetRGBButton(RGBColor.Off);
@@ -170,13 +171,13 @@ namespace FortRoom.Services
                         Thread.Sleep(10);
                     }
                     Console.WriteLine("Out From While 2");
-                    if (CurrentColor < 2)
-                        CurrentColor++;
-                    else
-                        CurrentColor = 0;
-                    if (level < 4)
+                    //if (CurrentColor < 2)
+                    //    CurrentColor++;
+                    //else
+                    //    CurrentColor = 0;
+                    if (VariableControlService.GameRound < Round.Round5)
                     {
-                        level++;
+                        //level++;
                         VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
                         ApplyChangesForTheNextRound();
                     }
@@ -269,9 +270,16 @@ namespace FortRoom.Services
         private void StopRGBButtonService()
         {
             StopRGBButton();
+            _logger.LogTrace("RGB Button Service Out");
+            RGBLight.SetPriority(false);
+            RGBLight.SetColor(VariableControlService.DefaultColor);
+            _logger.LogTrace("Set Rounds");
+
             VariableControlService.GameRound = Round.Round1;
             VariableControlService.IsRGBButtonServiceStarted = false;
             VariableControlService.IsTheGameFinished = true;
+            _logger.LogTrace("Audio Off");
+
             AudioPlayer.PIStartAudio(SoundType.MissionAccomplished);
             Thread.Sleep(1000);
             AudioPlayer.PIStopAudio();
