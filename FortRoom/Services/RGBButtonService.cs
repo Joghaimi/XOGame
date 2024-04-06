@@ -126,9 +126,10 @@ namespace FortRoom.Services
                                     {
                                         AudioPlayer.PIStartAudio(SoundType.Bonus);
                                         RGBLight.SetColor(RGBColor.Yellow);
+                                        RGBLight.SetPriority(true);
                                         item.TurnColorOn(RGBColor.Off);
                                         item.Set(false);
-                                        RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
+                                        RGBLight.TurnRGBColorDelayedASecAndPriorityRemove(VariableControlService.DefaultColor);
                                         numberOfClickedButton++;
                                         item.BlockForASec();
                                         //VariableControlService.ActiveButtonPressed++;
@@ -139,7 +140,8 @@ namespace FortRoom.Services
                                     else if (itemOnButNotSelected)
                                     {
                                         RGBLight.SetColor(RGBColor.Red);
-                                        RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
+                                        RGBLight.SetPriority(true);
+                                        RGBLight.TurnRGBColorDelayedASecAndPriorityRemove(VariableControlService.DefaultColor);
                                         item.TurnColorOn(RGBColor.Off);
                                         item.BlockForASec();
                                         VariableControlService.TeamScore.FortRoomScore -= 5;
@@ -345,12 +347,13 @@ namespace FortRoom.Services
                     if (button1Status && button2Status)
                     {
                         RGBLight.SetColor(RGBColor.Yellow);
+                        RGBLight.SetPriority(true);
                         AudioPlayer.PIStartAudio(SoundType.Bonus);
                         RGBButtonList[button1Index].Set(false);
                         RGBButtonList[button2Index].Set(false);
                         RGBButtonList[button1Index].TurnColorOn(RGBColor.Off);
 
-                        RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
+                        RGBLight.TurnRGBColorDelayedASecAndPriorityRemove(VariableControlService.DefaultColor);
                         Button1 = true;
                         Button2 = true;
                     }

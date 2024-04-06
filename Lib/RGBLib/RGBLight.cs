@@ -151,10 +151,9 @@ namespace Library.RGBLib
                 SetColor(rGBColor);
             });
         }
-        public static void TurnRGBColorDelayedASecWithPriority(RGBColor rGBColor)
+        public static void TurnRGBColorDelayedASecAndPriorityRemove(RGBColor rGBColor)
         {
 
-            ThereArePriorityOn = true;
             Task.Run(async () =>
             {
                 await Task.Delay(1000);
