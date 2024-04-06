@@ -181,11 +181,11 @@ namespace FortRoom.Services
                         }
 
                     }
-                    else if (!isRGBButtonTurnedOffBecauseThePressureMate)
-                    {
-                        isRGBButtonTurnedOffBecauseThePressureMate = true;
-                        ControlTheColorOfAllSetRGBButton(RGBColor.Off);
-                    }
+                }
+                else if (!isRGBButtonTurnedOffBecauseThePressureMate)
+                {
+                    isRGBButtonTurnedOffBecauseThePressureMate = true;
+                    ControlTheColorOfAllSetRGBButton(RGBColor.Off);
                 }
 
                 Thread.Sleep(10);
