@@ -33,6 +33,7 @@ namespace FortRoom.Services
             RGBColor.Blue,
             RGBColor.Green,
             RGBColor.White,
+            RGBColor.Turquoise,
             RGBColor.Yellow,
             RGBColor.purple
         };

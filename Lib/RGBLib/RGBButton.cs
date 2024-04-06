@@ -56,6 +56,16 @@ namespace Library.RGBLib
                     MCP23Controller.Write(_RGBRPin, PinState.Low);
                     MCP23Controller.Write(_RGBGPin, PinState.High);
                     break;
+                case RGBColor.Yellow:
+                    MCP23Controller.Write(_RGBBPin, PinState.High);
+                    MCP23Controller.Write(_RGBRPin, PinState.Low);
+                    MCP23Controller.Write(_RGBGPin, PinState.Low);
+                    break;
+                case RGBColor.White:
+                    MCP23Controller.Write(_RGBBPin, PinState.Low);
+                    MCP23Controller.Write(_RGBRPin, PinState.Low);
+                    MCP23Controller.Write(_RGBGPin, PinState.Low);
+                    break;
                 case RGBColor.Turquoise:
                     MCP23Controller.Write(_RGBBPin, PinState.Low);
                     MCP23Controller.Write(_RGBRPin, PinState.High);
