@@ -161,7 +161,7 @@ namespace FortRoom.Services
                         {
                             Console.WriteLine("Button #1");
                             Thread.Sleep(3000);
-                            if (!RGBButtonList[button1Index].CurrentStatus() && RGBButtonList[button1Index].CurrentColor() == color)
+                            if (!RGBButtonList[button1Index].CurrentStatus() && RGBButtonList[button1Index].isSet())//&& RGBButtonList[button1Index].CurrentColor() == color)
                             {
                                 Button1 = true;
                                 Console.WriteLine("Button #1 Pressed");
@@ -176,7 +176,7 @@ namespace FortRoom.Services
                         {
                             Console.WriteLine("Button #2");
                             Thread.Sleep(3000);
-                            if (!RGBButtonList[button2Index].CurrentStatus() && RGBButtonList[button2Index].CurrentColor() == color)
+                            if (!RGBButtonList[button2Index].CurrentStatus() && RGBButtonList[button2Index].isSet())//&& RGBButtonList[button2Index].CurrentColor() == color)
                             {
                                 Button2 = true;
                                 Console.WriteLine("Button #2 Pressed");
