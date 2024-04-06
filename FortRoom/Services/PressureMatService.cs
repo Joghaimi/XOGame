@@ -16,6 +16,7 @@ namespace FortRoom.Services
     {
         private CancellationTokenSource _cts;
         private readonly ILogger<PressureMatService> _logger;
+        private bool oldPressureMateValue = false;
         public PressureMatService(ILogger<PressureMatService> logger)
         {
             _logger = logger;
@@ -41,10 +42,24 @@ namespace FortRoom.Services
                     {
                         bool currentValue = MCP23Controller.Read(MasterDI.IN1);
                         VariableControlService.IsPressureMateActive = !currentValue;
-                        if(!VariableControlService.IsPressureMateActive)
-                            RGBLight.SetColor(VariableControlService.DefaultColor);
+                        if (!VariableControlService.IsPressureMateActive)
+                        {
+                            if (VariableControlService.IsPressureMateActive != oldPressureMateValue)
+                            {
+                                RGBLight.SetColor(VariableControlService.DefaultColor);
+                                oldPressureMateValue = VariableControlService.IsPressureMateActive;
+                            }
+                        }
                         else
-                            RGBLight.SetColor(RGBColor.Red);
+                        {
+                            if (VariableControlService.IsPressureMateActive != oldPressureMateValue)
+                            {
+                                RGBLight.SetColor(VariableControlService.DefaultColor);
+                                oldPressureMateValue = VariableControlService.IsPressureMateActive;
+                                RGBLight.SetColor(RGBColor.Red);
+                            }
+                        }
+
                         if (!currentValue && !scoreJustDecreased)
                         {
                             VariableControlService.TimeOfPressureHit++;
