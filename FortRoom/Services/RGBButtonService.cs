@@ -66,9 +66,9 @@ namespace FortRoom.Services
 
                     byte numberOfClickedButton = 0;
                     GameStopWatch.Restart();
+                    bool isRGBButtonTurnedOffBecauseThePressureMate = false;
                     while (GameStopWatch.ElapsedMilliseconds < 90000)
                     {
-                        bool isRGBButtonTurnedOffBecauseThePressureMate = false;
                         foreach (var item in RGBButtonList)
                         {
                             if (!IsGameStartedOrInGoing())
@@ -85,7 +85,7 @@ namespace FortRoom.Services
                                 if (itemSelected)
                                 {
                                     AudioPlayer.PIStartAudio(SoundType.Bonus);
-                                    RGBLight.SetColor(RGBColor.Blue);
+                                    RGBLight.SetColor(RGBColor.Yellow);
                                     item.TurnColorOn(RGBColor.Off);
                                     item.Set(false);
                                     RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
@@ -141,32 +141,50 @@ namespace FortRoom.Services
             (int button1Index, int button2Index) = ButtonTaskList[level];
             RGBButtonList[button1Index].TurnColorOn(color);
             RGBButtonList[button2Index].TurnColorOn(color);
+
+            bool isRGBButtonTurnedOffBecauseThePressureMate = false;
+
             while (!Button1 || !Button2)
             {
+
                 if (!IsGameStartedOrInGoing())
                     break;
-                if (!Button1)
+                if (!VariableControlService.IsPressureMateActive)
                 {
-                    if (!RGBButtonList[button1Index].CurrentStatus() && RGBButtonList[button1Index].CurrentColor() == color)
+                    if (isRGBButtonTurnedOffBecauseThePressureMate)
                     {
-                        Button1 = true;
-                        Console.WriteLine("Button #1 Pressed");
-                        RGBLight.SetColor(RGBColor.Blue);
-                        AudioPlayer.PIStartAudio(SoundType.Bonus);
-                        RGBButtonList[button1Index].TurnColorOn(RGBColor.Off);
-                        RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
+                        isRGBButtonTurnedOffBecauseThePressureMate = false;
+                        ControlTheColorOfAllSetRGBButton(color);
+                        if (!Button1)
+                        {
+                            if (!RGBButtonList[button1Index].CurrentStatus() && RGBButtonList[button1Index].CurrentColor() == color)
+                            {
+                                Button1 = true;
+                                Console.WriteLine("Button #1 Pressed");
+                                RGBLight.SetColor(RGBColor.Yellow);
+                                AudioPlayer.PIStartAudio(SoundType.Bonus);
+                                RGBButtonList[button1Index].TurnColorOn(RGBColor.Off);
+                                RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
+                            }
+                        }
+                        if (!Button2)
+                        {
+                            if (!RGBButtonList[button2Index].CurrentStatus() && RGBButtonList[button2Index].CurrentColor() == color)
+                            {
+                                Button2 = true;
+                                Console.WriteLine("Button #2 Pressed");
+                                RGBLight.SetColor(RGBColor.Yellow);
+                                AudioPlayer.PIStartAudio(SoundType.Bonus);
+                                RGBButtonList[button2Index].TurnColorOn(RGBColor.Off);
+                                RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
+                            }
+                        }
+
                     }
-                }
-                if (!Button2)
-                {
-                    if (!RGBButtonList[button2Index].CurrentStatus() && RGBButtonList[button2Index].CurrentColor() == color)
+                    else if (!isRGBButtonTurnedOffBecauseThePressureMate)
                     {
-                        Button2 = true;
-                        Console.WriteLine("Button #2 Pressed");
-                        RGBLight.SetColor(RGBColor.Blue);
-                        AudioPlayer.PIStartAudio(SoundType.Bonus);
-                        RGBButtonList[button2Index].TurnColorOn(RGBColor.Off);
-                        RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
+                        isRGBButtonTurnedOffBecauseThePressureMate = true;
+                        ControlTheColorOfAllSetRGBButton(RGBColor.Off);
                     }
                 }
 
