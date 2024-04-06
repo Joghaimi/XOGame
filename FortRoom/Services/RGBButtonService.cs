@@ -85,7 +85,8 @@ namespace FortRoom.Services
 
                     ControlRoundSound(VariableControlService.GameRound);
                     StartTheGameTask(selectedColor, VariableControlService.GameRound);
-                    TurnRGBButtonWithColor(selectedColor);
+                    //TurnRGBButtonWithColor(selectedColor);
+                    TurnRGBButtonWithColor(RGBColor.Off);
 
                     byte numberOfClickedButton = 0;
                     GameStopWatch.Restart();
@@ -106,59 +107,59 @@ namespace FortRoom.Services
                             numberOfTurenedOnButton++;
                         }
 
-                        TurnUnSelectedRGBButtonWithColor(RGBColor.Red);
-                        while (true)
-                        {
-                            if (!IsGameStartedOrInGoing())
-                                break;
-                            foreach (var item in RGBButtonList)
-                            {
+                        //TurnUnSelectedRGBButtonWithColor(RGBColor.Red);
+                        //while (true)
+                        //{
+                        //    if (!IsGameStartedOrInGoing())
+                        //        break;
+                        //    foreach (var item in RGBButtonList)
+                        //    {
 
-                                if (!VariableControlService.IsPressureMateActive)
-                                {
-                                    if (isRGBButtonTurnedOffBecauseThePressureMate)
-                                    {
-                                        isRGBButtonTurnedOffBecauseThePressureMate = false;
-                                        ControlTheColorOfAllSetRGBButton(selectedColor);
-                                    }
+                        //        if (!VariableControlService.IsPressureMateActive)
+                        //        {
+                        //            if (isRGBButtonTurnedOffBecauseThePressureMate)
+                        //            {
+                        //                isRGBButtonTurnedOffBecauseThePressureMate = false;
+                        //                ControlTheColorOfAllSetRGBButton(selectedColor);
+                        //            }
 
-                                    bool itemSelected = !item.CurrentStatus() && item.isSet();// item.CurrentColor() == selectedColor;
-                                    bool itemOnButNotSelected = !item.CurrentStatus();
-                                    if (itemSelected)
-                                    {
-                                        AudioPlayer.PIStartAudio(SoundType.Bonus);
-                                        RGBLight.SetColor(RGBColor.Yellow);
-                                        item.TurnColorOn(RGBColor.Off);
-                                        item.Set(false);
-                                        RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
-                                        numberOfClickedButton++;
-                                        //VariableControlService.ActiveButtonPressed++;
-                                        VariableControlService.TeamScore.FortRoomScore += 10;
-                                        numberOfTurenedOnButton--;
-                                    }
-                                    else if (itemOnButNotSelected)
-                                    {
-                                        RGBLight.SetColor(RGBColor.Red);
-                                        RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
-                                        item.TurnColorOn(RGBColor.Off);
-                                        VariableControlService.TeamScore.FortRoomScore -= 5;
-                                    }
-                                }
-                                else if (!isRGBButtonTurnedOffBecauseThePressureMate)
-                                {
-                                    isRGBButtonTurnedOffBecauseThePressureMate = true;
-                                    ControlTheColorOfAllSetRGBButton(RGBColor.Off);
-                                }
-                                if (numberOfTurenedOnButton == 0)
-                                    break;
+                        //            bool itemSelected = !item.CurrentStatus() && item.isSet();// item.CurrentColor() == selectedColor;
+                        //            bool itemOnButNotSelected = !item.CurrentStatus();
+                        //            if (itemSelected)
+                        //            {
+                        //                AudioPlayer.PIStartAudio(SoundType.Bonus);
+                        //                RGBLight.SetColor(RGBColor.Yellow);
+                        //                item.TurnColorOn(RGBColor.Off);
+                        //                item.Set(false);
+                        //                RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
+                        //                numberOfClickedButton++;
+                        //                //VariableControlService.ActiveButtonPressed++;
+                        //                VariableControlService.TeamScore.FortRoomScore += 10;
+                        //                numberOfTurenedOnButton--;
+                        //            }
+                        //            else if (itemOnButNotSelected)
+                        //            {
+                        //                RGBLight.SetColor(RGBColor.Red);
+                        //                RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
+                        //                item.TurnColorOn(RGBColor.Off);
+                        //                VariableControlService.TeamScore.FortRoomScore -= 5;
+                        //            }
+                        //        }
+                        //        else if (!isRGBButtonTurnedOffBecauseThePressureMate)
+                        //        {
+                        //            isRGBButtonTurnedOffBecauseThePressureMate = true;
+                        //            ControlTheColorOfAllSetRGBButton(RGBColor.Off);
+                        //        }
+                        //        if (numberOfTurenedOnButton == 0)
+                        //            break;
 
 
-                            }
-                            if (numberOfTurenedOnButton == 0)
-                                break;
-                        }
+                        //    }
+                        //    if (numberOfTurenedOnButton == 0)
+                        //        break;
+                        //}
 
-                        gameLevel = NextLevel(gameLevel);
+                        //gameLevel = NextLevel(gameLevel);
                         //if (gameLevel > Level.Level5)
 
 
