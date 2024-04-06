@@ -159,6 +159,8 @@ namespace FortRoom.Services
 
 
                         gameLevel = NextLevel(gameLevel);
+                        if (gameLevel == Level.Finished)
+                            break;
                         Console.WriteLine("Level Selected");
 
                         //if (gameLevel > Level.Level5)
@@ -429,7 +431,7 @@ namespace FortRoom.Services
             Console.WriteLine("Select Color");
             while (true)
             {
-                int button1Index = random.Next(0, 10);
+                int button1Index = random.Next(0, 9);
                 if (!RGBButtonList[button1Index].isSet())
                 {
                     RGBButtonList[button1Index].TurnColorOn(color);
