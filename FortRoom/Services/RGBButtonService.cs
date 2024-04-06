@@ -79,7 +79,7 @@ namespace FortRoom.Services
 
                     //ControlRoundSound(VariableControlService.GameRound);
                     //StartTheGameTask(selectedColor, VariableControlService.GameRound);
-                    TurnRGBButtonWithColor(RGBColor.Off,false);
+                    TurnRGBButtonWithColor(RGBColor.Off, false);
 
 
 
@@ -120,7 +120,7 @@ namespace FortRoom.Services
                                     }
 
                                     bool itemSelected = !item.CurrentStatusWithCheckForDelay() && item.isSet();// item.CurrentColor() == selectedColor;
-                                    bool itemOnButNotSelected = !item.CurrentStatusWithCheckForDelay();
+                                    bool itemOnButNotSelected = !item.CurrentStatusWithCheckForDelay() && !item.isSet();
                                     if (itemSelected)
                                     {
                                         AudioPlayer.PIStartAudio(SoundType.Bonus);
@@ -415,7 +415,7 @@ namespace FortRoom.Services
                 item.Set(true); ;
             }
         }
-        public void TurnRGBButtonWithColor(RGBColor color ,bool isSet)
+        public void TurnRGBButtonWithColor(RGBColor color, bool isSet)
         {
             foreach (var item in RGBButtonList)
             {
