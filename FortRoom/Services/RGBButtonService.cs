@@ -159,6 +159,7 @@ namespace FortRoom.Services
 
 
                         gameLevel = NextLevel(gameLevel);
+                        Console.WriteLine("Level Selected");
 
                         //if (gameLevel > Level.Level5)
 
@@ -393,7 +394,8 @@ namespace FortRoom.Services
                     return Level.Level4;
                 case Level.Level4:
                     return Level.Level5;
-                case Level.Level5: return Level.Level1;
+                case Level.Level5:
+                    return Level.Level1;
                 default:
                     return Level.Level1;
             }
