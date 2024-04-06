@@ -149,12 +149,7 @@ namespace FortRoom.Services
                                     isRGBButtonTurnedOffBecauseThePressureMate = true;
                                     ControlTheColorOfAllSetRGBButton(RGBColor.Off);
                                 }
-                                if (numberOfTurenedOnButton == 0)
-                                    break;
-
-
                             }
-                            Console.WriteLine("Out From For Each");
 
                             if (numberOfTurenedOnButton == 0)
                                 break;
