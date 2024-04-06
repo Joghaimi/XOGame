@@ -141,6 +141,8 @@ namespace FortRoom.Services
             (int button1Index, int button2Index) = ButtonTaskList[level];
             RGBButtonList[button1Index].TurnColorOn(color);
             RGBButtonList[button2Index].TurnColorOn(color);
+            RGBButtonList[button1Index].Set(true);
+            RGBButtonList[button2Index].Set(true);
 
             bool isRGBButtonTurnedOffBecauseThePressureMate = false;
 
@@ -163,6 +165,7 @@ namespace FortRoom.Services
                                 Console.WriteLine("Button #1 Pressed");
                                 RGBLight.SetColor(RGBColor.Yellow);
                                 AudioPlayer.PIStartAudio(SoundType.Bonus);
+                                RGBButtonList[button1Index].Set(false);
                                 RGBButtonList[button1Index].TurnColorOn(RGBColor.Off);
                                 RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
                             }
@@ -174,6 +177,7 @@ namespace FortRoom.Services
                                 Button2 = true;
                                 Console.WriteLine("Button #2 Pressed");
                                 RGBLight.SetColor(RGBColor.Yellow);
+                                RGBButtonList[button2Index].Set(false);
                                 AudioPlayer.PIStartAudio(SoundType.Bonus);
                                 RGBButtonList[button2Index].TurnColorOn(RGBColor.Off);
                                 RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
