@@ -76,9 +76,8 @@ namespace FortRoom.Services
                         VariableControlService.IsRGBButtonServiceStarted = true;
                     // Select Color 
                     var selectedColor = SelectRandomRGBColorForLevel();
-
-                    //ControlRoundSound(VariableControlService.GameRound);
-                    //StartTheGameTask(selectedColor, VariableControlService.GameRound);
+                    ControlRoundSound(VariableControlService.GameRound);
+                    StartTheGameTask(selectedColor, VariableControlService.GameRound);
                     TurnRGBButtonWithColor(RGBColor.Off, false);
 
 
@@ -281,18 +280,18 @@ namespace FortRoom.Services
 
 
                     //TurnRGBButtonWithColor(RGBColor.Off);
-                    //if (CurrentColor < 2)
-                    //    CurrentColor++;
-                    //else
-                    //    CurrentColor = 0;
-                    //if (level < 4)
-                    //{
-                    //    level++;
-                    //    VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
-                    //    ApplyChangesForTheNextRound();
-                    //}
-                    //else
-                    //    StopRGBButtonService();
+                    if (CurrentColor < 2)
+                        CurrentColor++;
+                    else
+                        CurrentColor = 0;
+                    if (level < 4)
+                    {
+                        level++;
+                        VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
+                        ApplyChangesForTheNextRound();
+                    }
+                    else
+                        StopRGBButtonService();
                 }
                 else if (!IsGameStartedOrInGoing() && VariableControlService.IsRGBButtonServiceStarted)
                 {
