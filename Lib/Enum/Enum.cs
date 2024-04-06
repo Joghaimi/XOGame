@@ -154,4 +154,13 @@ namespace Library
         Round4 = 3,
         Round5 = 4
     }
+    public enum Level
+    {
+        Level1 = 0,
+        Level2 = 1,
+        Level3 = 2,
+        Level4 = 3,
+        Level5 = 4
+    }
+
 }
