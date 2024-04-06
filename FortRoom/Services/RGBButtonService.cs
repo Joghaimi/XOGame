@@ -75,24 +75,15 @@ namespace FortRoom.Services
                     if (!VariableControlService.IsRGBButtonServiceStarted)
                         VariableControlService.IsRGBButtonServiceStarted = true;
                     // Select Color 
-
-                    Random random = new Random();
-                    int randomColorIndex = random.Next(0, RGBColors.Count());
-                    var selectedColor = RGBColors[randomColorIndex];
-                    RGBColors.RemoveAt(randomColorIndex);
-                    Console.WriteLine(selectedColor);
-
+                    var selectedColor = SelectRandomRGBColorForLevel();
 
                     //ControlRoundSound(VariableControlService.GameRound);
                     //StartTheGameTask(selectedColor, VariableControlService.GameRound);
-                    //TurnRGBButtonWithColor(selectedColor);
                     //TurnRGBButtonWithColor(RGBColor.Off);
 
-                    TurnRandomRGBButtonWithColor(selectedColor);
+                    //TurnRandomRGBButtonWithColor(selectedColor);
 
-                    while (true)
-                    {
-                    }
+
 
                     byte numberOfClickedButton = 0;
                     GameStopWatch.Restart();
@@ -100,6 +91,34 @@ namespace FortRoom.Services
                     Level gameLevel = Level.Level1;
                     while (GameStopWatch.ElapsedMilliseconds < 90000)
                     {
+                        // 
+
+                        int numberOfTurenedOnButton = 0;
+                        
+                        // Turn Number of Button
+                        for (int i = 0; i < ((int)gameLevel) + 1; i++)
+                        {
+                            if (!IsGameStartedOrInGoing())
+                                break;
+                            TurnRandomRGBButtonWithColor(selectedColor);
+                            numberOfTurenedOnButton++;
+                        }
+                        TurnUnSelectedRGBButtonWithColor(RGBColor.Red);
+
+
+
+                        while (true)
+                        {
+                            if (!IsGameStartedOrInGoing())
+                                break;
+
+
+
+                        }
+
+
+
+
                         //if (!IsGameStartedOrInGoing())
                         //    break;
                         //TurnRGBButtonWithColor(RGBColor.Off);
@@ -331,6 +350,16 @@ namespace FortRoom.Services
                 item.Set(true); ;
             }
         }
+        public RGBColor SelectRandomRGBColorForLevel()
+        {
+            Random random = new Random();
+            int randomColorIndex = random.Next(0, RGBColors.Count());
+            var selectedColor = RGBColors[randomColorIndex];
+            RGBColors.RemoveAt(randomColorIndex);
+            Console.WriteLine(selectedColor);
+            return selectedColor;
+        }
+
         public void TurnRandomRGBButtonWithColor(RGBColor color)
         {
             Random random = new Random();
