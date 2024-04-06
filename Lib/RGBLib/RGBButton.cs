@@ -100,6 +100,7 @@ namespace Library.RGBLib
         }
         public void Set(bool isSet)
         {
+            Console.WriteLine($"Is Set {isSet}");
             _isSet = isSet;
         }
     }
