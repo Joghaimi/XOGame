@@ -134,6 +134,7 @@ namespace FortRoom.Services
                                         //VariableControlService.ActiveButtonPressed++;
                                         VariableControlService.TeamScore.FortRoomScore += 10;
                                         numberOfTurenedOnButton--;
+                                        Console.WriteLine("Selected ");
                                     }
                                     else if (itemOnButNotSelected)
                                     {
@@ -141,6 +142,8 @@ namespace FortRoom.Services
                                         RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
                                         item.TurnColorOn(RGBColor.Off);
                                         VariableControlService.TeamScore.FortRoomScore -= 5;
+                                        Console.WriteLine("UnSelected ");
+
                                     }
                                 }
                                 else if (!isRGBButtonTurnedOffBecauseThePressureMate)
