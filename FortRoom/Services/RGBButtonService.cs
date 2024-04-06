@@ -332,7 +332,8 @@ namespace FortRoom.Services
                 int button1Index = random.Next(0, 10);
                 if (!RGBButtonList[button1Index].isSet())
                 {
-                    TurnRGBButtonWithColor(color);
+                    RGBButtonList[button1Index].TurnColorOn(color);
+                    RGBButtonList[button1Index].Set(true);    
                     break;
                 }
             }
