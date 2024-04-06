@@ -44,20 +44,24 @@ namespace FortRoom.Services
                         VariableControlService.IsPressureMateActive = !currentValue;
                         if (!VariableControlService.IsPressureMateActive)
                         {
-                            if (VariableControlService.IsPressureMateActive != oldPressureMateValue)
-                            {
-                                RGBLight.SetColor(VariableControlService.DefaultColor);
-                                oldPressureMateValue = VariableControlService.IsPressureMateActive;
-                            }
+                            RGBLight.SetColor(VariableControlService.DefaultColor);
+
+                            //if (VariableControlService.IsPressureMateActive != oldPressureMateValue)
+                            //{
+                            //    RGBLight.SetColor(VariableControlService.DefaultColor);
+                            //    oldPressureMateValue = VariableControlService.IsPressureMateActive;
+                            //}
                         }
                         else
                         {
-                            if (VariableControlService.IsPressureMateActive != oldPressureMateValue)
-                            {
-                                RGBLight.SetColor(VariableControlService.DefaultColor);
-                                oldPressureMateValue = VariableControlService.IsPressureMateActive;
-                                RGBLight.SetColor(RGBColor.Red);
-                            }
+                            RGBLight.SetColor(RGBColor.Red);
+
+                            //if (VariableControlService.IsPressureMateActive != oldPressureMateValue)
+                            //{
+                            //    //RGBLight.SetColor(VariableControlService.DefaultColor);
+                            //    RGBLight.SetColor(RGBColor.Red);
+                            //    oldPressureMateValue = VariableControlService.IsPressureMateActive;
+                            //}
                         }
 
                         if (!currentValue && !scoreJustDecreased)

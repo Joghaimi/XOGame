@@ -42,6 +42,8 @@ namespace Library.RGBLib
             uint red = 0;
             if (_roomLight == selectedColor)
                 return;
+            if (ThereArePriorityOn)
+                return;
             _roomLight = selectedColor;
             Console.WriteLine(selectedColor.ToString());
             switch (selectedColor)
@@ -105,6 +107,11 @@ namespace Library.RGBLib
                 Console.Write(result);
             }
         }
+        public static void SetPriority(bool ison)
+        {
+            ThereArePriorityOn = ison;
+        }
+
         private static string HomePath()
         {
             switch (_room)
@@ -125,15 +132,15 @@ namespace Library.RGBLib
                     return "/home/pi/XOGame";
             }
         }
-        [Obsolete("Don't Use This Function")]
-        public static async Task TurnRGBColorDelayed(RGBColor rGBColor)
-        {
-            Task.Run(async () =>
-            {
-                await Task.Delay(1000);
-                SetColor(rGBColor);
-            });
-        }
+        //[Obsolete("Don't Use This Function")]
+        //public static async Task TurnRGBColorDelayed(RGBColor rGBColor)
+        //{
+        //    Task.Run(async () =>
+        //    {
+        //        await Task.Delay(1000);
+        //        SetColor(rGBColor);
+        //    });
+        //}
         public static void TurnRGBColorDelayedASec(RGBColor rGBColor)
         {
             if (ThereArePriorityOn)
@@ -164,31 +171,31 @@ namespace Library.RGBLib
                 SetColor(rGBColor);
             });
         }
-        public static async Task TurnRGBOFFDelayed()
-        {
-            Task.Run(async () =>
-            {
-                await Task.Delay(1000);
-                SetColor(RGBColor.Off);
-            });
-        }
-        public static async Task TurnRGBRedDelayed()
-        {
-            Task.Run(async () =>
-            {
-                await Task.Delay(1000);
-                SetColor(RGBColor.Red);
-            });
-        }
-        public static async Task TurnRGBOffAfter1Sec()
-        {
-            Task.Run(async () =>
-            {
-                await Task.Delay(1000);
-                SetColor(RGBColor.Off);
-                MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
-            });
-        }
+        //public static async Task TurnRGBOFFDelayed()
+        //{
+        //    Task.Run(async () =>
+        //    {
+        //        await Task.Delay(1000);
+        //        SetColor(RGBColor.Off);
+        //    });
+        //}
+        //public static async Task TurnRGBRedDelayed()
+        //{
+        //    Task.Run(async () =>
+        //    {
+        //        await Task.Delay(1000);
+        //        SetColor(RGBColor.Red);
+        //    });
+        //}
+        //public static async Task TurnRGBOffAfter1Sec()
+        //{
+        //    Task.Run(async () =>
+        //    {
+        //        await Task.Delay(1000);
+        //        SetColor(RGBColor.Off);
+        //        MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
+        //    });
+        //}
         public static void DatSend(uint dx)
         {
             for (int i = 0; i < 32; i++)
