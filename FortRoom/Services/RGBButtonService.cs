@@ -409,6 +409,7 @@ namespace FortRoom.Services
         public void TurnRandomRGBButtonWithColor(RGBColor color)
         {
             Random random = new Random();
+            Console.WriteLine("Select Color");
             while (true)
             {
                 int button1Index = random.Next(0, 10);
@@ -419,6 +420,8 @@ namespace FortRoom.Services
                     break;
                 }
             }
+            Console.WriteLine("Select Color =========");
+
         }
         public void TurnUnSelectedRGBButtonWithColor(RGBColor color)
         {
