@@ -90,11 +90,8 @@ namespace FortRoom.Services
                     Level gameLevel = Level.Level1;
                     while (GameStopWatch.ElapsedMilliseconds < 90000)
                     {
-                        // 
 
                         int numberOfTurenedOnButton = 0;
-
-                        // Turn Number of Button
                         for (int i = 0; i < ((int)gameLevel) + 1; i++)
                         {
                             if (!IsGameStartedOrInGoing())
@@ -135,18 +132,16 @@ namespace FortRoom.Services
                                         //VariableControlService.ActiveButtonPressed++;
                                         VariableControlService.TeamScore.FortRoomScore += 10;
                                         numberOfTurenedOnButton--;
-                                        Console.WriteLine(
-
-                                            $"Selected {numberOfTurenedOnButton} ");
+                                        Console.WriteLine( $"Selected {numberOfTurenedOnButton} ");
                                     }
                                     else if (itemOnButNotSelected)
                                     {
                                         RGBLight.SetColor(RGBColor.Red);
                                         RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
                                         item.TurnColorOn(RGBColor.Off);
+                                        item.BlockForASec();
                                         VariableControlService.TeamScore.FortRoomScore -= 5;
                                         Console.WriteLine("UnSelected ");
-
                                     }
                                 }
                                 else if (!isRGBButtonTurnedOffBecauseThePressureMate)
@@ -159,10 +154,13 @@ namespace FortRoom.Services
 
 
                             }
+                            Console.WriteLine("Out From For Each");
 
                             if (numberOfTurenedOnButton == 0)
                                 break;
                         }
+                        Console.WriteLine("Out From For While 1");
+
 
                         gameLevel = NextLevel(gameLevel);
                         //if (gameLevel > Level.Level5)
@@ -279,19 +277,22 @@ namespace FortRoom.Services
                             //    break;
                             Thread.Sleep(10);
                     }
-                    TurnRGBButtonWithColor(RGBColor.Off);
-                    if (CurrentColor < 2)
-                        CurrentColor++;
-                    else
-                        CurrentColor = 0;
-                    if (level < 4)
-                    {
-                        level++;
-                        VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
-                        ApplyChangesForTheNextRound();
-                    }
-                    else
-                        StopRGBButtonService();
+                    Console.WriteLine("Out From While 2");
+
+
+                    //TurnRGBButtonWithColor(RGBColor.Off);
+                    //if (CurrentColor < 2)
+                    //    CurrentColor++;
+                    //else
+                    //    CurrentColor = 0;
+                    //if (level < 4)
+                    //{
+                    //    level++;
+                    //    VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
+                    //    ApplyChangesForTheNextRound();
+                    //}
+                    //else
+                    //    StopRGBButtonService();
                 }
                 else if (!IsGameStartedOrInGoing() && VariableControlService.IsRGBButtonServiceStarted)
                 {
