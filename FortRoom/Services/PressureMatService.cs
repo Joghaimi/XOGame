@@ -43,13 +43,14 @@ namespace FortRoom.Services
                         VariableControlService.IsPressureMateActive = !currentValue;
                         if(!VariableControlService.IsPressureMateActive)
                             RGBLight.SetColor(VariableControlService.DefaultColor);
-
+                        else
+                            RGBLight.SetColor(RGBColor.Red);
                         if (!currentValue && !scoreJustDecreased)
                         {
                             VariableControlService.TimeOfPressureHit++;
                             MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
                             AudioPlayer.PIStartAudio(SoundType.Descend);
-                            RGBLight.SetColor(RGBColor.Red);
+                            //RGBLight.SetColor(RGBColor.Red);
                             //RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor, 3000);
                             scoreJustDecreased = true;
                             timer.Restart();

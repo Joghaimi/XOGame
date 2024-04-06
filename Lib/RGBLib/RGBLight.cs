@@ -42,7 +42,7 @@ namespace Library.RGBLib
             if (_roomLight == selectedColor)
                 return;
             _roomLight = selectedColor;
-            //Console.WriteLine(selectedColor.ToString());
+            Console.WriteLine(selectedColor.ToString());
             switch (selectedColor)
             {
                 case RGBColor.Red:
