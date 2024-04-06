@@ -26,6 +26,7 @@ namespace Library.RGBLib
         private static GPIOController _controller;
         private static Queue<(RGBColor, int)> _rgbLightQueue = new Queue<(RGBColor, int)>();
         private static Room _room;
+        private static RGBColor _roomLight;
         public static void Init(int _clkPin, int _dataPin, Room room)
         {
             CLKPin = _clkPin;
@@ -38,6 +39,9 @@ namespace Library.RGBLib
             uint blue = 0;
             uint green = 0;
             uint red = 0;
+            if (_roomLight == selectedColor)
+                return;
+            _roomLight = selectedColor;
             //Console.WriteLine(selectedColor.ToString());
             switch (selectedColor)
             {
@@ -138,7 +142,7 @@ namespace Library.RGBLib
             });
         }
 
-        public static void TurnRGBColorDelayedASec(RGBColor rGBColor,int _ms)
+        public static void TurnRGBColorDelayedASec(RGBColor rGBColor, int _ms)
         {
             Task.Run(async () =>
             {

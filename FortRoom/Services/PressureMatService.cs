@@ -47,11 +47,15 @@ namespace FortRoom.Services
                             MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
                             AudioPlayer.PIStartAudio(SoundType.Descend);
                             RGBLight.SetColor(RGBColor.Red);
-                            RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor, 3000);
+                            //RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor, 3000);
                             scoreJustDecreased = true;
                             timer.Restart();
                             VariableControlService.TeamScore.FortRoomScore -= 20;
 
+                        }
+                        else
+                        {
+                            RGBLight.SetColor(VariableControlService.DefaultColor);
                         }
                         //previousValue = currentValue;
                         if (scoreJustDecreased && timer.ElapsedMilliseconds >= 3000)
