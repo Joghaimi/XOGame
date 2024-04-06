@@ -102,10 +102,11 @@ namespace FortRoom.Services
                             TurnRandomRGBButtonWithColor(selectedColor);
                             numberOfTurenedOnButton++;
                         }
+                        Console.WriteLine($"numberOfTurenedOnButton :numberOfTurenedOnButton");
                         TurnUnSelectedRGBButtonWithColor(RGBColor.Red);
 
 
-
+                        Console.WriteLine($"gameLevel: {gameLevel}");
                         while (true)
                         {
                             if (!IsGameStartedOrInGoing())
@@ -164,7 +165,7 @@ namespace FortRoom.Services
                         }
 
                         gameLevel = NextLevel(gameLevel);
-                        if (gameLevel > Level.Level5)
+                        //if (gameLevel > Level.Level5)
 
 
 
