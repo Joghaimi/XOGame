@@ -222,7 +222,7 @@ namespace DivingRoom.Services
 
                 foreach (var item in unSelectedPushButton)
                 {
-                    int randomNumber = random.Next(0, unSelectedPushButton.Count);
+                    int randomNumber = random.Next(0, unSelectedColorArray.Count);
                     _logger.LogTrace($"other color {item} With Color {unSelectedColorArray[randomNumber]}");
                     RGBButtonList[item].TurnColorOn(unSelectedColorArray[randomNumber]);
                 }

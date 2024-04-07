@@ -17,7 +17,7 @@ namespace DarkRoom.Services
         public static Team TeamScore { get; set; } = new Team();
         public static bool EnableGoingToTheNextRoom = false;
 
-        public static int RoomTiming = 540000;// Time in Mill
+        public static int RoomTiming = 360000;// Time in Mill
         public static int TimeOfGetTheTarget { get; set; } = 0;
         public static int ActiveTargetPressed { get; set; } = 0;
 

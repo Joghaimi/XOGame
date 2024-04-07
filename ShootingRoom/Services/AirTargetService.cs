@@ -59,7 +59,7 @@ namespace ShootingRoom.Services
 
         //int Score = 0;
         int numberOfAchivedInRow = 0;
-        List<int> LevelsRequiredScoreList = new List<int>() { 75, 100, 125, 150, 180 };
+        List<int> LevelsRequiredScoreList = new List<int>() { 50, 75, 100, 125, 150 };
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _controller = new GPIOController();
@@ -114,7 +114,7 @@ namespace ShootingRoom.Services
                             int numberOfWrongHits = 0;
                             LevelTimer.Restart();
                             Console.WriteLine("Start The Level");
-                            while (LevelScore > VariableControlService.LevelScore && LevelTimer.ElapsedMilliseconds < 96000)
+                            while (LevelScore > VariableControlService.LevelScore && LevelTimer.ElapsedMilliseconds < 60000)
                             {
                                 if (!IsGameStartedOrInGoing())
                                     break;
@@ -151,7 +151,7 @@ namespace ShootingRoom.Services
                                                 numberOfWrongHits++;
                                                 Console.WriteLine($"- Score {VariableControlService.LevelScore} , #{numberOfWrongHits}");
                                             }
-                                            if (numberOfHit == 20 )
+                                            if (numberOfHit == 20)
                                                 break;
                                             Thread.Sleep(10);
                                         }
