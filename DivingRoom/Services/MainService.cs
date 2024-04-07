@@ -33,9 +33,9 @@ namespace DivingRoom.Services
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _controller = new GPIOController();
-            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Diving);
-            MCP23Controller.Init(Room.Diving);
-            AudioPlayer.Init(Room.Diving);
+            RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Dark);
+            MCP23Controller.Init(Room.Dark);
+            AudioPlayer.Init(Room.Dark);
 
             // Init the Pin's
             _controller.Setup(MasterDI.PIRPin1, PinMode.InputPullDown);
