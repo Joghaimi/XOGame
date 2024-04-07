@@ -15,7 +15,7 @@ namespace FortRoom.Services
         public static Team TeamScore { get; set; } = new Team();
         public static bool IsOccupied { get; set; }
         public static bool EnableGoingToTheNextRoom = false;
-        public static int RoomTiming = 540000;// Time in Mill
+        public static int RoomTiming = 360000;// Time in Mill
 
         public static bool IsRGBButtonServiceStarted = false;
         public static bool IsMatServiceStarted = false;

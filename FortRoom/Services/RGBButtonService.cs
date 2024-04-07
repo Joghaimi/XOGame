@@ -89,7 +89,7 @@ namespace FortRoom.Services
                     bool isRGBButtonTurnedOffBecauseThePressureMate = false;
                     Level gameLevel = Level.Level1;
 
-                    while (GameStopWatch.ElapsedMilliseconds < 90000)
+                    while (GameStopWatch.ElapsedMilliseconds < 70000)
                     {
 
                         int numberOfTurenedOnButton = 0;
