@@ -343,7 +343,7 @@ namespace DivingRoom.Services
                 }
                 Thread.Sleep(5000);
                 Index++;
-                if (Index >= 3)
+                if (Index > 3)
                     Index = 0;
             }
         }
