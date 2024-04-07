@@ -96,7 +96,7 @@ namespace DivingRoom.Services
                                 numberOfPressedButton = 0;
                                 numberOfSelectedButton = 0;
                                 UnselectAllPB();
-                                //var PrimaryColor = SelectColor((RGBColor)CurrentColor);
+                                SelectColor((RGBColor)CurrentColor);
                                 var PrimaryColor = new List<RGBColor> { (RGBColor)CurrentColor, (RGBColor)CurrentColor };
                                 TurnSelectiveRGBButtonWithColorRandom(PrimaryColor);
                                 TurnUnSelectedRGBButtonWithColorRandom(PrimaryColor);
