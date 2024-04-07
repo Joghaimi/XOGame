@@ -23,7 +23,7 @@ namespace DivingRoom.Services
         int numberOfSelectedButton = 0;
         int numberOfPressedButton = 0;
         int Score = 0;
-        int CurrentColor = 5;
+        int CurrentColor = 0;
         int difficulty = 6;
         List<int> unSelectedPushButton = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
@@ -96,7 +96,8 @@ namespace DivingRoom.Services
                                 numberOfPressedButton = 0;
                                 numberOfSelectedButton = 0;
                                 UnselectAllPB();
-                                var PrimaryColor = SelectColor((RGBColor)CurrentColor);
+                                //var PrimaryColor = SelectColor((RGBColor)CurrentColor);
+                                var PrimaryColor = new List<RGBColor> { (RGBColor)CurrentColor, (RGBColor)CurrentColor };
                                 TurnSelectiveRGBButtonWithColorRandom(PrimaryColor);
                                 TurnUnSelectedRGBButtonWithColorRandom(PrimaryColor);
                                 AudioPlayer.PIStartAudio(SoundType.LightsChange);
@@ -122,18 +123,18 @@ namespace DivingRoom.Services
                                 numberOfPressedButton = 0;
                                 numberOfSelectedButton = 0;
                                 isSelected = false;
-                                if (CurrentColor < 7)
+                                if (CurrentColor < 3)
                                     CurrentColor++;
                                 else
-                                    CurrentColor = 5;
+                                    CurrentColor = 0;
                                 await Task.Delay(1000); // Delay for 1 second
                             }
                         }
                         _logger.LogTrace("Game Ended");
-                        if (CurrentColor < 7)
+                        if (CurrentColor < 3)
                             CurrentColor++;
                         else
-                            CurrentColor = 5;
+                            CurrentColor = 0;
                         difficulty -= 2;
                         VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
                     }
@@ -206,7 +207,8 @@ namespace DivingRoom.Services
             return RGBColorMapping.GetRGBColors(selectedColor);
         }
 
-        private void TurnUnSelectedRGBButtonWithColorRandom(RGBColor[] colorArray)
+        //private void TurnUnSelectedRGBButtonWithColorRandom(RGBColor[] colorArray)
+        private void TurnUnSelectedRGBButtonWithColorRandom(List<RGBColor> colorArray)
         {
 
             RGBColor[] unSelectedColorArray = { RGBColor.Green, RGBColor.Red, RGBColor.Blue };
@@ -223,7 +225,8 @@ namespace DivingRoom.Services
         }
 
 
-        private void TurnSelectiveRGBButtonWithColorRandom(RGBColor[] colorArray)
+        //private void TurnSelectiveRGBButtonWithColorRandom(RGBColor[] colorArray)
+        private void TurnSelectiveRGBButtonWithColorRandom(List<RGBColor> colorArray)
         {
             for (int i = 0; i < difficulty; i += 2)
             {
@@ -282,7 +285,7 @@ namespace DivingRoom.Services
         private void Reset()
         {
             VariableControlService.TeamScore.DivingRoomScore = 0;
-            CurrentColor = 5;
+            CurrentColor = 0;
             difficulty = 6;
         }
 

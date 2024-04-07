@@ -366,6 +366,7 @@ namespace FortRoom.Services
 
         private void StopRGBButton()
         {
+            _logger.LogTrace("Turn RGB Button Color Off");
             foreach (var item in RGBButtonList)
             {
                 item.TurnColorOn(RGBColor.Off);
