@@ -62,7 +62,7 @@ namespace DivingRoom.Services
         {
             while (true)
             {
-
+                TestRGBButton();
                 if (IsGameStartedOrInGoing())
                 {
                     while (!IsEnterdTheRoom)
@@ -328,6 +328,24 @@ namespace DivingRoom.Services
         public void Dispose()
         {
             //_cts.Dispose();
+        }
+
+        public void TestRGBButton()
+        {
+            RGBColor[] unSelectedColorArray = { RGBColor.Green, RGBColor.Red, RGBColor.Blue, RGBColor.White };
+            int Index = 0;
+            while (true)
+            {
+                _logger.LogTrace($"Color {unSelectedColorArray}");
+                foreach (var item in RGBButtonList)
+                {
+                    item.TurnColorOn(unSelectedColorArray[Index]);
+                }
+                Thread.Sleep(5000);
+                Index++;
+                if (Index >= 3)
+                    Index = 0;
+            }
         }
     }
 }
