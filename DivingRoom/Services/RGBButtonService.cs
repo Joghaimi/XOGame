@@ -86,7 +86,7 @@ namespace DivingRoom.Services
                         if (!IsGameStartedOrInGoing())
                             break;
                         ControlRoundSound(VariableControlService.GameRound);
-                        while (GameStopWatch.ElapsedMilliseconds < 150000 || VariableControlService.GameRound == Round.Round3)
+                        while (GameStopWatch.ElapsedMilliseconds < 90000 || VariableControlService.GameRound == Round.Round3)
                         {
                             if (!IsGameStartedOrInGoing())
                                 break;
@@ -125,7 +125,7 @@ namespace DivingRoom.Services
                                 numberOfPressedButton = 0;
                                 numberOfSelectedButton = 0;
                                 isSelected = false;
-                                if (CurrentColor < 3)
+                                if (CurrentColor < 2)
                                     CurrentColor++;
                                 else
                                     CurrentColor = 0;
@@ -214,14 +214,17 @@ namespace DivingRoom.Services
         {
 
             RGBColor[] unSelectedColorArray = { RGBColor.Green, RGBColor.Red, RGBColor.Blue };
-            unSelectedColorArray = unSelectedColorArray.Where(val => val != colorArray[0] && val != colorArray[1]).ToArray();
+            unSelectedColorArray = unSelectedColorArray.Where(val => val != colorArray[0]).ToArray();
             if (unSelectedColorArray.Length > 0)
             {
                 _logger.LogTrace($"unselected {unSelectedColorArray[0].ToString()}");
+                _logger.LogTrace($"unselected {unSelectedColorArray[1].ToString()}");
+
                 foreach (var item in unSelectedPushButton)
                 {
-                    _logger.LogTrace($"other color {item}");
-                    RGBButtonList[item].TurnColorOn(unSelectedColorArray[0]);
+                    int randomNumber = random.Next(0, unSelectedPushButton.Count);
+                    _logger.LogTrace($"other color {item} With Color {unSelectedColorArray[randomNumber]}");
+                    RGBButtonList[item].TurnColorOn(unSelectedColorArray[randomNumber]);
                 }
             }
         }
