@@ -27,7 +27,8 @@ namespace DivingRoom.Services
         private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
         private MCP23Pin NextRoomPBLight = MasterOutputPin.OUTPUT8;
         private MCP23Pin NextRoomPB = MasterDI.IN8;
-
+        private bool doorStatus = false;
+        private bool RGBButtonStatus = false;
         Stopwatch GameTiming = new Stopwatch();
 
         public MainService(ILogger<MainService> logger)
@@ -105,6 +106,15 @@ namespace DivingRoom.Services
             while (!cancellationToken.IsCancellationRequested)
             {
                 RoomAudio();
+                ControlRGBButton();
+                if (VariableControlService.GameStatus == GameStatus.Leaving)
+                {
+                    _logger.LogTrace("Open The Door");
+                    DoorControl.Status(DoorPin, true);
+                    Thread.Sleep(5000);
+                    DoorControl.Status(DoorPin, false);
+                    VariableControlService.GameStatus = GameStatus.Empty;
+                }
             }
 
 
@@ -201,6 +211,7 @@ namespace DivingRoom.Services
                 AudioPlayer.PIStopAudio();
             }
         }
+        [Obsolete("Old Room Audio Control")]
         private void ControlRoomAudio()
         {
 
@@ -234,19 +245,40 @@ namespace DivingRoom.Services
             }
         }
 
+        //[Obsolete("Old Room Audio Control")]
+        //private void ControlRGBButton()
+        //{
+        //    if (!VariableControlService.IsTheGameFinished)
+        //    {
+        //        RelayController.Status(NextRoomPBLight, true);
+        //        return;
+        //    }
+        //    RelayController.Status(NextRoomPBLight, false);
+        //    VariableControlService.EnableGoingToTheNextRoom = MCP23Controller.Read(NextRoomPB);
+        //    _logger.LogTrace(MCP23Controller.Read(NextRoomPB).ToString());
+        //    if (MCP23Controller.Read(NextRoomPB))
+        //        _logger.LogTrace("Go To The Next Room ***");
+        //    Thread.Sleep(1000);
+        //}
+
         private void ControlRGBButton()
         {
-            if (!VariableControlService.IsTheGameFinished)
+            if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && !RGBButtonStatus)
             {
+                RGBButtonStatus = true;
                 RelayController.Status(NextRoomPBLight, true);
-                return;
             }
-            RelayController.Status(NextRoomPBLight, false);
-            VariableControlService.EnableGoingToTheNextRoom = MCP23Controller.Read(NextRoomPB);
-            _logger.LogTrace(MCP23Controller.Read(NextRoomPB).ToString());
-            if (MCP23Controller.Read(NextRoomPB))
-                _logger.LogTrace("Go To The Next Room ***");
-            Thread.Sleep(1000);
+            else
+            {
+                bool PBPressed = MCP23Controller.Read(NextRoomPB);
+                if (PBPressed)
+                {
+                    VariableControlService.GameStatus = GameStatus.Leaving;
+                    RelayController.Status(NextRoomPBLight, false);
+                }
+
+
+            }
         }
 
     }
