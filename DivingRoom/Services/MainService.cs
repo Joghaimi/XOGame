@@ -6,6 +6,7 @@ using Library.GPIOLib;
 using Library.Media;
 using Library.PinMapping;
 using Library.RGBLib;
+using Microsoft.Extensions.Logging;
 using System.Device.Gpio;
 using System.Diagnostics;
 
@@ -25,6 +26,8 @@ namespace DivingRoom.Services
         bool thereAreInstructionSoundPlays = false;
         private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
         private MCP23Pin NextRoomPBLight = MasterOutputPin.OUTPUT8;
+        private MCP23Pin NextRoomPB = MasterDI.IN1;
+
         Stopwatch GameTiming = new Stopwatch();
 
         public MainService(ILogger<MainService> logger)
@@ -43,8 +46,10 @@ namespace DivingRoom.Services
             _controller.Setup(MasterDI.PIRPin2, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin3, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
+
             RGBLight.SetColor(RGBColor.White);
             DoorControl.Status(DoorPin, false);
+            MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -194,12 +199,14 @@ namespace DivingRoom.Services
 
         private void ControlRGBButton()
         {
-            if (!VariableControlService.IsTheGameFinished)
-            {
-                RelayController.Status(NextRoomPBLight, true);
-                return;
-            }
-            RelayController.Status(NextRoomPBLight, false);
+            //if (!VariableControlService.IsTheGameFinished)
+            //{
+            //    RelayController.Status(NextRoomPBLight, true);
+            //    return;
+            //}
+            //RelayController.Status(NextRoomPBLight, false);
+            _logger.LogTrace(MCP23Controller.Read(NextRoomPB).ToString());
+            Thread.Sleep(1000);
         }
 
     }
