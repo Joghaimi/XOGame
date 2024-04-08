@@ -61,7 +61,7 @@ namespace GatheringRoom.Services
                         if (!isInTeam)
                         {
 
-                            var newPlayer = await APIIntegration.ReturnPlayerInformation(VariableControlService.UserName, VariableControlService.Password, VariableControlService.UserInfoURL, "84436C18");
+                            var newPlayer = await APIIntegration.ReturnPlayerInformation(VariableControlService.UserName, VariableControlService.Password, VariableControlService.UserInfoURL, playerId);
                             if (newPlayer != null)
                             {
                                 VariableControlService.TeamScore.player.Add(new Player { Id = newPlayer.Id, FirstName = newPlayer.FirstName, LastName = newPlayer.LastName });
