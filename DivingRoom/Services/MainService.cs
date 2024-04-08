@@ -206,8 +206,8 @@ namespace DivingRoom.Services
             }
             RelayController.Status(NextRoomPBLight, false);
             VariableControlService.EnableGoingToTheNextRoom = MCP23Controller.Read(NextRoomPB);
-            _logger.LogTrace("Go To The next room From PB Door");
-            //_logger.LogTrace(MCP23Controller.Read(NextRoomPB).ToString());
+            if (MCP23Controller.Read(NextRoomPB))
+                _logger.LogTrace("Go To The Next Room");
             //Thread.Sleep(1000);
         }
 
