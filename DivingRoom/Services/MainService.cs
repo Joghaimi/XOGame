@@ -199,14 +199,16 @@ namespace DivingRoom.Services
 
         private void ControlRGBButton()
         {
-            //if (!VariableControlService.IsTheGameFinished)
-            //{
-            //    RelayController.Status(NextRoomPBLight, true);
-            //    return;
-            //}
-            //RelayController.Status(NextRoomPBLight, false);
-            _logger.LogTrace(MCP23Controller.Read(NextRoomPB).ToString());
-            Thread.Sleep(1000);
+            if (!VariableControlService.IsTheGameFinished)
+            {
+                RelayController.Status(NextRoomPBLight, true);
+                return;
+            }
+            RelayController.Status(NextRoomPBLight, false);
+            VariableControlService.EnableGoingToTheNextRoom = MCP23Controller.Read(NextRoomPB);
+            _logger.LogTrace("Go To The next room From PB Door");
+            //_logger.LogTrace(MCP23Controller.Read(NextRoomPB).ToString());
+            //Thread.Sleep(1000);
         }
 
     }
