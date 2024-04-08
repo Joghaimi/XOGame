@@ -162,6 +162,7 @@ namespace DivingRoom.Services
             VariableControlService.EnableGoingToTheNextRoom = false;
             VariableControlService.IsTheirAnyOneInTheRoom = false;
             VariableControlService.IsTheGameStarted = false;
+            VariableControlService.IsTheGameFinished = false;
             VariableControlService.IsGameTimerStarted = false;
         }
 
@@ -206,9 +207,10 @@ namespace DivingRoom.Services
             }
             RelayController.Status(NextRoomPBLight, false);
             VariableControlService.EnableGoingToTheNextRoom = MCP23Controller.Read(NextRoomPB);
+            _logger.LogTrace(MCP23Controller.Read(NextRoomPB).ToString());
             if (MCP23Controller.Read(NextRoomPB))
-                _logger.LogTrace("Go To The Next Room");
-            //Thread.Sleep(1000);
+                _logger.LogTrace("Go To The Next Room ***");
+            Thread.Sleep(1000);
         }
 
     }
