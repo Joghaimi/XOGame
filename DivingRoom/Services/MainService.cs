@@ -66,9 +66,9 @@ namespace DivingRoom.Services
         {
             while (true)
             {
-                DoorControl.Status(NextRoomPBLight, false);
+                RelayController.Status(NextRoomPBLight, false);
                 Thread.Sleep(1000);
-                DoorControl.Status(NextRoomPBLight, true);
+                RelayController.Status(NextRoomPBLight, true);
                 Thread.Sleep(1000);
             }
 
