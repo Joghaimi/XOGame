@@ -19,7 +19,7 @@ namespace DivingRoom.Controllers
         [HttpGet("RoomStatus")]
         public IActionResult GetRoomStatus()
         {
-            return Ok(VariableControlService.GameStatus);
+            return Ok(VariableControlService.GameStatus.ToString());
         }
 
         [HttpPost("RoomStatus")]
