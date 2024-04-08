@@ -196,10 +196,10 @@ namespace DivingRoom.Services
         {
             if (!VariableControlService.IsTheGameFinished)
             {
-                RelayController.Status(NextRoomPBLight, false);
+                RelayController.Status(NextRoomPBLight, true);
                 return;
             }
-            RelayController.Status(NextRoomPBLight, true);
+            RelayController.Status(NextRoomPBLight, false);
         }
 
     }
