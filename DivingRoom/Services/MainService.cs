@@ -26,7 +26,7 @@ namespace DivingRoom.Services
         bool thereAreInstructionSoundPlays = false;
         private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
         private MCP23Pin NextRoomPBLight = MasterOutputPin.OUTPUT8;
-        private MCP23Pin NextRoomPB = MasterDI.IN1;
+        private MCP23Pin NextRoomPB = MasterDI.IN8;
 
         Stopwatch GameTiming = new Stopwatch();
 
