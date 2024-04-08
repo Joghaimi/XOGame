@@ -270,7 +270,7 @@ namespace DivingRoom.Services
             {
                 Console.WriteLine("Ready To Leave .. Turn RGB Button On");
                 RGBButtonStatus = true;
-                RelayController.Status(NextRoomPBLight, false);
+                RelayController.Status(NextRoomPBLight, true);
             }
             else if(VariableControlService.GameStatus == GameStatus.ReadyToLeave && RGBButtonStatus)
             {
@@ -281,7 +281,7 @@ namespace DivingRoom.Services
                 {
                     RGBButtonStatus = false;
                     VariableControlService.GameStatus = GameStatus.Leaving;
-                    RelayController.Status(NextRoomPBLight, true);
+                    RelayController.Status(NextRoomPBLight, false);
                 }
             }
         }

@@ -12,7 +12,7 @@ namespace Library.GPIOLib
     {
         public static void Status(MCP23Pin relayPin, bool status)
         {
-            if (!status)
+            if (status)
             {
                 MCP23Controller.PinModeSetup(relayPin, PinMode.Output);
                 MCP23Controller.Write(relayPin, PinState.High);
