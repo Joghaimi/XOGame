@@ -164,4 +164,14 @@ namespace Library
         Finished = 5,
     }
 
+    public enum GameStatus
+    {
+        Empty,
+        NotStarted, // Not Empty and Not Started 
+        Started,
+        FinishedNotEmpty, // Start Sending Request For the Next Room 
+        ReadyToLeave, // Turn the PB Light
+        Leaving // PB Pressed waiting 
+    }
+
 }

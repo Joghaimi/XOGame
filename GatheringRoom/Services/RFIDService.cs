@@ -6,17 +6,19 @@ using Library.RFIDLib;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
+using Library.APIIntegration;
 
 namespace GatheringRoom.Services
 {
     public class RFIDService : IHostedService, IDisposable
     {
         private readonly ILogger<GatheringRoomController> _logger;
-        private CancellationTokenSource _cts;
+        private CancellationTokenSource _cts, _cts2;
         private RFID _rfidController = new();
         RFIDSerial rfid = new RFIDSerial(SerialPort.Serial);
         int pinReset = 6;
         bool stop = false;
+        private string token = "";
         public RFIDService(ILogger<GatheringRoomController> logger)
         {
             _logger = logger;
@@ -26,8 +28,10 @@ namespace GatheringRoom.Services
         {
             _logger.LogInformation("Start RFID Service");
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _rfidController.Init(pinReset);
             Task.Run(() => RunService(_cts.Token));
+            Task.Run(() => RefreshTokenService(_cts2.Token));
             return Task.CompletedTask;
         }
 
@@ -41,7 +45,7 @@ namespace GatheringRoom.Services
                     AudioPlayer.PIStartAudio(SoundType.ScanId);
                     if (VariableControlService.TeamScore.player.Count < 5 && !stop)
                     {
-                        VariableControlService.IsTheGameStarted=true;
+                        VariableControlService.IsTheGameStarted = true;
                         string[] originString = Enumerable.Range(0, playerId.Length / 2).Select(i => playerId.Substring(i * 2, 2)).ToArray(); ;//newPlayerId.Split("-");
                         playerId = "";
                         _logger.LogTrace($"PlayerId Before {playerId}");
@@ -54,7 +58,7 @@ namespace GatheringRoom.Services
                         _logger.LogTrace("New Card Found");
                         _logger.LogTrace($"PlayerId After {playerId}");
                         _logger.LogTrace($"isInTeam {isInTeam}");
-                        if ( !isInTeam)
+                        if (!isInTeam)
                         {
                             using (HttpClient httpClient = new HttpClient())
                             {
@@ -106,6 +110,25 @@ namespace GatheringRoom.Services
             _logger.LogInformation("RFID Service Disposed");
             _cts.Dispose();
         }
+
+        private async Task RefreshTokenService(CancellationToken cancellationToken)
+        {
+            while (true)
+            {
+                _logger.LogTrace("Start Refresh Token ..");
+                token = "";
+                while (token == "")
+                {
+                    token = await APIIntegration.AuthorizationAsync(VariableControlService.AuthorizationURL, VariableControlService.UserName, VariableControlService.Password);
+                    Thread.Sleep(5000);
+                }
+                _logger.LogTrace($"New Token {token}");
+                Thread.Sleep(900000);
+            }
+        }
+
+
+
     }
 }
 

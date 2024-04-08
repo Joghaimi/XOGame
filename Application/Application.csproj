@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GatheringRoom\GatheringRoom.csproj" />
     <ProjectReference Include="..\Lib\Library.csproj" />
   </ItemGroup>
 

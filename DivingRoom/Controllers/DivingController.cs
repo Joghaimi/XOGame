@@ -1,4 +1,5 @@
 ﻿using DivingRoom.Services;
+using Library;
 using Library.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,22 @@ namespace DivingRoom.Controllers
         {
             _logger = logger;
         }
+
+        [HttpGet("RoomStatus")]
+        public IActionResult GetRoomStatus()
+        {
+            return Ok(VariableControlService.GameStatus);
+        }
+
+        [HttpGet("RoomStatus")]
+        public IActionResult ReturnRoomStatus(GameStatus gameStatus)
+        {
+            VariableControlService.GameStatus = gameStatus;
+            return Ok(VariableControlService.GameStatus);
+        }
+
+
+
 
         [HttpGet("IsOccupied")]
         public IActionResult Get()

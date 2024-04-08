@@ -23,7 +23,12 @@
         public static int TimeOfGetTheTarget { get; set; } = 0;
         public static int ActiveButtonPressed { get; set; } = 0;
         public static Team TeamScore { get; set; } = new Team();
-        public static string NextRoomURL { get; set; } = "https://foort.local:7248/api/FortRoom/ReceiveScore";
-
+        public static string NextRoomURL { get;} = "https://foort.local:7248/api/FortRoom/ReceiveScore";
+        
+        public static string AuthorizationURL { get;} = "https://qmdug12n2k.execute-api.us-east-1.amazonaws.com/dev/applogin";
+        public static string UserName { get; } = "frenzi";
+        public static string Password { get; } = "frenzi";
+        
+        public static string UserInfoURL { get; } = "https://qmdug12n2k.execute-api.us-east-1.amazonaws.com/dev/getrfiddata";
     }
 }
