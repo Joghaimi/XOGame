@@ -24,7 +24,7 @@ namespace DivingRoom.Services
         bool thereAreBackgroundSoundPlays = false;
         bool thereAreInstructionSoundPlays = false;
         private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
-        private MCP23Pin NextRoomPB = MasterOutputPin.OUTPUT8;
+        private MCP23Pin NextRoomPBLight = MasterOutputPin.OUTPUT8;
         Stopwatch GameTiming = new Stopwatch();
 
         public MainService(ILogger<MainService> logger)
@@ -45,11 +45,11 @@ namespace DivingRoom.Services
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
             RGBLight.SetColor(RGBColor.White);
             DoorControl.Status(DoorPin, false);
-           
+
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            
+
             _logger.LogInformation("Start Main Service");
             Task.Run(() => RunService(_cts.Token));
             Task.Run(() => CheckIFRoomIsEmpty(_cts2.Token));
@@ -59,13 +59,13 @@ namespace DivingRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            while (true)
-            {
-                RelayController.Status(NextRoomPB, true);
-                Thread.Sleep(1000);
-                RelayController.Status(NextRoomPB, false);
-                Thread.Sleep(1000);
-            }
+            //while (true)
+            //{
+            //    RelayController.Status(NextRoomPB, true);
+            //    Thread.Sleep(1000);
+            //    RelayController.Status(NextRoomPB, false);
+            //    Thread.Sleep(1000);
+            //}
 
 
             //MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
@@ -77,6 +77,8 @@ namespace DivingRoom.Services
                 PIR4 = _controller.Read(MasterDI.PIRPin4);
                 VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
                 ControlRoomAudio();
+                ControlRGBButton();
+
                 if (VariableControlService.EnableGoingToTheNextRoom)
                 {
                     _logger.LogDebug("Open The Door");
@@ -188,6 +190,16 @@ namespace DivingRoom.Services
                 thereAreBackgroundSoundPlays = false;
                 AudioPlayer.PIStopAudio();
             }
+        }
+
+        private void ControlRGBButton()
+        {
+            if (!VariableControlService.IsTheGameFinished)
+            {
+                RelayController.Status(NextRoomPBLight, false);
+                return;
+            }
+            RelayController.Status(NextRoomPBLight, true);
         }
 
     }
