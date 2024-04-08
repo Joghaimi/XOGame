@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Mono.Unix.Native;
 using System.Net.Http.Headers;
+using System.Security.AccessControl;
 
 namespace Library.APIIntegration
 {
@@ -44,24 +45,28 @@ namespace Library.APIIntegration
             return "";
         }
 
-        public async static Task<Player> ReturnPlayerInformation(string userInfoURL, string token, string playerId)
+        public async static Task<Player> ReturnPlayerInformation(string userName, string password, string userInfoURL, string playerId)
         {
             using (HttpClient httpClient = new HttpClient())
             {
+                //var Body = new
+                //{
+                //    rfid = playerId,
+                //    userName = userName,
+                //    password = password
+                //};
+                //string jsonData = "{\"rfid\":\""+ playerId + "\" ,\"username\":\""+ userName + "\",\"password\":\""+ password + "\"}";
                 var Body = new
                 {
                     rfid = playerId,
+                    username = userName,
+                    password = password
                 };
+
                 string jsonData = JsonConvert.SerializeObject(Body);
                 StringContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
-                
-                var tokenObject = new { token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzEyNTY4MzgzLCJleHAiOjE3MTI1NzE5ODN9.PfqD0-S9kgVCJ9YLT4D2IBWOKbYKZnQNz0WMpYN32mk" };
-                string tokenJson = JsonConvert.SerializeObject(tokenObject);
-                
-                //httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));//ACCEPT header
-                //httpClient.DefaultRequestHeaders.Add("Authorization", "{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzEyNTY4MzgzLCJleHAiOjE3MTI1NzE5ODN9.PfqD0-S9kgVCJ9YLT4D2IBWOKbYKZnQNz0WMpYN32mk\"}");
-                httpClient.DefaultRequestHeaders.Add("Authorization", "{}");
                 HttpResponseMessage response = await httpClient.PostAsync(userInfoURL, content);
+                Console.WriteLine($"response.IsSuccessStatusCode {response.IsSuccessStatusCode}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -70,7 +75,6 @@ namespace Library.APIIntegration
                     if (people?.Count > 0)
                     {
                         return people[0];
-
                     }
                 }
             }

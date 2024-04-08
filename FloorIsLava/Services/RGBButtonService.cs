@@ -68,15 +68,26 @@ namespace FloorIsLava.Services
                         break;
 
                     if (!IN2)
+                    {
                         IN2 = CeilingButton(!MCP23Controller.Read(MasterDI.IN2));
-                    if (!IN3)
+                        if (IN2)
+                            VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                    }
+                    if (!IN3) { 
                         IN3 = CeilingButton(!MCP23Controller.Read(MasterDI.IN3));
-                    if (!IN4)
+                        if (IN3)
+                            VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                    }
+                    if (!IN4) { 
                         IN4 = CeilingButton(!MCP23Controller.Read(MasterDI.IN4));
+                        if (IN3)
+                            VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                    }
                     pressureMat();
 
                     if (IN2 && IN3 && IN4 && numberOfPressedMotor == 3 && !ceilingMotorDown)
                     {
+
                         Console.WriteLine("Pressed all 3");
                         RGBButtonList[0].TurnColorOn(RGBColor.Red);
                         pressureMAtCount = true;
@@ -85,6 +96,7 @@ namespace FloorIsLava.Services
                             pressureMat();
                             Thread.Sleep(10);
                         }
+                        VariableControlService.TeamScore.FloorIsLavaRoomScore += 100;
                         motorTiming = MotorStopWatch.ElapsedMilliseconds + 15000;
                         ceilingMotoruUp = true;
 
@@ -107,6 +119,7 @@ namespace FloorIsLava.Services
                                 IN5 = true;
                                 AudioPlayer.PIStartAudio(SoundType.Charge);
                                 RGBLight.SetColor(RGBColor.Blue);
+                                VariableControlService.TeamScore.FloorIsLavaRoomScore += 50;
                                 if (!IN7)
                                     RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
                                 Console.WriteLine("IN5 PRESSED ====");
@@ -124,6 +137,7 @@ namespace FloorIsLava.Services
                                 IN7 = true;
                                 AudioPlayer.PIStartAudio(SoundType.Charge);
                                 RGBLight.SetColor(RGBColor.Blue);
+                                VariableControlService.TeamScore.FloorIsLavaRoomScore += 50;
                                 if (!IN5)
                                     RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
                                 Console.WriteLine("IN6 PRESSED ====");
@@ -171,6 +185,7 @@ namespace FloorIsLava.Services
             bool currentValue = MCP23Controller.Read(MasterDI.IN1);
             if (!currentValue && !justDecrease)
             {
+                VariableControlService.TeamScore.FloorIsLavaRoomScore -= 10;
                 justDecrease = true;
                 GameStopWatch.Restart();
                 Console.WriteLine("Pressure mat Pressed");

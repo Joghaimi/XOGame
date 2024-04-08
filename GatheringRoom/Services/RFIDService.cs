@@ -31,7 +31,7 @@ namespace GatheringRoom.Services
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _rfidController.Init(pinReset);
             Task.Run(() => RunService(_cts.Token));
-            Task.Run(() => RefreshTokenService(_cts2.Token));
+            //Task.Run(() => RefreshTokenService(_cts2.Token));
             return Task.CompletedTask;
         }
 
@@ -60,35 +60,42 @@ namespace GatheringRoom.Services
                         _logger.LogTrace($"isInTeam {isInTeam}");
                         if (!isInTeam)
                         {
-                            using (HttpClient httpClient = new HttpClient())
-                            {
-                                string apiUrl = "https://thcyle7652.execute-api.us-east-1.amazonaws.com/default/myservice-dev-hello";
-                                string jsonData = "{\"rfid\":\"" + playerId + "\"}";
-                                StringContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
-                                _logger.LogDebug($"Send Request");
-                                HttpResponseMessage response = await httpClient.PostAsync(apiUrl, content);
-                                _logger.LogDebug($"response.IsSuccessStatusCode {response.IsSuccessStatusCode}");
 
-                                if (response.IsSuccessStatusCode)
-                                {
-                                    string responseContent = await response.Content.ReadAsStringAsync();
-                                    List<Person> people = JsonConvert.DeserializeObject<List<Person>>(responseContent);
-                                    if (people?.Count > 0)
-                                    {
-                                        var player = new Player
-                                        {
-                                            Id = playerId,
-                                            FirstName = people[0].firstname,
-                                            LastName = people[0].lastname
-                                        };
-                                        VariableControlService.TeamScore.player.Add(player);
-                                        _logger.LogDebug($"Player {people[0].firstname} {people[0].lastname}");
-                                    }
-                                    _logger.LogError($"POST request successful {responseContent}. Response: {people[0].firstname} {people[0].lastname}");
-                                }
-                                else
-                                    _logger.LogError($"POST request failed. Status Code: {response.StatusCode}");
+                            var newPlayer = await APIIntegration.ReturnPlayerInformation(VariableControlService.UserName, VariableControlService.Password, VariableControlService.UserInfoURL, "84436C18");
+                            if (newPlayer != null)
+                            {
+                                VariableControlService.TeamScore.player.Add(new Player { Id = newPlayer.Id, FirstName = newPlayer.FirstName, LastName = newPlayer.LastName });
+                                _logger.LogDebug($"Player {newPlayer?.FirstName} {newPlayer.LastName}");
                             }
+                            //using (HttpClient httpClient = new HttpClient())
+                            //{
+                            //    string apiUrl = "https://thcyle7652.execute-api.us-east-1.amazonaws.com/default/myservice-dev-hello";
+                            //    string jsonData = "{\"rfid\":\"" + playerId + "\"}";
+                            //    StringContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
+                            //    _logger.LogDebug($"Send Request");
+                            //    HttpResponseMessage response = await httpClient.PostAsync(apiUrl, content);
+                            //    _logger.LogDebug($"response.IsSuccessStatusCode {response.IsSuccessStatusCode}");
+
+                            //    if (response.IsSuccessStatusCode)
+                            //    {
+                            //        string responseContent = await response.Content.ReadAsStringAsync();
+                            //        List<Person> people = JsonConvert.DeserializeObject<List<Person>>(responseContent);
+                            //        if (people?.Count > 0)
+                            //        {
+                            //            var player = new Player
+                            //            {
+                            //                Id = playerId,
+                            //                FirstName = people[0].firstname,
+                            //                LastName = people[0].lastname
+                            //            };
+                            //            VariableControlService.TeamScore.player.Add(player);
+                            //            _logger.LogDebug($"Player {people[0].firstname} {people[0].lastname}");
+                            //        }
+                            //        _logger.LogError($"POST request successful {responseContent}. Response: {people[0].firstname} {people[0].lastname}");
+                            //    }
+                            //    else
+                            //        _logger.LogError($"POST request failed. Status Code: {response.StatusCode}");
+                            //}
                         }
                         else
                             _logger.LogWarning($"Player is Exist :{isInTeam}");

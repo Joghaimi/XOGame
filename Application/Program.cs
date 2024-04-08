@@ -36,15 +36,16 @@ using GatheringRoom.Services;
 while (true)
 {
 
-    var token = await APIIntegration.AuthorizationAsync(VariableControlService.AuthorizationURL, VariableControlService.UserName, VariableControlService.Password);
-    Console.WriteLine(token);
-    if (token != "")
-    {
-        Console.WriteLine("Get User Info");
-        //var result = await APIIntegration.ReturnPlayerInformation(VariableControlService.UserInfoURL,token , "84436C18");
-        //Console.WriteLine(result);
-    }
-
+    //var token = await APIIntegration.AuthorizationAsync(VariableControlService.AuthorizationURL, VariableControlService.UserName, VariableControlService.Password);
+    //Console.WriteLine(token);
+    //if (token != "")
+    //{
+    //    Console.WriteLine("Get User Info");
+    //    //var result = await APIIntegration.ReturnPlayerInformation(VariableControlService.UserInfoURL,token , "84436C18");
+    //    //Console.WriteLine(result);
+    //}
+    var result = await APIIntegration.ReturnPlayerInformation(VariableControlService.UserName, VariableControlService.Password,VariableControlService.UserInfoURL, "84436C18");
+    Console.WriteLine($"result :{result}");
     Thread.Sleep(5000);
 }
 

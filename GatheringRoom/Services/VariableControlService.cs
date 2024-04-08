@@ -29,6 +29,6 @@
         public static string UserName { get; } = "frenzi";
         public static string Password { get; } = "frenzi";
         
-        public static string UserInfoURL { get; } = "https://qmdug12n2k.execute-api.us-east-1.amazonaws.com/dev/getrfiddata";
+        public static string UserInfoURL { get; } = "https://gotp4qetdh.execute-api.us-east-1.amazonaws.com/dev/getrfiddata";
     }
 }

@@ -21,18 +21,18 @@ namespace DarkRoom.Services
         Stopwatch GameStopWatch = new Stopwatch();
         private int Score = 0;
 
-        DarkRoomSensor IN1 = new DarkRoomSensor(HatInputPin.IR1, -1, true);
-        DarkRoomSensor IN2 = new DarkRoomSensor(HatInputPin.IR2, 2, false);
-        DarkRoomSensor IN3 = new DarkRoomSensor(HatInputPin.IR3, -3, false);
-        DarkRoomSensor IN4 = new DarkRoomSensor(HatInputPin.IR4, -4, false);
-        DarkRoomSensor IN5 = new DarkRoomSensor(HatInputPin.IR5, 5, false);
-        DarkRoomSensor IN6 = new DarkRoomSensor(HatInputPin.IR6, -6, false);
-        DarkRoomSensor IN7 = new DarkRoomSensor(HatInputPin.IR7, -7, false);
-        DarkRoomSensor IN8 = new DarkRoomSensor(HatInputPin.IR8, 8, false);
-        DarkRoomSensor IN9 = new DarkRoomSensor(HatInputPin.IR9, -9, false);
-        DarkRoomSensor IN10 = new DarkRoomSensor(HatInputPin.IR10, 10, false);
-        DarkRoomSensor IN11 = new DarkRoomSensor(HatInputPin.IR11, -11, false);
-        DarkRoomSensor IN12 = new DarkRoomSensor(HatInputPin.IR12, 12, true);
+        DarkRoomSensor IN1 = new DarkRoomSensor(HatInputPin.IR1, -5, true);
+        DarkRoomSensor IN2 = new DarkRoomSensor(HatInputPin.IR2, 20, false);
+        DarkRoomSensor IN3 = new DarkRoomSensor(HatInputPin.IR3, -5, false);
+        DarkRoomSensor IN4 = new DarkRoomSensor(HatInputPin.IR4, -10, false);
+        DarkRoomSensor IN5 = new DarkRoomSensor(HatInputPin.IR5, 10, false);
+        DarkRoomSensor IN6 = new DarkRoomSensor(HatInputPin.IR6, -5, false);
+        DarkRoomSensor IN7 = new DarkRoomSensor(HatInputPin.IR7, -10, false);
+        DarkRoomSensor IN8 = new DarkRoomSensor(HatInputPin.IR8, 40, false);
+        DarkRoomSensor IN9 = new DarkRoomSensor(HatInputPin.IR9, -15, false);
+        DarkRoomSensor IN10 = new DarkRoomSensor(HatInputPin.IR10, 30, false);
+        DarkRoomSensor IN11 = new DarkRoomSensor(HatInputPin.IR11, -15, false);
+        DarkRoomSensor IN12 = new DarkRoomSensor(HatInputPin.IR12, 50, true);
 
 
         public Task StartAsync(CancellationToken cancellationToken)

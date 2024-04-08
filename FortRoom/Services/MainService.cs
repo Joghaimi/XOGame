@@ -16,6 +16,8 @@ namespace FortRoom.Services
         private readonly ILogger<MainService> _logger;
         private GPIOController _controller;
         private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
+        private MCP23Pin LaserPin = MasterOutputPin.OUTPUT2;
+        
         private CancellationTokenSource _cts, _cts2, _cts3;
         public bool isTheirAreSomeOneInTheRoom = false;
         private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
@@ -110,7 +112,11 @@ namespace FortRoom.Services
             {
                 _logger.LogTrace("Start Instruction Audio");
                 thereAreInstructionSoundPlays = true;
-                AudioPlayer.PIBackgroundSound(SoundType.instruction);
+                AudioPlayer.PIBackgroundSound(SoundType.instruction); // TO DO
+                RelayController.Status(LaserPin , true);
+                Thread.Sleep(60000);
+                VariableControlService.IsTheGameStarted = true;
+                VariableControlService.IsTheGameFinished = false;
             }
             else if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted
                 && !VariableControlService.IsTheGameFinished
@@ -131,6 +137,7 @@ namespace FortRoom.Services
                 // Game Finished .. 
                 _logger.LogTrace("Stop Background Audio");
                 thereAreBackgroundSoundPlays = false;
+                VariableControlService.EnableGoingToTheNextRoom=true;
                 AudioPlayer.PIStopAudio();
             }
         }

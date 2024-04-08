@@ -160,7 +160,7 @@ namespace DivingRoom.Services
                 RGBButtonList[index].Set(false);
                 RGBButtonList[index].BlockForASec();
                 AudioPlayer.PIStartAudio(SoundType.Bonus);
-                VariableControlService.TeamScore.DivingRoomScore++;
+                VariableControlService.TeamScore.DivingRoomScore+=5;
                 numberOfPressedButton++;
                 _logger.LogInformation($"+ score {VariableControlService.TeamScore.DivingRoomScore}");
             }
@@ -171,7 +171,7 @@ namespace DivingRoom.Services
             {
 
                 RGBButtonList[index].BlockForASec();
-                VariableControlService.TeamScore.DivingRoomScore--;
+                VariableControlService.TeamScore.DivingRoomScore-=5;
                 AudioPlayer.PIStartAudio(SoundType.Descend);
                 Console.WriteLine($"- score {VariableControlService.TeamScore.DivingRoomScore}");
             }
