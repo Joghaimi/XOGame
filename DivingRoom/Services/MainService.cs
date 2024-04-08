@@ -268,19 +268,21 @@ namespace DivingRoom.Services
         {
             if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && !RGBButtonStatus)
             {
-                Console.WriteLine("Ready To Leave ..");
+                Console.WriteLine("Ready To Leave .. Turn RGB Button On");
                 RGBButtonStatus = true;
                 RelayController.Status(NextRoomPBLight, true);
             }
             else if(VariableControlService.GameStatus == GameStatus.ReadyToLeave && RGBButtonStatus)
             {
-                bool PBPressed = MCP23Controller.Read(NextRoomPB);
-                if (PBPressed)
-                {
-                    RGBButtonStatus = false;
-                    VariableControlService.GameStatus = GameStatus.Leaving;
-                    RelayController.Status(NextRoomPBLight, false);
-                }
+                Console.WriteLine(MCP23Controller.Read(NextRoomPB));
+                Thread.Sleep(5000);
+                //bool PBPressed = MCP23Controller.Read(NextRoomPB);
+                //if (PBPressed)
+                //{
+                //    RGBButtonStatus = false;
+                //    VariableControlService.GameStatus = GameStatus.Leaving;
+                //    RelayController.Status(NextRoomPBLight, false);
+                //}
             }
         }
 
