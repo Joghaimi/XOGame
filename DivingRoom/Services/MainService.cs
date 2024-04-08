@@ -207,7 +207,7 @@ namespace DivingRoom.Services
                 thereAreBackgroundSoundPlays = true;
                 AudioPlayer.PIBackgroundSound(SoundType.Background);
             }
-            else if (VariableControlService.GameStatus == GameStatus.FinishedNotEmpty && thereAreBackgroundSoundPlays)
+            else if (VariableControlService.GameStatus != GameStatus.FinishedNotEmpty && thereAreBackgroundSoundPlays)
             {
                 _logger.LogTrace("Stop Background Audio");
                 thereAreBackgroundSoundPlays = false;
