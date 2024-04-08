@@ -69,5 +69,10 @@ namespace FortRoom.Controllers
         {
             return Ok(VariableControlService.TeamScore.FortRoomScore);
         }
+        [HttpGet("IsGameStarted")]
+        public IActionResult IsGameStarted()
+        {
+            return Ok(VariableControlService.IsTheGameStarted);
+        }
     }
 }
