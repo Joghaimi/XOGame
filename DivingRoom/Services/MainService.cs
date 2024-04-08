@@ -48,7 +48,7 @@ namespace DivingRoom.Services
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
 
             RGBLight.SetColor(RGBColor.White);
-            DoorControl.Status(DoorPin, false);
+            DoorControl.Status(DoorPin, true);
             MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -87,16 +87,16 @@ namespace DivingRoom.Services
                 if (VariableControlService.EnableGoingToTheNextRoom)
                 {
                     _logger.LogDebug("Open The Door");
-                    DoorControl.Status(DoorPin, true);
-                    while (PIR1 || PIR2 || PIR3 || PIR4)
-                    {
-                        PIR1 = _controller.Read(MasterDI.PIRPin1);
-                        PIR2 = _controller.Read(MasterDI.PIRPin2);
-                        PIR3 = _controller.Read(MasterDI.PIRPin3);
-                        PIR4 = _controller.Read(MasterDI.PIRPin4);
-                    }
-                    Thread.Sleep(30000);
                     DoorControl.Status(DoorPin, false);
+                    //while (PIR1 || PIR2 || PIR3 || PIR4)
+                    //{
+                    //    PIR1 = _controller.Read(MasterDI.PIRPin1);
+                    //    PIR2 = _controller.Read(MasterDI.PIRPin2);
+                    //    PIR3 = _controller.Read(MasterDI.PIRPin3);
+                    //    PIR4 = _controller.Read(MasterDI.PIRPin4);
+                    //}
+                    Thread.Sleep(30000);
+                    DoorControl.Status(DoorPin, true);
                     ResetTheGame();
                     _logger.LogDebug("No One In The Room , All Gone To The Next Room");
                 }
