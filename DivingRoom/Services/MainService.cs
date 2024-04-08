@@ -265,6 +265,7 @@ namespace DivingRoom.Services
         {
             if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && !RGBButtonStatus)
             {
+                Console.WriteLine("Ready To Leave ..");
                 RGBButtonStatus = true;
                 RelayController.Status(NextRoomPBLight, true);
             }
@@ -273,6 +274,7 @@ namespace DivingRoom.Services
                 bool PBPressed = MCP23Controller.Read(NextRoomPB);
                 if (PBPressed)
                 {
+                    RGBButtonStatus = false;
                     VariableControlService.GameStatus = GameStatus.Leaving;
                     RelayController.Status(NextRoomPBLight, false);
                 }
