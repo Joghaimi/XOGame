@@ -64,13 +64,13 @@ namespace DivingRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            while (true)
-            {
-                DoorControl.Status(DoorPin, false);
-                Thread.Sleep(3000);
-                DoorControl.Status(DoorPin, true);
-                Thread.Sleep(3000);
-            }
+            //while (true)
+            //{
+            //    DoorControl.Status(DoorPin, false);
+            //    Thread.Sleep(3000);
+            //    DoorControl.Status(DoorPin, true);
+            //    Thread.Sleep(3000);
+            //}
 
 
             //MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
