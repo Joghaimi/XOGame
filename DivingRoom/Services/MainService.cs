@@ -24,6 +24,7 @@ namespace DivingRoom.Services
         bool thereAreBackgroundSoundPlays = false;
         bool thereAreInstructionSoundPlays = false;
         private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
+        private MCP23Pin NextRoomPB = MasterOutputPin.OUTPUT8;
         Stopwatch GameTiming = new Stopwatch();
 
         public MainService(ILogger<MainService> logger)
@@ -42,9 +43,9 @@ namespace DivingRoom.Services
             _controller.Setup(MasterDI.PIRPin2, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin3, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
-            DoorControl.Status(DoorPin, false);
             RGBLight.SetColor(RGBColor.White);
-
+            DoorControl.Status(DoorPin, false);
+           
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -58,6 +59,14 @@ namespace DivingRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
+            while (true)
+            {
+                RelayController.Status(NextRoomPB, true);
+                Thread.Sleep(1000);
+                RelayController.Status(NextRoomPB, false);
+                Thread.Sleep(1000);
+            }
+
 
             //MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
             while (!cancellationToken.IsCancellationRequested)

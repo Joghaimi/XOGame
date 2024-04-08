@@ -40,8 +40,11 @@ namespace FortRoom.Services
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
             // In Main Service Run All Default and common things 
             RGBLight.SetColor(VariableControlService.DefaultColor);
-
             DoorControl.Status(DoorPin, false);
+
+
+            MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Output);
+
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
