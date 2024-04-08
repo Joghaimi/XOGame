@@ -8,7 +8,6 @@ namespace Library.DoorControl
     {
         public static void Status(MCP23Pin doorPin, bool status)
         {
-            Console.WriteLine($"Door Status {status}");
             if (!status)
             {
                 MCP23Controller.PinModeSetup(doorPin, PinMode.Output);

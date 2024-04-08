@@ -105,7 +105,6 @@ namespace DivingRoom.Services
             while (!cancellationToken.IsCancellationRequested)
             {
                 RoomAudio();
-
             }
 
 
