@@ -32,7 +32,9 @@ namespace FortRoom.Services
         private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
         bool thereAreBackgroundSoundPlays = false;
         bool thereAreInstructionSoundPlays = false;
+        bool FinishAudioNotStarted = false;
         Stopwatch GameTiming = new Stopwatch();
+
 
 
 

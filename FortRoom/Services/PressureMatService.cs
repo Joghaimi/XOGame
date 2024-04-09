@@ -43,40 +43,20 @@ namespace FortRoom.Services
                         bool currentValue = MCP23Controller.Read(MasterDI.IN1);
                         VariableControlService.IsPressureMateActive = !currentValue;
                         if (!VariableControlService.IsPressureMateActive)
-                        {
                             RGBLight.SetColor(VariableControlService.DefaultColor);
-
-                            //if (VariableControlService.IsPressureMateActive != oldPressureMateValue)
-                            //{
-                            //    RGBLight.SetColor(VariableControlService.DefaultColor);
-                            //    oldPressureMateValue = VariableControlService.IsPressureMateActive;
-                            //}
-                        }
                         else
-                        {
                             RGBLight.SetColor(RGBColor.Red);
-
-                            //if (VariableControlService.IsPressureMateActive != oldPressureMateValue)
-                            //{
-                            //    //RGBLight.SetColor(VariableControlService.DefaultColor);
-                            //    RGBLight.SetColor(RGBColor.Red);
-                            //    oldPressureMateValue = VariableControlService.IsPressureMateActive;
-                            //}
-                        }
 
                         if (!currentValue && !scoreJustDecreased)
                         {
                             VariableControlService.TimeOfPressureHit++;
                             MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.High);
                             AudioPlayer.PIStartAudio(SoundType.Descend);
-                            //RGBLight.SetColor(RGBColor.Red);
-                            //RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor, 3000);
                             scoreJustDecreased = true;
                             timer.Restart();
                             VariableControlService.TeamScore.FortRoomScore -= 20;
 
                         }
-                        //previousValue = currentValue;
                         if (scoreJustDecreased && timer.ElapsedMilliseconds >= 3000)
                         {
                             scoreJustDecreased = false;
@@ -105,7 +85,7 @@ namespace FortRoom.Services
         }
         private bool IsGameStartedOrInGoing()
         {
-            return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
+            return VariableControlService.GameStatus == GameStatus.Started;
         }
     }
 }
