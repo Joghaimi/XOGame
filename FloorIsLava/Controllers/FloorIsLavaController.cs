@@ -47,6 +47,8 @@ namespace FloorIsLava.Controllers
             _logger.LogTrace("Received ..");
             VariableControlService.TeamScore = TeamScore;
             VariableControlService.IsOccupied = true;
+            VariableControlService.GameStatus = GameStatus.NotStarted;
+
             return Ok();
         }
         [HttpGet("ReturnScore")]
