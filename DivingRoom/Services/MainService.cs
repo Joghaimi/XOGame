@@ -200,8 +200,6 @@ namespace DivingRoom.Services
             {
 
                 bool PBPressed = !MCP23Controller.Read(NextRoomPB);
-                Console.WriteLine(PBPressed);
-                Thread.Sleep(1000);
                 if (PBPressed)
                 {
                     NextRoomRGBButtonStatus = false;
