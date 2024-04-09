@@ -38,9 +38,10 @@ namespace ShootingRoom.Controllers
         [HttpPost("ReceiveScore")]
         public IActionResult ReceiveScore(Team TeamScore)
         {
-            Console.WriteLine("Recived ..");
+            Console.WriteLine("Recived Score ..");
             VariableControlService.TeamScore = TeamScore;
             VariableControlService.IsOccupied = true;
+            VariableControlService.GameStatus = GameStatus.NotStarted;
             return Ok();
         }
         [HttpGet("ReturnScore")]
