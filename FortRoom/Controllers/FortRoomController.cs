@@ -33,7 +33,18 @@ namespace FortRoom.Controllers
             }
             return Ok(VariableControlService.IsOccupied);
         }
+        [HttpGet("RoomStatus")]
+        public IActionResult GetRoomStatus()
+        {
+            return Ok(VariableControlService.GameStatus.ToString());
+        }
 
+        [HttpPost("RoomStatus")]
+        public IActionResult ReturnRoomStatus(GameStatus gameStatus)
+        {
+            VariableControlService.GameStatus = gameStatus;
+            return Ok(VariableControlService.GameStatus);
+        }
         [HttpPost("StartStopGame")]
         public IActionResult StartGame(bool startGame)
         {
