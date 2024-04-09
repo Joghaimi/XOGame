@@ -48,8 +48,8 @@ namespace FortRoom.Services
             AudioPlayer.Init(Room.Fort);
             MCP23Controller.Init(Room.Fort);
 
-            MCP23Controller.PinModeSetup(EnterRoomPB, PinMode.InputPullDown);
-            MCP23Controller.PinModeSetup(NextRoomPB, PinMode.InputPullDown);
+            MCP23Controller.PinModeSetup(EnterRoomPB, PinMode.InputPullUp);
+            MCP23Controller.PinModeSetup(NextRoomPB, PinMode.InputPullUp);
 
 
 
