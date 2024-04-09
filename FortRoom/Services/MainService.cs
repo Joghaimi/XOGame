@@ -83,6 +83,12 @@ namespace FortRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
+            while (true)
+            {
+                bool PBPressed = !MCP23Controller.Read(EnterRoomPB);
+                Console.WriteLine(PBPressed);
+                Thread.Sleep(1000);
+            }
             while (!cancellationToken.IsCancellationRequested)
             {
                 RoomAudio();
