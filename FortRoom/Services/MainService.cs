@@ -53,6 +53,8 @@ namespace FortRoom.Services
 
             MCP23Controller.PinModeSetup(EnterRoomPB, PinMode.Input);
             MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
+
 
 
 
@@ -118,8 +120,11 @@ namespace FortRoom.Services
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                bool PBPressed = !MCP23Controller.Read(NextRoomPB);
+                bool PBPressed = MCP23Controller.Read(NextRoomPB);
+
                 Console.WriteLine(PBPressed);
+                Console.WriteLine(MCP23Controller.Read(MasterDI.IN1));
+                
                 Thread.Sleep(1000);
                 //if (PBPressed)
                 //{
