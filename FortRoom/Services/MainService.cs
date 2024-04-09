@@ -17,11 +17,13 @@ namespace FortRoom.Services
         private readonly ILogger<MainService> _logger;
         private GPIOController _controller;
         private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
-        private MCP23Pin LaserPin = MasterOutputPin.OUTPUT2;
+        //private MCP23Pin LaserPin = MasterOutputPin.OUTPUT2;
 
         bool EnterRGBButtonStatus = false;
-        private MCP23Pin EnterRGBButton = MasterOutputPin.OUTPUT5;
-        private MCP23Pin EnterRoomPB = MasterDI.IN2;
+        //private MCP23Pin EnterRGBButton = MasterOutputPin.OUTPUT5;
+        //private MCP23Pin EnterRoomPB = MasterDI.IN2;
+        private MCP23Pin EnterRGBButton = MasterOutputPin.OUTPUT8;
+        private MCP23Pin EnterRoomPB = MasterDI.IN3;
 
         bool NextRoomRGBButtonStatus = false;
         private MCP23Pin NextRoomPBLight = MasterOutputPin.OUTPUT8;
