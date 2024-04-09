@@ -279,6 +279,7 @@ namespace FortRoom.Services
         
         private void StopTheGame()
         {
+            Console.WriteLine("Stoped By Time For Test");
             VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
             VariableControlService.IsTheGameStarted = false;
             VariableControlService.IsTheGameFinished = true;
