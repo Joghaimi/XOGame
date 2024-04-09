@@ -26,7 +26,7 @@ namespace ShootingRoom.Services
 
         bool NextRoomRGBButtonStatus = false;
         private MCP23Pin NextRoomPBLight = MasterOutputPin.OUTPUT8;
-        private MCP23Pin NextRoomPB = MasterDI.IN8;
+        private MCP23Pin NextRoomPB = MasterDI.IN3;
 
 
 
@@ -68,7 +68,8 @@ namespace ShootingRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            while(true)
+            RelayController.Status(NextRoomPBLight, true);
+            while (true)
             {
                 bool PBPressed = !MCP23Controller.Read(NextRoomPB);
                 Console.WriteLine(PBPressed);
