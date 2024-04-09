@@ -54,7 +54,7 @@ namespace FortRoom.Services
             MCP23Controller.PinModeSetup(EnterRoomPB, PinMode.Input);
             MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
-           
+
 
             RGBLight.SetColor(VariableControlService.DefaultColor);
 
@@ -77,6 +77,13 @@ namespace FortRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
+            while (true)
+            {
+                Console.WriteLine(!MCP23Controller.Read(EnterRoomPB));
+                Thread.Sleep(1000);
+
+
+            }
             while (!cancellationToken.IsCancellationRequested)
             {
                 RoomAudio();
