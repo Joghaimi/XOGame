@@ -122,8 +122,8 @@ namespace FortRoom.Services
             {
                 bool PBPressed = MCP23Controller.Read(NextRoomPB);
 
-                Console.WriteLine(PBPressed);
-                Console.WriteLine(MCP23Controller.Read(MasterDI.IN1));
+                Console.WriteLine($"PBPressed {PBPressed}");
+                Console.WriteLine($"Pressure Mate {MCP23Controller.Read(MasterDI.IN1)}");
                 
                 Thread.Sleep(1000);
                 //if (PBPressed)
