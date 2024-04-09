@@ -163,6 +163,7 @@ namespace FortRoom.Services
                     EnterRGBButtonStatus = false;
                     RelayController.Status(NextRoomPBLight, false);
                     VariableControlService.GameStatus = GameStatus.Started;
+                    VariableControlService.IsGameTimerStarted = false;
                 }
             }
 
@@ -254,6 +255,7 @@ namespace FortRoom.Services
                 //if (VariableControlService.IsTheGameStarted && !VariableControlService.IsGameTimerStarted)
                 if (VariableControlService.GameStatus == GameStatus.Started && !VariableControlService.IsGameTimerStarted)
                 {
+                    Console.WriteLine("Restart The Timer");
                     GameTiming.Restart();
                     VariableControlService.IsGameTimerStarted = true;
                 }
