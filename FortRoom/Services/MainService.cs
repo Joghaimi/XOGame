@@ -272,7 +272,7 @@ namespace FortRoom.Services
                     return;
                 }
                 Console.WriteLine("*");
-                await Task.Delay(10000); // Delay for 10 seconds asynchronously
+                Thread.Sleep(5000);
             }
         }
 
