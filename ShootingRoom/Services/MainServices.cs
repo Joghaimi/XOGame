@@ -56,6 +56,10 @@ namespace ShootingRoom.Services
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
             DoorControl.Status(DoorPin, false);
 
+
+            MCP23Controller.PinModeSetup(EnterRoomPB, PinMode.Input);
+            MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
+
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);

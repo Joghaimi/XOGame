@@ -25,8 +25,15 @@ namespace DivingRoom.Services
         bool thereAreBackgroundSoundPlays = false;
         bool thereAreInstructionSoundPlays = false;
         private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
+        
+        
+        bool NextRoomRGBButtonStatus = false;
         private MCP23Pin NextRoomPBLight = MasterOutputPin.OUTPUT8;
-        private MCP23Pin NextRoomPB = MasterDI.IN8;
+        private MCP23Pin NextRoomPB = MasterDI.IN3;
+
+        bool EnterRGBButtonStatus = false;
+        private MCP23Pin EnterRGBButton = MasterOutputPin.OUTPUT8;
+        private MCP23Pin EnterRoomPB = MasterDI.IN3;
         private bool doorStatus = false;
         private bool RGBButtonStatus = false;
         Stopwatch GameTiming = new Stopwatch();
@@ -49,8 +56,13 @@ namespace DivingRoom.Services
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
 
             RGBLight.SetColor(VariableControlService.DefaultColor);
-            //DoorControl.Status(DoorPin, false); // Work ..
+
+
+
+
+            MCP23Controller.PinModeSetup(EnterRoomPB, PinMode.Input);
             MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -67,13 +79,16 @@ namespace DivingRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            //while (true)
-            //{
-            //    DoorControl.Status(DoorPin, false);
-            //    Thread.Sleep(3000);
-            //    DoorControl.Status(DoorPin, true);
-            //    Thread.Sleep(3000);
-            //}
+            while (true)
+            {
+                //DoorControl.Status(DoorPin, false);
+                //Thread.Sleep(3000);
+                //DoorControl.Status(DoorPin, true);
+                //Thread.Sleep(3000);
+                bool PBPressed = !MCP23Controller.Read(NextRoomPB);
+                Console.WriteLine(PBPressed);
+                Thread.Sleep(1000);
+            }
 
             // /********THE Working ONE*********/
             //while (!cancellationToken.IsCancellationRequested)

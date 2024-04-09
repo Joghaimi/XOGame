@@ -59,6 +59,9 @@ namespace DivingRoom.Controllers
             Console.WriteLine("Recived ..");
             VariableControlService.TeamScore = TeamScore;
             VariableControlService.IsOccupied = true;
+            VariableControlService.GameStatus = GameStatus.NotStarted;
+
+
             return Ok();
         }
         [HttpGet("ReturnScore")]
