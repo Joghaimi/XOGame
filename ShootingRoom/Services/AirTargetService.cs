@@ -294,7 +294,8 @@ namespace ShootingRoom.Services
 
         private bool IsGameStartedOrInGoing()
         {
-            return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
+            return VariableControlService.GameStatus == GameStatus.Started;
+            //return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
         }
         private void ReturnAllTargets()
         {
