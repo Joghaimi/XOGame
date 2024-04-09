@@ -17,13 +17,24 @@ namespace FortRoom.Services
         private GPIOController _controller;
         private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
         private MCP23Pin LaserPin = MasterOutputPin.OUTPUT2;
-        
-        private CancellationTokenSource _cts, _cts2, _cts3,_cts4;
+
+        private MCP23Pin EnterRGBButton = MasterOutputPin.OUTPUT8;
+        private MCP23Pin EnterRoomPB = MasterDI.IN8;
+
+
+        private MCP23Pin NextRoomPBLight = MasterOutputPin.OUTPUT8;
+        private MCP23Pin NextRoomPB = MasterDI.IN8;
+
+
+        private CancellationTokenSource _cts, _cts2, _cts3, _cts4;
         public bool isTheirAreSomeOneInTheRoom = false;
         private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
         bool thereAreBackgroundSoundPlays = false;
         bool thereAreInstructionSoundPlays = false;
         Stopwatch GameTiming = new Stopwatch();
+
+        bool EnterRGBButtonStatus = false;
+
 
 
         public MainService(ILogger<MainService> logger)
@@ -36,14 +47,20 @@ namespace FortRoom.Services
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Fort);
             AudioPlayer.Init(Room.Fort);
             MCP23Controller.Init(Room.Fort);
+
+            MCP23Controller.PinModeSetup(EnterRoomPB, PinMode.Input);
+            MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
+
+
+
             _controller.Setup(MasterDI.PIRPin1, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin2, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin3, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
             // In Main Service Run All Default and common things 
-           
+
             RGBLight.SetColor(VariableControlService.DefaultColor);
-            
+
             //DoorControl.Status(DoorPin, false);
 
 
@@ -66,34 +83,40 @@ namespace FortRoom.Services
         private async Task RunService(CancellationToken cancellationToken)
         {
 
+            //while (!cancellationToken.IsCancellationRequested)
+            //{
+            //    PIR1 = _controller.Read(MasterDI.PIRPin1);
+            //    PIR2 = _controller.Read(MasterDI.PIRPin2);
+            //    PIR3 = _controller.Read(MasterDI.PIRPin3);
+            //    PIR4 = _controller.Read(MasterDI.PIRPin4);
+            //    VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
+            //    ControlRoomAudio();// Control Background Audio
+            //    // IF Enable Going To The Next room 
+            //    if (VariableControlService.EnableGoingToTheNextRoom)
+            //    {
+            //        _logger.LogDebug("Open The Door");
+            //        DoorControl.Status(DoorPin, true);
+            //        while (PIR1 || PIR2 || PIR3 || PIR4)
+            //        {
+            //            PIR1 = _controller.Read(MasterDI.PIRPin1);
+            //            PIR2 = _controller.Read(MasterDI.PIRPin2);
+            //            PIR3 = _controller.Read(MasterDI.PIRPin3);
+            //            PIR4 = _controller.Read(MasterDI.PIRPin4);
+            //        }
+            //        Thread.Sleep(30000);
+            //        DoorControl.Status(DoorPin, false);
+            //        ResetTheGame();
+            //        _logger.LogDebug("No One In The Room , All Gone To The Next Room");
+            //    }
+            //    Thread.Sleep(10);
+
+
+            //}
+
             while (!cancellationToken.IsCancellationRequested)
             {
-                PIR1 = _controller.Read(MasterDI.PIRPin1);
-                PIR2 = _controller.Read(MasterDI.PIRPin2);
-                PIR3 = _controller.Read(MasterDI.PIRPin3);
-                PIR4 = _controller.Read(MasterDI.PIRPin4);
-                VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
-                ControlRoomAudio();// Control Background Audio
-                // IF Enable Going To The Next room 
-                if (VariableControlService.EnableGoingToTheNextRoom)
-                {
-                    _logger.LogDebug("Open The Door");
-                    DoorControl.Status(DoorPin, true);
-                    while (PIR1 || PIR2 || PIR3 || PIR4)
-                    {
-                        PIR1 = _controller.Read(MasterDI.PIRPin1);
-                        PIR2 = _controller.Read(MasterDI.PIRPin2);
-                        PIR3 = _controller.Read(MasterDI.PIRPin3);
-                        PIR4 = _controller.Read(MasterDI.PIRPin4);
-                    }
-                    Thread.Sleep(30000);
-                    DoorControl.Status(DoorPin, false);
-                    ResetTheGame();
-                    _logger.LogDebug("No One In The Room , All Gone To The Next Room");
-                }
-                Thread.Sleep(10);
-
-
+                RoomAudio();
+                ControlEnteringRGBButton();
             }
         }
         private async Task CheckIFRoomIsEmpty(CancellationToken cancellationToken)
@@ -110,7 +133,86 @@ namespace FortRoom.Services
         }
 
 
+        private void RoomAudio()
+        {
+            if (VariableControlService.GameStatus == GameStatus.NotStarted && !thereAreInstructionSoundPlays)
+            {
+                _logger.LogTrace("Start Instruction Audio");
+                AudioPlayer.PIBackgroundSound(SoundType.instruction);
+                thereAreInstructionSoundPlays = true;
+            }
+            else if (thereAreInstructionSoundPlays && VariableControlService.GameStatus != GameStatus.NotStarted)
+            {
+                _logger.LogTrace("Stop Instruction Audio");
+                thereAreInstructionSoundPlays = false;
+                AudioPlayer.PIStopAudio();
+                Thread.Sleep(500);
+            }
+
+            if (VariableControlService.GameStatus == GameStatus.Started && !thereAreBackgroundSoundPlays)
+            {
+                _logger.LogTrace("Start Background Audio");
+                thereAreBackgroundSoundPlays = true;
+                AudioPlayer.PIBackgroundSound(SoundType.Background);
+            }
+            else if (VariableControlService.GameStatus != GameStatus.Started && thereAreBackgroundSoundPlays)
+            {
+                _logger.LogTrace("Stop Background Audio");
+                thereAreBackgroundSoundPlays = false;
+                AudioPlayer.PIStopAudio();
+            }
+        }
+
+
+        private void ControlEnteringRGBButton()
+        {
+            if (!EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.NotStarted)
+            {
+                _logger.LogTrace("Ready To Start The Game .. Turn RGB Button On");
+                EnterRGBButtonStatus = true;
+                RelayController.Status(EnterRGBButton, true);
+            }
+            else if (EnterRGBButtonStatus && VariableControlService.GameStatus != GameStatus.NotStarted)
+            {
+                EnterRGBButtonStatus = false;
+                RelayController.Status(EnterRGBButton, false);
+            }
+            bool RGBButtonIsOnAndGameNotStarted = EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.NotStarted;
+            if (RGBButtonIsOnAndGameNotStarted)
+            {
+                //Console.WriteLine(MCP23Controller.Read(EnterRoomPB));
+                //    Thread.Sleep(5000);
+                bool PBPressed = !MCP23Controller.Read(EnterRoomPB);
+                Console.WriteLine(PBPressed);
+
+            }
+
+
+            //if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && !RGBButtonStatus)
+            //{
+            //    Console.WriteLine("Ready To Leave .. Turn RGB Button On");
+            //    RGBButtonStatus = true;
+            //    RelayController.Status(NextRoomPBLight, true);
+            //}
+            //else if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && RGBButtonStatus)
+            //{
+            //    Console.WriteLine(MCP23Controller.Read(NextRoomPB));
+            //    Thread.Sleep(5000);
+            //    bool PBPressed = !MCP23Controller.Read(NextRoomPB);
+            //    if (PBPressed)
+            //    {
+            //        RGBButtonStatus = false;
+            //        VariableControlService.GameStatus = GameStatus.Leaving;
+            //        RelayController.Status(NextRoomPBLight, false);
+            //    }
+            //}
+        }
+
+
+
+
         // To Do Next Time
+        [Obsolete("Old")]
         private void ControlRoomAudio()
         {
             // Control Background Audio
@@ -119,7 +221,7 @@ namespace FortRoom.Services
                 _logger.LogTrace("Start Instruction Audio");
                 thereAreInstructionSoundPlays = true;
                 AudioPlayer.PIBackgroundSound(SoundType.instruction); // TO DO
-                RelayController.Status(LaserPin , true);
+                RelayController.Status(LaserPin, true);
                 Thread.Sleep(60000);
                 VariableControlService.IsTheGameStarted = true;
                 VariableControlService.IsTheGameFinished = false;
@@ -143,7 +245,7 @@ namespace FortRoom.Services
                 // Game Finished .. 
                 _logger.LogTrace("Stop Background Audio");
                 thereAreBackgroundSoundPlays = false;
-                VariableControlService.EnableGoingToTheNextRoom=true;
+                VariableControlService.EnableGoingToTheNextRoom = true;
                 AudioPlayer.PIStopAudio();
             }
         }
