@@ -1,5 +1,6 @@
 ﻿using Iot.Device.Mcp3428;
 using Library;
+using Library.APIIntegration;
 using Library.DoorControl;
 using Library.Enum;
 using Library.GPIOLib;
@@ -117,10 +118,11 @@ namespace FortRoom.Services
 
             while (!cancellationToken.IsCancellationRequested)
             {
-             
+
                 RoomAudio();
                 ControlEnteringRGBButton();
                 ControlExitingRGBButton();
+                CheckNextRoomStatus();
             }
         }
         private async Task CheckIFRoomIsEmpty(CancellationToken cancellationToken)
@@ -241,6 +243,14 @@ namespace FortRoom.Services
             }
         }
 
+        private void CheckNextRoomStatus()
+        {
+            if (VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
+            {
+               var status = APIIntegration.NextRoomStatus(VariableControlService.NextRoomURL);
+                Thread.Sleep(3000);
+            }
+        }
 
 
 

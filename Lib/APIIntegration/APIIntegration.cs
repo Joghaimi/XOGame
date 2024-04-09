@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Mono.Unix.Native;
 using System.Net.Http.Headers;
 using System.Security.AccessControl;
+using System.Net.Http;
 
 namespace Library.APIIntegration
 {
@@ -49,13 +50,6 @@ namespace Library.APIIntegration
         {
             using (HttpClient httpClient = new HttpClient())
             {
-                //var Body = new
-                //{
-                //    rfid = playerId,
-                //    userName = userName,
-                //    password = password
-                //};
-                //string jsonData = "{\"rfid\":\""+ playerId + "\" ,\"username\":\""+ userName + "\",\"password\":\""+ password + "\"}";
                 var Body = new
                 {
                     rfid = playerId,
@@ -67,7 +61,6 @@ namespace Library.APIIntegration
                 StringContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await httpClient.PostAsync(userInfoURL, content);
                 Console.WriteLine($"response.IsSuccessStatusCode {response.IsSuccessStatusCode}");
-
                 if (response.IsSuccessStatusCode)
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
@@ -79,6 +72,38 @@ namespace Library.APIIntegration
                 }
             }
             return null;
+        }
+
+
+        public async static Task<string> NextRoomStatus(string nextRoomURL)
+        {
+            using (HttpClient httpClient = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await httpClient.GetAsync(nextRoomURL);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Read the response content as a string
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        Console.WriteLine("Response received:");
+                        Console.WriteLine(responseBody);
+                        return responseBody;
+                    }
+                    else
+                    {
+                        // Handle the unsuccessful response (non-success status code)
+                        Console.WriteLine($"Error: {response.StatusCode}");
+                        return null;
+                    }
+                }
+                catch (HttpRequestException ex)
+                {
+                    // Handle any exceptions that occurred during the request
+                    Console.WriteLine($"Request failed: {ex.Message}");
+                    return null;
+                }
+            }
         }
 
     }
