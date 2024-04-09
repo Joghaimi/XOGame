@@ -261,11 +261,11 @@ namespace FortRoom.Services
             }
         }
 
-        private async Task CheckNextRoomStatus()
+        private void CheckNextRoomStatus()
         {
             if (VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
             {
-                var status = await APIIntegration.NextRoomStatus(VariableControlService.NextRoomURL);
+                var status =  APIIntegration.NextRoomStatus(VariableControlService.NextRoomURL);
                 if (status == "Empty")
                 {
                     VariableControlService.GameStatus = GameStatus.ReadyToLeave;
