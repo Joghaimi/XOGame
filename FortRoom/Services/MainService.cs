@@ -83,12 +83,6 @@ namespace FortRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            while (true)
-            {
-                bool PBPressed = !MCP23Controller.Read(EnterRoomPB);
-                Console.WriteLine(PBPressed);
-                Thread.Sleep(1000);
-            }
             while (!cancellationToken.IsCancellationRequested)
             {
                 RoomAudio();
@@ -260,8 +254,7 @@ namespace FortRoom.Services
             {
                 //if (VariableControlService.IsTheGameStarted && !VariableControlService.IsGameTimerStarted)
 
-                if (VariableControlService.GameStatus == GameStatus.Empty || 
-                    (VariableControlService.GameStatus == GameStatus.Started && !VariableControlService.IsGameTimerStarted))
+                if (VariableControlService.GameStatus == GameStatus.Started || (VariableControlService.GameStatus == GameStatus.Started && !VariableControlService.IsGameTimerStarted))
                 {
                     Console.WriteLine("Restart The Timer");
                     GameTiming.Restart();
