@@ -116,9 +116,11 @@ namespace DivingRoom.Services
                 if (VariableControlService.GameStatus == GameStatus.Leaving)
                 {
                     _logger.LogTrace("Open The Door ***");
-                    DoorControl.Status(DoorPin, true);
+                    VariableControlService.NewDoorStatus = DoorStatus.Open;
+                    //DoorControl.Status(DoorPin, true);
                     Thread.Sleep(5000);
-                    DoorControl.Status(DoorPin, false);
+                    VariableControlService.NewDoorStatus = DoorStatus.Close;
+                    //DoorControl.Status(DoorPin, false);
                     VariableControlService.GameStatus = GameStatus.Empty;
                 }
             }
@@ -304,6 +306,9 @@ namespace DivingRoom.Services
                 Thread.Sleep(500);
             }
         }
+
+
+   
 
     }
 }
