@@ -263,7 +263,7 @@ namespace FortRoom.Services
                 }
                 bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming;
                 //bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.IsGameTimerStarted;
-                bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.GameStatus == GameStatus.Started;
+                bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.GameStatus == GameStatus.Started && VariableControlService.IsGameTimerStarted;
 
                 //if (GameFinishedByTimer || VariableControlService.IsTheGameFinished)
                 if (GameFinishedByTimer)// || VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
