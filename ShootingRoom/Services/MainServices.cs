@@ -81,7 +81,7 @@ namespace ShootingRoom.Services
             {
                 RoomAudio();
                 ControlEnteringRGBButton();
-                //await CheckNextRoomStatus();
+                await CheckNextRoomStatus();
                 //await ControlExitingRGBButton();
                 //if (VariableControlService.GameStatus == GameStatus.Empty)
                 //    DoorControl.Control(DoorPin, DoorStatus.Close);
