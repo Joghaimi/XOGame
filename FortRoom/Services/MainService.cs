@@ -70,7 +70,7 @@ namespace FortRoom.Services
             //DoorControl.Status(DoorPin, false);
 
 
-            MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Output);
+            //MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Output);
 
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
