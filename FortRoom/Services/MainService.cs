@@ -262,7 +262,7 @@ namespace FortRoom.Services
                 bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.GameStatus == GameStatus.Started;
 
                 //if (GameFinishedByTimer || VariableControlService.IsTheGameFinished)
-                if (GameFinishedByTimer || VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
+                if (GameFinishedByTimer)// || VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
                     StopTheGame();
             }
         }
