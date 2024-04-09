@@ -21,6 +21,8 @@ namespace DivingRoom.Services
         public static bool IsRGBButtonServiceStarted = false;
         public static Round GameRound = Round.Round1;
         public static GameStatus GameStatus { get; set; } = GameStatus.Empty;
+        public static DoorStatus CurrentDoorStatus { get; set; } = DoorStatus.Open;
+        public static DoorStatus NewDoorStatus { get; set; } = DoorStatus.Open;
 
 
     }

@@ -28,10 +28,6 @@ namespace DivingRoom.Controllers
             VariableControlService.GameStatus = gameStatus;
             return Ok(VariableControlService.GameStatus);
         }
-
-
-
-
         [HttpGet("IsOccupied")]
         public IActionResult Get()
         {
@@ -85,5 +81,18 @@ namespace DivingRoom.Controllers
         {
             return Ok(VariableControlService.TeamScore.DivingRoomScore);
         }
+
+
+        // Control Game 
+        [HttpGet("DoorControl")]
+        public IActionResult DoorControl(DoorStatus doorStatus)
+        {
+            VariableControlService.NewDoorStatus = doorStatus;
+            return Ok(doorStatus);
+        }
+
+
+
+
     }
 }

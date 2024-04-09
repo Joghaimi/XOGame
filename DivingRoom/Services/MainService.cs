@@ -20,7 +20,7 @@ namespace DivingRoom.Services
 
         private GPIOController _controller;
         private readonly ILogger<MainService> _logger;
-        private CancellationTokenSource _cts, _cts2, _cts3;
+        private CancellationTokenSource _cts, _cts2, _cts3, _cts4;
         private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
         bool thereAreBackgroundSoundPlays = false;
         bool thereAreInstructionSoundPlays = false;
@@ -49,17 +49,19 @@ namespace DivingRoom.Services
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
 
             RGBLight.SetColor(RGBColor.White);
-            DoorControl.Status(DoorPin, false);
+            //DoorControl.Status(DoorPin, false);
             MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            _cts4 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
             _logger.LogInformation("Start Main Service");
             Task.Run(() => RunService(_cts.Token));
             Task.Run(() => CheckIFRoomIsEmpty(_cts2.Token));
             Task.Run(() => GameTimingService(_cts3.Token));
+            Task.Run(() => DoorLockControl(_cts4.Token));
 
             return Task.CompletedTask;
         }
@@ -73,52 +75,53 @@ namespace DivingRoom.Services
             //    Thread.Sleep(3000);
             //}
 
+            // /********THE Working ONE*********/
+            //while (!cancellationToken.IsCancellationRequested)
+            //{
+            //    //PIR1 = _controller.Read(MasterDI.PIRPin1);
+            //    //PIR2 = _controller.Read(MasterDI.PIRPin2);
+            //    //PIR3 = _controller.Read(MasterDI.PIRPin3);
+            //    //PIR4 = _controller.Read(MasterDI.PIRPin4);
+            //    VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
+            //    ControlRoomAudio();
+            //    ControlRGBButton();
+            //    if (VariableControlService.EnableGoingToTheNextRoom)
+            //    {
+            //        _logger.LogDebug("Open The Door");
+            //        DoorControl.Status(DoorPin, true);
+            //        //while (PIR1 || PIR2 || PIR3 || PIR4)
+            //        //{
+            //        //    PIR1 = _controller.Read(MasterDI.PIRPin1);
+            //        //    PIR2 = _controller.Read(MasterDI.PIRPin2);
+            //        //    PIR3 = _controller.Read(MasterDI.PIRPin3);
+            //        //    PIR4 = _controller.Read(MasterDI.PIRPin4);
+            //        //}
+            //        Thread.Sleep(30000);
+            //        DoorControl.Status(DoorPin, false);
+            //        ResetTheGame();
+            //        _logger.LogDebug("No One In The Room , All Gone To The Next Room");
+            //    }
+            //    Thread.Sleep(10);
+            //}
+
+
+
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                //PIR1 = _controller.Read(MasterDI.PIRPin1);
-                //PIR2 = _controller.Read(MasterDI.PIRPin2);
-                //PIR3 = _controller.Read(MasterDI.PIRPin3);
-                //PIR4 = _controller.Read(MasterDI.PIRPin4);
-                VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
-                ControlRoomAudio();
+                RoomAudio();
                 ControlRGBButton();
-
-                if (VariableControlService.EnableGoingToTheNextRoom)
+                //_logger.LogTrace(VariableControlService.GameStatus.ToString());
+                //Thread.Sleep(5000);
+                if (VariableControlService.GameStatus == GameStatus.Leaving)
                 {
-                    _logger.LogDebug("Open The Door");
+                    _logger.LogTrace("Open The Door ***");
                     DoorControl.Status(DoorPin, true);
-                    //while (PIR1 || PIR2 || PIR3 || PIR4)
-                    //{
-                    //    PIR1 = _controller.Read(MasterDI.PIRPin1);
-                    //    PIR2 = _controller.Read(MasterDI.PIRPin2);
-                    //    PIR3 = _controller.Read(MasterDI.PIRPin3);
-                    //    PIR4 = _controller.Read(MasterDI.PIRPin4);
-                    //}
-                    Thread.Sleep(30000);
+                    Thread.Sleep(5000);
                     DoorControl.Status(DoorPin, false);
-                    ResetTheGame();
-                    _logger.LogDebug("No One In The Room , All Gone To The Next Room");
+                    VariableControlService.GameStatus = GameStatus.Empty;
                 }
-                Thread.Sleep(10);
             }
-
-            //while (!cancellationToken.IsCancellationRequested)
-            //{
-            //    RoomAudio();
-            //    ControlRGBButton();
-            //    //_logger.LogTrace(VariableControlService.GameStatus.ToString());
-            //    //Thread.Sleep(5000);
-
-            //    if (VariableControlService.GameStatus == GameStatus.Leaving)
-            //    {
-            //        _logger.LogTrace("Open The Door ***");
-            //        DoorControl.Status(DoorPin, true);
-            //        Thread.Sleep(5000);
-            //        DoorControl.Status(DoorPin, false);
-            //        VariableControlService.GameStatus = GameStatus.Empty;
-            //    }
-            //}
 
 
 
@@ -273,7 +276,7 @@ namespace DivingRoom.Services
                 RGBButtonStatus = true;
                 RelayController.Status(NextRoomPBLight, true);
             }
-            else if(VariableControlService.GameStatus == GameStatus.ReadyToLeave && RGBButtonStatus)
+            else if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && RGBButtonStatus)
             {
                 Console.WriteLine(MCP23Controller.Read(NextRoomPB));
                 Thread.Sleep(5000);
@@ -284,6 +287,20 @@ namespace DivingRoom.Services
                     VariableControlService.GameStatus = GameStatus.Leaving;
                     RelayController.Status(NextRoomPBLight, false);
                 }
+            }
+        }
+
+
+        private async Task DoorLockControl(CancellationToken cancellationToken)
+        {
+            while (true)
+            {
+                if (VariableControlService.CurrentDoorStatus != VariableControlService.NewDoorStatus)
+                {
+                    DoorControl.Control(DoorPin, VariableControlService.NewDoorStatus);
+                    VariableControlService.CurrentDoorStatus = VariableControlService.NewDoorStatus;
+                }
+                Thread.Sleep(500);
             }
         }
 

@@ -174,4 +174,11 @@ namespace Library
         Leaving // PB Pressed waiting 
     }
 
+    public enum DoorStatus
+    {
+        Close,
+        Open
+
+    }
+
 }
