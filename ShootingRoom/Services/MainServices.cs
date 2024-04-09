@@ -1,5 +1,6 @@
 ﻿using Iot.Device.Mcp3428;
 using Library;
+using Library.APIIntegration;
 using Library.DoorControl;
 using Library.Enum;
 using Library.GPIOLib;
@@ -22,6 +23,16 @@ namespace ShootingRoom.Services
         bool thereAreInstructionSoundPlays = false;
         private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
         Stopwatch GameTiming = new Stopwatch();
+
+        bool NextRoomRGBButtonStatus = false;
+        private MCP23Pin NextRoomPBLight = MasterOutputPin.OUTPUT8;
+        private MCP23Pin NextRoomPB = MasterDI.IN8;
+
+
+
+
+
+
 
         public MainServices(ILogger<MainServices> logger)
         {
@@ -57,14 +68,23 @@ namespace ShootingRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-
-            while (!cancellationToken.IsCancellationRequested)
+            while(true)
             {
-
-                RoomAudio();
-                //ControlEnteringRGBButton();
-                //ControlExitingRGBButton();
+                bool PBPressed = !MCP23Controller.Read(NextRoomPB);
+                Console.WriteLine(PBPressed);
+                Thread.Sleep(1000);
             }
+
+
+
+
+            //while (!cancellationToken.IsCancellationRequested)
+            //{
+
+            //    RoomAudio();
+            //    //ControlEnteringRGBButton();
+            //    ControlExitingRGBButton();
+            //}
             //while (!cancellationToken.IsCancellationRequested)
             //{
 
@@ -99,15 +119,15 @@ namespace ShootingRoom.Services
             //}
         }
 
-
-        private void StartTheGame()
-        {
-
-        }
         private void StopTheGame()
         {
+            //VariableControlService.IsTheGameStarted = false;
+            //VariableControlService.IsTheGameFinished = true;
+            Console.WriteLine("Stoped By Time For Test");
+            VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
             VariableControlService.IsTheGameStarted = false;
             VariableControlService.IsTheGameFinished = true;
+            VariableControlService.IsGameTimerStarted = false;
         }
         private void ResetTheGame()
         {
@@ -132,17 +152,31 @@ namespace ShootingRoom.Services
         // Control Starting All the Threads
         private async Task GameTimingService(CancellationToken cancellationToken)
         {
+            //while (!cancellationToken.IsCancellationRequested)
+            //{
+            //    if (VariableControlService.IsTheGameStarted && !VariableControlService.IsGameTimerStarted)
+            //    {
+            //        GameTiming.Restart();
+            //        VariableControlService.IsGameTimerStarted = true;
+            //    }
+            //    bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming;
+            //    bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.IsGameTimerStarted;
+
+            //    if (GameFinishedByTimer || VariableControlService.IsTheGameFinished)
+            //        StopTheGame();
+            //}
             while (!cancellationToken.IsCancellationRequested)
             {
-                if (VariableControlService.IsTheGameStarted && !VariableControlService.IsGameTimerStarted)
+                if ((VariableControlService.GameStatus == GameStatus.Started && !VariableControlService.IsGameTimerStarted))
                 {
+                    Console.WriteLine("Restart The Timer");
                     GameTiming.Restart();
+                    Thread.Sleep(1000);
                     VariableControlService.IsGameTimerStarted = true;
                 }
                 bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming;
-                bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.IsGameTimerStarted;
-
-                if (GameFinishedByTimer || VariableControlService.IsTheGameFinished)
+                bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.GameStatus == GameStatus.Started && VariableControlService.IsGameTimerStarted;
+                if (GameFinishedByTimer)// || VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
                     StopTheGame();
             }
         }
@@ -216,6 +250,49 @@ namespace ShootingRoom.Services
                 _logger.LogTrace("Stop Background Audio");
                 thereAreBackgroundSoundPlays = false;
                 AudioPlayer.PIStopAudio();
+            }
+        }
+
+
+
+        private async Task ControlExitingRGBButton()
+        {
+            if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && !NextRoomRGBButtonStatus)
+            {
+                Console.WriteLine("Ready To Leave .. Turn RGB Button On");
+                NextRoomRGBButtonStatus = true;
+                RelayController.Status(NextRoomPBLight, true);
+            }
+            else if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && NextRoomRGBButtonStatus)
+            {
+
+                bool PBPressed = !MCP23Controller.Read(NextRoomPB);
+                if (PBPressed)
+                {
+                    NextRoomRGBButtonStatus = false;
+                    //while (true)
+                    //{
+                    //    var result = await APIIntegration.SendScoreToTheNextRoom(VariableControlService.SendScoreToTheNextRoom, VariableControlService.TeamScore);
+                    //    _logger.LogTrace($"Score Send {result}");
+                    //    if (result)
+                    //    {
+                    //        VariableControlService.GameStatus = GameStatus.Leaving;
+                    //        RelayController.Status(NextRoomPBLight, false);
+                    //        DoorControl.Control(DoorPin, DoorStatus.Open);
+                    //        _logger.LogTrace($"Player Should be out From the room");
+                    //        Thread.Sleep(30000);
+                    //        DoorControl.Control(DoorPin, DoorStatus.Close);
+                    //        VariableControlService.GameStatus = GameStatus.Empty;
+                    //        _logger.LogTrace($"Room Should be Empty now");
+                    //        break;
+                    //    }
+                    //    Thread.Sleep(3000);
+                    //}
+
+
+                }
+                // This Will be Moved to run after PB Is Preessed 
+
             }
         }
 

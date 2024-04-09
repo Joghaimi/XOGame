@@ -56,11 +56,7 @@ namespace FortRoom.Services
             MCP23Controller.PinModeSetup(EnterRoomPB, PinMode.Input);
             MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
-            //_controller.Setup(MasterDI.PIRPin1, PinMode.InputPullDown);
-            //_controller.Setup(MasterDI.PIRPin2, PinMode.InputPullDown);
-            //_controller.Setup(MasterDI.PIRPin3, PinMode.InputPullDown);
-            //_controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
-            // In Main Service Run All Default and common things 
+           
 
             RGBLight.SetColor(VariableControlService.DefaultColor);
 
@@ -166,26 +162,6 @@ namespace FortRoom.Services
                     VariableControlService.IsGameTimerStarted = false;
                 }
             }
-
-
-            //if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && !RGBButtonStatus)
-            //{
-            //    Console.WriteLine("Ready To Leave .. Turn RGB Button On");
-            //    RGBButtonStatus = true;
-            //    RelayController.Status(NextRoomPBLight, true);
-            //}
-            //else if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && RGBButtonStatus)
-            //{
-            //    Console.WriteLine(MCP23Controller.Read(NextRoomPB));
-            //    Thread.Sleep(5000);
-            //    bool PBPressed = !MCP23Controller.Read(NextRoomPB);
-            //    if (PBPressed)
-            //    {
-            //        RGBButtonStatus = false;
-            //        VariableControlService.GameStatus = GameStatus.Leaving;
-            //        RelayController.Status(NextRoomPBLight, false);
-            //    }
-            //}
         }
 
         private async Task ControlExitingRGBButton()
@@ -252,8 +228,6 @@ namespace FortRoom.Services
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                //if (VariableControlService.IsTheGameStarted && !VariableControlService.IsGameTimerStarted)
-
                 if ((VariableControlService.GameStatus == GameStatus.Started && !VariableControlService.IsGameTimerStarted))
                 {
                     Console.WriteLine("Restart The Timer");
@@ -262,10 +236,7 @@ namespace FortRoom.Services
                     VariableControlService.IsGameTimerStarted = true;
                 }
                 bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming;
-                //bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.IsGameTimerStarted;
                 bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.GameStatus == GameStatus.Started && VariableControlService.IsGameTimerStarted;
-
-                //if (GameFinishedByTimer || VariableControlService.IsTheGameFinished)
                 if (GameFinishedByTimer)// || VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
                     StopTheGame();
             }
