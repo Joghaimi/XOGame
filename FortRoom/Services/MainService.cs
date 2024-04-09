@@ -283,6 +283,7 @@ namespace FortRoom.Services
             VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
             VariableControlService.IsTheGameStarted = false;
             VariableControlService.IsTheGameFinished = true;
+            VariableControlService.IsGameTimerStarted = false;
             //VariableControlService.EnableGoingToTheNextRoom = true;
         }
         //private void ResetTheGame()
