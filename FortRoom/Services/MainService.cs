@@ -120,23 +120,23 @@ namespace FortRoom.Services
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                bool PBPressed = MCP23Controller.Read(NextRoomPB);
+                //bool PBPressed = MCP23Controller.Read(NextRoomPB);
 
-                Console.WriteLine($"PBPressed {PBPressed} ================ **** ");
+                //Console.WriteLine($"PBPressed {PBPressed} ================ **** ");
                 //Console.WriteLine($"Pressure Mate {MCP23Controller.Read(MasterDI.IN1)}");
                 
-                Thread.Sleep(1000);
-                //if (PBPressed)
-                //{
-                //    NextRoomRGBButtonStatus = false;
-                //    VariableControlService.GameStatus = GameStatus.Leaving;
-                //    RelayController.Status(NextRoomPBLight, false);
-                //}
+                //Thread.Sleep(1000);
+                ////if (PBPressed)
+                ////{
+                ////    NextRoomRGBButtonStatus = false;
+                ////    VariableControlService.GameStatus = GameStatus.Leaving;
+                ////    RelayController.Status(NextRoomPBLight, false);
+                ////}
 
                 RoomAudio();
                 ControlEnteringRGBButton();
-                ControlExitingRGBButton();
                 CheckNextRoomStatus();
+                ControlExitingRGBButton();
             }
         }
         private async Task CheckIFRoomIsEmpty(CancellationToken cancellationToken)
@@ -245,33 +245,32 @@ namespace FortRoom.Services
             }
             else if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && NextRoomRGBButtonStatus)
             {
-                //Console.WriteLine(MCP23Controller.Read(NextRoomPB));
-                //Thread.Sleep(5000);
-                //bool PBPressed = !MCP23Controller.Read(NextRoomPB);
-                //if (PBPressed)
-                //{
-                //    NextRoomRGBButtonStatus = false;
-                //    VariableControlService.GameStatus = GameStatus.Leaving;
-                //    RelayController.Status(NextRoomPBLight, false);
-                //}
-                // This Will be Moved to run after PB Is Preessed 
-                while (true)
+             
+                bool PBPressed = !MCP23Controller.Read(NextRoomPB);
+                if (PBPressed)
                 {
-
-                    var result = await APIIntegration.SendScoreToTheNextRoom(VariableControlService.SendScoreToTheNextRoom, VariableControlService.TeamScore);
-                    _logger.LogTrace($"Score Send {result}");
-                    if (result)
+                    NextRoomRGBButtonStatus = false;
+                    while (true)
                     {
-                        VariableControlService.GameStatus = GameStatus.Leaving;
-                        _logger.LogTrace($"Player Should be out From the room");
-                        Thread.Sleep(30000);
-                        VariableControlService.GameStatus = GameStatus.Empty;
-                        _logger.LogTrace($"Room Should be Empty now");
-                        break;
+
+                        var result = await APIIntegration.SendScoreToTheNextRoom(VariableControlService.SendScoreToTheNextRoom, VariableControlService.TeamScore);
+                        _logger.LogTrace($"Score Send {result}");
+                        if (result)
+                        {
+                            VariableControlService.GameStatus = GameStatus.Leaving;
+                            RelayController.Status(NextRoomPBLight, false);
+                            _logger.LogTrace($"Player Should be out From the room");
+                            Thread.Sleep(30000);
+                            VariableControlService.GameStatus = GameStatus.Empty;
+                            _logger.LogTrace($"Room Should be Empty now");
+                            break;
+                        }
                     }
 
 
                 }
+                // This Will be Moved to run after PB Is Preessed 
+                
             }
         }
 
