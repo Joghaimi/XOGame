@@ -20,8 +20,6 @@ namespace FortRoom.Services
         //private MCP23Pin LaserPin = MasterOutputPin.OUTPUT2;
 
         bool EnterRGBButtonStatus = false;
-        //private MCP23Pin EnterRGBButton = MasterOutputPin.OUTPUT5;
-        //private MCP23Pin EnterRoomPB = MasterDI.IN2;
         private MCP23Pin EnterRGBButton = MasterOutputPin.OUTPUT8;
         private MCP23Pin EnterRoomPB = MasterDI.IN3;
 
