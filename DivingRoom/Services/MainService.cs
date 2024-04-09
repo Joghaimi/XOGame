@@ -245,17 +245,31 @@ namespace DivingRoom.Services
         // Control Starting All the Threads
         private async Task GameTimingService(CancellationToken cancellationToken)
         {
+            //while (!cancellationToken.IsCancellationRequested)
+            //{
+            //    if (VariableControlService.IsTheGameStarted && !VariableControlService.IsGameTimerStarted)
+            //    {
+            //        GameTiming.Restart();
+            //        VariableControlService.IsGameTimerStarted = true;
+            //    }
+            //    bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming;
+            //    bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.IsGameTimerStarted;
+
+            //    if (GameFinishedByTimer || VariableControlService.IsTheGameFinished)
+            //        StopTheGame();
+            //}
             while (!cancellationToken.IsCancellationRequested)
             {
-                if (VariableControlService.IsTheGameStarted && !VariableControlService.IsGameTimerStarted)
+                if ((VariableControlService.GameStatus == GameStatus.Started && !VariableControlService.IsGameTimerStarted))
                 {
+                    Console.WriteLine("Restart The Timer");
                     GameTiming.Restart();
+                    Thread.Sleep(1000);
                     VariableControlService.IsGameTimerStarted = true;
                 }
                 bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming;
-                bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.IsGameTimerStarted;
-
-                if (GameFinishedByTimer || VariableControlService.IsTheGameFinished)
+                bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.GameStatus == GameStatus.Started && VariableControlService.IsGameTimerStarted;
+                if (GameFinishedByTimer)// || VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
                     StopTheGame();
             }
         }
@@ -268,9 +282,15 @@ namespace DivingRoom.Services
         }
         private void StopTheGame()
         {
+            //VariableControlService.IsTheGameStarted = false;
+            //VariableControlService.IsTheGameFinished = true;
+            //VariableControlService.EnableGoingToTheNextRoom = true;
+
+            Console.WriteLine("Stoped By Time For Test");
+            VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
             VariableControlService.IsTheGameStarted = false;
             VariableControlService.IsTheGameFinished = true;
-            //VariableControlService.EnableGoingToTheNextRoom = true;
+            VariableControlService.IsGameTimerStarted = false;
 
         }
         private void ResetTheGame()
