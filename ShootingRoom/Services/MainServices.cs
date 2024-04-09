@@ -72,19 +72,19 @@ namespace ShootingRoom.Services
         private async Task RunService(CancellationToken cancellationToken)
         {
 
-            while (true)
-            {
-                 Console.WriteLine(!MCP23Controller.Read(EnterRoomPB));
-                Thread.Sleep(1000);
-            }
+            //while (true)
+            //{
+            //     Console.WriteLine(!MCP23Controller.Read(EnterRoomPB));
+            //    Thread.Sleep(1000);
+            //}
             while (!cancellationToken.IsCancellationRequested)
             {
                 RoomAudio();
                 ControlEnteringRGBButton();
-                await CheckNextRoomStatus();
-                await ControlExitingRGBButton();
-                if (VariableControlService.GameStatus == GameStatus.Empty)
-                    DoorControl.Control(DoorPin, DoorStatus.Close);
+                //await CheckNextRoomStatus();
+                //await ControlExitingRGBButton();
+                //if (VariableControlService.GameStatus == GameStatus.Empty)
+                //    DoorControl.Control(DoorPin, DoorStatus.Close);
 
             }
 
