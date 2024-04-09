@@ -23,9 +23,15 @@ namespace ShootingRoom.Services
         public static int GameScore { get; set; } = 0;
         public static bool IsGameTimerStarted = false;
         public static int RoomTiming = 360000;// Time in Mill
-        public static Round GameRound = Round.Round1;
 
         public static int LevelScore = 0;
+
+
+        public static Round GameRound = Round.Round1;
+        public static RGBColor DefaultColor = RGBColor.White;
+        public static GameStatus GameStatus { get; set; } = GameStatus.Empty;
+        public static DoorStatus CurrentDoorStatus { get; set; } = DoorStatus.Open;
+        public static DoorStatus NewDoorStatus { get; set; } = DoorStatus.Open;
 
 
 

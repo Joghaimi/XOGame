@@ -73,7 +73,7 @@ namespace ShootingRoom.Services
             ControlPin(BigTargetRelay, false);
             ControlPin(BigTargetRelay, false);
             ControlPin(UVLight, false);
-            RGBLight.SetColor(RGBColor.White);
+            RGBLight.SetColor(VariableControlService.DefaultColor);
 
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -182,7 +182,7 @@ namespace ShootingRoom.Services
                             }
                             else
                             {
-                                RGBLight.SetColor(RGBColor.White);
+                                RGBLight.SetColor(VariableControlService.DefaultColor);
                                 IsItUV = ControlUVLight(false);
                             }
 
@@ -220,7 +220,7 @@ namespace ShootingRoom.Services
                     AudioPlayer.PIStartAudio(SoundType.Bonus);
                     Console.WriteLine($"Target Hit # {VariableControlService.LevelScore}");
                     RGBLight.SetColor(RGBColor.Blue);
-                    RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
+                    RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
                     Thread.Sleep(500);
                 }
                 if (VariableControlService.LevelScore == 5)
@@ -314,7 +314,7 @@ namespace ShootingRoom.Services
                 AudioPlayer.PIStartAudio(SoundType.Bonus);
                 RGBLight.SetColor(RGBColor.Blue);
                 if (!inUVMode)
-                    RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
+                    RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
                 else
                     RGBLight.TurnRGBColorDelayedASec(RGBColor.Off);
                 return score++;
@@ -324,7 +324,7 @@ namespace ShootingRoom.Services
                 AudioPlayer.PIStartAudio(SoundType.Descend);
                 RGBLight.SetColor(RGBColor.Red);
                 if (!inUVMode)
-                    RGBLight.TurnRGBColorDelayedASec(RGBColor.White);
+                    RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
                 else
                     RGBLight.TurnRGBColorDelayedASec(RGBColor.Off);
                 return score--;

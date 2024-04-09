@@ -16,7 +16,7 @@ namespace ShootingRoom.Services
         private readonly ILogger<MainServices> _logger;
         private GPIOController _controller;
         public bool isTheirAreSomeOneInTheRoom = false;
-        private CancellationTokenSource _cts, _cts2, _cts3;
+        private CancellationTokenSource _cts, _cts2, _cts3, _cts4;
         private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
         bool thereAreBackgroundSoundPlays = false;
         bool thereAreInstructionSoundPlays = false;
@@ -30,7 +30,9 @@ namespace ShootingRoom.Services
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _controller = new GPIOController();
+            
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Shooting);
+            RGBLight.SetColor(VariableControlService.DefaultColor);
             MCP23Controller.Init(Room.Shooting);
             AudioPlayer.Init(Room.Shooting);
             // Init the Pin's
@@ -43,10 +45,13 @@ namespace ShootingRoom.Services
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            _cts4 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
 
             Task.Run(() => RunService(_cts.Token));
             Task.Run(() => CheckIFRoomIsEmpty(_cts2.Token));
             Task.Run(() => GameTimingService(_cts3.Token));
+            Task.Run(() => DoorLockControl(_cts4.Token));
 
             return Task.CompletedTask;
         }
@@ -162,7 +167,19 @@ namespace ShootingRoom.Services
                 AudioPlayer.PIStopAudio();
             }
         }
-
+        private async Task DoorLockControl(CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                if (VariableControlService.CurrentDoorStatus != VariableControlService.NewDoorStatus)
+                {
+                    _logger.LogTrace($"Door Status Changes :{VariableControlService.NewDoorStatus.ToString()}");
+                    DoorControl.Control(DoorPin, VariableControlService.NewDoorStatus);
+                    VariableControlService.CurrentDoorStatus = VariableControlService.NewDoorStatus;
+                }
+                Thread.Sleep(500);
+            }
+        }
 
 
         public Task StopAsync(CancellationToken cancellationToken)
