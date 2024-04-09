@@ -1,5 +1,6 @@
 ﻿using Iot.Device.Mcp3428;
 using Library;
+using Library.APIIntegration;
 using Library.DoorControl;
 using Library.GPIOLib;
 using Library.Media;
@@ -15,7 +16,7 @@ namespace DarkRoom.Services
     {
 
         private GPIOController _controller;
-        private CancellationTokenSource _cts, _cts2, _cts3;
+        private CancellationTokenSource _cts, _cts2, _cts3, _cts4;
         private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
         private readonly ILogger<MainService> _logger;
         bool thereAreBackgroundSoundPlays = false;
@@ -52,6 +53,7 @@ namespace DarkRoom.Services
 
             MCP23Controller.PinModeSetup(EnterRoomPB, PinMode.Input);
             MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
+
             MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -61,6 +63,8 @@ namespace DarkRoom.Services
             Task.Run(() => CheckIFRoomIsEmpty(_cts2.Token));
             Task.Run(() => RunService(_cts.Token));
             Task.Run(() => GameTimingService(_cts3.Token));
+            Task.Run(() => DoorLockControl(_cts4.Token));
+
 
             return Task.CompletedTask;
         }
@@ -68,68 +72,216 @@ namespace DarkRoom.Services
         {
 
 
-            while (true)
+            while (!cancellationToken.IsCancellationRequested)
             {
-                //DoorControl.Status(DoorPin, false);
-                //Thread.Sleep(3000);
-                //DoorControl.Status(DoorPin, true);
-                //Thread.Sleep(3000);
-                bool PBPressed = !MCP23Controller.Read(NextRoomPB);
-                Console.WriteLine(PBPressed);
-                Thread.Sleep(1000);
+                RoomAudio();
+                ControlEnteringRGBButton();
+                await CheckNextRoomStatus();
+                await ControlExitingRGBButton();
+                //if (VariableControlService.GameStatus == GameStatus.Empty)
+                //    DoorControl.Control(DoorPin, DoorStatus.Close);
+
             }
 
 
+            //while (true)
+            //{
+            //    //DoorControl.Status(DoorPin, false);
+            //    //Thread.Sleep(3000);
+            //    //DoorControl.Status(DoorPin, true);
+            //    //Thread.Sleep(3000);
+            //    bool PBPressed = !MCP23Controller.Read(NextRoomPB);
+            //    Console.WriteLine(PBPressed);
+            //    Thread.Sleep(1000);
+            //}
 
-            MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
 
-            while (!cancellationToken.IsCancellationRequested)
+
+            //MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
+
+            //while (!cancellationToken.IsCancellationRequested)
+            //{
+            //    PIR1 = _controller.Read(MasterDI.PIRPin1);
+            //    PIR2 = _controller.Read(MasterDI.PIRPin2);
+            //    PIR3 = _controller.Read(MasterDI.PIRPin3);
+            //    PIR4 = _controller.Read(MasterDI.PIRPin4);
+            //    VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
+            //    ControlRoomAudio();
+            //    if (VariableControlService.EnableGoingToTheNextRoom)
+            //    {
+            //        _logger.LogDebug("Open The Door");
+            //        DoorControl.Status(DoorPin, true);
+            //        while (PIR1 || PIR2 || PIR3 || PIR4)
+            //        {
+            //            PIR1 = _controller.Read(MasterDI.PIRPin1);
+            //            PIR2 = _controller.Read(MasterDI.PIRPin2);
+            //            PIR3 = _controller.Read(MasterDI.PIRPin3);
+            //            PIR4 = _controller.Read(MasterDI.PIRPin4);
+            //        }
+            //        Thread.Sleep(30000);
+            //        DoorControl.Status(DoorPin, false);
+            //        VariableControlService.EnableGoingToTheNextRoom = false;
+            //        VariableControlService.IsTheirAnyOneInTheRoom = false;
+            //        VariableControlService.IsTheGameStarted = false;
+            //        RGBLight.SetColor(RGBColor.Off);
+            //        _logger.LogDebug("No One In The Room , All Gone To The Next Room");
+            //    }
+
+            Thread.Sleep(10);
+            //}
+        }
+
+
+
+
+
+
+
+        private void RoomAudio()
+        {
+            if (VariableControlService.GameStatus == GameStatus.NotStarted && !thereAreInstructionSoundPlays)
             {
-                PIR1 = _controller.Read(MasterDI.PIRPin1);
-                PIR2 = _controller.Read(MasterDI.PIRPin2);
-                PIR3 = _controller.Read(MasterDI.PIRPin3);
-                PIR4 = _controller.Read(MasterDI.PIRPin4);
-                VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
-                ControlRoomAudio();
-                if (VariableControlService.EnableGoingToTheNextRoom)
-                {
-                    _logger.LogDebug("Open The Door");
-                    DoorControl.Status(DoorPin, true);
-                    while (PIR1 || PIR2 || PIR3 || PIR4)
-                    {
-                        PIR1 = _controller.Read(MasterDI.PIRPin1);
-                        PIR2 = _controller.Read(MasterDI.PIRPin2);
-                        PIR3 = _controller.Read(MasterDI.PIRPin3);
-                        PIR4 = _controller.Read(MasterDI.PIRPin4);
-                    }
-                    Thread.Sleep(30000);
-                    DoorControl.Status(DoorPin, false);
-                    VariableControlService.EnableGoingToTheNextRoom = false;
-                    VariableControlService.IsTheirAnyOneInTheRoom = false;
-                    VariableControlService.IsTheGameStarted = false;
-                    RGBLight.SetColor(RGBColor.Off);
-                    _logger.LogDebug("No One In The Room , All Gone To The Next Room");
-                }
+                _logger.LogTrace("Start Instruction Audio");
+                AudioPlayer.PIBackgroundSound(SoundType.instruction);
+                thereAreInstructionSoundPlays = true;
+            }
+            else if (thereAreInstructionSoundPlays && VariableControlService.GameStatus != GameStatus.NotStarted)
+            {
+                _logger.LogTrace("Stop Instruction Audio");
+                thereAreInstructionSoundPlays = false;
+                AudioPlayer.PIStopAudio();
+                Thread.Sleep(500);
+            }
 
-                Thread.Sleep(10);
+            if (VariableControlService.GameStatus == GameStatus.Started && !thereAreBackgroundSoundPlays)
+            {
+                _logger.LogTrace("Start Background Audio");
+                thereAreBackgroundSoundPlays = true;
+                AudioPlayer.PIBackgroundSound(SoundType.Background);
+            }
+            else if (VariableControlService.GameStatus != GameStatus.Started && thereAreBackgroundSoundPlays)
+            {
+                _logger.LogTrace("Stop Background Audio");
+                thereAreBackgroundSoundPlays = false;
+                AudioPlayer.PIStopAudio();
             }
         }
 
-      
+        private void ControlEnteringRGBButton()
+        {
+            if (!EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.NotStarted)
+            {
+                _logger.LogTrace("Ready To Start The Game .. Turn RGB Button On");
+                EnterRGBButtonStatus = true;
+                RelayController.Status(EnterRGBButton, true);
+            }
+            else if (EnterRGBButtonStatus && VariableControlService.GameStatus != GameStatus.NotStarted)
+            {
+                EnterRGBButtonStatus = false;
+                RelayController.Status(EnterRGBButton, false);
+            }
+            bool RGBButtonIsOnAndGameNotStarted = EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.NotStarted;
+            if (RGBButtonIsOnAndGameNotStarted)
+            {
+                bool PBPressed = !MCP23Controller.Read(EnterRoomPB);
+                if (PBPressed)
+                {
+                    _logger.LogTrace("Start The Game Pressed");
+                    Console.WriteLine(PBPressed);
+                    EnterRGBButtonStatus = false;
+                    RelayController.Status(NextRoomPBLight, false);
+                    VariableControlService.GameStatus = GameStatus.Started;
+                    VariableControlService.IsGameTimerStarted = false;
+                }
+            }
+        }
+        private async Task CheckNextRoomStatus()
+        {
+            if (VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
+            {
+                var status = await APIIntegration.NextRoomStatus(VariableControlService.NextRoomURL);
+                if (status == "Empty")
+                {
+                    VariableControlService.GameStatus = GameStatus.ReadyToLeave;
+                    return;
+                }
+                Thread.Sleep(5000);
+            }
+        }
+        private async Task ControlExitingRGBButton()
+        {
+            if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && !NextRoomRGBButtonStatus)
+            {
+                Console.WriteLine("Ready To Leave .. Turn RGB Button On");
+                NextRoomRGBButtonStatus = true;
+                RelayController.Status(NextRoomPBLight, true);
+            }
+            else if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && NextRoomRGBButtonStatus)
+            {
+
+                bool PBPressed = !MCP23Controller.Read(NextRoomPB);
+                if (PBPressed)
+                {
+                    NextRoomRGBButtonStatus = false;
+                    while (true)
+                    {
+                        var result = await APIIntegration.SendScoreToTheNextRoom(VariableControlService.SendScoreToTheNextRoom, VariableControlService.TeamScore);
+                        _logger.LogTrace($"Score Send {result}");
+                        if (result)
+                        {
+                            VariableControlService.GameStatus = GameStatus.Leaving;
+                            RelayController.Status(NextRoomPBLight, false);
+                            DoorControl.Control(DoorPin, DoorStatus.Open);
+                            _logger.LogTrace($"Player Should be out From the room");
+                            Thread.Sleep(30000);
+                            DoorControl.Control(DoorPin, DoorStatus.Close);
+                            VariableControlService.GameStatus = GameStatus.Empty;
+                            _logger.LogTrace($"Room Should be Empty now");
+                            break;
+                        }
+                        Thread.Sleep(3000);
+                    }
+
+
+                }
+
+            }
+        }
+
+
+
+
+
+
         // Control Starting All the Threads
         private async Task GameTimingService(CancellationToken cancellationToken)
         {
+            //while (!cancellationToken.IsCancellationRequested)
+            //{
+            //    if (VariableControlService.IsTheGameStarted && !VariableControlService.IsGameTimerStarted)
+            //    {
+            //        GameTiming.Restart();
+            //        VariableControlService.IsGameTimerStarted = true;
+            //    }
+            //    bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming;
+            //    bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.IsGameTimerStarted;
+
+            //    if (GameFinishedByTimer || VariableControlService.IsTheGameFinished)
+            //        StopTheGame();
+            //}
+
             while (!cancellationToken.IsCancellationRequested)
             {
-                if (VariableControlService.IsTheGameStarted && !VariableControlService.IsGameTimerStarted)
+                if ((VariableControlService.GameStatus == GameStatus.Started && !VariableControlService.IsGameTimerStarted))
                 {
+                    Console.WriteLine("Restart The Timer");
                     GameTiming.Restart();
+                    Thread.Sleep(1000);
                     VariableControlService.IsGameTimerStarted = true;
                 }
                 bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming;
-                bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.IsGameTimerStarted;
-
-                if (GameFinishedByTimer || VariableControlService.IsTheGameFinished)
+                bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.GameStatus == GameStatus.Started && VariableControlService.IsGameTimerStarted;
+                if (GameFinishedByTimer)// || VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
                     StopTheGame();
             }
         }
@@ -178,9 +330,16 @@ namespace DarkRoom.Services
         }
         private void StopTheGame()
         {
+            //VariableControlService.IsTheGameStarted = false;
+            //VariableControlService.IsTheGameFinished = true;
+            //VariableControlService.EnableGoingToTheNextRoom = true;
 
+            Console.WriteLine("Stoped By Time For Test");
+            VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
             VariableControlService.IsTheGameStarted = false;
             VariableControlService.IsTheGameFinished = true;
+            VariableControlService.IsGameTimerStarted = false;
+
         }
         private void ResetTheGame()
         {
@@ -201,6 +360,19 @@ namespace DarkRoom.Services
         public void Dispose()
         {
             _cts.Dispose();
+        }
+        private async Task DoorLockControl(CancellationToken cancellationToken)
+        {
+            while (true)
+            {
+                if (VariableControlService.CurrentDoorStatus != VariableControlService.NewDoorStatus)
+                {
+                    _logger.LogTrace($"Door Status Changes :{VariableControlService.NewDoorStatus.ToString()}");
+                    DoorControl.Control(DoorPin, VariableControlService.NewDoorStatus);
+                    VariableControlService.CurrentDoorStatus = VariableControlService.NewDoorStatus;
+                }
+                Thread.Sleep(500);
+            }
         }
 
     }

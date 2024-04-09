@@ -142,7 +142,9 @@ namespace DarkRoom.Services
         }
         private bool IsGameStartedOrInGoing()
         {
-            return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
+            //return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
+            return VariableControlService.GameStatus == GameStatus.Started;
+
         }
     }
 }
