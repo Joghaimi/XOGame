@@ -124,7 +124,7 @@ namespace FortRoom.Services
 
                 //Console.WriteLine($"PBPressed {PBPressed} ================ **** ");
                 //Console.WriteLine($"Pressure Mate {MCP23Controller.Read(MasterDI.IN1)}");
-                
+
                 //Thread.Sleep(1000);
                 ////if (PBPressed)
                 ////{
@@ -136,7 +136,7 @@ namespace FortRoom.Services
                 RoomAudio();
                 ControlEnteringRGBButton();
                 await CheckNextRoomStatus();
-                ControlExitingRGBButton();
+                await ControlExitingRGBButton();
             }
         }
         private async Task CheckIFRoomIsEmpty(CancellationToken cancellationToken)
@@ -235,7 +235,7 @@ namespace FortRoom.Services
             //}
         }
 
-        private async void ControlExitingRGBButton()
+        private async Task ControlExitingRGBButton()
         {
             if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && !NextRoomRGBButtonStatus)
             {
@@ -245,7 +245,7 @@ namespace FortRoom.Services
             }
             else if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && NextRoomRGBButtonStatus)
             {
-             
+
                 bool PBPressed = !MCP23Controller.Read(NextRoomPB);
                 if (PBPressed)
                 {
@@ -270,7 +270,7 @@ namespace FortRoom.Services
 
                 }
                 // This Will be Moved to run after PB Is Preessed 
-                
+
             }
         }
 
@@ -278,7 +278,7 @@ namespace FortRoom.Services
         {
             if (VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
             {
-                var status =await  APIIntegration.NextRoomStatus(VariableControlService.NextRoomURL);
+                var status = await APIIntegration.NextRoomStatus(VariableControlService.NextRoomURL);
                 if (status == "Empty")
                 {
                     VariableControlService.GameStatus = GameStatus.ReadyToLeave;
@@ -290,7 +290,7 @@ namespace FortRoom.Services
 
 
 
-        
+
 
 
         private async Task GameTimingService(CancellationToken cancellationToken)
