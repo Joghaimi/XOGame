@@ -29,11 +29,11 @@ namespace DivingRoom.Services
         
         bool NextRoomRGBButtonStatus = false;
         private MCP23Pin NextRoomPBLight = MasterOutputPin.OUTPUT8;
-        private MCP23Pin NextRoomPB = MasterDI.IN8;
+        private MCP23Pin NextRoomPB = MasterDI.IN4;
 
         bool EnterRGBButtonStatus = false;
         private MCP23Pin EnterRGBButton = MasterOutputPin.OUTPUT8;
-        private MCP23Pin EnterRoomPB = MasterDI.IN8;
+        private MCP23Pin EnterRoomPB = MasterDI.IN4;
         private bool doorStatus = false;
         private bool RGBButtonStatus = false;
         Stopwatch GameTiming = new Stopwatch();
