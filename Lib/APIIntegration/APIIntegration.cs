@@ -77,7 +77,7 @@ namespace Library.APIIntegration
         }
 
 
-        public async static Task<string> NextRoomStatus(string nextRoomURL)
+        public  static string NextRoomStatus(string nextRoomURL)
         {
             HttpClientHandler handler = new HttpClientHandler();
             handler.ServerCertificateCustomValidationCallback = ValidateCertificate;

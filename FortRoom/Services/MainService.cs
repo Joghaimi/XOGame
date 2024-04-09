@@ -118,6 +118,15 @@ namespace FortRoom.Services
 
             while (!cancellationToken.IsCancellationRequested)
             {
+                bool PBPressed = !MCP23Controller.Read(NextRoomPB);
+                Console.WriteLine(PBPressed);
+                Thread.Sleep(1000);
+                //if (PBPressed)
+                //{
+                //    NextRoomRGBButtonStatus = false;
+                //    VariableControlService.GameStatus = GameStatus.Leaving;
+                //    RelayController.Status(NextRoomPBLight, false);
+                //}
 
                 RoomAudio();
                 ControlEnteringRGBButton();
