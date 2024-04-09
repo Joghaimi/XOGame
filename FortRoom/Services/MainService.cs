@@ -89,7 +89,7 @@ namespace FortRoom.Services
                 ControlEnteringRGBButton();
                 await CheckNextRoomStatus();
                 await ControlExitingRGBButton();
-                if(VariableControlService.GameStatus == GameStatus.Empty)
+                if (VariableControlService.GameStatus == GameStatus.Empty)
                     DoorControl.Control(DoorPin, DoorStatus.Close);
 
             }
@@ -211,7 +211,7 @@ namespace FortRoom.Services
                         {
                             VariableControlService.GameStatus = GameStatus.Leaving;
                             RelayController.Status(NextRoomPBLight, false);
-                            DoorControl.Control(DoorPin,DoorStatus.Open);
+                            DoorControl.Control(DoorPin, DoorStatus.Open);
                             _logger.LogTrace($"Player Should be out From the room");
                             Thread.Sleep(30000);
                             DoorControl.Control(DoorPin, DoorStatus.Close);
@@ -253,10 +253,13 @@ namespace FortRoom.Services
             while (!cancellationToken.IsCancellationRequested)
             {
                 //if (VariableControlService.IsTheGameStarted && !VariableControlService.IsGameTimerStarted)
-                if (VariableControlService.GameStatus == GameStatus.Started && !VariableControlService.IsGameTimerStarted)
+
+                if (VariableControlService.GameStatus == GameStatus.Empty || 
+                    (VariableControlService.GameStatus == GameStatus.Started && !VariableControlService.IsGameTimerStarted))
                 {
                     Console.WriteLine("Restart The Timer");
                     GameTiming.Restart();
+                    Thread.Sleep(1000);
                     VariableControlService.IsGameTimerStarted = true;
                 }
                 bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming;
@@ -283,7 +286,7 @@ namespace FortRoom.Services
             }
         }
 
-        
+
         private void StopTheGame()
         {
             Console.WriteLine("Stoped By Time For Test");
