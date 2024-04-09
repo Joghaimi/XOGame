@@ -23,6 +23,15 @@ namespace DarkRoom.Services
         private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
         Stopwatch GameTiming = new Stopwatch();
 
+        bool NextRoomRGBButtonStatus = false;
+        private MCP23Pin NextRoomPBLight = MasterOutputPin.OUTPUT8;
+        private MCP23Pin NextRoomPB = MasterDI.IN3;
+
+        bool EnterRGBButtonStatus = false;
+        private MCP23Pin EnterRGBButton = MasterOutputPin.OUTPUT8;
+        private MCP23Pin EnterRoomPB = MasterDI.IN3;
+
+
         public MainService(ILogger<MainService> logger)
         {
             _logger = logger;
@@ -41,6 +50,10 @@ namespace DarkRoom.Services
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
             DoorControl.Status(DoorPin, false);
 
+            MCP23Controller.PinModeSetup(EnterRoomPB, PinMode.Input);
+            MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
+
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -53,6 +66,21 @@ namespace DarkRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
+
+
+            while (true)
+            {
+                //DoorControl.Status(DoorPin, false);
+                //Thread.Sleep(3000);
+                //DoorControl.Status(DoorPin, true);
+                //Thread.Sleep(3000);
+                bool PBPressed = !MCP23Controller.Read(NextRoomPB);
+                Console.WriteLine(PBPressed);
+                Thread.Sleep(1000);
+            }
+
+
+
             MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
 
             while (!cancellationToken.IsCancellationRequested)

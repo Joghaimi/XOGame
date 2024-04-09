@@ -84,8 +84,6 @@ namespace DivingRoom.Controllers
         {
             return Ok(VariableControlService.TeamScore.DivingRoomScore);
         }
-
-
         // Control Game 
         [HttpGet("DoorControl")]
         public IActionResult DoorControl(DoorStatus doorStatus)
