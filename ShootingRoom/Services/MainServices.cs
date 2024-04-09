@@ -294,32 +294,32 @@ namespace ShootingRoom.Services
             {
 
                 bool PBPressed = !MCP23Controller.Read(NextRoomPB);
-                Console.WriteLine(PBPressed);
-                Thread.Sleep(1000);
-                //if (PBPressed)
-                //{
-                //    NextRoomRGBButtonStatus = false;
-                //    while (true)
-                //    {
-                //        var result = await APIIntegration.SendScoreToTheNextRoom(VariableControlService.SendScoreToTheNextRoom, VariableControlService.TeamScore);
-                //        _logger.LogTrace($"Score Send {result}");
-                //        if (result)
-                //        {
-                //            VariableControlService.GameStatus = GameStatus.Leaving;
-                //            RelayController.Status(NextRoomPBLight, false);
-                //            DoorControl.Control(DoorPin, DoorStatus.Open);
-                //            _logger.LogTrace($"Player Should be out From the room");
-                //            Thread.Sleep(30000);
-                //            DoorControl.Control(DoorPin, DoorStatus.Close);
-                //            VariableControlService.GameStatus = GameStatus.Empty;
-                //            _logger.LogTrace($"Room Should be Empty now");
-                //            break;
-                //        }
-                //        Thread.Sleep(3000);
-                //    }
+                //Console.WriteLine(PBPressed);
+                //Thread.Sleep(1000);
+                if (PBPressed)
+                {
+                    NextRoomRGBButtonStatus = false;
+                    while (true)
+                    {
+                        var result = await APIIntegration.SendScoreToTheNextRoom(VariableControlService.SendScoreToTheNextRoom, VariableControlService.TeamScore);
+                        _logger.LogTrace($"Score Send {result}");
+                        if (result)
+                        {
+                            VariableControlService.GameStatus = GameStatus.Leaving;
+                            RelayController.Status(NextRoomPBLight, false);
+                            DoorControl.Control(DoorPin, DoorStatus.Open);
+                            _logger.LogTrace($"Player Should be out From the room");
+                            Thread.Sleep(30000);
+                            DoorControl.Control(DoorPin, DoorStatus.Close);
+                            VariableControlService.GameStatus = GameStatus.Empty;
+                            _logger.LogTrace($"Room Should be Empty now");
+                            break;
+                        }
+                        Thread.Sleep(3000);
+                    }
 
 
-                //}
+                }
 
             }
         }
