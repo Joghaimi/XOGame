@@ -89,6 +89,9 @@ namespace FortRoom.Services
                 ControlEnteringRGBButton();
                 await CheckNextRoomStatus();
                 await ControlExitingRGBButton();
+                if(VariableControlService.GameStatus == GameStatus.Empty)
+                    DoorControl.Control(DoorPin, DoorStatus.Close);
+
             }
         }
         private async Task CheckIFRoomIsEmpty(CancellationToken cancellationToken)
@@ -207,8 +210,10 @@ namespace FortRoom.Services
                         {
                             VariableControlService.GameStatus = GameStatus.Leaving;
                             RelayController.Status(NextRoomPBLight, false);
+                            DoorControl.Control(DoorPin,DoorStatus.Open);
                             _logger.LogTrace($"Player Should be out From the room");
                             Thread.Sleep(30000);
+                            DoorControl.Control(DoorPin, DoorStatus.Close);
                             VariableControlService.GameStatus = GameStatus.Empty;
                             _logger.LogTrace($"Room Should be Empty now");
                             break;
