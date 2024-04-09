@@ -121,7 +121,8 @@ namespace FortRoom.Services
 
         private bool IsGameStartedOrInGoing()
         {
-            return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
+            return VariableControlService.GameStatus == GameStatus.Started;
+            //return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
         }
         void StopObstructionService()
         {
