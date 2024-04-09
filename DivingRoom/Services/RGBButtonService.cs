@@ -18,7 +18,6 @@ namespace DivingRoom.Services
         private readonly IHostApplicationLifetime _appLifetime;
         Stopwatch GameStopWatch = new Stopwatch();
         private CancellationTokenSource _cts;
-        //bool IsTimerStarted = false;
         Random random = new Random();
         int numberOfSelectedButton = 0;
         int numberOfPressedButton = 0;
@@ -27,7 +26,7 @@ namespace DivingRoom.Services
         int difficulty = 6;
         List<int> unSelectedPushButton = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-        bool IsEnterdTheRoom = false;
+        //bool IsEnterdTheRoom = false;
         public RGBButtonServices(ILogger<RGBButtonServices> logger, IHostApplicationLifetime appLifetime)
         {
             _appLifetime = appLifetime;
@@ -39,9 +38,7 @@ namespace DivingRoom.Services
 
             _appLifetime.ApplicationStopping.Register(Stopped);
             _logger.LogInformation("Start RGBButtonService");
-
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1));
-            //RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR2, RGBButtonPin.RGBG2, RGBButtonPin.RGBB2, RGBButtonPin.RGBPB2));
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR3, RGBButtonPin.RGBG3, RGBButtonPin.RGBB3, RGBButtonPin.RGBPB3));
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR4, RGBButtonPin.RGBG4, RGBButtonPin.RGBB4, RGBButtonPin.RGBPB4));
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR5, RGBButtonPin.RGBG5, RGBButtonPin.RGBB5, RGBButtonPin.RGBPB5));
@@ -50,9 +47,9 @@ namespace DivingRoom.Services
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR12, RGBButtonPin.RGBG12, RGBButtonPin.RGBB12, RGBButtonPin.RGBPB12));
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR9, RGBButtonPin.RGBG9, RGBButtonPin.RGBB9, RGBButtonPin.RGBPB9));
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR10, RGBButtonPin.RGBG10, RGBButtonPin.RGBB10, RGBButtonPin.RGBPB10));
-            MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
-            MCP23Controller.PinModeSetup(MasterDI.IN2, PinMode.Input);
-            MCP23Controller.PinModeSetup(MasterDI.IN3, PinMode.Input);
+            //MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
+            //MCP23Controller.PinModeSetup(MasterDI.IN2, PinMode.Input);
+            //MCP23Controller.PinModeSetup(MasterDI.IN3, PinMode.Input);
             GameStopWatch.Start();
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task task1 = Task.Run(() => RunService(_cts.Token));
@@ -65,18 +62,18 @@ namespace DivingRoom.Services
                 //TestRGBButton();
                 if (IsGameStartedOrInGoing())
                 {
-                    while (!IsEnterdTheRoom)
-                    {
-                        IsEnterdTheRoom = MCP23Controller.Read(MasterDI.IN1) ||
-                                          MCP23Controller.Read(MasterDI.IN2) ||
-                                          MCP23Controller.Read(MasterDI.IN3);
-                        if (!IsGameStartedOrInGoing())
-                            break;
-                    }
+                    //while (!IsEnterdTheRoom)
+                    //{
+                    //    IsEnterdTheRoom = MCP23Controller.Read(MasterDI.IN1) ||
+                    //                      MCP23Controller.Read(MasterDI.IN2) ||
+                    //                      MCP23Controller.Read(MasterDI.IN3);
+                    //    if (!IsGameStartedOrInGoing())
+                    //        break;
+                    //}
                     if (!VariableControlService.IsRGBButtonServiceStarted)
                     {
-                        Reset();
                         VariableControlService.IsRGBButtonServiceStarted = true;
+                        Reset();
                         Console.WriteLine("****************** Game Started");
                     }
                     while (difficulty >= 2)
@@ -145,8 +142,8 @@ namespace DivingRoom.Services
                 {
                     _logger.LogInformation("RGB Service Stopped");
                     StopRGBButtonService();
-                    Reset();
-                    IsEnterdTheRoom = false;
+                    //Reset();
+                    //IsEnterdTheRoom = false;
                 }
                 Thread.Sleep(10);
 
@@ -160,7 +157,7 @@ namespace DivingRoom.Services
                 RGBButtonList[index].Set(false);
                 RGBButtonList[index].BlockForASec();
                 AudioPlayer.PIStartAudio(SoundType.Bonus);
-                VariableControlService.TeamScore.DivingRoomScore+=5;
+                VariableControlService.TeamScore.DivingRoomScore += 5;
                 numberOfPressedButton++;
                 _logger.LogInformation($"+ score {VariableControlService.TeamScore.DivingRoomScore}");
             }
@@ -171,7 +168,7 @@ namespace DivingRoom.Services
             {
 
                 RGBButtonList[index].BlockForASec();
-                VariableControlService.TeamScore.DivingRoomScore-=5;
+                VariableControlService.TeamScore.DivingRoomScore -= 5;
                 AudioPlayer.PIStartAudio(SoundType.Descend);
                 Console.WriteLine($"- score {VariableControlService.TeamScore.DivingRoomScore}");
             }
@@ -180,13 +177,13 @@ namespace DivingRoom.Services
 
         private void StopRGBButtonService()
         {
-            Reset();
+            //Reset();
             VariableControlService.IsRGBButtonServiceStarted = false;
             VariableControlService.IsTheGameFinished = true;
             TurnRGBButtonWithColor(RGBColor.Off);
             AudioPlayer.PIStartAudio(SoundType.MissionAccomplished);
             AudioPlayer.PIStopAudio();
-            RGBLight.SetColor(RGBColor.White);
+            RGBLight.SetColor(VariableControlService.DefaultColor);
             Thread.Sleep(1000);
         }
         private void UnselectAllPB()
@@ -316,7 +313,9 @@ namespace DivingRoom.Services
         }
         private bool IsGameStartedOrInGoing()
         {
-            return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
+
+            return VariableControlService.GameStatus == GameStatus.Started;
+            //return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
         }
 
 

@@ -18,10 +18,11 @@ namespace FortRoom.Services
         private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
         private MCP23Pin LaserPin = MasterOutputPin.OUTPUT2;
 
+        bool EnterRGBButtonStatus = false;
         private MCP23Pin EnterRGBButton = MasterOutputPin.OUTPUT8;
         private MCP23Pin EnterRoomPB = MasterDI.IN8;
 
-
+        bool NextRoomRGBButtonStatus = false;
         private MCP23Pin NextRoomPBLight = MasterOutputPin.OUTPUT8;
         private MCP23Pin NextRoomPB = MasterDI.IN8;
 
@@ -33,7 +34,6 @@ namespace FortRoom.Services
         bool thereAreInstructionSoundPlays = false;
         Stopwatch GameTiming = new Stopwatch();
 
-        bool EnterRGBButtonStatus = false;
 
 
 
@@ -48,15 +48,15 @@ namespace FortRoom.Services
             AudioPlayer.Init(Room.Fort);
             MCP23Controller.Init(Room.Fort);
 
-            MCP23Controller.PinModeSetup(EnterRoomPB, PinMode.InputPullDown);
-            MCP23Controller.PinModeSetup(NextRoomPB, PinMode.InputPullDown);
+            MCP23Controller.PinModeSetup(EnterRoomPB, PinMode.InputPullUp);
+            MCP23Controller.PinModeSetup(NextRoomPB, PinMode.InputPullUp);
 
 
 
-            _controller.Setup(MasterDI.PIRPin1, PinMode.InputPullDown);
-            _controller.Setup(MasterDI.PIRPin2, PinMode.InputPullDown);
-            _controller.Setup(MasterDI.PIRPin3, PinMode.InputPullDown);
-            _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
+            //_controller.Setup(MasterDI.PIRPin1, PinMode.InputPullDown);
+            //_controller.Setup(MasterDI.PIRPin2, PinMode.InputPullDown);
+            //_controller.Setup(MasterDI.PIRPin3, PinMode.InputPullDown);
+            //_controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
             // In Main Service Run All Default and common things 
 
             RGBLight.SetColor(VariableControlService.DefaultColor);
@@ -115,8 +115,10 @@ namespace FortRoom.Services
 
             while (!cancellationToken.IsCancellationRequested)
             {
+             
                 RoomAudio();
                 ControlEnteringRGBButton();
+                ControlExitingRGBButton();
             }
         }
         private async Task CheckIFRoomIsEmpty(CancellationToken cancellationToken)
@@ -213,6 +215,28 @@ namespace FortRoom.Services
             //        RelayController.Status(NextRoomPBLight, false);
             //    }
             //}
+        }
+
+        private void ControlExitingRGBButton()
+        {
+            if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && !NextRoomRGBButtonStatus)
+            {
+                Console.WriteLine("Ready To Leave .. Turn RGB Button On");
+                NextRoomRGBButtonStatus = true;
+                RelayController.Status(NextRoomPBLight, true);
+            }
+            else if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && NextRoomRGBButtonStatus)
+            {
+                Console.WriteLine(MCP23Controller.Read(NextRoomPB));
+                Thread.Sleep(5000);
+                bool PBPressed = !MCP23Controller.Read(NextRoomPB);
+                if (PBPressed)
+                {
+                    NextRoomRGBButtonStatus = false;
+                    VariableControlService.GameStatus = GameStatus.Leaving;
+                    RelayController.Status(NextRoomPBLight, false);
+                }
+            }
         }
 
 
