@@ -181,6 +181,8 @@ namespace FortRoom.Services
             if (RGBButtonIsOnAndGameNotStarted)
             {
                 bool PBPressed = !MCP23Controller.Read(EnterRoomPB);
+                Console.WriteLine(PBPressed);
+                Thread.Sleep(1000);
                 if (PBPressed)
                 {
                     _logger.LogTrace("Start The Game Pressed");
@@ -276,7 +278,7 @@ namespace FortRoom.Services
 
         private async Task DoorLockControl(CancellationToken cancellationToken)
         {
-            while (true)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 if (VariableControlService.CurrentDoorStatus != VariableControlService.NewDoorStatus)
                 {
