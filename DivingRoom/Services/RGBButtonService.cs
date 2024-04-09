@@ -59,7 +59,7 @@ namespace DivingRoom.Services
         {
             while (true)
             {
-                //TestRGBButton();
+                TestRGBButton();
                 if (IsGameStartedOrInGoing())
                 {
                     //while (!IsEnterdTheRoom)
