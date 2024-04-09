@@ -33,6 +33,7 @@ namespace FortRoom.Services
         public static DoorStatus NewDoorStatus { get; set; } = DoorStatus.Open;
 
         public static string NextRoomURL = "https://shooting.local:7248/api/Shooting/RoomStatus";
+        public static string SendScoreToTheNextRoom = "https://shooting.local:7248/api/Shooting/ReciveScore";
 
 
         public static void ResetTheGame()

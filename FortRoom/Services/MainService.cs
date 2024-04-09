@@ -221,7 +221,7 @@ namespace FortRoom.Services
             //}
         }
 
-        private void ControlExitingRGBButton()
+        private async void ControlExitingRGBButton()
         {
             if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && !NextRoomRGBButtonStatus)
             {
@@ -231,23 +231,44 @@ namespace FortRoom.Services
             }
             else if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && NextRoomRGBButtonStatus)
             {
-                Console.WriteLine(MCP23Controller.Read(NextRoomPB));
-                Thread.Sleep(5000);
-                bool PBPressed = !MCP23Controller.Read(NextRoomPB);
-                if (PBPressed)
+                //Console.WriteLine(MCP23Controller.Read(NextRoomPB));
+                //Thread.Sleep(5000);
+                //bool PBPressed = !MCP23Controller.Read(NextRoomPB);
+                //if (PBPressed)
+                //{
+                //    NextRoomRGBButtonStatus = false;
+                //    VariableControlService.GameStatus = GameStatus.Leaving;
+                //    RelayController.Status(NextRoomPBLight, false);
+                //}
+                while (true)
                 {
-                    NextRoomRGBButtonStatus = false;
-                    VariableControlService.GameStatus = GameStatus.Leaving;
-                    RelayController.Status(NextRoomPBLight, false);
+
+                    var result = await APIIntegration.SendScoreToTheNextRoom(VariableControlService.SendScoreToTheNextRoom, VariableControlService.TeamScore);
+                    _logger.LogTrace($"Score Send {result}");
+                    if (result)
+                    {
+                        VariableControlService.GameStatus = GameStatus.Leaving;
+                        _logger.LogTrace($"Player Should be out From the room");
+                        Thread.Sleep(30000);
+                        VariableControlService.GameStatus = GameStatus.Empty;
+                        _logger.LogTrace($"Room Should be Empty now");
+                        break;
+                    }
+
+
                 }
             }
         }
 
-        private void CheckNextRoomStatus()
+        private async void CheckNextRoomStatus()
         {
             if (VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
             {
-               var status = APIIntegration.NextRoomStatus(VariableControlService.NextRoomURL);
+                var status = await APIIntegration.NextRoomStatus(VariableControlService.NextRoomURL);
+                if (status == "Empty")
+                {
+                    VariableControlService.GameStatus = GameStatus.ReadyToLeave;
+                }
                 Thread.Sleep(3000);
             }
         }

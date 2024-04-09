@@ -110,6 +110,50 @@ namespace Library.APIIntegration
                 }
             }
         }
+
+        public async static Task<bool> SendScoreToTheNextRoom(string nextRoomURL, Team team)
+        {
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = ValidateCertificate;
+
+            using (HttpClient httpClient = new HttpClient(handler))
+            {
+                try
+                {
+                    string jsonData = JsonConvert.SerializeObject(team);
+                    StringContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = await httpClient.PostAsync(nextRoomURL, content);
+                    Console.WriteLine($"response.IsSuccessStatusCode {response.IsSuccessStatusCode}");
+                    if (response.IsSuccessStatusCode)
+                        return true;
+                    else
+                        return true;
+                    //HttpResponseMessage response = await httpClient.GetAsync(nextRoomURL);
+                    //if (response.IsSuccessStatusCode)
+                    //{
+                    //    // Read the response content as a string
+                    //    string responseBody = await response.Content.ReadAsStringAsync();
+                    //    Console.WriteLine("Response received:");
+                    //    Console.WriteLine(responseBody);
+                    //    return responseBody;
+                    //}
+                    //else
+                    //{
+                    //    // Handle the unsuccessful response (non-success status code)
+                    //    Console.WriteLine($"Error: {response.StatusCode}");
+                    //    return null;
+                    //}
+                }
+                catch (HttpRequestException ex)
+                {
+                    // Handle any exceptions that occurred during the request
+                    Console.WriteLine($"Request failed: {ex.Message}");
+                    return false;
+                }
+            }
+        }
+
+
         static bool ValidateCertificate(HttpRequestMessage requestMessage, X509Certificate2 certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
             return true; // Always accept the certificate
