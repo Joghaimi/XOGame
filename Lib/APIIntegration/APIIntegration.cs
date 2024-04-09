@@ -123,11 +123,12 @@ namespace Library.APIIntegration
                     string jsonData = JsonConvert.SerializeObject(team);
                     StringContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
                     HttpResponseMessage response = await httpClient.PostAsync(nextRoomURL, content);
-                    Console.WriteLine($"response.IsSuccessStatusCode {response.IsSuccessStatusCode}");
+                    Console.WriteLine($"response.IsSuccessStatusCode {response.IsSuccessStatusCode} {response.StatusCode}");
+                    
                     if (response.IsSuccessStatusCode)
                         return true;
                     else
-                        return true;
+                        return false;
                     //HttpResponseMessage response = await httpClient.GetAsync(nextRoomURL);
                     //if (response.IsSuccessStatusCode)
                     //{
