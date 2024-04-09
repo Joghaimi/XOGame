@@ -269,8 +269,9 @@ namespace FortRoom.Services
                 if (status == "Empty")
                 {
                     VariableControlService.GameStatus = GameStatus.ReadyToLeave;
+                    return;
                 }
-                Thread.Sleep(3000);
+                Thread.Sleep(10000);
             }
         }
 
