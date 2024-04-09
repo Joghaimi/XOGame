@@ -303,6 +303,47 @@ namespace FloorIsLava.Services
             }
         }
 
+        private void RoomAudio()
+        {
+            if (VariableControlService.GameStatus == GameStatus.NotStarted && !thereAreInstructionSoundPlays)
+            {
+                _logger.LogTrace("Start Instruction Audio");
+                AudioPlayer.PIBackgroundSound(SoundType.instruction);
+                thereAreInstructionSoundPlays = true;
+            }
+            else if (thereAreInstructionSoundPlays && VariableControlService.GameStatus != GameStatus.NotStarted)
+            {
+                _logger.LogTrace("Stop Instruction Audio");
+                thereAreInstructionSoundPlays = false;
+                AudioPlayer.PIStopAudio();
+                Thread.Sleep(500);
+            }
 
+            if (VariableControlService.GameStatus == GameStatus.Started && !thereAreBackgroundSoundPlays)
+            {
+                _logger.LogTrace("Start Background Audio");
+                thereAreBackgroundSoundPlays = true;
+                AudioPlayer.PIBackgroundSound(SoundType.Background);
+            }
+            else if (VariableControlService.GameStatus != GameStatus.Started && thereAreBackgroundSoundPlays)
+            {
+                _logger.LogTrace("Stop Background Audio");
+                thereAreBackgroundSoundPlays = false;
+                AudioPlayer.PIStopAudio();
+            }
+        }
+        private async Task DoorLockControl(CancellationToken cancellationToken)
+        {
+            while (true)
+            {
+                if (VariableControlService.CurrentDoorStatus != VariableControlService.NewDoorStatus)
+                {
+                    _logger.LogTrace($"Door Status Changes :{VariableControlService.NewDoorStatus.ToString()}");
+                    DoorControl.Control(DoorPin, VariableControlService.NewDoorStatus);
+                    VariableControlService.CurrentDoorStatus = VariableControlService.NewDoorStatus;
+                }
+                Thread.Sleep(500);
+            }
+        }
     }
 }
