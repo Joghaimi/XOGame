@@ -21,11 +21,11 @@ namespace FortRoom.Services
 
         bool EnterRGBButtonStatus = false;
         private MCP23Pin EnterRGBButton = MasterOutputPin.OUTPUT8;
-        private MCP23Pin EnterRoomPB = MasterDI.IN8;
+        private MCP23Pin EnterRoomPB = MasterDI.IN3;
 
         bool NextRoomRGBButtonStatus = false;
         private MCP23Pin NextRoomPBLight = MasterOutputPin.OUTPUT8;
-        private MCP23Pin NextRoomPB = MasterDI.IN8;
+        private MCP23Pin NextRoomPB = MasterDI.IN3;
 
 
         private CancellationTokenSource _cts, _cts2, _cts3, _cts4;
@@ -52,6 +52,7 @@ namespace FortRoom.Services
             MCP23Controller.Init(Room.Fort);
 
             MCP23Controller.PinModeSetup(EnterRoomPB, PinMode.Input);
+
             MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
 
@@ -122,7 +123,7 @@ namespace FortRoom.Services
             {
                 bool PBPressed = MCP23Controller.Read(NextRoomPB);
 
-                Console.WriteLine($"PBPressed {PBPressed}");
+                Console.WriteLine($"PBPressed {PBPressed} ================ **** ");
                 Console.WriteLine($"Pressure Mate {MCP23Controller.Read(MasterDI.IN1)}");
                 
                 Thread.Sleep(1000);
