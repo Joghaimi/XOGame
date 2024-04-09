@@ -28,7 +28,7 @@ namespace FortRoom.Services
         private MCP23Pin NextRoomPB = MasterDI.IN8;
 
 
-        private CancellationTokenSource _cts, _cts2, _cts3, _cts4, _cts5;
+        private CancellationTokenSource _cts, _cts2, _cts3, _cts4;
         public bool isTheirAreSomeOneInTheRoom = false;
         private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
         bool thereAreBackgroundSoundPlays = false;
@@ -74,13 +74,11 @@ namespace FortRoom.Services
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts4 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            _cts5 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
             Task.Run(() => RunService(_cts.Token));
             Task.Run(() => CheckIFRoomIsEmpty(_cts2.Token));
             Task.Run(() => GameTimingService(_cts3.Token));
             Task.Run(() => DoorLockControl(_cts4.Token));
-            Task.Run(() => CheckNextRoomStatus(_cts5.Token));
 
 
             return Task.CompletedTask;
@@ -124,7 +122,7 @@ namespace FortRoom.Services
                 RoomAudio();
                 ControlEnteringRGBButton();
                 ControlExitingRGBButton();
-                //CheckNextRoomStatus();
+                CheckNextRoomStatus();
             }
         }
         private async Task CheckIFRoomIsEmpty(CancellationToken cancellationToken)
@@ -263,7 +261,7 @@ namespace FortRoom.Services
             }
         }
 
-        private async Task CheckNextRoomStatus(CancellationToken cancellationToken)
+        private async Task CheckNextRoomStatus()
         {
             if (VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
             {
@@ -336,22 +334,6 @@ namespace FortRoom.Services
                     StopTheGame();
             }
         }
-        //private async Task CheckNextRoomSatus(CancellationToken cancellationToken)
-        //{
-        //    while (!cancellationToken.IsCancellationRequested)
-        //    {
-        //        if (VariableControlService.IsTheGameStarted && !VariableControlService.IsGameTimerStarted)
-        //        {
-        //            GameTiming.Restart();
-        //            VariableControlService.IsGameTimerStarted = true;
-        //        }
-        //        bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming;
-        //        bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.IsGameTimerStarted;
-
-        //        if (GameFinishedByTimer || VariableControlService.IsTheGameFinished)
-        //            StopTheGame();
-        //    }
-        //}
 
         private async Task DoorLockControl(CancellationToken cancellationToken)
         {
@@ -367,7 +349,10 @@ namespace FortRoom.Services
             }
         }
 
-      
+        private void StartTheGame()
+        {
+
+        }
         private void StopTheGame()
         {
             VariableControlService.IsTheGameStarted = false;
