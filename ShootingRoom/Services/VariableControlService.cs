@@ -33,8 +33,8 @@ namespace ShootingRoom.Services
         public static DoorStatus CurrentDoorStatus { get; set; } = DoorStatus.Open;
         public static DoorStatus NewDoorStatus { get; set; } = DoorStatus.Open;
 
-        public static string NextRoomURL = "https://shooting.local:7248/api/Diving/RoomStatus";
-        public static string SendScoreToTheNextRoom = "https://shooting.local:7248/api/Diving/ReceiveScore";
+        public static string NextRoomURL = "https://Diving.local:7248/api/Diving/RoomStatus";
+        public static string SendScoreToTheNextRoom = "https://Diving.local:7248/api/Diving/ReceiveScore";
 
 
 
