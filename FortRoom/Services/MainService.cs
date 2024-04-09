@@ -180,10 +180,15 @@ namespace FortRoom.Services
             bool RGBButtonIsOnAndGameNotStarted = EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.NotStarted;
             if (RGBButtonIsOnAndGameNotStarted)
             {
-                //Console.WriteLine(MCP23Controller.Read(EnterRoomPB));
-                //    Thread.Sleep(5000);
                 bool PBPressed = !MCP23Controller.Read(EnterRoomPB);
-                Console.WriteLine(PBPressed);
+                if (PBPressed)
+                {
+                    _logger.LogTrace("Start The Game Pressed");
+                    Console.WriteLine(PBPressed);
+                    EnterRGBButtonStatus = false;
+                    RelayController.Status(NextRoomPBLight, false);
+                    VariableControlService.GameStatus = GameStatus.Started;
+                }
 
             }
 
