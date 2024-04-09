@@ -18,7 +18,7 @@ namespace FortRoom.Services
         private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
         private MCP23Pin LaserPin = MasterOutputPin.OUTPUT2;
         
-        private CancellationTokenSource _cts, _cts2, _cts3;
+        private CancellationTokenSource _cts, _cts2, _cts3,_cts4;
         public bool isTheirAreSomeOneInTheRoom = false;
         private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
         bool thereAreBackgroundSoundPlays = false;
@@ -41,8 +41,10 @@ namespace FortRoom.Services
             _controller.Setup(MasterDI.PIRPin3, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
             // In Main Service Run All Default and common things 
+           
             RGBLight.SetColor(VariableControlService.DefaultColor);
-            DoorControl.Status(DoorPin, false);
+            
+            //DoorControl.Status(DoorPin, false);
 
 
             MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Output);
@@ -51,9 +53,13 @@ namespace FortRoom.Services
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            _cts4 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
             Task.Run(() => RunService(_cts.Token));
             Task.Run(() => CheckIFRoomIsEmpty(_cts2.Token));
             Task.Run(() => GameTimingService(_cts3.Token));
+            Task.Run(() => DoorLockControl(_cts4.Token));
+
 
             return Task.CompletedTask;
         }
@@ -161,7 +167,19 @@ namespace FortRoom.Services
             }
         }
 
-
+        private async Task DoorLockControl(CancellationToken cancellationToken)
+        {
+            while (true)
+            {
+                if (VariableControlService.CurrentDoorStatus != VariableControlService.NewDoorStatus)
+                {
+                    _logger.LogTrace($"Door Status Changes :{VariableControlService.NewDoorStatus.ToString()}");
+                    DoorControl.Control(DoorPin, VariableControlService.NewDoorStatus);
+                    VariableControlService.CurrentDoorStatus = VariableControlService.NewDoorStatus;
+                }
+                Thread.Sleep(500);
+            }
+        }
 
         private void StartTheGame()
         {

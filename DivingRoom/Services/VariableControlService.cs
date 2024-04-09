@@ -24,6 +24,7 @@ namespace DivingRoom.Services
         public static DoorStatus CurrentDoorStatus { get; set; } = DoorStatus.Open;
         public static DoorStatus NewDoorStatus { get; set; } = DoorStatus.Open;
 
+        public static RGBColor DefaultColor = RGBColor.Blue;
 
     }
 }

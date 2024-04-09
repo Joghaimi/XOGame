@@ -1,4 +1,5 @@
 ﻿using FortRoom.Services;
+using Library;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -74,5 +75,17 @@ namespace FortRoom.Controllers
         {
             return Ok(VariableControlService.IsTheGameStarted);
         }
+
+
+
+        // Control Game 
+        [HttpGet("DoorControl")]
+        public IActionResult DoorControl(DoorStatus doorStatus)
+        {
+            VariableControlService.NewDoorStatus = doorStatus;
+            return Ok(doorStatus);
+        }
+
+
     }
 }

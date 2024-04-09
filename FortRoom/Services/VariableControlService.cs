@@ -22,11 +22,16 @@ namespace FortRoom.Services
         public static bool IsObstructionServiceStarted = false;
         public static bool IsGameTimerStarted = false;
 
-        public static Round GameRound = Round.Round1;
         public static bool IsThingsChangedForTheNewRound = false;
 
         public static RGBColor DefaultColor = RGBColor.Blue;
         public static bool IsPressureMateActive = false;
+
+        public static Round GameRound = Round.Round1;
+        public static GameStatus GameStatus { get; set; } = GameStatus.Empty;
+        public static DoorStatus CurrentDoorStatus { get; set; } = DoorStatus.Open;
+        public static DoorStatus NewDoorStatus { get; set; } = DoorStatus.Open;
+
 
 
         public static void ResetTheGame()

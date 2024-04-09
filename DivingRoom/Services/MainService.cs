@@ -48,7 +48,7 @@ namespace DivingRoom.Services
             _controller.Setup(MasterDI.PIRPin3, PinMode.InputPullDown);
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
 
-            RGBLight.SetColor(RGBColor.White);
+            RGBLight.SetColor(VariableControlService.DefaultColor);
             //DoorControl.Status(DoorPin, false); // Work ..
             MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
 
