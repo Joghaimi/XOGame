@@ -290,44 +290,7 @@ namespace FortRoom.Services
 
 
 
-        // To Do Next Time
-        //[Obsolete("Old")]
-        //private void ControlRoomAudio()
-        //{
-        //    // Control Background Audio
-        //    if (VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished && !thereAreInstructionSoundPlays)
-        //    {
-        //        _logger.LogTrace("Start Instruction Audio");
-        //        thereAreInstructionSoundPlays = true;
-        //        AudioPlayer.PIBackgroundSound(SoundType.instruction); // TO DO
-        //        RelayController.Status(LaserPin, true);
-        //        Thread.Sleep(60000);
-        //        VariableControlService.IsTheGameStarted = true;
-        //        VariableControlService.IsTheGameFinished = false;
-        //    }
-        //    else if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted
-        //        && !VariableControlService.IsTheGameFinished
-        //        && thereAreInstructionSoundPlays && !thereAreBackgroundSoundPlays)
-        //    {
-        //        // Stop Background Audio 
-        //        _logger.LogTrace("Stop Instruction Audio");
-        //        thereAreInstructionSoundPlays = false;
-        //        AudioPlayer.PIStopAudio();
-        //        Thread.Sleep(500);
-        //        // Start Background Audio
-        //        _logger.LogTrace("Start Background Audio");
-        //        thereAreBackgroundSoundPlays = true;
-        //        AudioPlayer.PIBackgroundSound(SoundType.Background);
-        //    }
-        //    else if (VariableControlService.IsTheGameFinished && thereAreBackgroundSoundPlays)
-        //    {
-        //        // Game Finished .. 
-        //        _logger.LogTrace("Stop Background Audio");
-        //        thereAreBackgroundSoundPlays = false;
-        //        VariableControlService.EnableGoingToTheNextRoom = true;
-        //        AudioPlayer.PIStopAudio();
-        //    }
-        //}
+        
 
 
         private async Task GameTimingService(CancellationToken cancellationToken)
@@ -398,3 +361,44 @@ namespace FortRoom.Services
 
     }
 }
+
+
+
+// To Do Next Time
+//[Obsolete("Old")]
+//private void ControlRoomAudio()
+//{
+//    // Control Background Audio
+//    if (VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished && !thereAreInstructionSoundPlays)
+//    {
+//        _logger.LogTrace("Start Instruction Audio");
+//        thereAreInstructionSoundPlays = true;
+//        AudioPlayer.PIBackgroundSound(SoundType.instruction); // TO DO
+//        RelayController.Status(LaserPin, true);
+//        Thread.Sleep(60000);
+//        VariableControlService.IsTheGameStarted = true;
+//        VariableControlService.IsTheGameFinished = false;
+//    }
+//    else if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted
+//        && !VariableControlService.IsTheGameFinished
+//        && thereAreInstructionSoundPlays && !thereAreBackgroundSoundPlays)
+//    {
+//        // Stop Background Audio 
+//        _logger.LogTrace("Stop Instruction Audio");
+//        thereAreInstructionSoundPlays = false;
+//        AudioPlayer.PIStopAudio();
+//        Thread.Sleep(500);
+//        // Start Background Audio
+//        _logger.LogTrace("Start Background Audio");
+//        thereAreBackgroundSoundPlays = true;
+//        AudioPlayer.PIBackgroundSound(SoundType.Background);
+//    }
+//    else if (VariableControlService.IsTheGameFinished && thereAreBackgroundSoundPlays)
+//    {
+//        // Game Finished .. 
+//        _logger.LogTrace("Stop Background Audio");
+//        thereAreBackgroundSoundPlays = false;
+//        VariableControlService.EnableGoingToTheNextRoom = true;
+//        AudioPlayer.PIStopAudio();
+//    }
+//}
