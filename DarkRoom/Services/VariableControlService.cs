@@ -34,7 +34,6 @@ namespace DarkRoom.Services
         public static DoorStatus CurrentDoorStatus { get; set; } = DoorStatus.Open;
         public static DoorStatus NewDoorStatus { get; set; } = DoorStatus.Open;
 
-
         public static string NextRoomURL = "https://floor.local:7248/api/floorislava/RoomStatus";
         public static string SendScoreToTheNextRoom = "https://floor.local:7248/api/floorislava/ReceiveScore";
 
