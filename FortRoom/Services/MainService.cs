@@ -254,7 +254,7 @@ namespace FortRoom.Services
             {
                 //if (VariableControlService.IsTheGameStarted && !VariableControlService.IsGameTimerStarted)
 
-                if (VariableControlService.GameStatus == GameStatus.Started || (VariableControlService.GameStatus == GameStatus.Started && !VariableControlService.IsGameTimerStarted))
+                if ((VariableControlService.GameStatus == GameStatus.Started && !VariableControlService.IsGameTimerStarted))
                 {
                     Console.WriteLine("Restart The Timer");
                     GameTiming.Restart();
