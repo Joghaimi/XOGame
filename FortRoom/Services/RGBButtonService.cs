@@ -59,7 +59,7 @@ namespace FortRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            int level = 0;
+            //int level = 0;
             while (true)
             {
                 if (IsGameStartedOrInGoing())
