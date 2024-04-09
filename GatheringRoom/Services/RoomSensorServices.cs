@@ -20,7 +20,7 @@ namespace GatheringRoom.Services
         private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
         private bool isLightOn = false;
         private GPIOController _controller;
-        private CancellationTokenSource _cts, cts2;
+        private CancellationTokenSource _cts, cts2,_cts3;
         private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
 
 
@@ -37,15 +37,22 @@ namespace GatheringRoom.Services
             _controller.Setup(VariableControlService.PIRPin3, PinMode.InputPullDown);
             _controller.Setup(VariableControlService.PIRPin4, PinMode.InputPullDown);
             _controller.Setup(VariableControlService.PIRPin2, PinMode.InputPullDown);
+            
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
             _logger.LogInformation("RoomSensorServices Started");
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Gathering);
             MCP23Controller.Init(Room.Gathering);
             AudioPlayer.Init(Room.Gathering);
-            DoorControl.Status(DoorPin, false);
+
+            //DoorControl.Status(DoorPin, false);
+            
             Task.Run(() => CheckIFRoomIsEmpty(cts2.Token));
             Task.Run(() => RunService(_cts.Token));
+            Task.Run(() => DoorLockControl(_cts3.Token));
+
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
@@ -143,6 +150,19 @@ namespace GatheringRoom.Services
                     _logger.LogDebug($"Check if Their any in the Room {VariableControlService.IsTheirAnyOneInTheRoom}");
                 }
 
+            }
+        }
+        private async Task DoorLockControl(CancellationToken cancellationToken)
+        {
+            while (true)
+            {
+                if (VariableControlService.CurrentDoorStatus != VariableControlService.NewDoorStatus)
+                {
+                    _logger.LogTrace($"Door Status Changes :{VariableControlService.NewDoorStatus.ToString()}");
+                    DoorControl.Control(DoorPin, VariableControlService.NewDoorStatus);
+                    VariableControlService.CurrentDoorStatus = VariableControlService.NewDoorStatus;
+                }
+                Thread.Sleep(500);
             }
         }
     }

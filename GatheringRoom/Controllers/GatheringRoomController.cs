@@ -1,4 +1,5 @@
 using GatheringRoom.Services;
+using Library;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -52,6 +53,14 @@ namespace GatheringRoom.Controllers
         {
             _logger.LogTrace("Get Player Team");
             return base.Ok(VariableControlService.TeamScore.player);
+        }
+
+        // Control Game 
+        [HttpGet("DoorControl")]
+        public IActionResult DoorControl(DoorStatus doorStatus)
+        {
+            VariableControlService.NewDoorStatus = doorStatus;
+            return Ok(doorStatus);
         }
     }
 }

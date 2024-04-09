@@ -1,4 +1,6 @@
-﻿namespace GatheringRoom.Services
+﻿using Library;
+
+namespace GatheringRoom.Services
 {
     public static class VariableControlService
     {
@@ -30,5 +32,10 @@
         public static string Password { get; } = "frenzi";
         
         public static string UserInfoURL { get; } = "https://gotp4qetdh.execute-api.us-east-1.amazonaws.com/dev/getrfiddata";
+
+
+        public static GameStatus GameStatus { get; set; } = GameStatus.Empty;
+        public static DoorStatus CurrentDoorStatus { get; set; } = DoorStatus.Open;
+        public static DoorStatus NewDoorStatus { get; set; } = DoorStatus.Open;
     }
 }
