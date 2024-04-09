@@ -135,7 +135,7 @@ namespace FortRoom.Services
 
                 RoomAudio();
                 ControlEnteringRGBButton();
-                CheckNextRoomStatus();
+                await CheckNextRoomStatus();
                 ControlExitingRGBButton();
             }
         }
@@ -274,7 +274,7 @@ namespace FortRoom.Services
             }
         }
 
-        private async void CheckNextRoomStatus()
+        private async Task CheckNextRoomStatus()
         {
             if (VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
             {
