@@ -171,6 +171,7 @@ namespace ShootingRoom.Services
         {
             while (!cancellationToken.IsCancellationRequested)
             {
+                Console.WriteLine(VariableControlService.NewDoorStatus.ToString());
                 if (VariableControlService.CurrentDoorStatus != VariableControlService.NewDoorStatus)
                 {
                     _logger.LogTrace($"Door Status Changes :{VariableControlService.NewDoorStatus.ToString()}");
