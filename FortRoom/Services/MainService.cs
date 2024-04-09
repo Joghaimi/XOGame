@@ -87,15 +87,6 @@ namespace FortRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            while (true)
-            {
-                var result = await APIIntegration.SendScoreToTheNextRoom(VariableControlService.SendScoreToTheNextRoom, VariableControlService.TeamScore);
-                Console.WriteLine(result);
-                Thread.Sleep(3000);
-
-            }
-
-
             while (!cancellationToken.IsCancellationRequested)
             {
                 RoomAudio();
@@ -226,6 +217,7 @@ namespace FortRoom.Services
                             _logger.LogTrace($"Room Should be Empty now");
                             break;
                         }
+                        Thread.Sleep(3000);
                     }
 
 
