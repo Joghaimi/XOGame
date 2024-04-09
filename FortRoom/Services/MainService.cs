@@ -21,11 +21,11 @@ namespace FortRoom.Services
 
         bool EnterRGBButtonStatus = false;
         private MCP23Pin EnterRGBButton = MasterOutputPin.OUTPUT8;
-        private MCP23Pin EnterRoomPB = MasterDI.IN6;
+        private MCP23Pin EnterRoomPB = MasterDI.IN5;
 
         bool NextRoomRGBButtonStatus = false;
         private MCP23Pin NextRoomPBLight = MasterOutputPin.OUTPUT8;
-        private MCP23Pin NextRoomPB = MasterDI.IN6;
+        private MCP23Pin NextRoomPB = MasterDI.IN5;
 
 
         private CancellationTokenSource _cts, _cts2, _cts3, _cts4;
