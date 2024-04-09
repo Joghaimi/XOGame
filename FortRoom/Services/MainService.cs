@@ -80,7 +80,7 @@ namespace FortRoom.Services
             Task.Run(() => CheckIFRoomIsEmpty(_cts2.Token));
             Task.Run(() => GameTimingService(_cts3.Token));
             Task.Run(() => DoorLockControl(_cts4.Token));
-            Task.Run(() => CheckNextRoomStatus(_cts4.Token));
+            Task.Run(() => CheckNextRoomStatus(_cts5.Token));
 
 
             return Task.CompletedTask;
