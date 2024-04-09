@@ -250,7 +250,7 @@ namespace FortRoom.Services
                     {
                         VariableControlService.GameStatus = GameStatus.Leaving;
                         _logger.LogTrace($"Player Should be out From the room");
-                        Thread.Sleep(30000);
+                        Task.Delay(30000);
                         VariableControlService.GameStatus = GameStatus.Empty;
                         _logger.LogTrace($"Room Should be Empty now");
                         break;
@@ -271,7 +271,7 @@ namespace FortRoom.Services
                     VariableControlService.GameStatus = GameStatus.ReadyToLeave;
                     return;
                 }
-                Thread.Sleep(10000);
+                Task.Delay(10000);
             }
         }
 
