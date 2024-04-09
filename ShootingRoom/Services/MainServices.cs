@@ -72,7 +72,11 @@ namespace ShootingRoom.Services
         private async Task RunService(CancellationToken cancellationToken)
         {
 
-
+            while (true)
+            {
+                 Console.WriteLine(!MCP23Controller.Read(EnterRoomPB));
+                Thread.Sleep(1000);
+            }
             while (!cancellationToken.IsCancellationRequested)
             {
                 RoomAudio();
