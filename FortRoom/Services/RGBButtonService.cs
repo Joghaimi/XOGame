@@ -19,18 +19,10 @@ namespace FortRoom.Services
         private readonly ILogger<RGBButtonService> _logger;
         Stopwatch GameStopWatch = new Stopwatch();
         private CancellationTokenSource _cts;
-        //List<(int, int)> ButtonTaskList = new List<(int, int)>
-        //{
-        //    (2,3),
-        //    (8,6),
-        //    (5,0),
-        //    (7,4),
-        //    (2,6),
-        //};
+     
         List<int> LevelNumbers = new List<int> { 1, 2, 2, 3, 4 };
-        //List<int> buttonGroupTwo = new List<int> { 0, 6, 7, 8, 9 };
 
-        int CurrentColor = 0;
+        //int CurrentColor = 0;
 
         List<RGBColor> RGBColors = new List<RGBColor> {
             RGBColor.Blue,
@@ -265,7 +257,9 @@ namespace FortRoom.Services
 
         private bool IsGameStartedOrInGoing()
         {
-            return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
+            return VariableControlService.GameStatus == GameStatus.Started;
+
+            //return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
         }
         private void StopRGBButtonService()
         {
