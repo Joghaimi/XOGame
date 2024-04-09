@@ -21,7 +21,7 @@ namespace Library.DoorControl
         }
         public static void Control(MCP23Pin doorPin, DoorStatus status)
         {
-            if (status == DoorStatus.Open)
+            if (status == DoorStatus.Close)
             {
                 MCP23Controller.PinModeSetup(doorPin, PinMode.Output);
                 MCP23Controller.Write(doorPin, PinState.High);

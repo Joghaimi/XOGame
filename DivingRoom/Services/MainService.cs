@@ -49,7 +49,7 @@ namespace DivingRoom.Services
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
 
             RGBLight.SetColor(RGBColor.White);
-            //DoorControl.Status(DoorPin, false);
+            //DoorControl.Status(DoorPin, false); // Work ..
             MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -297,6 +297,7 @@ namespace DivingRoom.Services
             {
                 if (VariableControlService.CurrentDoorStatus != VariableControlService.NewDoorStatus)
                 {
+                    _logger.LogTrace($"Door Status Changes :{VariableControlService.NewDoorStatus.ToString()}");
                     DoorControl.Control(DoorPin, VariableControlService.NewDoorStatus);
                     VariableControlService.CurrentDoorStatus = VariableControlService.NewDoorStatus;
                 }
