@@ -48,8 +48,8 @@ namespace FortRoom.Services
             AudioPlayer.Init(Room.Fort);
             MCP23Controller.Init(Room.Fort);
 
-            MCP23Controller.PinModeSetup(EnterRoomPB, PinMode.Input);
-            MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
+            MCP23Controller.PinModeSetup(EnterRoomPB, PinMode.InputPullDown);
+            MCP23Controller.PinModeSetup(NextRoomPB, PinMode.InputPullDown);
 
 
 
@@ -183,14 +183,14 @@ namespace FortRoom.Services
                 bool PBPressed = !MCP23Controller.Read(EnterRoomPB);
                 Console.WriteLine(PBPressed);
                 Thread.Sleep(1000);
-                if (PBPressed)
-                {
-                    _logger.LogTrace("Start The Game Pressed");
-                    Console.WriteLine(PBPressed);
-                    EnterRGBButtonStatus = false;
-                    RelayController.Status(NextRoomPBLight, false);
-                    VariableControlService.GameStatus = GameStatus.Started;
-                }
+                //if (PBPressed)
+                //{
+                //    _logger.LogTrace("Start The Game Pressed");
+                //    Console.WriteLine(PBPressed);
+                //    EnterRGBButtonStatus = false;
+                //    RelayController.Status(NextRoomPBLight, false);
+                //    VariableControlService.GameStatus = GameStatus.Started;
+                //}
 
             }
 
