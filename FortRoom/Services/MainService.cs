@@ -252,7 +252,6 @@ namespace FortRoom.Services
                     NextRoomRGBButtonStatus = false;
                     while (true)
                     {
-
                         var result = await APIIntegration.SendScoreToTheNextRoom(VariableControlService.SendScoreToTheNextRoom, VariableControlService.TeamScore);
                         _logger.LogTrace($"Score Send {result}");
                         if (result)
