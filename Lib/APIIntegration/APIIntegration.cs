@@ -9,6 +9,8 @@ using Mono.Unix.Native;
 using System.Net.Http.Headers;
 using System.Security.AccessControl;
 using System.Net.Http;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Library.APIIntegration
 {
@@ -77,7 +79,10 @@ namespace Library.APIIntegration
 
         public async static Task<string> NextRoomStatus(string nextRoomURL)
         {
-            using (HttpClient httpClient = new HttpClient())
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = ValidateCertificate;
+
+            using (HttpClient httpClient = new HttpClient(handler))
             {
                 try
                 {
@@ -104,6 +109,10 @@ namespace Library.APIIntegration
                     return null;
                 }
             }
+        }
+        static bool ValidateCertificate(HttpRequestMessage requestMessage, X509Certificate2 certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        {
+            return true; // Always accept the certificate
         }
 
     }
