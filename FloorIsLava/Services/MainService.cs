@@ -29,11 +29,11 @@ namespace FloorIsLava.Services
 
         bool NextRoomRGBButtonStatus = false;
         private MCP23Pin NextRoomPBLight = MasterOutputPin.OUTPUT8;
-        private MCP23Pin NextRoomPB = MasterDI.IN4;
+        private MCP23Pin NextRoomPB = MasterDI.IN8;
 
         bool EnterRGBButtonStatus = false;
         private MCP23Pin EnterRGBButton = MasterOutputPin.OUTPUT8;
-        private MCP23Pin EnterRoomPB = MasterDI.IN4;
+        private MCP23Pin EnterRoomPB = MasterDI.IN8;
 
 
         public MainService(ILogger<MainService> logger)
