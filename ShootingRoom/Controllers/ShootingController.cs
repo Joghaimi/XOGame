@@ -1,4 +1,5 @@
-﻿using Library.Model;
+﻿using Library;
+using Library.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShootingRoom.Services;
@@ -66,6 +67,25 @@ namespace ShootingRoom.Controllers
         {
             var returnArray = new List<int>(){ (int)VariableControlService.GameRound, VariableControlService.LevelScore };
             return Ok(returnArray);
+        }
+        // Control Game 
+        [HttpGet("DoorControl")]
+        public IActionResult DoorControl(DoorStatus doorStatus)
+        {
+            VariableControlService.NewDoorStatus = doorStatus;
+            return Ok(doorStatus);
+        }
+        [HttpGet("RoomStatus")]
+        public IActionResult GetRoomStatus()
+        {
+            return Ok(VariableControlService.GameStatus.ToString());
+        }
+
+        [HttpPost("RoomStatus")]
+        public IActionResult ReturnRoomStatus(GameStatus gameStatus)
+        {
+            VariableControlService.GameStatus = gameStatus;
+            return Ok(VariableControlService.GameStatus);
         }
     }
 }
