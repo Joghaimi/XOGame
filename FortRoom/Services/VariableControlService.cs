@@ -1,6 +1,7 @@
 ﻿using Iot.Device.Mcp23xxx;
 using Library;
 using Library.GPIOLib;
+using Library.Model;
 using Library.RGBLib;
 
 namespace FortRoom.Services

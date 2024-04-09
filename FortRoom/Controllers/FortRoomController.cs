@@ -1,5 +1,6 @@
 ﻿using FortRoom.Services;
 using Library;
+using Library.Model;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
