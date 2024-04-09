@@ -29,11 +29,11 @@ namespace FloorIsLava.Services
 
         bool NextRoomRGBButtonStatus = false;
         private MCP23Pin NextRoomPBLight = MasterOutputPin.OUTPUT6;
-        private MCP23Pin NextRoomPB = MasterDI.IN8;
+        private MCP23Pin NextRoomPB = MasterDI.IN6;
 
         bool EnterRGBButtonStatus = false;
         private MCP23Pin EnterRGBButton = MasterOutputPin.OUTPUT6;
-        private MCP23Pin EnterRoomPB = MasterDI.IN8;
+        private MCP23Pin EnterRoomPB = MasterDI.IN6;
 
 
         public MainService(ILogger<MainService> logger)
@@ -79,9 +79,12 @@ namespace FloorIsLava.Services
             while (true)
             {
                 RelayController.Status(EnterRGBButton, true);
+
+                bool PBPressed = !MCP23Controller.Read(EnterRoomPB);
+                Console.WriteLine(PBPressed);
                 Thread.Sleep(1000);
-                RelayController.Status(EnterRGBButton, false);
-                Thread.Sleep(1000);
+                //RelayController.Status(EnterRGBButton, false);
+                //Thread.Sleep(1000);
 
             }
 
