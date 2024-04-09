@@ -1,4 +1,5 @@
 ﻿using DarkRoom.Services;
+using Library;
 using Library.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -68,5 +69,24 @@ namespace DarkRoom.Controllers
             VariableControlService.EnableGoingToTheNextRoom = true;
             return Ok(VariableControlService.IsTheGameStarted);
         }
+        [HttpGet("RoomStatus")]
+        public IActionResult GetRoomStatus()
+        {
+            return Ok(VariableControlService.GameStatus.ToString());
+        }
+
+        [HttpPost("RoomStatus")]
+        public IActionResult ReturnRoomStatus(GameStatus gameStatus)
+        {
+            VariableControlService.GameStatus = gameStatus;
+            return Ok(VariableControlService.GameStatus);
+        }
+        [HttpGet("DoorControl")]
+        public IActionResult DoorControl(DoorStatus doorStatus)
+        {
+            VariableControlService.NewDoorStatus = doorStatus;
+            return Ok(doorStatus);
+        }
+
     }
 }

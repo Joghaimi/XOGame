@@ -1,5 +1,6 @@
 ﻿using Iot.Device.Mcp3428;
 using Library;
+using Library.APIIntegration;
 using Library.DoorControl;
 using Library.Enum;
 using Library.GPIOLib;
@@ -79,16 +80,16 @@ namespace DivingRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            while (true)
-            {
-                //DoorControl.Status(DoorPin, false);
-                //Thread.Sleep(3000);
-                //DoorControl.Status(DoorPin, true);
-                //Thread.Sleep(3000);
-                bool PBPressed = !MCP23Controller.Read(NextRoomPB);
-                Console.WriteLine(PBPressed);
-                Thread.Sleep(1000);
-            }
+            //while (true)
+            //{
+            //    //DoorControl.Status(DoorPin, false);
+            //    //Thread.Sleep(3000);
+            //    //DoorControl.Status(DoorPin, true);
+            //    //Thread.Sleep(3000);
+            //    bool PBPressed = !MCP23Controller.Read(NextRoomPB);
+            //    Console.WriteLine(PBPressed);
+            //    Thread.Sleep(1000);
+            //}
 
             // /********THE Working ONE*********/
             //while (!cancellationToken.IsCancellationRequested)
@@ -125,19 +126,12 @@ namespace DivingRoom.Services
             while (!cancellationToken.IsCancellationRequested)
             {
                 RoomAudio();
-                ControlRGBButton();
-                //_logger.LogTrace(VariableControlService.GameStatus.ToString());
-                //Thread.Sleep(5000);
-                if (VariableControlService.GameStatus == GameStatus.Leaving)
-                {
-                    _logger.LogTrace("Open The Door ***");
-                    VariableControlService.NewDoorStatus = DoorStatus.Open;
-                    //DoorControl.Status(DoorPin, true);
-                    Thread.Sleep(5000);
-                    VariableControlService.NewDoorStatus = DoorStatus.Close;
-                    //DoorControl.Status(DoorPin, false);
-                    VariableControlService.GameStatus = GameStatus.Empty;
-                }
+                ControlEnteringRGBButton();
+                await CheckNextRoomStatus();
+                await ControlExitingRGBButton();
+                //if (VariableControlService.GameStatus == GameStatus.Empty)
+                //    DoorControl.Control(DoorPin, DoorStatus.Close);
+
             }
 
 
@@ -152,6 +146,88 @@ namespace DivingRoom.Services
         public void Dispose()
         {
             _cts.Dispose();
+        }
+        private void ControlEnteringRGBButton()
+        {
+            if (!EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.NotStarted)
+            {
+                _logger.LogTrace("Ready To Start The Game .. Turn RGB Button On");
+                EnterRGBButtonStatus = true;
+                RelayController.Status(EnterRGBButton, true);
+            }
+            else if (EnterRGBButtonStatus && VariableControlService.GameStatus != GameStatus.NotStarted)
+            {
+                EnterRGBButtonStatus = false;
+                RelayController.Status(EnterRGBButton, false);
+            }
+            bool RGBButtonIsOnAndGameNotStarted = EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.NotStarted;
+            if (RGBButtonIsOnAndGameNotStarted)
+            {
+                bool PBPressed = !MCP23Controller.Read(EnterRoomPB);
+                if (PBPressed)
+                {
+                    _logger.LogTrace("Start The Game Pressed");
+                    Console.WriteLine(PBPressed);
+                    EnterRGBButtonStatus = false;
+                    RelayController.Status(NextRoomPBLight, false);
+                    VariableControlService.GameStatus = GameStatus.Started;
+                    VariableControlService.IsGameTimerStarted = false;
+                }
+            }
+        }
+        private async Task CheckNextRoomStatus()
+        {
+            if (VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
+            {
+                var status = await APIIntegration.NextRoomStatus(VariableControlService.NextRoomURL);
+                if (status == "Empty")
+                {
+                    VariableControlService.GameStatus = GameStatus.ReadyToLeave;
+                    return;
+                }
+                Thread.Sleep(5000);
+            }
+        }
+        private async Task ControlExitingRGBButton()
+        {
+            if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && !NextRoomRGBButtonStatus)
+            {
+                Console.WriteLine("Ready To Leave .. Turn RGB Button On");
+                NextRoomRGBButtonStatus = true;
+                RelayController.Status(NextRoomPBLight, true);
+            }
+            else if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && NextRoomRGBButtonStatus)
+            {
+
+                bool PBPressed = !MCP23Controller.Read(NextRoomPB);
+                Console.WriteLine(PBPressed);
+                Thread.Sleep(1000);
+                if (PBPressed)
+                {
+                    NextRoomRGBButtonStatus = false;
+                    while (true)
+                    {
+                        var result = await APIIntegration.SendScoreToTheNextRoom(VariableControlService.SendScoreToTheNextRoom, VariableControlService.TeamScore);
+                        _logger.LogTrace($"Score Send {result}");
+                        if (result)
+                        {
+                            VariableControlService.GameStatus = GameStatus.Leaving;
+                            RelayController.Status(NextRoomPBLight, false);
+                            DoorControl.Control(DoorPin, DoorStatus.Open);
+                            _logger.LogTrace($"Player Should be out From the room");
+                            Thread.Sleep(30000);
+                            DoorControl.Control(DoorPin, DoorStatus.Close);
+                            VariableControlService.GameStatus = GameStatus.Empty;
+                            _logger.LogTrace($"Room Should be Empty now");
+                            break;
+                        }
+                        Thread.Sleep(3000);
+                    }
+
+
+                }
+
+            }
         }
 
 
