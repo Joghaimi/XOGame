@@ -76,17 +76,7 @@ namespace FloorIsLava.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            while (true)
-            {
-                RelayController.Status(EnterRGBButton, true);
-
-                bool PBPressed = !MCP23Controller.Read(EnterRoomPB);
-                Console.WriteLine(PBPressed);
-                Thread.Sleep(1000);
-                //RelayController.Status(EnterRGBButton, false);
-                //Thread.Sleep(1000);
-
-            }
+           
 
             while (!cancellationToken.IsCancellationRequested)
             {
