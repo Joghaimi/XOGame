@@ -253,16 +253,18 @@ namespace FloorIsLava.Services
         }
         private async Task CheckNextRoomStatus()
         {
-            if (VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
-            {
-                var status = await APIIntegration.NextRoomStatus(VariableControlService.NextRoomURL);
-                if (status == "Empty")
-                {
-                    VariableControlService.GameStatus = GameStatus.ReadyToLeave;
-                    return;
-                }
-                Thread.Sleep(5000);
-            }
+            VariableControlService.GameStatus = GameStatus.ReadyToLeave;
+            return;
+            //if (VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
+            //{
+            //    var status = await APIIntegration.NextRoomStatus(VariableControlService.NextRoomURL);
+            //    if (status == "Empty")
+            //    {
+            //        VariableControlService.GameStatus = GameStatus.ReadyToLeave;
+            //        return;
+            //    }
+            //    Thread.Sleep(5000);
+            //}
         }
         private async Task ControlExitingRGBButton()
         {
@@ -281,7 +283,8 @@ namespace FloorIsLava.Services
                     NextRoomRGBButtonStatus = false;
                     while (true)
                     {
-                        var result = await APIIntegration.SendScoreToTheNextRoom(VariableControlService.SendScoreToTheNextRoom, VariableControlService.TeamScore);
+                        //var result = await APIIntegration.SendScoreToTheNextRoom(VariableControlService.SendScoreToTheNextRoom, VariableControlService.TeamScore);
+                        var result = true;
                         _logger.LogTrace($"Score Send {result}");
                         if (result)
                         {
