@@ -86,7 +86,8 @@ namespace FortRoom.Controllers
         [HttpGet("IsGameStarted")]
         public IActionResult IsGameStarted()
         {
-            return Ok(VariableControlService.IsTheGameStarted);
+            return Ok(VariableControlService.GameStatus == GameStatus.Started);
+            //return Ok(VariableControlService.IsTheGameStarted);
         }
 
 
