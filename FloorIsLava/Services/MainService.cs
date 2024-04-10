@@ -76,7 +76,7 @@ namespace FloorIsLava.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-           
+
 
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -253,18 +253,19 @@ namespace FloorIsLava.Services
         }
         private async Task CheckNextRoomStatus()
         {
-            VariableControlService.GameStatus = GameStatus.ReadyToLeave;
-            return;
-            //if (VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
-            //{
-            //    var status = await APIIntegration.NextRoomStatus(VariableControlService.NextRoomURL);
-            //    if (status == "Empty")
-            //    {
-            //        VariableControlService.GameStatus = GameStatus.ReadyToLeave;
-            //        return;
-            //    }
-            //    Thread.Sleep(5000);
-            //}
+            if (VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
+            {
+                VariableControlService.GameStatus = GameStatus.ReadyToLeave;
+                return;
+
+                //var status = await APIIntegration.NextRoomStatus(VariableControlService.NextRoomURL);
+                //if (status == "Empty")
+                //{
+                //    VariableControlService.GameStatus = GameStatus.ReadyToLeave;
+                //return;
+                //}
+                Thread.Sleep(5000);
+            }
         }
         private async Task ControlExitingRGBButton()
         {
