@@ -28,6 +28,7 @@ namespace FloorIsLava.Services
         MCP23Pin MagnetRelay = MasterOutputPin.OUTPUT4;
         MCP23Pin CellingUPRelay = MasterOutputPin.OUTPUT1;
         MCP23Pin CellingDownRelay = MasterOutputPin.OUTPUT5;
+        bool magnetStarted = false;
         public Task StartAsync(CancellationToken cancellationToken)
         {
             // TO DO Init The RGB Light .. 
@@ -73,12 +74,14 @@ namespace FloorIsLava.Services
                         if (IN2)
                             VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
                     }
-                    if (!IN3) { 
+                    if (!IN3)
+                    {
                         IN3 = CeilingButton(!MCP23Controller.Read(MasterDI.IN3));
                         if (IN3)
                             VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
                     }
-                    if (!IN4) { 
+                    if (!IN4)
+                    {
                         IN4 = CeilingButton(!MCP23Controller.Read(MasterDI.IN4));
                         if (IN3)
                             VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
@@ -109,6 +112,7 @@ namespace FloorIsLava.Services
                         RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
                         Console.WriteLine("Magnet Start");
                         MCP23Controller.Write(MagnetRelay, PinState.High);
+                        magnetStarted = true;
                         while (true)
                         {
                             if (!IsGameStartedOrInGoing())
@@ -157,9 +161,7 @@ namespace FloorIsLava.Services
                         }
                         Console.WriteLine("Game Ended");
                         RGBLight.SetColor(RGBColor.Blue);
-                        Console.WriteLine("Magnet Stop");
 
-                        //MCP23Controller.Write(MagnetRelay, PinState.Low);
                         AudioPlayer.PIStopAudio();
                         Thread.Sleep(300);
                         AudioPlayer.PIStartAudio(SoundType.Finish);
@@ -172,6 +174,12 @@ namespace FloorIsLava.Services
                     Thread.Sleep(10);
                 }
                 Thread.Sleep(10);
+                if (magnetStarted && VariableControlService.GameStatus == GameStatus.Empty)
+                {
+                    Console.WriteLine("Magnet Stop");
+                    MCP23Controller.Write(MagnetRelay, PinState.Low);
+                    magnetStarted = false;
+                }
             }
 
         }
