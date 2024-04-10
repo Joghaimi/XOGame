@@ -90,8 +90,8 @@ namespace FortRoom.Services
                 ControlEnteringRGBButton();
                 await CheckNextRoomStatus();
                 await ControlExitingRGBButton();
-                if (VariableControlService.GameStatus == GameStatus.Empty)
-                    DoorControl.Control(DoorPin, DoorStatus.Close);
+                //if (VariableControlService.GameStatus == GameStatus.Empty)
+                //    DoorControl.Control(DoorPin, DoorStatus.Close);
 
             }
         }
