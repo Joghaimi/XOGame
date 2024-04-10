@@ -265,7 +265,7 @@ namespace ShootingRoom.Services
                 if (PBPressed)
                 {
                     _logger.LogTrace("Start The Game Pressed");
-                    Console.WriteLine(PBPressed);
+                    //Console.WriteLine(PBPressed);
                     EnterRGBButtonStatus = false;
                     RelayController.Status(NextRoomPBLight, false);
                     VariableControlService.GameStatus = GameStatus.Started;
