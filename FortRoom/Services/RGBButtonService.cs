@@ -278,7 +278,7 @@ namespace FortRoom.Services
             VariableControlService.IsRGBButtonServiceStarted = false;
             VariableControlService.IsTheGameFinished = true;
             _logger.LogTrace("Audio Off");
-            if (withoutFnishAudio)
+            if (!withoutFnishAudio)
             {
                 AudioPlayer.PIStartAudio(SoundType.MissionAccomplished);
                 Thread.Sleep(1000);
