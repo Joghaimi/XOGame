@@ -16,7 +16,9 @@ namespace FortRoom.Services
         public static Team TeamScore { get; set; } = new Team();
         public static bool IsOccupied { get; set; }
         public static bool EnableGoingToTheNextRoom = false;
-        public static int RoomTiming =360000;
+
+        public static int RoomTiming = 360000;
+        public static int CurrentTime = 0;
 
         public static bool IsRGBButtonServiceStarted = false;
         public static bool IsMatServiceStarted = false;
@@ -34,7 +36,7 @@ namespace FortRoom.Services
         public static DoorStatus NewDoorStatus { get; set; } = DoorStatus.Open;
 
         public static string NextRoomURL = "https://shooting.local:7248/api/Shooting/RoomStatus";
-        public static string SendScoreToTheNextRoom = "https://shooting.local:7248/api/Shooting/ReceiveScore"; 
+        public static string SendScoreToTheNextRoom = "https://shooting.local:7248/api/Shooting/ReceiveScore";
 
 
         public static void ResetTheGame()

@@ -100,6 +100,11 @@ namespace FortRoom.Controllers
             return Ok(doorStatus);
         }
 
+        [HttpGet("CurrentTime")]
+        public IActionResult CurrentTime()
+        {
+            return Ok(VariableControlService.RoomTiming - VariableControlService.CurrentTime < 0 ? 0 : VariableControlService.RoomTiming - VariableControlService.CurrentTime);
+        }
 
     }
 }

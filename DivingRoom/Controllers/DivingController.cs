@@ -92,6 +92,12 @@ namespace DivingRoom.Controllers
             return Ok(doorStatus);
         }
 
+        [HttpGet("RoomColor")]
+        public IActionResult SetRoomColor(RGBColor rGB)
+        {
+            VariableControlService.DefaultColor = rGB;
+            return Ok();
+        }
 
 
 
