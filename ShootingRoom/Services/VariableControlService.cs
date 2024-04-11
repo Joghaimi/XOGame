@@ -23,6 +23,7 @@ namespace ShootingRoom.Services
         public static int GameScore { get; set; } = 0;
         public static bool IsGameTimerStarted = false;
         public static int RoomTiming = 360000;// Time in Mill
+        public static int CurrentTime = 360000;// Time in Mill
 
         public static int LevelScore = 0;
 
