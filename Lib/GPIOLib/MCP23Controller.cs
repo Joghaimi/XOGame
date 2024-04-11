@@ -277,7 +277,8 @@ namespace Library.GPIOLib
             }
             catch(Exception ex)
             {
-                throw new ArgumentException($"Read MCPChip Exception {ex.Message}");
+                return false;
+                //throw new ArgumentException($"Read MCPChip Exception {ex.Message}");
             }
             // Test 
             //byte GPIOStatus = ReturnMCPChip(_MCP23Pin.Chip).ReadByte(Register.GPIO, _MCP23Pin.port);
