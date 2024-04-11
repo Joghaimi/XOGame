@@ -189,6 +189,8 @@ namespace FloorIsLava.Services
             //}
             while (!cancellationToken.IsCancellationRequested)
             {
+                VariableControlService.CurrentTime = (int)GameTiming.ElapsedMilliseconds;
+
                 if ((VariableControlService.GameStatus == GameStatus.Started && !VariableControlService.IsGameTimerStarted))
                 {
                     Console.WriteLine("Restart The Timer");
