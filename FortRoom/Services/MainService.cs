@@ -58,7 +58,7 @@ namespace FortRoom.Services
 
             RGBLight.SetColor(VariableControlService.DefaultColor);
 
-            //DoorControl.Status(DoorPin, false);
+            DoorControl.Control(DoorPin, DoorStatus.Close);
             //MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Output);
 
 

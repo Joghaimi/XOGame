@@ -165,13 +165,8 @@ namespace FortRoom.Services
                         Thread.Sleep(10);
                     }
                     Console.WriteLine("Out From While 2");
-                    //if (CurrentColor < 2)
-                    //    CurrentColor++;
-                    //else
-                    //    CurrentColor = 0;
                     if (VariableControlService.GameRound < Round.Round5)
                     {
-                        //level++;
                         VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
                         ApplyChangesForTheNextRound();
                     }
