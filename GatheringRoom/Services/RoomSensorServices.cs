@@ -117,7 +117,7 @@ namespace GatheringRoom.Services
             _logger.LogDebug("Turn Off RGB Light");
             RGBLight.SetColor(RGBColor.Off);
             _logger.LogDebug("Open The Door");
-            DoorControl.Status(DoorPin, true);
+            DoorControl.Control(DoorPin, DoorStatus.Open);
             _logger.LogDebug("RoomSensorServices Stopped");
             _cts.Cancel();
             return Task.CompletedTask;
