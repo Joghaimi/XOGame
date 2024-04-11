@@ -47,7 +47,7 @@ namespace GatheringRoom.Services
             MCP23Controller.Init(Room.Gathering);
             AudioPlayer.Init(Room.Gathering);
 
-            //DoorControl.Status(DoorPin, false);
+            DoorControl.Control(DoorPin, DoorStatus.Close);
             
             Task.Run(() => CheckIFRoomIsEmpty(cts2.Token));
             Task.Run(() => RunService(_cts.Token));
@@ -87,16 +87,20 @@ namespace GatheringRoom.Services
                 if (VariableControlService.EnableGoingToTheNextRoom)
                 {
                     _logger.LogDebug("Open The Door");
-                    DoorControl.Status(DoorPin, true);
-                    while (PIR1 || PIR2 || PIR3 || PIR4)
-                    {
-                        PIR1 = _controller.Read(VariableControlService.PIRPin1);
-                        PIR2 = _controller.Read(VariableControlService.PIRPin2);
-                        PIR3 = _controller.Read(VariableControlService.PIRPin3);
-                        PIR4 = _controller.Read(VariableControlService.PIRPin4);
-                    }
+                    //DoorControl.Status(DoorPin, true);
+                    DoorControl.Control(DoorPin, DoorStatus.Open);
+
+                    //while (PIR1 || PIR2 || PIR3 || PIR4)
+                    //{
+                    //    PIR1 = _controller.Read(VariableControlService.PIRPin1);
+                    //    PIR2 = _controller.Read(VariableControlService.PIRPin2);
+                    //    PIR3 = _controller.Read(VariableControlService.PIRPin3);
+                    //    PIR4 = _controller.Read(VariableControlService.PIRPin4);
+                    //}
                     Thread.Sleep(30000);
-                    DoorControl.Status(DoorPin, false);
+                    DoorControl.Control(DoorPin, DoorStatus.Close);
+
+                    //DoorControl.Status(DoorPin, false);
                     VariableControlService.EnableGoingToTheNextRoom = false;
                     VariableControlService.IsTheirAnyOneInTheRoom = false;
                     VariableControlService.IsTheGameStarted = false;
