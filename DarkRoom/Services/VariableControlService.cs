@@ -28,7 +28,7 @@ namespace DarkRoom.Services
         public static int GameScore { get; set; } = 0;
         public static bool IsGameTimerStarted = false;
         public static Round GameRound = Round.Round1;
-        public static RGBColor DefaultColor = RGBColor.White;
+        public static RGBColor DefaultColor = RGBColor.Blue;
 
         public static GameStatus GameStatus { get; set; } = GameStatus.Empty;
         public static DoorStatus CurrentDoorStatus { get; set; } = DoorStatus.Open;
