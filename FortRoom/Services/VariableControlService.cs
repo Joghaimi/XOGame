@@ -25,7 +25,7 @@ namespace FortRoom.Services
 
         public static bool IsThingsChangedForTheNewRound = false;
 
-        public static RGBColor DefaultColor = RGBColor.Blue;
+        public static RGBColor DefaultColor = RGBColor.White;
         public static bool IsPressureMateActive = false;
 
         public static Round GameRound = Round.Round1;
