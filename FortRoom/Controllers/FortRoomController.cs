@@ -103,7 +103,9 @@ namespace FortRoom.Controllers
         [HttpGet("CurrentTime")]
         public IActionResult CurrentTime()
         {
-            return Ok(VariableControlService.RoomTiming - VariableControlService.CurrentTime < 0 ? 0 : VariableControlService.RoomTiming - VariableControlService.CurrentTime);
+            var totalTime = VariableControlService.RoomTiming - VariableControlService.CurrentTime;
+            totalTime = totalTime / 1000;
+            return Ok(totalTime < 0 ? 0 : totalTime);
         }
 
     }
