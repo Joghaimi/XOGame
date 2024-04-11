@@ -18,6 +18,8 @@ namespace DivingRoom.Services
         public static bool EnableGoingToTheNextRoom = false;
         public static bool IsGameTimerStarted = false;
         public static int RoomTiming = 360000;// Time in Mill
+        public static int CurrentTime = 0;
+
         public static bool IsRGBButtonServiceStarted = false;
         public static Round GameRound = Round.Round1;
         public static GameStatus GameStatus { get; set; } = GameStatus.Empty;
