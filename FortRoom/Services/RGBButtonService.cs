@@ -60,7 +60,7 @@ namespace FortRoom.Services
         private async Task RunService(CancellationToken cancellationToken)
         {
             //int level = 0;
-            while (!cancellationToken.IsCancellationRequested))
+            while (!cancellationToken.IsCancellationRequested)
             {
                 try
                 {
