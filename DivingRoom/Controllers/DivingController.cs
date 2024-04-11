@@ -98,7 +98,13 @@ namespace DivingRoom.Controllers
             VariableControlService.DefaultColor = rGB;
             return Ok();
         }
-
+        [HttpGet("CurrentTime")]
+        public IActionResult CurrentTime()
+        {
+            var totalTime = VariableControlService.RoomTiming - VariableControlService.CurrentTime;
+            totalTime = totalTime / 1000;
+            return Ok(totalTime < 0 ? 0 : totalTime);
+        }
 
 
     }
