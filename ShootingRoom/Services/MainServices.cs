@@ -76,72 +76,19 @@ namespace ShootingRoom.Services
         private async Task RunService(CancellationToken cancellationToken)
         {
 
-            //while (true)
-            //{
-            //     Console.WriteLine(!MCP23Controller.Read(EnterRoomPB));
-            //    Thread.Sleep(1000);
-            //}
+        
             while (!cancellationToken.IsCancellationRequested)
             {
                 RoomAudio();
                 ControlEnteringRGBButton();
                 await CheckNextRoomStatus();
                 await ControlExitingRGBButton();
-                //if (VariableControlService.GameStatus == GameStatus.Empty)
-                //    DoorControl.Control(DoorPin, DoorStatus.Close);
 
             }
-
-         
-
-
-
-
-            //while (!cancellationToken.IsCancellationRequested)
-            //{
-
-            //    RoomAudio();
-            //    //ControlEnteringRGBButton();
-            //    ControlExitingRGBButton();
-            //}
-            //while (!cancellationToken.IsCancellationRequested)
-            //{
-
-            //    PIR1 = _controller.Read(MasterDI.PIRPin1);
-            //    PIR2 = _controller.Read(MasterDI.PIRPin2);
-            //    PIR3 = _controller.Read(MasterDI.PIRPin3);
-            //    PIR4 = _controller.Read(MasterDI.PIRPin4);
-            //    VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
-            //    ControlRoomAudio();
-            //    if (VariableControlService.EnableGoingToTheNextRoom)
-            //    {
-
-
-            //        _logger.LogDebug("Open The Door");
-            //        DoorControl.Status(DoorPin, true);
-            //        while (PIR1 || PIR2 || PIR3 || PIR4)
-            //        {
-            //            PIR1 = _controller.Read(MasterDI.PIRPin1);
-            //            PIR2 = _controller.Read(MasterDI.PIRPin2);
-            //            PIR3 = _controller.Read(MasterDI.PIRPin3);
-            //            PIR4 = _controller.Read(MasterDI.PIRPin4);
-            //        }
-            //        Thread.Sleep(30000);
-            //        DoorControl.Status(DoorPin, false);
-            //        ResetTheGame();
-            //        _logger.LogDebug("No One In The Room , All Gone To The Next Room");
-            //        _logger.LogDebug("Open The Door");
-            //        DoorControl.Status(DoorPin, true);
-            //    }
-
-            //    Thread.Sleep(10);
-            //}
         }
 
         private void StopTheGame()
         {
-            //VariableControlService.IsTheGameStarted = false;
-            //VariableControlService.IsTheGameFinished = true;
             Console.WriteLine("Stoped By Time For Test");
             VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
             VariableControlService.IsTheGameStarted = false;
@@ -171,19 +118,6 @@ namespace ShootingRoom.Services
         // Control Starting All the Threads
         private async Task GameTimingService(CancellationToken cancellationToken)
         {
-            //while (!cancellationToken.IsCancellationRequested)
-            //{
-            //    if (VariableControlService.IsTheGameStarted && !VariableControlService.IsGameTimerStarted)
-            //    {
-            //        GameTiming.Restart();
-            //        VariableControlService.IsGameTimerStarted = true;
-            //    }
-            //    bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming;
-            //    bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.IsGameTimerStarted;
-
-            //    if (GameFinishedByTimer || VariableControlService.IsTheGameFinished)
-            //        StopTheGame();
-            //}
             while (!cancellationToken.IsCancellationRequested)
             {
                 VariableControlService.CurrentTime = (int)GameTiming.ElapsedMilliseconds;
@@ -197,7 +131,7 @@ namespace ShootingRoom.Services
                 }
                 bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming;
                 bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.GameStatus == GameStatus.Started && VariableControlService.IsGameTimerStarted;
-                if (GameFinishedByTimer)// || VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
+                if (GameFinishedByTimer)
                     StopTheGame();
             }
         }
@@ -221,6 +155,7 @@ namespace ShootingRoom.Services
         {
             if (VariableControlService.GameStatus == GameStatus.NotStarted && !thereAreInstructionSoundPlays)
             {
+                Thread.Sleep(VariableControlService.DelayTimeBeforeInstructionInMs);
                 _logger.LogTrace("Start Instruction Audio");
                 AudioPlayer.PIBackgroundSound(SoundType.instruction);
                 thereAreInstructionSoundPlays = true;
@@ -251,6 +186,7 @@ namespace ShootingRoom.Services
         {
             if (!EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.NotStarted)
             {
+                Thread.Sleep(VariableControlService.DelayTimeBeforeTurnPBOnInMs);
                 _logger.LogTrace("Ready To Start The Game .. Turn RGB Button On");
                 EnterRGBButtonStatus = true;
                 RelayController.Status(EnterRGBButton, true);
@@ -301,7 +237,7 @@ namespace ShootingRoom.Services
 
                 bool PBPressed = !MCP23Controller.Read(NextRoomPB);
                 Console.WriteLine(PBPressed);
-                Thread.Sleep(1000);
+                //Thread.Sleep(1000);
                 if (PBPressed)
                 {
                     NextRoomRGBButtonStatus = false;

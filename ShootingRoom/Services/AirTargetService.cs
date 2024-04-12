@@ -59,7 +59,7 @@ namespace ShootingRoom.Services
 
         //int Score = 0;
         int numberOfAchivedInRow = 0;
-        List<int> LevelsRequiredScoreList = new List<int>() { 50, 75, 100, 125, 150 };
+        List<int> LevelsRequiredScoreList = new List<int>() { 100, 80, 60, 40, 150 };
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _controller = new GPIOController();
@@ -109,7 +109,6 @@ namespace ShootingRoom.Services
 
                             level++;
                             VariableControlService.LevelScore = 0;
-                            //int ActualLevelScore = 0;
                             int numberOfRightHits = 0;
                             int numberOfWrongHits = 0;
                             LevelTimer.Restart();
@@ -131,6 +130,8 @@ namespace ShootingRoom.Services
                                         if (!IsGameStartedOrInGoing())
                                             break;
                                         if (VariableControlService.LevelScore >= LevelScore)
+                                            break;
+                                        if (LevelTimer.ElapsedMilliseconds > 60000)
                                             break;
                                         foreach (var element in AirTargetList)
                                         {
@@ -168,7 +169,8 @@ namespace ShootingRoom.Services
                             Console.WriteLine("End The Level");
 
                             bool roundAchieved =
-                                CalculateTheScore(IsItDoubleScore, VariableControlService.LevelScore >= LevelScore, LevelScore, numberOfRightHits, numberOfWrongHits);
+                                CalculateTheScore(IsItDoubleScore, VariableControlService.LevelScore >= LevelScore, LevelScore,
+                                numberOfRightHits, numberOfWrongHits, VariableControlService.GameRound);
                             if (roundAchieved)
                                 numberOfAchivedInRow++;
                             else
@@ -255,10 +257,35 @@ namespace ShootingRoom.Services
             else
             {
                 Console.WriteLine($"Not All The Target shooted right{numberOfRightHit} , wrong {numberOfWrongHit}");
-                VariableControlService.TeamScore.ShootingRoomScore += (numberOfRightHit * 5 - numberOfWrongHit * 3);
+                VariableControlService.TeamScore.ShootingRoomScore += (numberOfRightHit * 5 - numberOfWrongHit * 5);
                 return false;
             }
         }
+
+
+
+        private bool CalculateTheScore(
+            bool isItDoubleScore, bool achieveTargetScore, int levelScore,
+            int numberOfRightHit, int numberOfWrongHit, Round round)
+        {
+            if ((isItDoubleScore && achieveTargetScore || round == Round.Round5))
+            {
+                VariableControlService.TeamScore.ShootingRoomScore += (levelScore * 2);
+                return false;
+            }
+            else if (achieveTargetScore)
+            {
+                VariableControlService.TeamScore.ShootingRoomScore += (levelScore);
+                return true;
+            }
+            else
+            {
+                Console.WriteLine($"Not All The Target shooted right{numberOfRightHit} , wrong {numberOfWrongHit}");
+                VariableControlService.TeamScore.ShootingRoomScore += (numberOfRightHit * 5 - numberOfWrongHit * 5);
+                return false;
+            }
+        }
+
 
         private void StopAirTargetService()
         {
