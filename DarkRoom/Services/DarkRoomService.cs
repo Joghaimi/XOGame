@@ -50,8 +50,6 @@ namespace DarkRoom.Services
             DarkRoomSensorList.Add(new DarkRoomSensorController(IN11));
             DarkRoomSensorList.Add(new DarkRoomSensorController(IN12));
 
-            MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT1, PinMode.Output);
-
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
@@ -67,7 +65,6 @@ namespace DarkRoom.Services
             {
                 if (IsGameStartedOrInGoing())
                 {
-                    //Console.WriteLine($"Is Game Started {VariableControlService.IsTheGameStarted}");
                     int i = 0;
                     foreach (var sensor in DarkRoomSensorList)
                     {
@@ -114,15 +111,18 @@ namespace DarkRoom.Services
         {
             while (true)
             {
-                Thread.Sleep(29000);
+                Thread.Sleep(10000);
                 if (IsGameStartedOrInGoing())
                 {
-                    MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT1, PinMode.Output);
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.High);
+                    RelayController.Status(MasterOutputPin.OUTPUT1, false);
                     Thread.Sleep(1000);
-                    MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT1, PinMode.Input);
-                    MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.Low);
-                    Thread.Sleep(1000);
+                    RelayController.Status(MasterOutputPin.OUTPUT1, true);
+                    //MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT1, PinMode.Output);
+                    //MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.High);
+                    //Thread.Sleep(1000);
+                    //MCP23Controller.PinModeSetup(MasterOutputPin.OUTPUT1, PinMode.Input);
+                    //MCP23Controller.Write(MasterOutputPin.OUTPUT1, PinState.Low);
+                    //Thread.Sleep(1000);
 
                 }
             }
@@ -142,7 +142,6 @@ namespace DarkRoom.Services
         }
         private bool IsGameStartedOrInGoing()
         {
-            //return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
             return VariableControlService.GameStatus == GameStatus.Started;
 
         }

@@ -34,5 +34,10 @@ namespace DivingRoom.Services
 
 
 
+        public static int DelayTimeBeforeInstructionInMs = 10000;
+        public static int DelayTimeBeforeTurnPBOnInMs = 35000;
+
+
+
     }
 }

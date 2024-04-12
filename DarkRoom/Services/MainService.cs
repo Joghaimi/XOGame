@@ -78,57 +78,8 @@ namespace DarkRoom.Services
                 ControlEnteringRGBButton();
                 await CheckNextRoomStatus();
                 await ControlExitingRGBButton();
-                //if (VariableControlService.GameStatus == GameStatus.Empty)
-                //    DoorControl.Control(DoorPin, DoorStatus.Close);
-
             }
-
-
-            //while (true)
-            //{
-            //    //DoorControl.Status(DoorPin, false);
-            //    //Thread.Sleep(3000);
-            //    //DoorControl.Status(DoorPin, true);
-            //    //Thread.Sleep(3000);
-            //    bool PBPressed = !MCP23Controller.Read(NextRoomPB);
-            //    Console.WriteLine(PBPressed);
-            //    Thread.Sleep(1000);
-            //}
-
-
-
-            //MCP23Controller.Write(MasterOutputPin.OUTPUT6, PinState.Low);
-
-            //while (!cancellationToken.IsCancellationRequested)
-            //{
-            //    PIR1 = _controller.Read(MasterDI.PIRPin1);
-            //    PIR2 = _controller.Read(MasterDI.PIRPin2);
-            //    PIR3 = _controller.Read(MasterDI.PIRPin3);
-            //    PIR4 = _controller.Read(MasterDI.PIRPin4);
-            //    VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
-            //    ControlRoomAudio();
-            //    if (VariableControlService.EnableGoingToTheNextRoom)
-            //    {
-            //        _logger.LogDebug("Open The Door");
-            //        DoorControl.Status(DoorPin, true);
-            //        while (PIR1 || PIR2 || PIR3 || PIR4)
-            //        {
-            //            PIR1 = _controller.Read(MasterDI.PIRPin1);
-            //            PIR2 = _controller.Read(MasterDI.PIRPin2);
-            //            PIR3 = _controller.Read(MasterDI.PIRPin3);
-            //            PIR4 = _controller.Read(MasterDI.PIRPin4);
-            //        }
-            //        Thread.Sleep(30000);
-            //        DoorControl.Status(DoorPin, false);
-            //        VariableControlService.EnableGoingToTheNextRoom = false;
-            //        VariableControlService.IsTheirAnyOneInTheRoom = false;
-            //        VariableControlService.IsTheGameStarted = false;
-            //        RGBLight.SetColor(RGBColor.Off);
-            //        _logger.LogDebug("No One In The Room , All Gone To The Next Room");
-            //    }
-
             Thread.Sleep(10);
-            //}
         }
 
 
@@ -141,6 +92,7 @@ namespace DarkRoom.Services
         {
             if (VariableControlService.GameStatus == GameStatus.NotStarted && !thereAreInstructionSoundPlays)
             {
+                Thread.Sleep(VariableControlService.DelayTimeBeforeInstructionInMs);
                 _logger.LogTrace("Start Instruction Audio");
                 AudioPlayer.PIBackgroundSound(SoundType.instruction);
                 thereAreInstructionSoundPlays = true;
@@ -171,6 +123,7 @@ namespace DarkRoom.Services
         {
             if (!EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.NotStarted)
             {
+                Thread.Sleep(VariableControlService.DelayTimeBeforeTurnPBOnInMs);
                 _logger.LogTrace("Ready To Start The Game .. Turn RGB Button On");
                 EnterRGBButtonStatus = true;
                 RelayController.Status(EnterRGBButton, true);
@@ -256,20 +209,6 @@ namespace DarkRoom.Services
         // Control Starting All the Threads
         private async Task GameTimingService(CancellationToken cancellationToken)
         {
-            //while (!cancellationToken.IsCancellationRequested)
-            //{
-            //    if (VariableControlService.IsTheGameStarted && !VariableControlService.IsGameTimerStarted)
-            //    {
-            //        GameTiming.Restart();
-            //        VariableControlService.IsGameTimerStarted = true;
-            //    }
-            //    bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming;
-            //    bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.IsGameTimerStarted;
-
-            //    if (GameFinishedByTimer || VariableControlService.IsTheGameFinished)
-            //        StopTheGame();
-            //}
-
             while (!cancellationToken.IsCancellationRequested)
             {
                 VariableControlService.CurrentTime = (int)GameTiming.ElapsedMilliseconds;
@@ -332,10 +271,6 @@ namespace DarkRoom.Services
         }
         private void StopTheGame()
         {
-            //VariableControlService.IsTheGameStarted = false;
-            //VariableControlService.IsTheGameFinished = true;
-            //VariableControlService.EnableGoingToTheNextRoom = true;
-
             Console.WriteLine("Stoped By Time For Test");
             VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
             VariableControlService.IsTheGameStarted = false;
