@@ -177,7 +177,9 @@ namespace FloorIsLava.Services
                 if (magnetStarted && VariableControlService.GameStatus == GameStatus.Empty)
                 {
                     Console.WriteLine("Magnet Stop");
-                    MCP23Controller.Write(MagnetRelay, PinState.Low);
+                    RelayController.Status(MagnetRelay, false);
+                    
+                    //MCP23Controller.Write(MagnetRelay, PinState.Low);
                     magnetStarted = false;
                 }
             }
