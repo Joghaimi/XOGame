@@ -177,8 +177,8 @@ namespace Library
     public enum DoorStatus
     {
         Close,
-        Open
-
+        Open,
+        Undefined
     }
 
 }
