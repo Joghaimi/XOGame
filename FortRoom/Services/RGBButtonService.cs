@@ -123,7 +123,7 @@ namespace FortRoom.Services
                                         if (itemSelected)
                                         {
                                             AudioPlayer.PIStartAudio(SoundType.Bonus);
-                                            RGBLight.SetColor(RGBColor.Yellow);
+                                            RGBLight.SetColor(VariableControlService.CorrectColor);
                                             RGBLight.SetPriority(true);
                                             item.TurnColorOn(RGBColor.Off);
                                             item.Set(false);
@@ -225,7 +225,7 @@ namespace FortRoom.Services
                     bool button2Status = !RGBButtonList[button2Index].CurrentStatus() && RGBButtonList[button2Index].isSet();
                     if (button1Status && button2Status)
                     {
-                        RGBLight.SetColor(RGBColor.Yellow);
+                        RGBLight.SetColor(VariableControlService.CorrectColor);
                         RGBLight.SetPriority(true);
                         AudioPlayer.PIStartAudio(SoundType.Bonus);
                         RGBButtonList[button1Index].Set(false);
