@@ -106,11 +106,11 @@ namespace Library
         Motor2Round4 = 1750,
         Motor2Round5 = 2000,
 
-        Motor3Round1 = 1000,
-        Motor3Round2 = 1500,
-        Motor3Round3 = 2000,
-        Motor3Round4 = 2500,
-        Motor3Round5 = 3000,
+        Motor3Round1 = 2000,
+        Motor3Round2 = 2500,
+        Motor3Round3 = 3000,
+        Motor3Round4 = 3500,
+        Motor3Round5 = 4000,
 
         Motor4Round1 = 1000,
         Motor4Round2 = 1000,

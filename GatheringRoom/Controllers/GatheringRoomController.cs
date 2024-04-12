@@ -51,8 +51,8 @@ namespace GatheringRoom.Controllers
         [HttpGet("getThePlayers")]
         public IActionResult Get()
         {
-            _logger.LogTrace("Get Player Team");
-            return base.Ok(VariableControlService.TeamScore.player);
+            //_logger.LogTrace("Get Player Team");
+            return Ok(VariableControlService.TeamScore.player);
         }
 
         // Control Game 
