@@ -29,7 +29,7 @@ namespace ShootingRoom.Services
 
 
         public static Round GameRound = Round.Round1;
-        public static RGBColor DefaultColor = RGBColor.Blue;
+        public static RGBColor DefaultColor = RGBColor.White;
         public static GameStatus GameStatus { get; set; } = GameStatus.Empty;
         public static DoorStatus CurrentDoorStatus { get; set; } = DoorStatus.Open;
         public static DoorStatus NewDoorStatus { get; set; } = DoorStatus.Open;
