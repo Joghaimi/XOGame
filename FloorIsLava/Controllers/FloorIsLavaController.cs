@@ -98,6 +98,11 @@ namespace FloorIsLava.Controllers
             totalTime = totalTime / 1000;
             return Ok(totalTime < 0 ? 0 : totalTime);
         }
+        [HttpGet("GetScore")]
+        public IActionResult GetScore()
+        {
+            return Ok(VariableControlService.TeamScore.FloorIsLavaRoomScore);
+        }
 
 
     }
