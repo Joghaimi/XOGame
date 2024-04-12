@@ -35,12 +35,14 @@ namespace FortRoom.Services
 
         public static Round GameRound = Round.Round1;
         public static GameStatus GameStatus { get; set; } = GameStatus.Empty;
-        public static DoorStatus CurrentDoorStatus { get; set; } = DoorStatus.Open;
+        public static DoorStatus CurrentDoorStatus { get; set; } = DoorStatus.Undefined;
         public static DoorStatus NewDoorStatus { get; set; } = DoorStatus.Open;
 
         public static string NextRoomURL = "https://shooting.local:7248/api/Shooting/RoomStatus";
         public static string SendScoreToTheNextRoom = "https://shooting.local:7248/api/Shooting/ReceiveScore";
 
+        public static int DelayTimeBeforeInstructionInMs = 10000;
+        public static int DelayTimeBeforeTurnPBOnInMs = 35000;
 
         public static void ResetTheGame()
         {

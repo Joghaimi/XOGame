@@ -97,7 +97,7 @@ namespace FortRoom.Services
                                 numberOfTurenedOnButton++;
                             }
                             Console.WriteLine($"numberOfTurenedOnButton :numberOfTurenedOnButton");
-                            TurnUnSelectedRGBButtonWithColor(RGBColor.Red);
+                            TurnUnSelectedRGBButtonWithColor(VariableControlService.WrongColor);
 
 
                             Console.WriteLine($"gameLevel: {gameLevel}");
@@ -114,7 +114,7 @@ namespace FortRoom.Services
                                         {
                                             isRGBButtonTurnedOffBecauseThePressureMate = false;
                                             ControlTheColorOfAllSetRGBButton(selectedColor);
-                                            TurnUnSelectedRGBButtonWithColor(RGBColor.Red);
+                                            TurnUnSelectedRGBButtonWithColor(VariableControlService.WrongColor);
                                             _logger.LogTrace("Turn On All RGB Button");
                                         }
 

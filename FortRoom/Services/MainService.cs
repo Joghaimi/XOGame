@@ -77,22 +77,12 @@ namespace FortRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            //while (true)
-            //{
-            //    Console.WriteLine(!MCP23Controller.Read(EnterRoomPB));
-            //    Thread.Sleep(1000);
-
-
-            //}
             while (!cancellationToken.IsCancellationRequested)
             {
                 RoomAudio();
                 ControlEnteringRGBButton();
                 await CheckNextRoomStatus();
                 await ControlExitingRGBButton();
-                //if (VariableControlService.GameStatus == GameStatus.Empty)
-                //    DoorControl.Control(DoorPin, DoorStatus.Close);
-
             }
         }
         private async Task CheckIFRoomIsEmpty(CancellationToken cancellationToken)
@@ -113,6 +103,7 @@ namespace FortRoom.Services
         {
             if (VariableControlService.GameStatus == GameStatus.NotStarted && !thereAreInstructionSoundPlays)
             {
+                Thread.Sleep(VariableControlService.DelayTimeBeforeInstructionInMs);
                 _logger.LogTrace("Start Instruction Audio");
                 AudioPlayer.PIBackgroundSound(SoundType.instruction);
                 thereAreInstructionSoundPlays = true;
@@ -144,6 +135,7 @@ namespace FortRoom.Services
         {
             if (!EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.NotStarted)
             {
+                Thread.Sleep(VariableControlService.DelayTimeBeforeTurnPBOnInMs);
                 _logger.LogTrace("Ready To Start The Game .. Turn RGB Button On");
                 EnterRGBButtonStatus = true;
                 RelayController.Status(EnterRGBButton, true);
@@ -243,7 +235,7 @@ namespace FortRoom.Services
                 }
                 bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming;
                 bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.GameStatus == GameStatus.Started && VariableControlService.IsGameTimerStarted;
-                if (GameFinishedByTimer)// || VariableControlService.GameStatus == GameStatus.FinishedNotEmpty)
+                if (GameFinishedByTimer)
                     StopTheGame();
             }
         }
@@ -262,7 +254,6 @@ namespace FortRoom.Services
             }
         }
 
-
         private void StopTheGame()
         {
             Console.WriteLine("Stoped By Time For Test");
@@ -270,15 +261,7 @@ namespace FortRoom.Services
             VariableControlService.IsTheGameStarted = false;
             VariableControlService.IsTheGameFinished = true;
             VariableControlService.IsGameTimerStarted = false;
-            //VariableControlService.EnableGoingToTheNextRoom = true;
         }
-        //private void ResetTheGame()
-        //{
-        //    VariableControlService.EnableGoingToTheNextRoom = false;
-        //    VariableControlService.IsTheirAnyOneInTheRoom = false;
-        //    VariableControlService.IsTheGameStarted = false;
-        //    VariableControlService.IsGameTimerStarted = false;
-        //}
 
         // Stop The Service
         public Task StopAsync(CancellationToken cancellationToken)
@@ -298,77 +281,3 @@ namespace FortRoom.Services
 
     }
 }
-
-
-
-// To Do Next Time
-//[Obsolete("Old")]
-//private void ControlRoomAudio()
-//{
-//    // Control Background Audio
-//    if (VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished && !thereAreInstructionSoundPlays)
-//    {
-//        _logger.LogTrace("Start Instruction Audio");
-//        thereAreInstructionSoundPlays = true;
-//        AudioPlayer.PIBackgroundSound(SoundType.instruction); // TO DO
-//        RelayController.Status(LaserPin, true);
-//        Thread.Sleep(60000);
-//        VariableControlService.IsTheGameStarted = true;
-//        VariableControlService.IsTheGameFinished = false;
-//    }
-//    else if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted
-//        && !VariableControlService.IsTheGameFinished
-//        && thereAreInstructionSoundPlays && !thereAreBackgroundSoundPlays)
-//    {
-//        // Stop Background Audio 
-//        _logger.LogTrace("Stop Instruction Audio");
-//        thereAreInstructionSoundPlays = false;
-//        AudioPlayer.PIStopAudio();
-//        Thread.Sleep(500);
-//        // Start Background Audio
-//        _logger.LogTrace("Start Background Audio");
-//        thereAreBackgroundSoundPlays = true;
-//        AudioPlayer.PIBackgroundSound(SoundType.Background);
-//    }
-//    else if (VariableControlService.IsTheGameFinished && thereAreBackgroundSoundPlays)
-//    {
-//        // Game Finished .. 
-//        _logger.LogTrace("Stop Background Audio");
-//        thereAreBackgroundSoundPlays = false;
-//        VariableControlService.EnableGoingToTheNextRoom = true;
-//        AudioPlayer.PIStopAudio();
-//    }
-//}
-
-
-
-
-//while (!cancellationToken.IsCancellationRequested)
-//{
-//    PIR1 = _controller.Read(MasterDI.PIRPin1);
-//    PIR2 = _controller.Read(MasterDI.PIRPin2);
-//    PIR3 = _controller.Read(MasterDI.PIRPin3);
-//    PIR4 = _controller.Read(MasterDI.PIRPin4);
-//    VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
-//    ControlRoomAudio();// Control Background Audio
-//    // IF Enable Going To The Next room 
-//    if (VariableControlService.EnableGoingToTheNextRoom)
-//    {
-//        _logger.LogDebug("Open The Door");
-//        DoorControl.Status(DoorPin, true);
-//        while (PIR1 || PIR2 || PIR3 || PIR4)
-//        {
-//            PIR1 = _controller.Read(MasterDI.PIRPin1);
-//            PIR2 = _controller.Read(MasterDI.PIRPin2);
-//            PIR3 = _controller.Read(MasterDI.PIRPin3);
-//            PIR4 = _controller.Read(MasterDI.PIRPin4);
-//        }
-//        Thread.Sleep(30000);
-//        DoorControl.Status(DoorPin, false);
-//        ResetTheGame();
-//        _logger.LogDebug("No One In The Room , All Gone To The Next Room");
-//    }
-//    Thread.Sleep(10);
-
-
-//}

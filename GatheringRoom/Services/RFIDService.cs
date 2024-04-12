@@ -67,7 +67,6 @@ namespace GatheringRoom.Services
                             }
                             else
                                 _logger.LogWarning($"Player is Exist :{isInTeam}");
-
                         }
                     }
                     else
