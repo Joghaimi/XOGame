@@ -375,6 +375,8 @@ namespace FloorIsLava.Services
                         Console.WriteLine("IN4 Scored");
                     }
                 }
+                if (IN2 && IN3 && IN4)
+                    break;
             }
         }
 
