@@ -77,8 +77,7 @@ namespace FloorIsLava.Services
                         IN4 = false;
                         IN5 = false;
                         IN7 = false;
-                        MCP23Controller.Write(MagnetRelay, PinState.Low);
-
+                        RelayController.Status(MagnetRelay, false);
                         gameRestarted = true;
                     }
 
