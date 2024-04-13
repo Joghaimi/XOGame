@@ -118,6 +118,7 @@ namespace FloorIsLava.Services
                                 break;
                             pressureMat();
                             Thread.Sleep(10);
+                            
                         }
 
                         VariableControlService.TeamScore.FloorIsLavaRoomScore += 100;
