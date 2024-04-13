@@ -32,7 +32,8 @@ namespace FloorIsLava.Services
 
 
         bool restartedBefore = false;
-
+        bool taskOneFinished = false;
+        bool taskTwoFinished = false;
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
@@ -88,6 +89,8 @@ namespace FloorIsLava.Services
                     IN4 = false;
                     IN5 = false;
                     IN7 = false;
+                    taskOneFinished = false;
+                    taskTwoFinished = false;
                     numberOfPressedMotor = 0;
                     // Turn Off The Magnet
                     Console.WriteLine("Stop The Magnet");
@@ -98,10 +101,12 @@ namespace FloorIsLava.Services
                 {
                     restartedBefore = false;
                     // Game Sequence 
-                    TaskOne();
+                    if (!taskOneFinished)
+                        TaskOne();
 
-                    bool TaskOneEnded = IN2 && IN3 && IN4 && numberOfPressedMotor == 3 && !ceilingMotorDown;
-                    if (TaskOneEnded)
+                    //bool TaskOneEnded = IN2 && IN3 && IN4 && numberOfPressedMotor == 3 && !ceilingMotorDown;
+                    bool CeilingDown = numberOfPressedMotor == 3 && !ceilingMotorDown;
+                    if (CeilingDown && !taskTwoFinished)
                     {
                         Console.WriteLine("All 3 Button Pressed , Task One Ended");
                         RGBButtonList[0].TurnColorOn(RGBColor.Red);
@@ -112,16 +117,19 @@ namespace FloorIsLava.Services
                             pressureMat();
                             Thread.Sleep(10);
                         }
+
                         VariableControlService.TeamScore.FloorIsLavaRoomScore += 100;
                         motorTiming = MotorStopWatch.ElapsedMilliseconds + 15000;
                         ceilingMotoruUp = true;
                         pressureMAtCount = false;
+
                         Console.WriteLine("Button Pressed");
 
                         RGBButtonList[0].TurnColorOn(RGBColor.Blue);
                         RGBLight.SetColor(RGBColor.Blue);
                         AudioPlayer.PIStartAudio(SoundType.Bonus);
                         RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
+
                         Console.WriteLine("Magnet Start");
                         RelayController.Status(MagnetRelay, true);
                         //        //MCP23Controller.Write(MagnetRelay, PinState.High);
@@ -172,6 +180,7 @@ namespace FloorIsLava.Services
                                 break;
                             Thread.Sleep(10);
                         }
+
                         Console.WriteLine("Game Ended");
                         RGBLight.SetColor(RGBColor.Blue);
 
@@ -182,10 +191,9 @@ namespace FloorIsLava.Services
                         IN2 = false;
                         IN3 = false;
                         IN4 = false;
+                        taskTwoFinished = true;
+                        Console.WriteLine("Task Two Finished");
                         //break;
-
-
-
                     }
 
 
@@ -376,10 +384,17 @@ namespace FloorIsLava.Services
                     }
                 }
                 if (IN2 && IN3 && IN4)
+                {
+                    taskOneFinished = true;
                     break;
+                }
             }
         }
 
+        void TaskTwo()
+        {
+
+        }
 
 
 
