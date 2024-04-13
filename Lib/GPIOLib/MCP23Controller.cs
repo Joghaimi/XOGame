@@ -331,7 +331,7 @@ namespace Library.GPIOLib
         // Test 
         //byte GPIOStatus = ReturnMCPChip(_MCP23Pin.Chip).ReadByte(Register.GPIO, _MCP23Pin.port);
         //return ((GPIOStatus >> _MCP23Pin.PinNumber) & 0x01) == 1;
-        //}
+        //}s
 
         public static void Write(MCP23Pin _MCP23Pin, PinState PinState)
         {
