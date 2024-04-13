@@ -165,6 +165,7 @@ namespace FloorIsLava.Services
                         AudioPlayer.PIStopAudio();
                         Thread.Sleep(300);
                         AudioPlayer.PIStartAudio(SoundType.Finish);
+                        VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
                         IN2 = false;
                         IN3 = false;
                         IN4 = false;
