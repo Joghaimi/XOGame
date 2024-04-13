@@ -358,38 +358,45 @@ namespace FloorIsLava.Services
                 if (!IsGameStartedOrInGoing())
                     break;
                 pressureMat();
-                if (!IN2)
+
+                try
                 {
-                    IN2 = CeilingButton(!MCP23Controller.Read(MasterDI.IN2 , true));
-                    if (IN2)
+                    if (!IN2)
                     {
-                        VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
-                        Console.WriteLine("IN2 Scored");
+                        IN2 = CeilingButton(!MCP23Controller.Read(MasterDI.IN2, true));
+                        if (IN2)
+                        {
+                            VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                            Console.WriteLine("IN2 Scored");
+                        }
                     }
-                }
-                if (!IN3)
-                {
-                    IN3 = CeilingButton(!MCP23Controller.Read(MasterDI.IN3, true));
-                    if (IN3)
+                    if (!IN3)
                     {
-                        VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
-                        Console.WriteLine("IN3 Scored");
+                        IN3 = CeilingButton(!MCP23Controller.Read(MasterDI.IN3, true));
+                        if (IN3)
+                        {
+                            VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                            Console.WriteLine("IN3 Scored");
+                        }
                     }
-                }
-                if (!IN4)
-                {
-                    IN4 = CeilingButton(!MCP23Controller.Read(MasterDI.IN4, true));
-                    if (IN4)
+                    if (!IN4)
                     {
-                        VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
-                        Console.WriteLine("IN4 Scored");
+                        IN4 = CeilingButton(!MCP23Controller.Read(MasterDI.IN4, true));
+                        if (IN4)
+                        {
+                            VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                            Console.WriteLine("IN4 Scored");
+                        }
                     }
+                    if (IN2 && IN3 && IN4)
+                    {
+                        taskOneFinished = true;
+                        break;
+                    }
+
                 }
-                if (IN2 && IN3 && IN4)
-                {
-                    taskOneFinished = true;
-                    break;
-                }
+                catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+
             }
         }
 
