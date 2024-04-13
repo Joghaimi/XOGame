@@ -80,6 +80,17 @@ namespace FloorIsLava.Services
             RGBLight.SetColor(RGBColor.Red);
             while (!cancellationToken.IsCancellationRequested)
             {
+                while (true)
+                {
+
+                    Console.WriteLine("Relay OFF");
+                    RelayController.Status(MagnetRelay, false);
+                    Thread.Sleep(5000);
+                    Console.WriteLine("Relay ON");
+                    RelayController.Status(MagnetRelay, true);
+                    Thread.Sleep(5000);
+                }
+
                 //Console.WriteLine(
 
                 //    $"IN2 {MCP23Controller.Read(MasterDI.IN2, true)} IN3 {MCP23Controller.Read(MasterDI.IN3, true)} IN4 {MCP23Controller.Read(MasterDI.IN4, true)}");
@@ -233,135 +244,135 @@ namespace FloorIsLava.Services
 
 
 
-                    //if (IsGameStartedOrInGoing())
-                    //{
-                    //    gameRestarted = false;
-                    //    if (!IsGameStartedOrInGoing())
-                    //        break;
-
-                    //    if (!IN2)
-                    //    {
-                    //        IN2 = CeilingButton(!MCP23Controller.Read(MasterDI.IN2));
-                    //        if (IN2)
-                    //            VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
-                    //    }
-                    //    if (!IN3)
-                    //    {
-                    //        IN3 = CeilingButton(!MCP23Controller.Read(MasterDI.IN3));
-                    //        if (IN3)
-                    //            VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
-                    //    }
-                    //    if (!IN4)
-                    //    {
-                    //        IN4 = CeilingButton(!MCP23Controller.Read(MasterDI.IN4));
-                    //        if (IN4)
-                    //            VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
-                    //    }
-                    //    pressureMat();
-
-                    //    if (IN2 && IN3 && IN4 && numberOfPressedMotor == 3 && !ceilingMotorDown)
-                    //    {
-
-                    //        Console.WriteLine("Pressed all 3");
-                    //        RGBButtonList[0].TurnColorOn(RGBColor.Red);
-                    //        pressureMAtCount = true;
-                    //        while (RGBButtonList[0].CurrentStatus() || PressureMatPressed)
-                    //        {
-                    //            pressureMat();
-                    //            Thread.Sleep(10);
-                    //        }
-                    //        VariableControlService.TeamScore.FloorIsLavaRoomScore += 100;
-                    //        motorTiming = MotorStopWatch.ElapsedMilliseconds + 15000;
-                    //        ceilingMotoruUp = true;
-
-                    //        pressureMAtCount = false;
-                    //        Console.WriteLine("Button Pressed");
-
-                    //        RGBButtonList[0].TurnColorOn(RGBColor.Blue);
-                    //        RGBLight.SetColor(RGBColor.Blue);
-                    //        AudioPlayer.PIStartAudio(SoundType.Bonus);
-                    //        RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
-                    //        Console.WriteLine("Magnet Start");
-                    //        RelayController.Status(MagnetRelay, true);
-                    //        //MCP23Controller.Write(MagnetRelay, PinState.High);
-                    //        magnetStarted = true;
-                    //        while (true)
-                    //        {
-                    //            if (!IsGameStartedOrInGoing())
-                    //                break;
-                    //            pressureMat();
-                    //            if (!MCP23Controller.Read(MasterDI.IN5) && !IN5)
-                    //            {
-                    //                IN5 = true;
-                    //                AudioPlayer.PIStartAudio(SoundType.Charge);
-                    //                RGBLight.SetColor(RGBColor.Blue);
-                    //                VariableControlService.TeamScore.FloorIsLavaRoomScore += 50;
-                    //                if (!IN7)
-                    //                    RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
-                    //                Console.WriteLine("IN5 PRESSED ====");
-                    //            }
-                    //            pressureMat();
-                    //            if (IN5)
-                    //            {
-                    //                IN5 = !MCP23Controller.Read(MasterDI.IN5);
-                    //                if (!IN5)
-                    //                    Console.WriteLine("IN5 bREAK ====");
-
-                    //            }
-                    //            if (!MCP23Controller.Read(MasterDI.IN7) && !IN7)
-                    //            {
-                    //                IN7 = true;
-                    //                AudioPlayer.PIStartAudio(SoundType.Charge);
-                    //                RGBLight.SetColor(RGBColor.Blue);
-                    //                VariableControlService.TeamScore.FloorIsLavaRoomScore += 50;
-                    //                if (!IN5)
-                    //                    RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
-                    //                Console.WriteLine("IN6 PRESSED ====");
-
-                    //            }
-                    //            pressureMat();
-                    //            if (IN7)
-                    //            {
-                    //                IN7 = !MCP23Controller.Read(MasterDI.IN7);
-                    //                if (!IN7)
-                    //                    Console.WriteLine("IN6 bREAK ====");
-
-                    //            }
-                    //            if (IN7 && IN5)
-                    //                break;
-                    //            Thread.Sleep(10);
-                    //        }
-                    //        Console.WriteLine("Game Ended");
-                    //        RGBLight.SetColor(RGBColor.Blue);
-
-                    //        AudioPlayer.PIStopAudio();
-                    //        Thread.Sleep(300);
-                    //        AudioPlayer.PIStartAudio(SoundType.Finish);
-                    //        VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
-                    //        IN2 = false;
-                    //        IN3 = false;
-                    //        IN4 = false;
-                    //        break;
-                    //    }
-                    //    Thread.Sleep(10);
-                    //}
-                    //else
-                    //{
-                    //    IN2 = false;
-                    //    IN3 = false;
-                    //    IN4 = false;
-                    //}
-                    //Thread.Sleep(10);
-                }
-                //if (magnetStarted && VariableControlService.GameStatus == GameStatus.Empty)
+                //if (IsGameStartedOrInGoing())
                 //{
-                //    Console.WriteLine("Magnet Stop");
-                //    RelayController.Status(MagnetRelay, false);
-                //    magnetStarted = false;
-                //}
-                //}
+                //    gameRestarted = false;
+                //    if (!IsGameStartedOrInGoing())
+                //        break;
 
+                //    if (!IN2)
+                //    {
+                //        IN2 = CeilingButton(!MCP23Controller.Read(MasterDI.IN2));
+                //        if (IN2)
+                //            VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                //    }
+                //    if (!IN3)
+                //    {
+                //        IN3 = CeilingButton(!MCP23Controller.Read(MasterDI.IN3));
+                //        if (IN3)
+                //            VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                //    }
+                //    if (!IN4)
+                //    {
+                //        IN4 = CeilingButton(!MCP23Controller.Read(MasterDI.IN4));
+                //        if (IN4)
+                //            VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                //    }
+                //    pressureMat();
+
+                //    if (IN2 && IN3 && IN4 && numberOfPressedMotor == 3 && !ceilingMotorDown)
+                //    {
+
+                //        Console.WriteLine("Pressed all 3");
+                //        RGBButtonList[0].TurnColorOn(RGBColor.Red);
+                //        pressureMAtCount = true;
+                //        while (RGBButtonList[0].CurrentStatus() || PressureMatPressed)
+                //        {
+                //            pressureMat();
+                //            Thread.Sleep(10);
+                //        }
+                //        VariableControlService.TeamScore.FloorIsLavaRoomScore += 100;
+                //        motorTiming = MotorStopWatch.ElapsedMilliseconds + 15000;
+                //        ceilingMotoruUp = true;
+
+                //        pressureMAtCount = false;
+                //        Console.WriteLine("Button Pressed");
+
+                //        RGBButtonList[0].TurnColorOn(RGBColor.Blue);
+                //        RGBLight.SetColor(RGBColor.Blue);
+                //        AudioPlayer.PIStartAudio(SoundType.Bonus);
+                //        RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
+                //        Console.WriteLine("Magnet Start");
+                //        RelayController.Status(MagnetRelay, true);
+                //        //MCP23Controller.Write(MagnetRelay, PinState.High);
+                //        magnetStarted = true;
+                //        while (true)
+                //        {
+                //            if (!IsGameStartedOrInGoing())
+                //                break;
+                //            pressureMat();
+                //            if (!MCP23Controller.Read(MasterDI.IN5) && !IN5)
+                //            {
+                //                IN5 = true;
+                //                AudioPlayer.PIStartAudio(SoundType.Charge);
+                //                RGBLight.SetColor(RGBColor.Blue);
+                //                VariableControlService.TeamScore.FloorIsLavaRoomScore += 50;
+                //                if (!IN7)
+                //                    RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
+                //                Console.WriteLine("IN5 PRESSED ====");
+                //            }
+                //            pressureMat();
+                //            if (IN5)
+                //            {
+                //                IN5 = !MCP23Controller.Read(MasterDI.IN5);
+                //                if (!IN5)
+                //                    Console.WriteLine("IN5 bREAK ====");
+
+                //            }
+                //            if (!MCP23Controller.Read(MasterDI.IN7) && !IN7)
+                //            {
+                //                IN7 = true;
+                //                AudioPlayer.PIStartAudio(SoundType.Charge);
+                //                RGBLight.SetColor(RGBColor.Blue);
+                //                VariableControlService.TeamScore.FloorIsLavaRoomScore += 50;
+                //                if (!IN5)
+                //                    RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
+                //                Console.WriteLine("IN6 PRESSED ====");
+
+                //            }
+                //            pressureMat();
+                //            if (IN7)
+                //            {
+                //                IN7 = !MCP23Controller.Read(MasterDI.IN7);
+                //                if (!IN7)
+                //                    Console.WriteLine("IN6 bREAK ====");
+
+                //            }
+                //            if (IN7 && IN5)
+                //                break;
+                //            Thread.Sleep(10);
+                //        }
+                //        Console.WriteLine("Game Ended");
+                //        RGBLight.SetColor(RGBColor.Blue);
+
+                //        AudioPlayer.PIStopAudio();
+                //        Thread.Sleep(300);
+                //        AudioPlayer.PIStartAudio(SoundType.Finish);
+                //        VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
+                //        IN2 = false;
+                //        IN3 = false;
+                //        IN4 = false;
+                //        break;
+                //    }
+                //    Thread.Sleep(10);
+                //}
+                //else
+                //{
+                //    IN2 = false;
+                //    IN3 = false;
+                //    IN4 = false;
+                //}
+                //Thread.Sleep(10);
             }
+            //if (magnetStarted && VariableControlService.GameStatus == GameStatus.Empty)
+            //{
+            //    Console.WriteLine("Magnet Stop");
+            //    RelayController.Status(MagnetRelay, false);
+            //    magnetStarted = false;
+            //}
+            //}
+
+        }
 
         void TaskOne()
         {
