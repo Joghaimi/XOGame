@@ -141,7 +141,7 @@ namespace FloorIsLava.Services
                             if (!IsGameStartedOrInGoing())
                                 break;
                             pressureMat();
-                            if (!MCP23Controller.Read(MasterDI.IN5) && !IN5)
+                            if (!MCP23Controller.Read(MasterDI.IN5, true) && !IN5)
                             {
                                 IN5 = true;
                                 AudioPlayer.PIStartAudio(SoundType.Charge);
@@ -154,12 +154,12 @@ namespace FloorIsLava.Services
                             pressureMat();
                             if (IN5)
                             {
-                                IN5 = !MCP23Controller.Read(MasterDI.IN5);
+                                IN5 = !MCP23Controller.Read(MasterDI.IN5, true);
                                 if (!IN5)
                                     Console.WriteLine("IN5 bREAK ====");
 
                             }
-                            if (!MCP23Controller.Read(MasterDI.IN7) && !IN7)
+                            if (!MCP23Controller.Read(MasterDI.IN7, true) && !IN7)
                             {
                                 IN7 = true;
                                 AudioPlayer.PIStartAudio(SoundType.Charge);
@@ -173,7 +173,7 @@ namespace FloorIsLava.Services
                             pressureMat();
                             if (IN7)
                             {
-                                IN7 = !MCP23Controller.Read(MasterDI.IN7);
+                                IN7 = !MCP23Controller.Read(MasterDI.IN7, true);
                                 if (!IN7)
                                     Console.WriteLine("IN6 bREAK ====");
 
@@ -360,7 +360,7 @@ namespace FloorIsLava.Services
                 pressureMat();
                 if (!IN2)
                 {
-                    IN2 = CeilingButton(!MCP23Controller.Read(MasterDI.IN2));
+                    IN2 = CeilingButton(!MCP23Controller.Read(MasterDI.IN2 , true));
                     if (IN2)
                     {
                         VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
@@ -369,7 +369,7 @@ namespace FloorIsLava.Services
                 }
                 if (!IN3)
                 {
-                    IN3 = CeilingButton(!MCP23Controller.Read(MasterDI.IN3));
+                    IN3 = CeilingButton(!MCP23Controller.Read(MasterDI.IN3, true));
                     if (IN3)
                     {
                         VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
@@ -378,7 +378,7 @@ namespace FloorIsLava.Services
                 }
                 if (!IN4)
                 {
-                    IN4 = CeilingButton(!MCP23Controller.Read(MasterDI.IN4));
+                    IN4 = CeilingButton(!MCP23Controller.Read(MasterDI.IN4, true));
                     if (IN4)
                     {
                         VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
