@@ -20,7 +20,8 @@ namespace FortRoom.Controllers
         [HttpGet("IsOccupied")]
         public IActionResult Get()
         {
-            return Ok(VariableControlService.IsOccupied);
+            //return Ok(VariableControlService.IsOccupied);
+            return Ok(VariableControlService.GameStatus !=GameStatus.Empty);
         }
         [HttpGet("SetAsOccupied")]
         public IActionResult SetAsOccupied(bool IsOccupied)
