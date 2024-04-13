@@ -102,6 +102,11 @@ namespace FloorIsLava.Services
                     Console.WriteLine("Stop The Magnet");
                     RelayController.Status(MagnetRelay, false);
                     restartedBefore = true;
+                    RGBLight.SetColor(RGBColor.Red);
+                    RGBButtonList[0].TurnColorOn(RGBColor.Off);
+                    CellingDirection(true, 10000);
+
+
                 }
                 if (IsGameStartedOrInGoing())
                 {
