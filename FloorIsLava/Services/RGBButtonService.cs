@@ -393,7 +393,7 @@ namespace FloorIsLava.Services
                         taskOneFinished = true;
                         break;
                     }
-
+                    Thread.Sleep(10);
                 }
                 catch (Exception ex) { Console.WriteLine(ex.ToString()); }
 
