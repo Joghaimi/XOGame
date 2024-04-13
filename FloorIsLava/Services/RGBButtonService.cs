@@ -136,7 +136,7 @@ namespace FloorIsLava.Services
                         Console.WriteLine("Magnet Start");
                         RelayController.Status(MagnetRelay, true);
                         //        //MCP23Controller.Write(MagnetRelay, PinState.High);
-                        magnetStarted = true;
+                        //magnetStarted = true;
                         while (true)
                         {
                             if (!IsGameStartedOrInGoing())
@@ -394,7 +394,7 @@ namespace FloorIsLava.Services
                         taskOneFinished = true;
                         break;
                     }
-                    Thread.Sleep(10);
+                    Thread.Sleep(100);
                 }
                 catch (Exception ex) { Console.WriteLine(ex.ToString()); }
 
