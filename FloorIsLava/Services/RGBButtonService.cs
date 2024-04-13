@@ -29,6 +29,11 @@ namespace FloorIsLava.Services
         MCP23Pin CellingUPRelay = MasterOutputPin.OUTPUT1;
         MCP23Pin CellingDownRelay = MasterOutputPin.OUTPUT5;
         bool magnetStarted = false;
+
+
+        bool gameRestarted = false;
+
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
             // TO DO Init The RGB Light .. 
@@ -63,11 +68,25 @@ namespace FloorIsLava.Services
             RGBLight.SetColor(RGBColor.Red);
             while (!cancellationToken.IsCancellationRequested)
             {
-                Console.WriteLine("Floor is Lava");
                 while (true)
                 {
+                    if (VariableControlService.GameStatus == GameStatus.Empty && !gameRestarted)
+                    {
+                        IN2 = false;
+                        IN3 = false;
+                        IN4 = false;
+                        IN5 = false;
+                        IN7 = false;
+                        MCP23Controller.Write(MagnetRelay, PinState.Low);
+
+                        gameRestarted = true;
+                    }
+
+
+
                     if (IsGameStartedOrInGoing())
                     {
+                        gameRestarted = false;
                         if (!IsGameStartedOrInGoing())
                             break;
 
@@ -198,8 +217,6 @@ namespace FloorIsLava.Services
         private bool IsGameStartedOrInGoing()
         {
             return VariableControlService.GameStatus == GameStatus.Started;
-
-            //return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
         }
         private void pressureMat()
         {

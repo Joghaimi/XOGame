@@ -259,14 +259,6 @@ namespace FloorIsLava.Services
             {
                 VariableControlService.GameStatus = GameStatus.ReadyToLeave;
                 return;
-
-                //var status = await APIIntegration.NextRoomStatus(VariableControlService.NextRoomURL);
-                //if (status == "Empty")
-                //{
-                //    VariableControlService.GameStatus = GameStatus.ReadyToLeave;
-                //return;
-                //}
-                Thread.Sleep(5000);
             }
         }
         private async Task ControlExitingRGBButton()
