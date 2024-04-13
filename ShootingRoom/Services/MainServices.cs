@@ -231,6 +231,7 @@ namespace ShootingRoom.Services
                 Console.WriteLine("Ready To Leave .. Turn RGB Button On");
                 NextRoomRGBButtonStatus = true;
                 RelayController.Status(NextRoomPBLight, true);
+                Thread.Sleep(1000);
             }
             else if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && NextRoomRGBButtonStatus)
             {
