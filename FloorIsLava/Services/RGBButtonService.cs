@@ -114,6 +114,8 @@ namespace FloorIsLava.Services
 
                         while (RGBButtonList[0].CurrentStatus() || PressureMatPressed)
                         {
+                            if (!IsGameStartedOrInGoing())
+                                break;
                             pressureMat();
                             Thread.Sleep(10);
                         }
