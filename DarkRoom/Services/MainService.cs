@@ -51,6 +51,8 @@ namespace DarkRoom.Services
             _controller.Setup(MasterDI.PIRPin4, PinMode.InputPullDown);
             DoorControl.Status(DoorPin, false);
 
+            RGBLight.SetColor(VariableControlService.DefaultColor);
+
             MCP23Controller.PinModeSetup(EnterRoomPB, PinMode.Input);
             MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
 
