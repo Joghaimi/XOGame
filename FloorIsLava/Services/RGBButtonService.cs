@@ -114,7 +114,8 @@ namespace FloorIsLava.Services
                             AudioPlayer.PIStartAudio(SoundType.Bonus);
                             RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
                             Console.WriteLine("Magnet Start");
-                            MCP23Controller.Write(MagnetRelay, PinState.High);
+                            RelayController.Status(MagnetRelay, true);
+                            //MCP23Controller.Write(MagnetRelay, PinState.High);
                             magnetStarted = true;
                             while (true)
                             {
@@ -176,13 +177,18 @@ namespace FloorIsLava.Services
                         }
                         Thread.Sleep(10);
                     }
+                    else
+                    {
+                        IN2 = false;
+                        IN3 = false;
+                        IN4 = false;
+                    }
                     Thread.Sleep(10);
                 }
                 if (magnetStarted && VariableControlService.GameStatus == GameStatus.Empty)
                 {
                     Console.WriteLine("Magnet Stop");
                     RelayController.Status(MagnetRelay, false);
-                    //MCP23Controller.Write(MagnetRelay, PinState.Low);
                     magnetStarted = false;
                 }
             }
