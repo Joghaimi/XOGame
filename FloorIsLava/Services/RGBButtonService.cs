@@ -86,7 +86,7 @@ namespace FloorIsLava.Services
                         if (!IN4)
                         {
                             IN4 = CeilingButton(!MCP23Controller.Read(MasterDI.IN4));
-                            if (IN3)
+                            if (IN4)
                                 VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
                         }
                         pressureMat();
