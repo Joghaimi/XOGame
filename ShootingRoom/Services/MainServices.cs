@@ -76,13 +76,14 @@ namespace ShootingRoom.Services
         private async Task RunService(CancellationToken cancellationToken)
         {
 
-        
+
             while (!cancellationToken.IsCancellationRequested)
             {
                 RoomAudio();
                 ControlEnteringRGBButton();
                 await CheckNextRoomStatus();
                 await ControlExitingRGBButton();
+                    Thread.Sleep(10);
 
             }
         }
@@ -135,7 +136,7 @@ namespace ShootingRoom.Services
                     StopTheGame();
             }
         }
-      
+
         private async Task DoorLockControl(CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
@@ -199,7 +200,7 @@ namespace ShootingRoom.Services
             bool RGBButtonIsOnAndGameNotStarted = EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.NotStarted;
             if (RGBButtonIsOnAndGameNotStarted)
             {
-                bool PBPressed = !MCP23Controller.Read(EnterRoomPB,true);
+                bool PBPressed = !MCP23Controller.Read(EnterRoomPB, true);
                 if (PBPressed)
                 {
                     _logger.LogTrace("Start The Game Pressed");
@@ -236,7 +237,7 @@ namespace ShootingRoom.Services
             else if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && NextRoomRGBButtonStatus)
             {
 
-                bool PBPressed = !MCP23Controller.Read(NextRoomPB,true);
+                bool PBPressed = !MCP23Controller.Read(NextRoomPB, true);
                 Console.WriteLine(PBPressed);
                 //Thread.Sleep(1000);
                 if (PBPressed)
