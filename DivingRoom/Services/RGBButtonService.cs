@@ -185,6 +185,9 @@ namespace DivingRoom.Services
             AudioPlayer.PIStopAudio();
             RGBLight.SetColor(VariableControlService.DefaultColor);
             Thread.Sleep(1000);
+            AudioPlayer.PIForceStopAudio();
+
+
         }
         private void UnselectAllPB()
         {

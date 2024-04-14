@@ -296,6 +296,7 @@ namespace ShootingRoom.Services
             AudioPlayer.PIStartAudio(SoundType.MissionAccomplished);
             Thread.Sleep(1000);
             AudioPlayer.PIStopAudio();
+            AudioPlayer.PIForceStopAudio();
         }
 
         private void ControlPin(int pinNumber, bool state)

@@ -308,6 +308,7 @@ namespace FortRoom.Services
                 Thread.Sleep(1000);
                 AudioPlayer.PIStopAudio();
             }
+            AudioPlayer.PIForceStopAudio();
         }
 
 

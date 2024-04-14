@@ -90,7 +90,7 @@ namespace Library.Media
             {
                 Process audioProcess = new Process();
                 audioProcess.StartInfo.FileName = "/bin/bash";
-                audioProcess.StartInfo.Arguments = $"sudo killall vlc";
+                audioProcess.StartInfo.Arguments = $"killall -s 9 vlc";
                 audioProcess.StartInfo.RedirectStandardOutput = true;
                 audioProcess.StartInfo.RedirectStandardError = true;
                 audioProcess.StartInfo.UseShellExecute = false;
