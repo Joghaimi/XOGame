@@ -80,23 +80,6 @@ namespace FloorIsLava.Services
             RGBLight.SetColor(RGBColor.Red);
             while (!cancellationToken.IsCancellationRequested)
             {
-                while (true)
-                {
-
-                    Console.WriteLine("Relay OFF");
-                    RelayController.Status(MagnetRelay, false);
-                    Thread.Sleep(5000);
-                    Console.WriteLine("Relay ON");
-                    RelayController.Status(MagnetRelay, true);
-                    Thread.Sleep(5000);
-                }
-
-                //Console.WriteLine(
-
-                //    $"IN2 {MCP23Controller.Read(MasterDI.IN2, true)} IN3 {MCP23Controller.Read(MasterDI.IN3, true)} IN4 {MCP23Controller.Read(MasterDI.IN4, true)}");
-
-                //Thread.Sleep(100);
-
                 if (VariableControlService.GameStatus == GameStatus.Empty && !restartedBefore)
                 {
                     Console.WriteLine("Restart The Game");

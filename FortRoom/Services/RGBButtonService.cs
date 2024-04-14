@@ -10,6 +10,7 @@ using Iot.Device.Mcp3428;
 using Iot.Device.BrickPi3.Sensors;
 using System.Xml.Linq;
 using RGBColor = Library.RGBColor;
+using Microsoft.Scripting.Utils;
 
 namespace FortRoom.Services
 {
@@ -19,10 +20,7 @@ namespace FortRoom.Services
         private readonly ILogger<RGBButtonService> _logger;
         Stopwatch GameStopWatch = new Stopwatch();
         private CancellationTokenSource _cts;
-
-        List<int> LevelNumbers = new List<int> { 1, 2, 2, 3, 4 };
-
-        //int CurrentColor = 0;
+        Random random = new Random();
 
         List<RGBColor> RGBColors = new List<RGBColor> {
             RGBColor.Blue,
@@ -31,8 +29,6 @@ namespace FortRoom.Services
             RGBColor.Yellow,
             RGBColor.purple
         };
-
-
 
         public RGBButtonService(ILogger<RGBButtonService> logger, IHostApplicationLifetime appLifetime)
         {
@@ -54,12 +50,13 @@ namespace FortRoom.Services
             GameStopWatch.Start();
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
             Task.Run(() => RunService(_cts.Token));
+
             return Task.CompletedTask;
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-            //int level = 0;
             while (!cancellationToken.IsCancellationRequested)
             {
                 try
@@ -196,9 +193,8 @@ namespace FortRoom.Services
             int level = (int)round;
             if (level > RGBButtonList.Count)
                 return;
-            Random random = new Random();
-            int button1Index = random.Next(0, 5);
-            int button2Index = random.Next(5, 9);
+            int button1Index = SelectRandomNumberInRange(0, 5);
+            int button2Index = SelectRandomNumberInRange(5, 9);
             bool Button1 = false; bool Button2 = false;
             RGBButtonList[button1Index].TurnColorOn(color);
             RGBButtonList[button2Index].TurnColorOn(color);
@@ -211,8 +207,6 @@ namespace FortRoom.Services
 
                 if (!IsGameStartedOrInGoing())
                     break;
-
-
 
                 if (!VariableControlService.IsPressureMateActive)
                 {
@@ -231,6 +225,7 @@ namespace FortRoom.Services
                         RGBButtonList[button1Index].Set(false);
                         RGBButtonList[button2Index].Set(false);
                         RGBButtonList[button1Index].TurnColorOn(RGBColor.Off);
+                        RGBButtonList[button2Index].TurnColorOn(RGBColor.Off);
 
                         RGBLight.TurnRGBColorDelayedASecAndPriorityRemove(VariableControlService.DefaultColor);
                         Button1 = true;
@@ -252,7 +247,27 @@ namespace FortRoom.Services
 
 
 
+        private int SelectRandomNumberInRange(int start, int end, bool canBeNegative = false)
+        {
+            try
+            {
+                var value = random.Next(start, end);
+                if (value < 0 || value > end)
+                {
+                    return SelectRandomNumberInRange(start, end, canBeNegative);
+                }
+                return value;
 
+            }
+            catch (Exception e)
+            {
+
+                _logger.LogError("SelectRandomNumberInRange Exception , Try Agan");
+                return SelectRandomNumberInRange(start, end, canBeNegative);
+
+            }
+
+        }
 
 
 
@@ -263,8 +278,6 @@ namespace FortRoom.Services
         private bool IsGameStartedOrInGoing()
         {
             return VariableControlService.GameStatus == GameStatus.Started;
-
-            //return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
         }
         private void StopRGBButtonService(bool withoutFnishAudio = false)
         {
@@ -277,6 +290,17 @@ namespace FortRoom.Services
             VariableControlService.GameRound = Round.Round1;
             VariableControlService.IsRGBButtonServiceStarted = false;
             VariableControlService.IsTheGameFinished = true;
+
+            // Reset RGB Button List
+            RGBColors = new List<RGBColor> {
+            RGBColor.Blue,
+            RGBColor.White,
+            RGBColor.Turquoise,
+            RGBColor.Yellow,
+            RGBColor.purple};
+
+
+
             _logger.LogTrace("Audio Off");
             if (!withoutFnishAudio)
             {
@@ -333,12 +357,20 @@ namespace FortRoom.Services
         }
         public RGBColor SelectRandomRGBColorForLevel()
         {
-            Random random = new Random();
-            int randomColorIndex = random.Next(0, RGBColors.Count());
-            var selectedColor = RGBColors[randomColorIndex];
-            RGBColors.RemoveAt(randomColorIndex);
-            Console.WriteLine(selectedColor);
-            return selectedColor;
+            try
+            {
+                Random random = new Random();
+                int randomColorIndex = random.Next(0, RGBColors.Count());
+                var selectedColor = RGBColors[randomColorIndex];
+                RGBColors.RemoveAt(randomColorIndex);
+                Console.WriteLine(selectedColor);
+                return selectedColor;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"SelectRandomRGBColorForLevel Exception , Try Again {ex.Message}");
+                throw;
+            }
         }
 
         public void TurnRandomRGBButtonWithColor(RGBColor color)

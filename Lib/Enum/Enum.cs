@@ -168,10 +168,14 @@ namespace Library
     {
         Empty,
         NotStarted, // Not Empty and Not Started 
+        StartInstructionAudio,
+        InstructionAudioStarted,
+        InstructionAudioEnded,
         Started,
         FinishedNotEmpty, // Start Sending Request For the Next Room 
         ReadyToLeave, // Turn the PB Light
-        Leaving // PB Pressed waiting 
+        Leaving,// PB Pressed waiting
+        Reset,
     }
 
     public enum DoorStatus
