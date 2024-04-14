@@ -199,7 +199,7 @@ namespace ShootingRoom.Services
             bool RGBButtonIsOnAndGameNotStarted = EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.NotStarted;
             if (RGBButtonIsOnAndGameNotStarted)
             {
-                bool PBPressed = !MCP23Controller.Read(EnterRoomPB);
+                bool PBPressed = !MCP23Controller.Read(EnterRoomPB,true);
                 if (PBPressed)
                 {
                     _logger.LogTrace("Start The Game Pressed");
@@ -236,7 +236,7 @@ namespace ShootingRoom.Services
             else if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && NextRoomRGBButtonStatus)
             {
 
-                bool PBPressed = !MCP23Controller.Read(NextRoomPB);
+                bool PBPressed = !MCP23Controller.Read(NextRoomPB,true);
                 Console.WriteLine(PBPressed);
                 //Thread.Sleep(1000);
                 if (PBPressed)
