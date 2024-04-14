@@ -49,7 +49,7 @@ namespace GatheringRoom.Services
 
             DoorControl.Control(DoorPin, DoorStatus.Close);
             
-            Task.Run(() => CheckIFRoomIsEmpty(cts2.Token));
+            //Task.Run(() => CheckIFRoomIsEmpty(cts2.Token));
             Task.Run(() => RunService(_cts.Token));
             Task.Run(() => DoorLockControl(_cts3.Token));
 
@@ -57,31 +57,32 @@ namespace GatheringRoom.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
+            RGBLight.SetColor(RGBColor.Blue);
             while (!cancellationToken.IsCancellationRequested)
             {
-                PIR1 = _controller.Read(VariableControlService.PIRPin1);
-                PIR2 = _controller.Read(VariableControlService.PIRPin2);
-                PIR3 = _controller.Read(VariableControlService.PIRPin3);
-                PIR4 = _controller.Read(VariableControlService.PIRPin4);
+                //PIR1 = _controller.Read(VariableControlService.PIRPin1);
+                //PIR2 = _controller.Read(VariableControlService.PIRPin2);
+                //PIR3 = _controller.Read(VariableControlService.PIRPin3);
+                //PIR4 = _controller.Read(VariableControlService.PIRPin4);
 
-                VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
+                //VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
 
 
-                if (VariableControlService.IsTheirAnyOneInTheRoom && !isLightOn)
-                {
-                    _logger.LogDebug("Some One In The Room");
-                    RGBLight.SetColor(RGBColor.Blue);
-                    _logger.LogDebug("Switch Light On"); // To Do
-                    VariableControlService.IsTheirAnyOneInTheRoom = true;// rise a flag 
-                    isLightOn = true;
-                }
-                else if (!VariableControlService.IsTheirAnyOneInTheRoom && isLightOn)
-                {
-                    _logger.LogInformation("No One In The Room");
-                    Console.WriteLine("Switch Light Off"); // To Do
-                    RGBLight.SetColor(RGBColor.Off);
-                    isLightOn = false;
-                }
+                //if (VariableControlService.IsTheirAnyOneInTheRoom && !isLightOn)
+                //{
+                //    _logger.LogDebug("Some One In The Room");
+                //    RGBLight.SetColor(RGBColor.Blue);
+                //    _logger.LogDebug("Switch Light On"); // To Do
+                //    VariableControlService.IsTheirAnyOneInTheRoom = true;// rise a flag 
+                //    isLightOn = true;
+                //}
+                //else if (!VariableControlService.IsTheirAnyOneInTheRoom && isLightOn)
+                //{
+                //    _logger.LogInformation("No One In The Room");
+                //    Console.WriteLine("Switch Light Off"); // To Do
+                //    RGBLight.SetColor(RGBColor.Off);
+                //    isLightOn = false;
+                //}
 
                 // IF Enable Going To The Next room 
                 if (VariableControlService.EnableGoingToTheNextRoom)
