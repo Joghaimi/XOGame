@@ -21,7 +21,7 @@ namespace Library.Media
             _currentRoom = currentRoom;
         }
 
-        //public static void PIStartAudio(SoundType soundType, bool isLowVolum)
+        //public static void PIStartAudio(SoundType soundType, bool isLowVolume)
         //{
         //    try
         //    {
@@ -64,12 +64,12 @@ namespace Library.Media
                 audioProcess.StartInfo.StandardOutputEncoding = System.Text.Encoding.UTF8;
                 audioProcess.StartInfo.StandardErrorEncoding = System.Text.Encoding.UTF8;
                 audioProcess.StartInfo.CreateNoWindow = true;
+                //audioProcess.StartInfo.
                 audioProcess.Start();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Excepton ==>" + ex.Message);
-
             }
 
         }

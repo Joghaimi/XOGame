@@ -64,9 +64,9 @@ namespace DivingRoom.Services
                 {
                     while (!IsEnterdTheRoom)
                     {
-                        IsEnterdTheRoom = MCP23Controller.Read(MasterDI.IN1) ||
-                                          MCP23Controller.Read(MasterDI.IN2) ||
-                                          MCP23Controller.Read(MasterDI.IN3);
+                        IsEnterdTheRoom = MCP23Controller.Read(MasterDI.IN1, false) ||
+                                          MCP23Controller.Read(MasterDI.IN2, false) ||
+                                          MCP23Controller.Read(MasterDI.IN3, false);
                         if (!IsGameStartedOrInGoing())
                             break;
                     }

@@ -68,7 +68,7 @@ namespace FortRoom.Services
             _cts4 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
             Task.Run(() => RunService(_cts.Token));
-            Task.Run(() => CheckIFRoomIsEmpty(_cts2.Token));
+            //Task.Run(() => CheckIFRoomIsEmpty(_cts2.Token));
             Task.Run(() => GameTimingService(_cts3.Token));
             Task.Run(() => DoorLockControl(_cts4.Token));
 

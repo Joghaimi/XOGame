@@ -35,7 +35,7 @@ namespace FloorIsLava.Services
             {
                 if (VariableControlService.IsTheGameStarted)
                 {
-                    currentValue = !MCP23Controller.Read(MasterDI.IN1);
+                    currentValue = !MCP23Controller.Read(MasterDI.IN1, previousValue);
                     if (currentValue && !scoreJustDecreased)
                     {
 

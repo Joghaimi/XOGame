@@ -34,11 +34,17 @@ namespace Library.AirTarget
             _Target4 = Target4;
             _Target5 = Target5;
             MCP23Controller.PinModeSetup(_ShelfLight.Pin, PinMode.Output);
+            Thread.Sleep(1);
             MCP23Controller.PinModeSetup(_Target1.Pin, PinMode.Input);
+            Thread.Sleep(1);
             MCP23Controller.PinModeSetup(_Target2.Pin, PinMode.Input);
+            Thread.Sleep(1);
             MCP23Controller.PinModeSetup(_Target3.Pin, PinMode.Input);
+            Thread.Sleep(1);
             MCP23Controller.PinModeSetup(_Target4.Pin, PinMode.Input);
+            Thread.Sleep(1);
             MCP23Controller.PinModeSetup(_Target5.Pin, PinMode.Input);
+            Thread.Sleep(1);
 
         }
         public void Init()

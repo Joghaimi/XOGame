@@ -347,13 +347,7 @@ namespace FloorIsLava.Services
                 //}
                 //Thread.Sleep(10);
             }
-            //if (magnetStarted && VariableControlService.GameStatus == GameStatus.Empty)
-            //{
-            //    Console.WriteLine("Magnet Stop");
-            //    RelayController.Status(MagnetRelay, false);
-            //    magnetStarted = false;
-            //}
-            //}
+          
 
         }
 
@@ -429,7 +423,7 @@ namespace FloorIsLava.Services
         }
         private void pressureMat()
         {
-            bool currentValue = MCP23Controller.Read(MasterDI.IN1);
+            bool currentValue = MCP23Controller.Read(MasterDI.IN1,false);
             if (!currentValue && !justDecrease)
             {
                 VariableControlService.TeamScore.FloorIsLavaRoomScore -= 10;

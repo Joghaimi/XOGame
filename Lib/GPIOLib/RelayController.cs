@@ -22,6 +22,7 @@ namespace Library.GPIOLib
                 MCP23Controller.PinModeSetup(relayPin, PinMode.Input);
                 MCP23Controller.Write(relayPin, PinState.Low);
             }
+            Thread.Sleep(1);
         }
     }
 }

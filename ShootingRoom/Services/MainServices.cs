@@ -58,7 +58,9 @@ namespace ShootingRoom.Services
 
 
             MCP23Controller.PinModeSetup(EnterRoomPB, PinMode.Input);
+            Thread.Sleep(1);
             MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
+            Thread.Sleep(1);
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -67,7 +69,7 @@ namespace ShootingRoom.Services
 
 
             Task.Run(() => RunService(_cts.Token));
-            Task.Run(() => CheckIFRoomIsEmpty(_cts2.Token));
+            //Task.Run(() => CheckIFRoomIsEmpty(_cts2.Token));
             Task.Run(() => GameTimingService(_cts3.Token));
             Task.Run(() => DoorLockControl(_cts4.Token));
 
@@ -83,7 +85,7 @@ namespace ShootingRoom.Services
                 ControlEnteringRGBButton();
                 await CheckNextRoomStatus();
                 await ControlExitingRGBButton();
-                    Thread.Sleep(10);
+                Thread.Sleep(10);
 
             }
         }
@@ -145,6 +147,7 @@ namespace ShootingRoom.Services
                 {
                     _logger.LogTrace($"Door Status Changes :{VariableControlService.NewDoorStatus.ToString()}");
                     DoorControl.Control(DoorPin, VariableControlService.NewDoorStatus);
+                    Thread.Sleep(1);
                     VariableControlService.CurrentDoorStatus = VariableControlService.NewDoorStatus;
                 }
                 Thread.Sleep(500);
@@ -201,6 +204,7 @@ namespace ShootingRoom.Services
             if (RGBButtonIsOnAndGameNotStarted)
             {
                 bool PBPressed = !MCP23Controller.Read(EnterRoomPB, true);
+                Thread.Sleep(1);
                 if (PBPressed)
                 {
                     _logger.LogTrace("Start The Game Pressed");
@@ -239,7 +243,7 @@ namespace ShootingRoom.Services
 
                 bool PBPressed = !MCP23Controller.Read(NextRoomPB, true);
                 Console.WriteLine(PBPressed);
-                //Thread.Sleep(1000);
+                Thread.Sleep(1);
                 if (PBPressed)
                 {
                     NextRoomRGBButtonStatus = false;
