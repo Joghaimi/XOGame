@@ -60,11 +60,11 @@ namespace ShootingRoom.Services
 
         //int Score = 0;
         int numberOfAchivedInRow = 0;
-        readonly Logger<AirTargetService> _logger;
-        public AirTargetService(Logger<AirTargetService> logger)
-        {
-            _logger = logger;
-        }
+        //readonly Logger<AirTargetService> _logger;
+        //public AirTargetService(Logger<AirTargetService> logger)
+        //{
+        //    _logger = logger;
+        //}
 
         List<int> LevelsRequiredScoreList = new List<int>() { 100, 80, 60, 40, 150 };
         public Task StartAsync(CancellationToken cancellationToken)
@@ -224,7 +224,7 @@ namespace ShootingRoom.Services
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex.Message);
+                       Console.WriteLine(ex.Message);
                     }
                 }
                 Thread.Sleep(10);
