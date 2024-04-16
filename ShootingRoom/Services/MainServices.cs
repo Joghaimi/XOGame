@@ -242,7 +242,7 @@ namespace ShootingRoom.Services
             {
 
                 bool PBPressed = !MCP23Controller.Read(NextRoomPB, true);
-                Console.WriteLine(PBPressed);
+                //Console.WriteLine(PBPressed);
                 Thread.Sleep(1);
                 if (PBPressed)
                 {
