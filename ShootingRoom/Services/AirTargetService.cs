@@ -60,8 +60,8 @@ namespace ShootingRoom.Services
 
         //int Score = 0;
         int numberOfAchivedInRow = 0;
-        readonly Logger<AirTargetController> _logger;
-        public AirTargetService(Logger<AirTargetController> logger)
+        readonly Logger<AirTargetService> _logger;
+        public AirTargetService(Logger<AirTargetService> logger)
         {
             _logger = logger;
         }
