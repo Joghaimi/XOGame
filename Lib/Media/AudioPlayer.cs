@@ -58,7 +58,7 @@ namespace Library.Media
                 Process audioProcess = new Process();
                 audioProcess.StartInfo.FileName = "/bin/bash";
                 //audioProcess.StartInfo.Arguments = $"cvlc --vout none --play-and-exit {soundFilePath}";
-                audioProcess.StartInfo.Arguments = $"aplay {soundFilePath}";
+                audioProcess.StartInfo.Arguments = $"-c \"aplay {soundFilePath} 2>&1\"";
                 audioProcess.StartInfo.RedirectStandardOutput = true;
                 audioProcess.StartInfo.RedirectStandardError = true;
                 audioProcess.StartInfo.UseShellExecute = false;
