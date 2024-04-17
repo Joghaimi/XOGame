@@ -77,12 +77,26 @@ namespace Library.Media
         public static void PIStopAudio()
         {
 
-            if (audioProcess != null && !audioProcess.HasExited)
+            //if (audioProcess != null && !audioProcess.HasExited)
+            //{
+            //    audioProcess.Kill();
+            //    audioProcess.WaitForExit();
+            //    Console.WriteLine("Audio playback stopped.");
+            //}
+            try
             {
-                audioProcess.Kill();
-                audioProcess.WaitForExit();
-                Console.WriteLine("Audio playback stopped.");
+                if (audioProcess != null && !audioProcess.HasExited)
+                {
+                    audioProcess.Kill();
+                    audioProcess.WaitForExit();
+                    Console.WriteLine("Audio playback stopped.");
+                }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception occurred while stopping audio: " + ex.Message);
+            }
+            //}
 
         }
         public static void PIForceStopAudio()
