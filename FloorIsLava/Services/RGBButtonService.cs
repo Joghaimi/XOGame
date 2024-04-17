@@ -191,7 +191,7 @@ namespace FloorIsLava.Services
 
                         Console.WriteLine("Game Ended");
                         RGBLight.SetColor(RGBColor.Blue);
-
+                        Thread.Sleep(5000);
                         AudioPlayer.PIStopAudio();
                         Thread.Sleep(300);
                         AudioPlayer.PIStartAudio(SoundType.Finish);
