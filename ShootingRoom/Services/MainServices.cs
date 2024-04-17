@@ -61,7 +61,9 @@ namespace ShootingRoom.Services
             Thread.Sleep(1);
             MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
             Thread.Sleep(1);
-
+            RGBLight.SetColor(RGBColor.Off);
+            Thread.Sleep(20);
+            RGBLight.SetColor(VariableControlService.DefaultColor);
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);

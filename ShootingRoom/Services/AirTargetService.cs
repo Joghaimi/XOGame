@@ -56,15 +56,8 @@ namespace ShootingRoom.Services
         private CancellationTokenSource _cts;
         Stopwatch GameStopWatch = new Stopwatch();
         private GPIOController _controller;
-        //int bigTargetHitScore = 0;
-
-        //int Score = 0;
         int numberOfAchivedInRow = 0;
-        //readonly Logger<AirTargetService> _logger;
-        //public AirTargetService(Logger<AirTargetService> logger)
-        //{
-        //    _logger = logger;
-        //}
+       
 
         List<int> LevelsRequiredScoreList = new List<int>() { 100, 80, 60, 40, 150 };
         public Task StartAsync(CancellationToken cancellationToken)
@@ -178,10 +171,10 @@ namespace ShootingRoom.Services
 
                                             }
                                             item.UnSelectTarget(false);
-                                            if (numberOfHit == 20 || VariableControlService.LevelScore >= LevelScore)
+                                            if (numberOfHit == 20 || VariableControlService.LevelScore >= LevelScore && VariableControlService.GameRound != Round.Round5)
                                                 break;
                                         }
-                                        if (numberOfHit == 20 || VariableControlService.LevelScore >= LevelScore)
+                                        if (numberOfHit == 20 || (VariableControlService.LevelScore >= LevelScore && VariableControlService.GameRound !=Round.Round5))
                                             break;
 
                                     }
@@ -194,7 +187,7 @@ namespace ShootingRoom.Services
                                         numberOfAchivedInRow++;
                                     else
                                         numberOfAchivedInRow = 0;
-                                    if (VariableControlService.GameRound == Round.Round4 || numberOfAchivedInRow == 2)
+                                    if (VariableControlService.GameRound == Round.Round4 || numberOfAchivedInRow == 1)
                                     {
                                         IsItDoubleScore = true;
                                         IsItUV = ControlUVLight(true);
