@@ -230,6 +230,7 @@ namespace FloorIsLava.Services
             if (!EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.NotStarted)
             {
                 _logger.LogTrace("Ready To Start The Game .. Turn RGB Button On");
+                Thread.Sleep(VariableControlService.DelayTimeBeforeTurnPBOnInMs);
                 EnterRGBButtonStatus = true;
                 RelayController.Status(EnterRGBButton, true);
             }
@@ -306,6 +307,7 @@ namespace FloorIsLava.Services
         {
             if (VariableControlService.GameStatus == GameStatus.NotStarted && !thereAreInstructionSoundPlays)
             {
+                Thread.Sleep(VariableControlService.DelayTimeBeforeInstructionInMs);
                 _logger.LogTrace("Start Instruction Audio");
                 AudioPlayer.PIBackgroundSound(SoundType.instruction);
                 thereAreInstructionSoundPlays = true;
