@@ -124,7 +124,7 @@ namespace ShootingRoom.Services
                                     int numberOfWrongHits = 0;
                                     LevelTimer.Restart();
                                     Console.WriteLine("Start The Level");
-                                    while (LevelScore > VariableControlService.LevelScore && LevelTimer.ElapsedMilliseconds < 60000 && VariableControlService.GameRound != Round.Round5)
+                                    while ((LevelScore > VariableControlService.LevelScore || VariableControlService.GameRound == Round.Round5) && LevelTimer.ElapsedMilliseconds < 60000)
                                     {
                                         if (!IsGameStartedOrInGoing())
                                             break;
