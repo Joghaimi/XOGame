@@ -187,7 +187,7 @@ namespace ShootingRoom.Services
                                         numberOfAchivedInRow++;
                                     else
                                         numberOfAchivedInRow = 0;
-                                    if (VariableControlService.GameRound == Round.Round4 || numberOfAchivedInRow == 1)
+                                    if (VariableControlService.GameRound == Round.Round4 || numberOfAchivedInRow == 2)
                                     {
                                         IsItDoubleScore = true;
                                         IsItUV = ControlUVLight(true);
