@@ -57,7 +57,7 @@ namespace ShootingRoom.Services
         Stopwatch GameStopWatch = new Stopwatch();
         private GPIOController _controller;
         int numberOfAchivedInRow = 0;
-       
+
 
         List<int> LevelsRequiredScoreList = new List<int>() { 100, 80, 60, 40, 150 };
         public Task StartAsync(CancellationToken cancellationToken)
@@ -124,7 +124,7 @@ namespace ShootingRoom.Services
                                     int numberOfWrongHits = 0;
                                     LevelTimer.Restart();
                                     Console.WriteLine("Start The Level");
-                                    while (LevelScore > VariableControlService.LevelScore && LevelTimer.ElapsedMilliseconds < 60000)
+                                    while (LevelScore > VariableControlService.LevelScore && LevelTimer.ElapsedMilliseconds < 60000 && VariableControlService.GameRound != Round.Round5)
                                     {
                                         if (!IsGameStartedOrInGoing())
                                             break;
@@ -140,7 +140,7 @@ namespace ShootingRoom.Services
                                             {
                                                 if (!IsGameStartedOrInGoing())
                                                     break;
-                                                if (VariableControlService.LevelScore >= LevelScore)
+                                                if (VariableControlService.LevelScore >= LevelScore && VariableControlService.GameRound != Round.Round5)
                                                     break;
                                                 if (LevelTimer.ElapsedMilliseconds > 60000)
                                                     break;
@@ -174,7 +174,7 @@ namespace ShootingRoom.Services
                                             if (numberOfHit == 20 || VariableControlService.LevelScore >= LevelScore && VariableControlService.GameRound != Round.Round5)
                                                 break;
                                         }
-                                        if (numberOfHit == 20 || (VariableControlService.LevelScore >= LevelScore && VariableControlService.GameRound !=Round.Round5))
+                                        if (numberOfHit == 20 || (VariableControlService.LevelScore >= LevelScore && VariableControlService.GameRound != Round.Round5))
                                             break;
 
                                     }
@@ -217,7 +217,7 @@ namespace ShootingRoom.Services
                     }
                     catch (Exception ex)
                     {
-                       Console.WriteLine(ex.Message);
+                        Console.WriteLine(ex.Message);
                     }
                 }
                 Thread.Sleep(10);
