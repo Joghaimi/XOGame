@@ -85,12 +85,21 @@ namespace Library.Media
             //}
             try
             {
-                if (audioProcess != null && !audioProcess.HasExited)
-                {
-                    audioProcess.Kill();
-                    audioProcess.WaitForExit();
-                    Console.WriteLine("Audio playback stopped.");
-                }
+                //if (audioProcess != null && !audioProcess.HasExited)
+                //{
+                //    audioProcess.Kill();
+                //    audioProcess.WaitForExit();
+                //    Console.WriteLine("Audio playback stopped.");
+                //}
+                audioProcess = new Process();
+                audioProcess.StartInfo.FileName = "/bin/bash";
+                audioProcess.StartInfo.Arguments = $"-c \"pkill -9 aplay 2>&1\"";
+                //audioProcess.StartInfo.Arguments = $"cvlc --gain +0.9 --vout none --play-and-exit {soundFilePath}";
+                audioProcess.StartInfo.UseShellExecute = false;
+                audioProcess.StartInfo.RedirectStandardOutput = false;
+                audioProcess.StartInfo.RedirectStandardError = false;
+                audioProcess.Start();
+
             }
             catch (Exception ex)
             {
