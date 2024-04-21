@@ -32,19 +32,26 @@ using Newtonsoft.Json;
 using Library.RFIDLib;
 using Library.APIIntegration;
 using GatheringRoom.Services;
-using rpi_ws281x;
-using System.Drawing;
+// Initialize a new instance of the wrapper
+var neopixel = new ws281x.Net.Neopixel(ledCount: 42, pin: 10);
 
-var settings = Settings.CreateDefaultSettings();
-var controller = settings.AddController(16, Pin.Gpio10, StripType.WS2812_STRIP, ControllerType.PWM0, 255, false);
-using (var rpi = new WS281x(settings))
+// You can also choose a custom color order
+neopixel = new ws281x.Net.Neopixel(ledCount: 42, pin: 10, stripType: rpi_ws281x.WS2811_STRIP_RBG);
+
+// Always initialize the wrapper first
+neopixel.Begin();
+
+// Set color of all LEDs to red
+for (var i = 0; i < neopixel.GetNumberOfPixels(); i++)
 {
-    //Set the color of the first LED of controller 0 to blue
-    controller.SetLED(0, Color.Blue);
-    //Set the color of the second LED of controller 0 to red
-    controller.SetLED(1, Color.Red);
-    rpi.Render();
+    neopixel.SetPixelColor(i, System.Drawing.Color.Red);
 }
+
+// Apply changes to the led
+neopixel.Show();
+
+// Dispose after use
+neopixel.Dispose();
 //while (true)
 //{
 
