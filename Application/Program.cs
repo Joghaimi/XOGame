@@ -32,22 +32,34 @@ using Newtonsoft.Json;
 using Library.RFIDLib;
 using Library.APIIntegration;
 using GatheringRoom.Services;
+using rpi_ws281x;
+using System.Drawing;
 
-while (true)
+var settings = Settings.CreateDefaultSettings();
+var controller = settings.AddController(16, Pin.Gpio10, StripType.WS2812_STRIP, ControllerType.PWM0, 255, false);
+using (var rpi = new WS281x(settings))
 {
-
-    //var token = await APIIntegration.AuthorizationAsync(VariableControlService.AuthorizationURL, VariableControlService.UserName, VariableControlService.Password);
-    //Console.WriteLine(token);
-    //if (token != "")
-    //{
-    //    Console.WriteLine("Get User Info");
-    //    //var result = await APIIntegration.ReturnPlayerInformation(VariableControlService.UserInfoURL,token , "84436C18");
-    //    //Console.WriteLine(result);
-    //}
-    var result = await APIIntegration.ReturnPlayerInformation(VariableControlService.UserName, VariableControlService.Password,VariableControlService.UserInfoURL, "84436C18");
-    Console.WriteLine($"result :{result}");
-    Thread.Sleep(5000);
+    //Set the color of the first LED of controller 0 to blue
+    controller.SetLED(0, Color.Blue);
+    //Set the color of the second LED of controller 0 to red
+    controller.SetLED(1, Color.Red);
+    rpi.Render();
 }
+//while (true)
+//{
+
+//    //var token = await APIIntegration.AuthorizationAsync(VariableControlService.AuthorizationURL, VariableControlService.UserName, VariableControlService.Password);
+//    //Console.WriteLine(token);
+//    //if (token != "")
+//    //{
+//    //    Console.WriteLine("Get User Info");
+//    //    //var result = await APIIntegration.ReturnPlayerInformation(VariableControlService.UserInfoURL,token , "84436C18");
+//    //    //Console.WriteLine(result);
+//    //}
+//    var result = await APIIntegration.ReturnPlayerInformation(VariableControlService.UserName, VariableControlService.Password,VariableControlService.UserInfoURL, "84436C18");
+//    Console.WriteLine($"result :{result}");
+//    Thread.Sleep(5000);
+//}
 
 
 
