@@ -9,7 +9,6 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using static IronPython.Modules.PythonCsvModule;
 
 namespace Library.GPIOLib
 {

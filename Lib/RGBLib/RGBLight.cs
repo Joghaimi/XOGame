@@ -13,8 +13,6 @@ using System.Device;
 using Iot.Device.Common;
 using Library.Delay;
 using System;
-using IronPython.Hosting;
-using Microsoft.Scripting.Hosting;
 using Iot.Device.Mcp3428;
 
 namespace Library.RGBLib

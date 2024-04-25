@@ -6,7 +6,6 @@ using Library.PinMapping;
 using Library.GPIOLib;
 using System.Device.Gpio;
 using Iot.Device.Mcp3428;
-using static IronPython.Modules._ast;
 using System;
 
 namespace FloorIsLava.Services

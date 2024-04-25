@@ -1,5 +1,4 @@
 ﻿using Iot.Device.Mcp3428;
-using IronPython.Compiler.Ast;
 using Library;
 using Library.AirTarget;
 using Library.GPIOLib;

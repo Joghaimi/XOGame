@@ -1,5 +1,4 @@
 ﻿using Iot.Device.Max7219;
-using Mono.Unix.Native;
 using NAudio.SoundFont;
 using System;
 using System.Collections.Generic;
