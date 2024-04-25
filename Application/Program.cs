@@ -32,26 +32,51 @@ using Newtonsoft.Json;
 using Library.RFIDLib;
 using Library.APIIntegration;
 using GatheringRoom.Services;
-// Initialize a new instance of the wrapper
-var neopixel = new ws281x.Net.Neopixel(ledCount: 42, pin: 10);
+using Python.Runtime;
 
-// You can also choose a custom color order
-neopixel = new ws281x.Net.Neopixel(ledCount: 42, pin: 10, stripType: rpi_ws281x.WS2811_STRIP_RBG);
+Console.WriteLine("Hello, World!");
+test();
 
-// Always initialize the wrapper first
-neopixel.Begin();
-
-// Set color of all LEDs to red
-for (var i = 0; i < neopixel.GetNumberOfPixels(); i++)
+void test()
 {
-    neopixel.SetPixelColor(i, System.Drawing.Color.Red);
+    Runtime.PythonDLL = "test.py";
+    PythonEngine.Initialize();
+    using (Py.GIL())
+    {
+        var python = Py.Import("ahmad");
+        var iscallable = python.IsCallable();
+        python.InvokeMethod("print_ahmad");
+        python.InvokeMethod("print_ahmad");
+        python.InvokeMethod("print_ahmad");
+        python.InvokeMethod("print_ahmad");
+        python.InvokeMethod("print_ahmad");
+    }
 }
 
-// Apply changes to the led
-neopixel.Show();
 
-// Dispose after use
-neopixel.Dispose();
+
+
+
+// Initialize a new instance of the wrapper
+//var neopixel = new ws281x.Net.Neopixel(ledCount: 42, pin: 10);
+
+//// You can also choose a custom color order
+//neopixel = new ws281x.Net.Neopixel(ledCount: 42, pin: 10, stripType: rpi_ws281x.WS2811_STRIP_RBG);
+
+//// Always initialize the wrapper first
+//neopixel.Begin();
+
+//// Set color of all LEDs to red
+//for (var i = 0; i < neopixel.GetNumberOfPixels(); i++)
+//{
+//    neopixel.SetPixelColor(i, System.Drawing.Color.Red);
+//}
+
+//// Apply changes to the led
+//neopixel.Show();
+
+//// Dispose after use
+//neopixel.Dispose();
 //while (true)
 //{
 
