@@ -39,7 +39,7 @@ test();
 
 void test()
 {
-    Runtime.PythonDLL = "test";
+    //Runtime.PythonDLL = "C:\\Python312\\python312.dll";
     PythonEngine.Initialize();
     using (Py.GIL())
     {
