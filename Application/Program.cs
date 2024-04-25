@@ -39,7 +39,7 @@ test();
 
 void test()
 {
-    Runtime.PythonDLL = "test.py";
+    Runtime.PythonDLL = "test";
     PythonEngine.Initialize();
     using (Py.GIL())
     {
