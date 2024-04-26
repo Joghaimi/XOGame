@@ -47,9 +47,9 @@ namespace CatchyGame.Service
             //    Thread.Sleep(2000);
 
             //}
-            
-            
-             //Init Strip
+
+
+            //Init Strip
             strip1 = new Strip(RGBColor.Yellow, 0, 89, rGBButton1Pixel, rGBButton2Pixel, rGBButton3Pixel, rGBButton4Pixel);
 
 
@@ -74,6 +74,10 @@ namespace CatchyGame.Service
                 RGBWS2811.SetColor(strip1.currentLed, strip1.rgbColor);
                 RGBWS2811.Commit();
                 strip1.NextLed();
+                if (strip1.rGBButton1.Pixel == strip1.currentLed)
+                {
+                    strip1.rGBButton1.Button.TurnColorOn(RGBColor.Red);
+                }
                 //rgb1
                 Thread.Sleep(1000);
                 Console.Write(".");

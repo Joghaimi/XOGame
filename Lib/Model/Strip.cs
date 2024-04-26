@@ -41,7 +41,7 @@ namespace Library.Model
             {
                 Console.WriteLine($"Turn RGBOne {rgbColor}");
                 rGBButton1.Button.Set(true);
-                rGBButton1.Button.TurnColorOn(rgbColor);
+                //rGBButton1.Button.TurnColorOn(RGBColor.Red);
             }
             else
             {
