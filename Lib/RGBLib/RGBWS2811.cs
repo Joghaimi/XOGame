@@ -28,6 +28,10 @@ namespace Library.RGBLib
             pyParams[4] = white.ToPython();
             python.InvokeMethod("set_color", pyParams);
         }
+        public static void Commit()
+        {
+            python.InvokeMethod("commit");
+        }
         public static void SetColor(int rgbNumber, RGBColor rGBColor)
         {
         }

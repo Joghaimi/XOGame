@@ -1,3 +1,4 @@
+#/usr/lib/python3.11
 from rpi_ws281x import PixelStrip, Color, ws
 strip = None
 
@@ -21,4 +22,6 @@ def set_color(rgbNumber,red, green, blue, white):
     global strip  # Use the global keyword to access the global variable
     color =  Color(red, green, blue, white)
     strip.setPixelColor(rgbNumber, color)
+
+def commit():
     strip.show()
