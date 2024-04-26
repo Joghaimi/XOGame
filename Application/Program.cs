@@ -38,68 +38,85 @@ RGBWS2811.Init();
 while (true)
 {
     Console.WriteLine("Set Red");
-
-
-    RGBWS2811.SetColor(1, 255, 0, 0, 0);
-    RGBWS2811.SetColor(15, 255, 0, 0, 0);
-    RGBWS2811.SetColor(30, 255, 0, 0, 0);
-    RGBWS2811.SetColor(50, 255, 0, 0, 0);
+    for (int i = 0; i < 1000; i++)
+    {
+        RGBWS2811.SetColor(i, 255, 0, 0, 0);
+    }
     RGBWS2811.Commit();
-    Thread.Sleep(100);
-    RGBWS2811.SetColor(1, 0, 0, 0, 0);
-    RGBWS2811.SetColor(15, 0, 0, 0, 0);
-    RGBWS2811.SetColor(30, 0, 0, 0, 0);
-    RGBWS2811.SetColor(50, 0, 0, 0, 0);
+    Thread.Sleep(2000);
+    for (int i = 0; i < 1000; i++)
+    {
+        RGBWS2811.SetColor(i, 0, 255, 0, 0);
+    }
     RGBWS2811.Commit();
-    Thread.Sleep(100);
-
-
-    RGBWS2811.SetColor(1, 0, 255, 0, 0);
-    RGBWS2811.SetColor(15, 0, 255, 0, 0);
-    RGBWS2811.SetColor(30, 0, 255, 0, 0);
-    RGBWS2811.SetColor(50, 0, 255, 0, 0);
+    Thread.Sleep(2000);
+    for (int i = 0; i < 1000; i++)
+    {
+        RGBWS2811.SetColor(i, 0, 0, 255, 0);
+    }
     RGBWS2811.Commit();
+    Thread.Sleep(2000);
 
-    Thread.Sleep(100);
-    RGBWS2811.SetColor(1, 0, 0, 0, 0);
-    RGBWS2811.SetColor(15, 0, 0, 0, 0);
-    RGBWS2811.SetColor(30, 0, 0, 0, 0);
-    RGBWS2811.SetColor(50, 0, 0, 0, 0);
-    RGBWS2811.Commit();
-
-    Thread.Sleep(100);
-
-
-
-    RGBWS2811.SetColor(1, 0, 0, 255, 0);
-    RGBWS2811.SetColor(15, 0, 0, 255, 0);
-    RGBWS2811.SetColor(30, 0, 0, 255, 0);
-    RGBWS2811.SetColor(50, 0, 0, 255, 0);
-    RGBWS2811.Commit();
-
-    Thread.Sleep(100);
-    RGBWS2811.SetColor(1, 0, 0, 0, 0);
-    RGBWS2811.SetColor(15, 0, 0, 0, 0);
-    RGBWS2811.SetColor(30, 0, 0, 0, 0);
-    RGBWS2811.SetColor(50, 0, 0, 0, 0);
-    RGBWS2811.Commit();
-
-    Thread.Sleep(100);
+    //RGBWS2811.SetColor(1, 255, 0, 0, 0);
+    //RGBWS2811.SetColor(15, 255, 0, 0, 0);
+    //RGBWS2811.SetColor(30, 255, 0, 0, 0);
+    //RGBWS2811.SetColor(50, 255, 0, 0, 0);
+    //RGBWS2811.Commit();
+    //Thread.Sleep(100);
+    //RGBWS2811.SetColor(1, 0, 0, 0, 0);
+    //RGBWS2811.SetColor(15, 0, 0, 0, 0);
+    //RGBWS2811.SetColor(30, 0, 0, 0, 0);
+    //RGBWS2811.SetColor(50, 0, 0, 0, 0);
+    //RGBWS2811.Commit();
+    //Thread.Sleep(100);
 
 
-    RGBWS2811.SetColor(1, 0, 0, 0, 0);
-    RGBWS2811.SetColor(15, 0, 0, 0, 0);
-    RGBWS2811.SetColor(30, 0, 0, 0, 0);
-    RGBWS2811.SetColor(50, 0, 0, 0, 0);
-    RGBWS2811.Commit();
-    Thread.Sleep(100);
-    RGBWS2811.SetColor(1, 0, 0, 0, 0);
-    RGBWS2811.SetColor(15, 0, 0, 0, 0);
-    RGBWS2811.SetColor(30, 0, 0, 0, 0);
-    RGBWS2811.SetColor(50, 0, 0, 0, 0);
-    RGBWS2811.Commit();
+    //RGBWS2811.SetColor(1, 0, 255, 0, 0);
+    //RGBWS2811.SetColor(15, 0, 255, 0, 0);
+    //RGBWS2811.SetColor(30, 0, 255, 0, 0);
+    //RGBWS2811.SetColor(50, 0, 255, 0, 0);
+    //RGBWS2811.Commit();
 
-    Thread.Sleep(100);
+    //Thread.Sleep(100);
+    //RGBWS2811.SetColor(1, 0, 0, 0, 0);
+    //RGBWS2811.SetColor(15, 0, 0, 0, 0);
+    //RGBWS2811.SetColor(30, 0, 0, 0, 0);
+    //RGBWS2811.SetColor(50, 0, 0, 0, 0);
+    //RGBWS2811.Commit();
+
+    //Thread.Sleep(100);
+
+
+
+    //RGBWS2811.SetColor(1, 0, 0, 255, 0);
+    //RGBWS2811.SetColor(15, 0, 0, 255, 0);
+    //RGBWS2811.SetColor(30, 0, 0, 255, 0);
+    //RGBWS2811.SetColor(50, 0, 0, 255, 0);
+    //RGBWS2811.Commit();
+
+    //Thread.Sleep(100);
+    //RGBWS2811.SetColor(1, 0, 0, 0, 0);
+    //RGBWS2811.SetColor(15, 0, 0, 0, 0);
+    //RGBWS2811.SetColor(30, 0, 0, 0, 0);
+    //RGBWS2811.SetColor(50, 0, 0, 0, 0);
+    //RGBWS2811.Commit();
+
+    //Thread.Sleep(100);
+
+
+    //RGBWS2811.SetColor(1, 0, 0, 0, 0);
+    //RGBWS2811.SetColor(15, 0, 0, 0, 0);
+    //RGBWS2811.SetColor(30, 0, 0, 0, 0);
+    //RGBWS2811.SetColor(50, 0, 0, 0, 0);
+    //RGBWS2811.Commit();
+    //Thread.Sleep(100);
+    //RGBWS2811.SetColor(1, 0, 0, 0, 0);
+    //RGBWS2811.SetColor(15, 0, 0, 0, 0);
+    //RGBWS2811.SetColor(30, 0, 0, 0, 0);
+    //RGBWS2811.SetColor(50, 0, 0, 0, 0);
+    //RGBWS2811.Commit();
+
+    //Thread.Sleep(100);
 
 
 
