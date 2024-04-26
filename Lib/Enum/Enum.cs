@@ -47,6 +47,7 @@ namespace Library
         FloorIsLava,
         Gathering,
         Shooting,
+        Catchy,
     }
     public enum Displays
     {

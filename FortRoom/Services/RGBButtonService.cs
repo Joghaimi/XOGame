@@ -10,7 +10,6 @@ using Iot.Device.Mcp3428;
 using Iot.Device.BrickPi3.Sensors;
 using System.Xml.Linq;
 using RGBColor = Library.RGBColor;
-using Microsoft.Scripting.Utils;
 
 namespace FortRoom.Services
 {

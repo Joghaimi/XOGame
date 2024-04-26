@@ -24,7 +24,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApi", "TestApi\TestApi.csproj", "{E7138ED8-8FEA-40BF-98D9-73B89B8875E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DivingRoom", "DivingRoom\DivingRoom.csproj", "{36C389AB-3189-44F6-9180-3EAB531D5FA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DivingRoom", "DivingRoom\DivingRoom.csproj", "{36C389AB-3189-44F6-9180-3EAB531D5FA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatchyGame", "CatchyGame\CatchyGame.csproj", "{0505F478-BF6A-4813-ABAB-7A89798DB2CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +70,10 @@ Global
 		{36C389AB-3189-44F6-9180-3EAB531D5FA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36C389AB-3189-44F6-9180-3EAB531D5FA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36C389AB-3189-44F6-9180-3EAB531D5FA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0505F478-BF6A-4813-ABAB-7A89798DB2CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0505F478-BF6A-4813-ABAB-7A89798DB2CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0505F478-BF6A-4813-ABAB-7A89798DB2CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0505F478-BF6A-4813-ABAB-7A89798DB2CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
