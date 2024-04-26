@@ -41,21 +41,21 @@ while (true)
     
     
     RGBWS2811.SetColor(1, 255, 0, 0, 0);
-    RGBWS2811.SetColor(2, 255, 0, 0, 0);
-    RGBWS2811.SetColor(3, 255, 0, 0, 0);
-    RGBWS2811.SetColor(4, 255, 0, 0, 0);
+    RGBWS2811.SetColor(15, 255, 0, 0, 0);
+    RGBWS2811.SetColor(30, 255, 0, 0, 0);
+    RGBWS2811.SetColor(50, 255, 0, 0, 0);
 
     Thread.Sleep(100);
     RGBWS2811.SetColor(1, 0, 255, 0, 0);
-    RGBWS2811.SetColor(2, 0, 255, 0, 0);
-    RGBWS2811.SetColor(3, 0, 255, 0, 0);
-    RGBWS2811.SetColor(4, 0, 255, 0, 0);
+    RGBWS2811.SetColor(15, 0, 255, 0, 0);
+    RGBWS2811.SetColor(30, 0, 255, 0, 0);
+    RGBWS2811.SetColor(50, 0, 255, 0, 0);
 
     Thread.Sleep(100);
-    RGBWS2811.SetColor(2, 0, 0, 255, 0);
-    RGBWS2811.SetColor(3, 0, 0, 255, 0);
     RGBWS2811.SetColor(1, 0, 0, 255, 0);
-    RGBWS2811.SetColor(4, 0, 0, 255, 0);
+    RGBWS2811.SetColor(15, 0, 0, 255, 0);
+    RGBWS2811.SetColor(30, 0, 0, 255, 0);
+    RGBWS2811.SetColor(50, 0, 0, 255, 0);
 
     Thread.Sleep(100);
 
