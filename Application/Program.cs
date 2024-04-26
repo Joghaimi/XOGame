@@ -50,8 +50,8 @@ void test()
         var python = Py.Import("ahmad");
         //var iscallable = python.IsCallable();
         python.InvokeMethod("print_ahmad");
-        python.InvokeMethod("init");
-        python.InvokeMethod("test");
+        python.InvokeMethod("run_led_effects");
+        //python.InvokeMethod("test");
         //python.InvokeMethod("print_ahmad");
         //python.InvokeMethod("print_ahmad");
         //python.InvokeMethod("print_ahmad");
