@@ -45,7 +45,8 @@ void test()
     PythonEngine.Initialize();
     using (Py.GIL())
     {
-        sys.path.append("/home/catchy/XOGame/Application");  // Replace this with the path to your Python script
+        PythonEngine.Exec("import sys");
+        PythonEngine.Exec("sys.path.append('/home/catchy/XOGame/Application')");
         var python = Py.Import("ahmad");
         var iscallable = python.IsCallable();
         python.InvokeMethod("print_ahmad");
