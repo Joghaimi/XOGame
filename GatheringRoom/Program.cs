@@ -10,13 +10,19 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
     builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
 }));
+
+
+
+
 builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.Converters
 .Add(new JsonStringEnumConverter()));
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddLogging(builder => builder.AddConsole().SetMinimumLevel(LogLevel.Trace));
-builder.Services.AddHostedService<RFIDService>();
-builder.Services.AddHostedService<RoomSensorServices>();
+//builder.Services.AddHostedService<RFIDService>();
+//builder.Services.AddHostedService<RoomSensorServices>();
 var app = builder.Build();
 app.UseCors("corsapp");
 
