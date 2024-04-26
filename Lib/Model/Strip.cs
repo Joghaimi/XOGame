@@ -35,8 +35,11 @@ namespace Library.Model
             else
                 currentLed = startRGBLed;
 
-            //if(currentLed == rGBButton1.Pixel)
-            //    rGBButton1
+            if (currentLed == rGBButton1.Pixel) { 
+                rGBButton1.Button.Set(true);
+                rGBButton1.Button.TurnColorOn(rgbColor);
+            }
+                
 
 
         }
