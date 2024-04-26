@@ -34,31 +34,55 @@ using Library.APIIntegration;
 using GatheringRoom.Services;
 using Python.Runtime;
 
-Console.WriteLine("Hello, World!");
-test();
-
-void test()
+RGBWS2811.Init();
+while (true)
 {
-    Runtime.PythonDLL = "/usr/lib/python3.11/config-3.11-aarch64-linux-gnu/libpython3.11.so";
-
-    //Runtime.PythonDLL = "C:\\Python312\\python312.dll";
-    PythonEngine.Initialize();
-    using (Py.GIL())
+    Console.WriteLine("Set Red");
+    for (int i = 0; i < 255; i++)
     {
-        //PythonEngine.Exec("import sys");
-        //PythonEngine.Exec("sys.path.append('/home/catchy/XOGame/Application')");
-        var python = Py.Import("ahmad");
-        //var iscallable = python.IsCallable();
-        //python.InvokeMethod("print_ahmad");
-        python.InvokeMethod("run_led_effects");
-        //python.InvokeMethod("test");
-        //python.InvokeMethod("print_ahmad");
-        //python.InvokeMethod("print_ahmad");
-        //python.InvokeMethod("print_ahmad");
-        //python.InvokeMethod("print_ahmad");
-        PythonEngine.Exec("print('Hello, Python!')"); //sample...
-
+        RGBWS2811.SetColor(i, 255, 0, 0, 0);
+        Thread.Sleep(50);
     }
+    Console.WriteLine("Set green");
+    for (int i = 0; i < 255; i++)
+    {
+        RGBWS2811.SetColor(i, 0, 255, 0, 0);
+        Thread.Sleep(50);
+    }
+    Console.WriteLine("Set Blue");
+    for (int i = 0; i < 255; i++)
+    {
+        RGBWS2811.SetColor(i, 0, 0, 255, 0);
+        Thread.Sleep(50);
+    }
+}
+
+
+//Console.WriteLine("Hello, World!");
+//test();
+
+//void test()
+//{
+//    Runtime.PythonDLL = "/usr/lib/python3.11/config-3.11-aarch64-linux-gnu/libpython3.11.so";
+
+//    //Runtime.PythonDLL = "C:\\Python312\\python312.dll";
+//    PythonEngine.Initialize();
+//    using (Py.GIL())
+//    {
+//        //PythonEngine.Exec("import sys");
+//        //PythonEngine.Exec("sys.path.append('/home/catchy/XOGame/Application')");
+//        var python = Py.Import("ahmad");
+//        //var iscallable = python.IsCallable();
+//        //python.InvokeMethod("print_ahmad");
+//        python.InvokeMethod("run_led_effects");
+//        //python.InvokeMethod("test");
+//        //python.InvokeMethod("print_ahmad");
+//        //python.InvokeMethod("print_ahmad");
+//        //python.InvokeMethod("print_ahmad");
+//        //python.InvokeMethod("print_ahmad");
+//        PythonEngine.Exec("print('Hello, Python!')"); //sample...
+
+//    }
 
 
     //using (Py.GIL()) // Acquire the Global Interpreter Lock (GIL)
