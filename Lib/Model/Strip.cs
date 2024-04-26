@@ -46,7 +46,7 @@ namespace Library.Model
             else
             {
                 rGBButton1.Button.Set(false);
-                rGBButton1.Button.TurnColorOn(RGBColor.Off);
+                //rGBButton1.Button.TurnColorOn(RGBColor.Off);
             }
 
 
