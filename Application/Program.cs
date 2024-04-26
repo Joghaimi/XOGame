@@ -49,7 +49,7 @@ void test()
         //PythonEngine.Exec("sys.path.append('/home/catchy/XOGame/Application')");
         var python = Py.Import("ahmad");
         //var iscallable = python.IsCallable();
-        python.InvokeMethod("print_ahmad");
+        //python.InvokeMethod("print_ahmad");
         python.InvokeMethod("run_led_effects");
         //python.InvokeMethod("test");
         //python.InvokeMethod("print_ahmad");
