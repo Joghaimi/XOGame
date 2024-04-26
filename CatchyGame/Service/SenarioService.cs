@@ -10,17 +10,19 @@ namespace CatchyGame.Service
     {
 
         Strip strip1, strip2, strip3, strip4;
+        RGBButton rgb1;
         private CancellationTokenSource _cts, _cts2;
         public Task StartAsync(CancellationToken cancellationToken)
         {
 
             MCP23Controller.Init(Room.Fort);
             // RGB Pixel Button 
-            RGBButtonPixel rGBButton1Pixel = new RGBButtonPixel(20, new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1));
+            rgb1 = new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1);
+
+            RGBButtonPixel rGBButton1Pixel = new RGBButtonPixel(20, rgb1);
             RGBButtonPixel rGBButton2Pixel = new RGBButtonPixel(40, new RGBButton(RGBButtonPin.RGBR4, RGBButtonPin.RGBG4, RGBButtonPin.RGBB4, RGBButtonPin.RGBPB4));
             RGBButtonPixel rGBButton3Pixel = new RGBButtonPixel(23, new RGBButton(RGBButtonPin.RGBR5, RGBButtonPin.RGBG5, RGBButtonPin.RGBB5, RGBButtonPin.RGBPB5));
             RGBButtonPixel rGBButton4Pixel = new RGBButtonPixel(41, new RGBButton(RGBButtonPin.RGBR8, RGBButtonPin.RGBG8, RGBButtonPin.RGBB8, RGBButtonPin.RGBPB8));
-            //var rgb1 = new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1);
             //var rgb2 = new RGBButton(RGBButtonPin.RGBR4, RGBButtonPin.RGBG4, RGBButtonPin.RGBB4, RGBButtonPin.RGBPB4);
             //var rgb3 = new RGBButton(RGBButtonPin.RGBR5, RGBButtonPin.RGBG5, RGBButtonPin.RGBB5, RGBButtonPin.RGBPB5);
             //var rgb4 = new RGBButton(RGBButtonPin.RGBR8, RGBButtonPin.RGBG8, RGBButtonPin.RGBB8, RGBButtonPin.RGBPB8);
@@ -77,6 +79,12 @@ namespace CatchyGame.Service
                 if (strip1.rGBButton1.Pixel == strip1.currentLed)
                 {
                     strip1.rGBButton1.Button.TurnColorOn(RGBColor.Red);
+                }
+                else
+                {
+                    rgb1.TurnColorOn(RGBColor.Blue);
+
+
                 }
                 //rgb1
                 Thread.Sleep(1000);
