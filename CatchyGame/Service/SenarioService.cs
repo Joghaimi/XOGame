@@ -46,6 +46,7 @@ namespace CatchyGame.Service
                 RGBWS2811.SetColor(strip1.currentLed , strip1.rgbColor);
                 strip1.NextLed();
                 Thread.Sleep(100);
+                Console.Write(".");
             }
         }
 
