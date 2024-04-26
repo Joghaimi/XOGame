@@ -41,19 +41,19 @@ while (true)
     for (int i = 0; i < 1000; i++)
     {
         RGBWS2811.SetColor(i, 255, 0, 0, 0);
-        Thread.Sleep(50);
+        Thread.Sleep(3);
     }
     Console.WriteLine("Set green");
     for (int i = 0; i < 1000; i++)
     {
         RGBWS2811.SetColor(i, 0, 255, 0, 0);
-        Thread.Sleep(50);
+        Thread.Sleep(3);
     }
     Console.WriteLine("Set Blue");
     for (int i = 0; i < 1000; i++)
     {
         RGBWS2811.SetColor(i, 0, 0, 255, 0);
-        Thread.Sleep(50);
+        Thread.Sleep(3);
     }
 }
 
