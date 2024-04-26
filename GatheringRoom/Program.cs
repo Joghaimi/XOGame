@@ -21,8 +21,8 @@ builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializ
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddLogging(builder => builder.AddConsole().SetMinimumLevel(LogLevel.Trace));
-//builder.Services.AddHostedService<RFIDService>();
-//builder.Services.AddHostedService<RoomSensorServices>();
+builder.Services.AddHostedService<RFIDService>();
+builder.Services.AddHostedService<RoomSensorServices>();
 var app = builder.Build();
 app.UseCors("corsapp");
 
