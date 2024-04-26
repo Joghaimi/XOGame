@@ -10,14 +10,14 @@ namespace CatchyGame.Service
     {
 
         Strip strip1, strip2, strip3, strip4;
-        RGBButton rgb1;
+        //RGBButton rgb1;
         private CancellationTokenSource _cts, _cts2;
         public Task StartAsync(CancellationToken cancellationToken)
         {
 
             MCP23Controller.Init(Room.Fort);
             // RGB Pixel Button 
-            rgb1 = new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1);
+            var rgb1 = new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1);
 
             RGBButtonPixel rGBButton1Pixel = new RGBButtonPixel(20, rgb1);
             RGBButtonPixel rGBButton2Pixel = new RGBButtonPixel(40, new RGBButton(RGBButtonPin.RGBR4, RGBButtonPin.RGBG4, RGBButtonPin.RGBB4, RGBButtonPin.RGBPB4));
