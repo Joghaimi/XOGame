@@ -38,19 +38,19 @@ RGBWS2811.Init();
 while (true)
 {
     Console.WriteLine("Set Red");
-    for (int i = 0; i < 255; i++)
+    for (int i = 0; i < 1000; i++)
     {
         RGBWS2811.SetColor(i, 255, 0, 0, 0);
         Thread.Sleep(50);
     }
     Console.WriteLine("Set green");
-    for (int i = 0; i < 255; i++)
+    for (int i = 0; i < 1000; i++)
     {
         RGBWS2811.SetColor(i, 0, 255, 0, 0);
         Thread.Sleep(50);
     }
     Console.WriteLine("Set Blue");
-    for (int i = 0; i < 255; i++)
+    for (int i = 0; i < 1000; i++)
     {
         RGBWS2811.SetColor(i, 0, 0, 255, 0);
         Thread.Sleep(50);

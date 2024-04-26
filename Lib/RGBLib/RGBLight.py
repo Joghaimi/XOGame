@@ -19,5 +19,6 @@ def init_strip():
 
 def set_color(rgbNumber,red, green, blue, white):
     global strip  # Use the global keyword to access the global variable
-    strip.setPixelColorRGBW(rgbNumber, red, green, blue, white)
+    color =  Color(red, green, blue, white)
+    strip.setPixelColor(rgbNumber, color)
     strip.show()
