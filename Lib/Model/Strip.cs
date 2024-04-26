@@ -34,6 +34,11 @@ namespace Library.Model
                 currentLed++;
             else
                 currentLed = startRGBLed;
+
+            //if(currentLed == rGBButton1.Pixel)
+            //    rGBButton1
+
+
         }
     }
 }
