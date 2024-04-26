@@ -38,23 +38,44 @@ RGBWS2811.Init();
 while (true)
 {
     Console.WriteLine("Set Red");
-    for (int i = 0; i < 1000; i++)
-    {
-        RGBWS2811.SetColor(i, 255, 0, 0, 0);
-        Thread.Sleep(3);
-    }
-    Console.WriteLine("Set green");
-    for (int i = 0; i < 1000; i++)
-    {
-        RGBWS2811.SetColor(i, 0, 255, 0, 0);
-        Thread.Sleep(3);
-    }
-    Console.WriteLine("Set Blue");
-    for (int i = 0; i < 1000; i++)
-    {
-        RGBWS2811.SetColor(i, 0, 0, 255, 0);
-        Thread.Sleep(3);
-    }
+    
+    
+    RGBWS2811.SetColor(1, 255, 0, 0, 0);
+    RGBWS2811.SetColor(2, 255, 0, 0, 0);
+    RGBWS2811.SetColor(3, 255, 0, 0, 0);
+    RGBWS2811.SetColor(4, 255, 0, 0, 0);
+
+    Thread.Sleep(100);
+    RGBWS2811.SetColor(1, 0, 255, 0, 0);
+    RGBWS2811.SetColor(2, 0, 255, 0, 0);
+    RGBWS2811.SetColor(3, 0, 255, 0, 0);
+    RGBWS2811.SetColor(4, 0, 255, 0, 0);
+
+    Thread.Sleep(100);
+    RGBWS2811.SetColor(2, 0, 0, 255, 0);
+    RGBWS2811.SetColor(3, 0, 0, 255, 0);
+    RGBWS2811.SetColor(1, 0, 0, 255, 0);
+    RGBWS2811.SetColor(4, 0, 0, 255, 0);
+
+    Thread.Sleep(100);
+
+    //for (int i = 0; i < 1000; i++)
+    //{
+    //    RGBWS2811.SetColor(i, 255, 0, 0, 0);
+    //    Thread.Sleep(3);
+    //}
+    //Console.WriteLine("Set green");
+    //for (int i = 0; i < 1000; i++)
+    //{
+    //    RGBWS2811.SetColor(i, 0, 255, 0, 0);
+    //    Thread.Sleep(3);
+    //}
+    //Console.WriteLine("Set Blue");
+    //for (int i = 0; i < 1000; i++)
+    //{
+    //    RGBWS2811.SetColor(i, 0, 0, 255, 0);
+    //    Thread.Sleep(3);
+    //}
 }
 
 
@@ -85,12 +106,12 @@ while (true)
 //    }
 
 
-    //using (Py.GIL()) // Acquire the Global Interpreter Lock (GIL)
-    //{
-    //    dynamic pyModule = Py.Import("my_python_script.py"); // Import your Python script
-    //    int result = pyModule.add(5, 3); // Call a Python function
-    //    Console.WriteLine(result); // Print the result
-    //}
+//using (Py.GIL()) // Acquire the Global Interpreter Lock (GIL)
+//{
+//    dynamic pyModule = Py.Import("my_python_script.py"); // Import your Python script
+//    int result = pyModule.add(5, 3); // Call a Python function
+//    Console.WriteLine(result); // Print the result
+//}
 //}
 
 
