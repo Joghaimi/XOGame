@@ -32,18 +32,21 @@ namespace Library.Model
         {
             if (currentLed < endRGBLed)
                 currentLed++;
-            else
+            else { 
                 currentLed = startRGBLed;
+                Console.WriteLine( "Rset ..");
+            }
 
             if (currentLed == rGBButton1.Pixel)
             {
+                Console.WriteLine($"Turn RGBOne {rgbColor}");
                 rGBButton1.Button.Set(true);
                 rGBButton1.Button.TurnColorOn(rgbColor);
             }
             else
             {
                 rGBButton1.Button.Set(false);
-                rGBButton1.Button.TurnColorOn(rgbColor);
+                rGBButton1.Button.TurnColorOn(RGBColor.Off);
             }
 
 
