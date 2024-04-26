@@ -25,16 +25,21 @@ namespace CatchyGame.Service
             var rgb3 = new RGBButton(RGBButtonPin.RGBR5, RGBButtonPin.RGBG5, RGBButtonPin.RGBB5, RGBButtonPin.RGBPB5);
             var rgb4 = new RGBButton(RGBButtonPin.RGBR8, RGBButtonPin.RGBG8, RGBButtonPin.RGBB8, RGBButtonPin.RGBPB8);
             while (true) {
+                Console.WriteLine("RED");
                 rgb1.TurnColorOn(RGBColor.Red);
                 rgb2.TurnColorOn(RGBColor.Red);
                 rgb3.TurnColorOn(RGBColor.Red);
                 rgb4.TurnColorOn(RGBColor.Red);
                 Thread.Sleep(2000);
+                Console.WriteLine("Green");
+
                 rgb1.TurnColorOn(RGBColor.Green);
                 rgb2.TurnColorOn(RGBColor.Green);
                 rgb4.TurnColorOn(RGBColor.Green);
                 rgb3.TurnColorOn(RGBColor.Green);
                 Thread.Sleep(2000);
+                Console.WriteLine("Blue");
+
                 rgb1.TurnColorOn(RGBColor.Blue);
                 rgb2.TurnColorOn(RGBColor.Blue);
                 rgb4.TurnColorOn(RGBColor.Blue);
