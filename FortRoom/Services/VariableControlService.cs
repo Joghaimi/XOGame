@@ -38,8 +38,8 @@ namespace FortRoom.Services
         public static DoorStatus CurrentDoorStatus { get; set; } = DoorStatus.Undefined;
         public static DoorStatus NewDoorStatus { get; set; } = DoorStatus.Open;
 
-        public static string NextRoomURL = "https://shooting.local:7248/api/Shooting/RoomStatus";
-        public static string SendScoreToTheNextRoom = "https://shooting.local:7248/api/Shooting/ReceiveScore";
+        public static string NextRoomURL = "http://shooting.local:5000/api/Shooting/RoomStatus";
+        public static string SendScoreToTheNextRoom = "http://shooting.local:5000/api/Shooting/ReceiveScore";
 
         public static int DelayTimeBeforeInstructionInMs = 10000;
         public static int DelayTimeBeforeTurnPBOnInMs = 35000;

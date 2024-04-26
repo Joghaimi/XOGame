@@ -24,8 +24,8 @@ namespace FloorIsLava.Services
         public static DoorStatus CurrentDoorStatus { get; set; } = DoorStatus.Open;
         public static DoorStatus NewDoorStatus { get; set; } = DoorStatus.Open;
 
-        public static string NextRoomURL = "https://dark.local:7248/api/darkRoom/RoomStatus";
-        public static string SendScoreToTheNextRoom = "https://dark.local:7248/api/darkRoom/ReceiveScore";
+        public static string NextRoomURL = "http://dark.local:5000/api/darkRoom/RoomStatus";
+        public static string SendScoreToTheNextRoom = "http://dark.local:5000/api/darkRoom/ReceiveScore";
 
         public static int DelayTimeBeforeInstructionInMs = 10000;
         public static int DelayTimeBeforeTurnPBOnInMs = 35000;

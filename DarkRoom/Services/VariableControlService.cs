@@ -35,8 +35,8 @@ namespace DarkRoom.Services
         public static DoorStatus CurrentDoorStatus { get; set; } = DoorStatus.Undefined;
         public static DoorStatus NewDoorStatus { get; set; } = DoorStatus.Open;
 
-        public static string NextRoomURL = "https://floor.local:7248/api/floorislava/RoomStatus";
-        public static string SendScoreToTheNextRoom = "https://floor.local:7248/api/floorislava/ReceiveScore";
+        public static string NextRoomURL = "http://floor.local:5000/api/floorislava/RoomStatus";
+        public static string SendScoreToTheNextRoom = "http://floor.local:5000/api/floorislava/ReceiveScore";
 
         public static int DelayTimeBeforeInstructionInMs = 10000;
         public static int DelayTimeBeforeTurnPBOnInMs = 35000;

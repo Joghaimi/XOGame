@@ -29,8 +29,8 @@ namespace DivingRoom.Services
         public static RGBColor DefaultColor = RGBColor.White;
 
       
-        public static string NextRoomURL = "https://dark.local:7248/api/darkRoom/RoomStatus";
-        public static string SendScoreToTheNextRoom = "https://dark.local:7248/api/darkRoom/ReceiveScore";
+        public static string NextRoomURL = "http://dark.local:5000/api/darkRoom/RoomStatus";
+        public static string SendScoreToTheNextRoom = "http://dark.local:5000/api/darkRoom/ReceiveScore";
 
 
 
