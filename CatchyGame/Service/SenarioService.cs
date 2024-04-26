@@ -49,8 +49,8 @@ namespace CatchyGame.Service
             //}
             
             
-            // Init Strip
-            //strip1 = new Strip(RGBColor.Yellow, 0, 89, rGBButton1Pixel, rGBButton2Pixel, rGBButton3Pixel, rGBButton4Pixel);
+             //Init Strip
+            strip1 = new Strip(RGBColor.Yellow, 0, 89, rGBButton1Pixel, rGBButton2Pixel, rGBButton3Pixel, rGBButton4Pixel);
 
 
             // Init the RGBStrip 
