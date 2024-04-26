@@ -30,23 +30,23 @@ namespace CatchyGame.Service
             {
                 Console.WriteLine("RED");
                 rgb1.TurnColorOn(RGBColor.Red);
-                //rgb2.TurnColorOn(RGBColor.Red);
-                //rgb3.TurnColorOn(RGBColor.Red);
-                //rgb4.TurnColorOn(RGBColor.Red);
+                rgb2.TurnColorOn(RGBColor.Red);
+                rgb3.TurnColorOn(RGBColor.Red);
+                rgb4.TurnColorOn(RGBColor.Red);
                 Thread.Sleep(2000);
                 Console.WriteLine("Green");
 
                 rgb1.TurnColorOn(RGBColor.Green);
-                //rgb2.TurnColorOn(RGBColor.Green);
-                //rgb4.TurnColorOn(RGBColor.Green);
-                //rgb3.TurnColorOn(RGBColor.Green);
+                rgb2.TurnColorOn(RGBColor.Green);
+                rgb4.TurnColorOn(RGBColor.Green);
+                rgb3.TurnColorOn(RGBColor.Green);
                 Thread.Sleep(2000);
                 Console.WriteLine("Blue");
 
                 rgb1.TurnColorOn(RGBColor.Blue);
-                //rgb2.TurnColorOn(RGBColor.Blue);
-                //rgb4.TurnColorOn(RGBColor.Blue);
-                //rgb3.TurnColorOn(RGBColor.Blue);
+                rgb2.TurnColorOn(RGBColor.Blue);
+                rgb4.TurnColorOn(RGBColor.Blue);
+                rgb3.TurnColorOn(RGBColor.Blue);
                 Thread.Sleep(2000);
 
             }
