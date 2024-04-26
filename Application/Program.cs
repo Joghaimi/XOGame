@@ -39,17 +39,25 @@ test();
 
 void test()
 {
-    Runtime.PythonDLL = "/usr/lib/python3.11/config-3.11-aarch64-linux-gnu/python.o";
-    PythonEngine.Initialize();
-    using (Py.GIL())
+    //Runtime.PythonDLL = "C:\\Python312\\python312.dll";
+    //PythonEngine.Initialize();
+    //using (Py.GIL())
+    //{
+    //    var python = Py.Import("ahmad");
+    //    var iscallable = python.IsCallable();
+    //    python.InvokeMethod("print_ahmad");
+    //    python.InvokeMethod("print_ahmad");
+    //    python.InvokeMethod("print_ahmad");
+    //    python.InvokeMethod("print_ahmad");
+    //    python.InvokeMethod("print_ahmad");
+    //}
+
+
+    using (Py.GIL()) // Acquire the Global Interpreter Lock (GIL)
     {
-        var python = Py.Import("ahmad");
-        var iscallable = python.IsCallable();
-        python.InvokeMethod("print_ahmad");
-        python.InvokeMethod("print_ahmad");
-        python.InvokeMethod("print_ahmad");
-        python.InvokeMethod("print_ahmad");
-        python.InvokeMethod("print_ahmad");
+        dynamic pyModule = Py.Import("my_python_script.py"); // Import your Python script
+        int result = pyModule.add(5, 3); // Call a Python function
+        Console.WriteLine(result); // Print the result
     }
 }
 
