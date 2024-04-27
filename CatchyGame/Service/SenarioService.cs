@@ -38,59 +38,59 @@ namespace CatchyGame.Service
             var rgb6 = new RGBButton(RGBButtonPin.RGBR6, RGBButtonPin.RGBG6, RGBButtonPin.RGBB6, RGBButtonPin.RGBPB6);
             var rgb7 = new RGBButton(RGBButtonPin.RGBR7, RGBButtonPin.RGBG7, RGBButtonPin.RGBB7, RGBButtonPin.RGBPB7);
             var rgb8 = new RGBButton(RGBButtonPin.RGBR8, RGBButtonPin.RGBG8, RGBButtonPin.RGBB8, RGBButtonPin.RGBPB8);
-            while (true)
-            {
-                if(!rgb1.CurrentStatus())
-                    Console.WriteLine("Button #1");
-                if (!rgb2.CurrentStatus())
-                    Console.WriteLine("Button #2");
-                if (!rgb3.CurrentStatus())
-                    Console.WriteLine("Button #3");
-                if (!rgb4.CurrentStatus())
-                    Console.WriteLine("Button #4");
-                if (!rgb5.CurrentStatus())
-                    Console.WriteLine("Button #5");
-                if (!rgb6.CurrentStatus())
-                    Console.WriteLine("Button #6");
-                if (!rgb7.CurrentStatus())
-                    Console.WriteLine("Button #7");
-                if (!rgb8.CurrentStatus())
-                    Console.WriteLine("Button #8");
-                //Console.WriteLine("Red");
-                //rgb1.TurnColorOn(RGBColor.Red);
-                //rgb2.TurnColorOn(RGBColor.Red);
-                //rgb3.TurnColorOn(RGBColor.Red);
-                //rgb4.TurnColorOn(RGBColor.Red);
-                //rgb5.TurnColorOn(RGBColor.Red);
-                //rgb6.TurnColorOn(RGBColor.Red);
-                //rgb7.TurnColorOn(RGBColor.Red);
-                //rgb8.TurnColorOn(RGBColor.Red);
-                //Thread.Sleep(2000);
+            //while (true)
+            //{
+            //    if(!rgb1.CurrentStatus())
+            //        Console.WriteLine("Button #1");
+            //    if (!rgb2.CurrentStatus())
+            //        Console.WriteLine("Button #2");
+            //    if (!rgb3.CurrentStatus())
+            //        Console.WriteLine("Button #3");
+            //    if (!rgb4.CurrentStatus())
+            //        Console.WriteLine("Button #4");
+            //    if (!rgb5.CurrentStatus())
+            //        Console.WriteLine("Button #5");
+            //    if (!rgb6.CurrentStatus())
+            //        Console.WriteLine("Button #6");
+            //    if (!rgb7.CurrentStatus())
+            //        Console.WriteLine("Button #7");
+            //    if (!rgb8.CurrentStatus())
+            //        Console.WriteLine("Button #8");
+            //Console.WriteLine("Red");
+            //rgb1.TurnColorOn(RGBColor.Red);
+            //rgb2.TurnColorOn(RGBColor.Red);
+            //rgb3.TurnColorOn(RGBColor.Red);
+            //rgb4.TurnColorOn(RGBColor.Red);
+            //rgb5.TurnColorOn(RGBColor.Red);
+            //rgb6.TurnColorOn(RGBColor.Red);
+            //rgb7.TurnColorOn(RGBColor.Red);
+            //rgb8.TurnColorOn(RGBColor.Red);
+            //Thread.Sleep(2000);
 
-                //Console.WriteLine("Green");
-                //rgb1.TurnColorOn(RGBColor.Green);
-                //rgb2.TurnColorOn(RGBColor.Green);
-                //rgb3.TurnColorOn(RGBColor.Green);
-                //rgb4.TurnColorOn(RGBColor.Green);
-                //rgb5.TurnColorOn(RGBColor.Green);
-                //rgb6.TurnColorOn(RGBColor.Green);
-                //rgb7.TurnColorOn(RGBColor.Green);
-                //rgb8.TurnColorOn(RGBColor.Green);
-                //Thread.Sleep(2000);
+            //Console.WriteLine("Green");
+            //rgb1.TurnColorOn(RGBColor.Green);
+            //rgb2.TurnColorOn(RGBColor.Green);
+            //rgb3.TurnColorOn(RGBColor.Green);
+            //rgb4.TurnColorOn(RGBColor.Green);
+            //rgb5.TurnColorOn(RGBColor.Green);
+            //rgb6.TurnColorOn(RGBColor.Green);
+            //rgb7.TurnColorOn(RGBColor.Green);
+            //rgb8.TurnColorOn(RGBColor.Green);
+            //Thread.Sleep(2000);
 
-                //Console.WriteLine("Blue");
-                //rgb1.TurnColorOn(RGBColor.Blue);
-                //rgb2.TurnColorOn(RGBColor.Blue);
-                //rgb3.TurnColorOn(RGBColor.Blue);
-                //rgb4.TurnColorOn(RGBColor.Blue);
-                //rgb5.TurnColorOn(RGBColor.Blue);
-                //rgb6.TurnColorOn(RGBColor.Blue);
-                //rgb7.TurnColorOn(RGBColor.Blue);
-                //rgb8.TurnColorOn(RGBColor.Blue);
-                //Thread.Sleep(2000);
+            //Console.WriteLine("Blue");
+            //rgb1.TurnColorOn(RGBColor.Blue);
+            //rgb2.TurnColorOn(RGBColor.Blue);
+            //rgb3.TurnColorOn(RGBColor.Blue);
+            //rgb4.TurnColorOn(RGBColor.Blue);
+            //rgb5.TurnColorOn(RGBColor.Blue);
+            //rgb6.TurnColorOn(RGBColor.Blue);
+            //rgb7.TurnColorOn(RGBColor.Blue);
+            //rgb8.TurnColorOn(RGBColor.Blue);
+            //Thread.Sleep(2000);
 
 
-            }
+            //}
             RGBButtonPixel StripOneButton1 = new RGBButtonPixel(20, rgb1);
             RGBButtonPixel StripOneButton2 = new RGBButtonPixel(60, rgb4);
             RGBButtonPixel StripOneButton3 = new RGBButtonPixel(82, rgb5);
@@ -216,8 +216,8 @@ namespace CatchyGame.Service
                             strip.NextLed();
                             RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
                             strip.NextLed();
-                            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                            strip.NextLed();
+                            //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                            //strip.NextLed();
                         }
                         if (strip.isActive && strip.resetLine)
                         {
@@ -329,6 +329,6 @@ namespace CatchyGame.Service
         }
 
 
-     
+
     }
 }
