@@ -184,11 +184,11 @@ namespace CatchyGame.Service
 
 
                 ResetAllLine();
-                //UnSelectAllStrap();
-                StripList[3].isActive=true;
-                StripList[4].isActive=true;
+                UnSelectAllStrap();
                 NumberOfStripToStart = NumberOfStrapsInLevel(CurrentLevel);
-                RandomSelectStrip(NumberOfStripToStart);
+                //RandomSelectStrip(NumberOfStripToStart);
+                StripList[3].isActive = true;
+                //StripList[4].isActive = true;
                 Console.WriteLine(CurrentLevel.ToString());
                 Console.WriteLine($"Number Of Selected Strip {NumberOfStripToStart}");
 
