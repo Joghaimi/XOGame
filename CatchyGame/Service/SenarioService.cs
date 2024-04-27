@@ -158,7 +158,7 @@ namespace CatchyGame.Service
 
                     }
                     RGBWS2811.Commit();
-                    Thread.Sleep(delayMs);
+                    //Thread.Sleep(delayMs);
                 }
                 CurrentLevel = NextLevel(CurrentLevel);
 
