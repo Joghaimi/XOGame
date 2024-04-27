@@ -145,11 +145,26 @@ namespace CatchyGame.Service
                 {
                     int delayMs = 70 - (int)(LevelTime.ElapsedMilliseconds / 1000);
                     if (delayMs < 0) { delayMs = 1; }
-                    
+
                     foreach (var strip in StripList)
                     {
-                        RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                        strip.NextLed();
+                        bool nextOneIsTargetButton =
+                            strip.rGBButton1.Pixel == strip.currentLed ||
+                            strip.rGBButton2.Pixel == strip.currentLed ||
+                            strip.rGBButton3.Pixel == strip.currentLed ||
+                            strip.rGBButton4.Pixel == strip.currentLed;
+                        if (nextOneIsTargetButton)
+                        {
+                            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                            strip.NextLed();
+                        }
+                        else
+                        {
+                            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                            strip.NextLed();
+                            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                            strip.NextLed();
+                        }
                         if (strip.isActive && strip.resetLine)
                         {
                             ResetLine(strip.startRGBLed, strip.endRGBLed);
@@ -223,7 +238,7 @@ namespace CatchyGame.Service
                 {
                     StripList[selectedIndex].isActive = true;
                     selected++;
-                    Console.WriteLine($"Selected Strip #{selectedIndex+1}");
+                    Console.WriteLine($"Selected Strip #{selectedIndex + 1}");
                 }
             }
         }
