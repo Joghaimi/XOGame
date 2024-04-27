@@ -215,12 +215,12 @@ namespace CatchyGame.Service
                             strip.rGBButton2.Pixel == strip.currentLed ||
                             strip.rGBButton3.Pixel == strip.currentLed ||
                             strip.rGBButton4.Pixel == strip.currentLed;
-                        if (nextOneIsTargetButton)
+                        if (nextOneIsTargetButton || LevelTime.ElapsedMilliseconds < 20)
                         {
                             RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
                             strip.NextLed();
                         }
-                        else
+                        else if (LevelTime.ElapsedMilliseconds > 20 || LevelTime.ElapsedMilliseconds < 40)
                         {
                             RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
                             strip.NextLed();
@@ -228,6 +228,15 @@ namespace CatchyGame.Service
                             strip.NextLed();
                             //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
                             //strip.NextLed();
+                        }
+                        else {
+
+                            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                            strip.NextLed();
+                            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                            strip.NextLed();
+                            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                            strip.NextLed();
                         }
                         //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
                         //strip.NextLed();
