@@ -114,7 +114,7 @@ namespace CatchyGame.Service
 
             RGBButtonPixel StripFiveButton1 = new RGBButtonPixel(955, rgb2);
             RGBButtonPixel StripFiveButton3 = new RGBButtonPixel(975, rgb4);
-            RGBButtonPixel StripFiveButton2 = new RGBButtonPixel(997, rgb5);
+            RGBButtonPixel StripFiveButton2 = new RGBButtonPixel(996, rgb5);
             RGBButtonPixel StripFiveButton4 = new RGBButtonPixel(1041, rgb8);
 
 
