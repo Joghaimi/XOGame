@@ -38,7 +38,6 @@ namespace Library.Model
             else
             {
                 currentLed = startRGBLed;
-                Console.WriteLine("Rset ..");
             }
 
             //if (currentLed == rGBButton1.Pixel)

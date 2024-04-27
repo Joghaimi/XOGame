@@ -100,12 +100,12 @@ namespace CatchyGame.Service
 
 
             //Init Strip
-            StripList.Add(new Strip(RGBColor.Yellow, 0, 212, StripOneButton1, StripOneButton2, StripOneButton3, StripOneButton4));
-            StripList.Add(new Strip(RGBColor.Yellow, 213, 438, StripTwoButton1, StripTwoButton2, StripTwoButton3, StripTwoButton4));
-            StripList.Add(new Strip(RGBColor.Yellow, 439, 664, StripThreeButton1, StripThreeButton2, StripThreeButton3, StripThreeButton4));
-            StripList.Add(new Strip(RGBColor.Yellow, 665, 880, StripFourButton1, StripFourButton2, StripFourButton3, StripFourButton4));
-            StripList.Add(new Strip(RGBColor.Yellow, 881, 1073, StripFiveButton1, StripFiveButton2, StripFiveButton3, StripFiveButton4));
-            StripList.Add(new Strip(RGBColor.Yellow, 1074, 1236, StripFiveButton1, StripFiveButton2, StripFiveButton3, StripFiveButton4));
+            StripList.Add(new Strip(RGBColor.Red, 0, 212, StripOneButton1, StripOneButton2, StripOneButton3, StripOneButton4));
+            StripList.Add(new Strip(RGBColor.Red, 213, 438, StripTwoButton1, StripTwoButton2, StripTwoButton3, StripTwoButton4));
+            StripList.Add(new Strip(RGBColor.Red, 439, 664, StripThreeButton1, StripThreeButton2, StripThreeButton3, StripThreeButton4));
+            StripList.Add(new Strip(RGBColor.Red, 665, 880, StripFourButton1, StripFourButton2, StripFourButton3, StripFourButton4));
+            StripList.Add(new Strip(RGBColor.Red, 881, 1073, StripFiveButton1, StripFiveButton2, StripFiveButton3, StripFiveButton4));
+            StripList.Add(new Strip(RGBColor.Red, 1074, 1236, StripFiveButton1, StripFiveButton2, StripFiveButton3, StripFiveButton4));
 
 
             // Init the RGBStrip 
@@ -138,7 +138,7 @@ namespace CatchyGame.Service
                 LevelTime.Restart();
                 while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
                 {
-                    int delayMs = 100 - (int)(LevelTime.ElapsedMilliseconds / 1000);
+                    int delayMs = 70 - (int)(LevelTime.ElapsedMilliseconds / 1000);
                     foreach (var strap in StripList)
                     {
                         RGBWS2811.SetColor(strap.isActive, strap.currentLed, strap.rgbColor);
