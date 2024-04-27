@@ -167,7 +167,7 @@ namespace CatchyGame.Service
             StripList.Add(new Strip(RGBColor.Red, 213, 438, StripTwoButton1, StripTwoButton2, StripTwoButton3, StripTwoButton4));
             StripList.Add(new Strip(RGBColor.Red, 439, 664, StripThreeButton1, StripThreeButton2, StripThreeButton3, StripThreeButton4));
             StripList.Add(new Strip(RGBColor.Red, 665, 880, StripFourButton1, StripFourButton2, StripFourButton3, StripFourButton4));
-            StripList.Add(new Strip(RGBColor.Red, 881, 1075, StripFiveButton1, StripFiveButton2, StripFiveButton3, StripFiveButton4));
+            StripList.Add(new Strip(RGBColor.Red, 881, 1073, StripFiveButton1, StripFiveButton2, StripFiveButton3, StripFiveButton4));
             StripList.Add(new Strip(RGBColor.Red, 1074, 1236, StripFiveButton1, StripFiveButton2, StripFiveButton3, StripFiveButton4));
 
 
