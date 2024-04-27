@@ -188,7 +188,7 @@ namespace CatchyGame.Service
                 NumberOfStripToStart = NumberOfStrapsInLevel(CurrentLevel);
                 //RandomSelectStrip(NumberOfStripToStart);
                 StripList[4].isActive = true;
-                //StripList[4].isActive = true;
+                StripList[5].isActive = true;
                 Console.WriteLine(CurrentLevel.ToString());
                 Console.WriteLine($"Number Of Selected Strip {NumberOfStripToStart}");
 
@@ -216,8 +216,8 @@ namespace CatchyGame.Service
                         {
                             RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
                             strip.NextLed();
-                            //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                            //strip.NextLed();
+                            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                            strip.NextLed();
                             //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
                             //strip.NextLed();
                         }
