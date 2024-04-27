@@ -212,11 +212,10 @@ namespace CatchyGame.Service
             while (numberOfStripToSelect > selected)
             {
                 var selectedIndex = random.Next(0, StripList.Count);
-                Console.WriteLine(selectedIndex);
                 if (!StripList[selectedIndex].isActive)
                 {
                     StripList[selectedIndex].isActive = true;
-                    numberOfStripToSelect++;
+                    selected++;
                     Console.WriteLine($"Selected Strip #{selectedIndex}");
                 }
             }
