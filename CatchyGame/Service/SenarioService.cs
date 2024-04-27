@@ -144,7 +144,7 @@ namespace CatchyGame.Service
                 while (true)//LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
                 {
                     int delayMs = 70 - (int)(LevelTime.ElapsedMilliseconds / 1000);
-                    if (delayMs < 0) { delayMs = 10; }
+                    if (delayMs < 0) { delayMs = 1; }
                     
                     foreach (var strip in StripList)
                     {
