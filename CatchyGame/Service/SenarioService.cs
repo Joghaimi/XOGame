@@ -196,9 +196,7 @@ namespace CatchyGame.Service
                 ResetAllLine();
                 UnSelectAllStrap();
                 NumberOfStripToStart = NumberOfStrapsInLevel(CurrentLevel);
-                //RandomSelectStrip(NumberOfStripToStart);
-                StripList[5].isActive = true;
-                //StripList[5].isActive = true;
+                RandomSelectStrip(NumberOfStripToStart);
                 Console.WriteLine(CurrentLevel.ToString());
                 Console.WriteLine($"Number Of Selected Strip {NumberOfStripToStart}");
 
@@ -217,22 +215,22 @@ namespace CatchyGame.Service
                             strip.rGBButton2.Pixel == strip.currentLed ||
                             strip.rGBButton3.Pixel == strip.currentLed ||
                             strip.rGBButton4.Pixel == strip.currentLed;
-                        //if (nextOneIsTargetButton)
-                        //{
-                        //    RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                        //    strip.NextLed();
-                        //}
-                        //else
-                        //{
-                        //    RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                        //    strip.NextLed();
-                        //    RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                        //    strip.NextLed();
-                        //    //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                        //    //strip.NextLed();
-                        //}
-                        RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                        strip.NextLed();
+                        if (nextOneIsTargetButton)
+                        {
+                            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                            strip.NextLed();
+                        }
+                        else
+                        {
+                            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                            strip.NextLed();
+                            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                            strip.NextLed();
+                            //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                            //strip.NextLed();
+                        }
+                        //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                        //strip.NextLed();
                         if (strip.isActive && strip.resetLine)
                         {
                             ResetLine(strip.startRGBLed, strip.endRGBLed);
