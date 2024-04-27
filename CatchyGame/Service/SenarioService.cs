@@ -273,7 +273,10 @@ namespace CatchyGame.Service
                     {
                         button.BlockForATimeInMs(200);
                         if (button.isSet())
+                        {
                             AddPoint();
+                            button.BlockForATimeInMs(200);
+                        }
                         else
                             SubstractPoint();
                     }
@@ -374,7 +377,7 @@ namespace CatchyGame.Service
         }
 
 
-       
+
 
 
     }
