@@ -205,7 +205,7 @@ namespace CatchyGame.Service
                             strip.rGBButton2.Pixel == strip.currentLed ||
                             strip.rGBButton3.Pixel == strip.currentLed ||
                             strip.rGBButton4.Pixel == strip.currentLed;
-                        if (nextOneIsTargetButton)
+                        if (false && nextOneIsTargetButton)
                         {
                             RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
                             strip.NextLed();
