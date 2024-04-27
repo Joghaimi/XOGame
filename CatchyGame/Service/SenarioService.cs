@@ -141,7 +141,7 @@ namespace CatchyGame.Service
 
                 // Start The Timer 
                 LevelTime.Restart();
-                while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
+                while (true)//LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
                 {
                     int delayMs = 70 - (int)(LevelTime.ElapsedMilliseconds / 1000);
                     foreach (var strip in StripList)
@@ -221,7 +221,7 @@ namespace CatchyGame.Service
                 {
                     StripList[selectedIndex].isActive = true;
                     selected++;
-                    Console.WriteLine($"Selected Strip #{selectedIndex}");
+                    Console.WriteLine($"Selected Strip #{selectedIndex+1}");
                 }
             }
         }
