@@ -3,63 +3,115 @@ using Library;
 using Library.RGBLib;
 using Library.Model;
 using Library.PinMapping;
+using System.Diagnostics;
 
 namespace CatchyGame.Service
 {
     public class SenarioService : IHostedService, IDisposable
     {
 
+
+        List<Strip> StripList = new List<Strip>();
+
+
         Strip strip1, strip2, strip3, strip4;
         //RGBButton rgb1;
         private CancellationTokenSource _cts, _cts2;
+        private Level CurrentLevel = Level.Level1;
+        private int NumberOfStripToStart = 0;
+        Stopwatch GameTiming = new Stopwatch();
+        Stopwatch LevelTime = new Stopwatch();
+        Random random = new Random();
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
 
             MCP23Controller.Init(Room.Fort);
+
             // RGB Pixel Button 
             var rgb1 = new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1);
-
-            //RGBButtonPixel rGBButton1Pixel = new RGBButtonPixel(20, rgb1);
-            //RGBButtonPixel rGBButton2Pixel = new RGBButtonPixel(40, new RGBButton(RGBButtonPin.RGBR4, RGBButtonPin.RGBG4, RGBButtonPin.RGBB4, RGBButtonPin.RGBPB4));
-            //RGBButtonPixel rGBButton3Pixel = new RGBButtonPixel(23, new RGBButton(RGBButtonPin.RGBR5, RGBButtonPin.RGBG5, RGBButtonPin.RGBB5, RGBButtonPin.RGBPB5));
-            //RGBButtonPixel rGBButton4Pixel = new RGBButtonPixel(41, new RGBButton(RGBButtonPin.RGBR8, RGBButtonPin.RGBG8, RGBButtonPin.RGBB8, RGBButtonPin.RGBPB8));
             var rgb2 = new RGBButton(RGBButtonPin.RGBR4, RGBButtonPin.RGBG4, RGBButtonPin.RGBB4, RGBButtonPin.RGBPB4);
             var rgb3 = new RGBButton(RGBButtonPin.RGBR5, RGBButtonPin.RGBG5, RGBButtonPin.RGBB5, RGBButtonPin.RGBPB5);
             var rgb4 = new RGBButton(RGBButtonPin.RGBR8, RGBButtonPin.RGBG8, RGBButtonPin.RGBB8, RGBButtonPin.RGBPB8);
-            while (true)
-            {
-                Console.WriteLine("RED");
-                rgb1.TurnColorOn(RGBColor.Red);
-                rgb2.TurnColorOn(RGBColor.Red);
-                rgb3.TurnColorOn(RGBColor.Red);
-                rgb4.TurnColorOn(RGBColor.Red);
-                Thread.Sleep(2000);
-                Console.WriteLine("Green");
+            var rgb5 = new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1);
+            var rgb6 = new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1);
+            var rgb7 = new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1);
+            var rgb8 = new RGBButton(RGBButtonPin.RGBR8, RGBButtonPin.RGBG8, RGBButtonPin.RGBB8, RGBButtonPin.RGBPB8);
 
-                rgb1.TurnColorOn(RGBColor.Green);
-                rgb2.TurnColorOn(RGBColor.Green);
-                rgb4.TurnColorOn(RGBColor.Green);
-                rgb3.TurnColorOn(RGBColor.Green);
-                Thread.Sleep(2000);
-                Console.WriteLine("Blue");
+            RGBButtonPixel StripOneButton1 = new RGBButtonPixel(20, rgb1);
+            RGBButtonPixel StripOneButton2 = new RGBButtonPixel(60, rgb4);
+            RGBButtonPixel StripOneButton3 = new RGBButtonPixel(82, rgb5);
+            RGBButtonPixel StripOneButton4 = new RGBButtonPixel(123, rgb8);
 
-                rgb1.TurnColorOn(RGBColor.Blue);
-                rgb2.TurnColorOn(RGBColor.Blue);
-                rgb4.TurnColorOn(RGBColor.Blue);
-                rgb3.TurnColorOn(RGBColor.Blue);
-                Thread.Sleep(2000);
+            RGBButtonPixel StripTwoButton1 = new RGBButtonPixel(242, rgb1);
+            RGBButtonPixel StripTwoButton2 = new RGBButtonPixel(279, rgb3);
+            RGBButtonPixel StripTwoButton3 = new RGBButtonPixel(319, rgb6);
+            RGBButtonPixel StripTwoButton4 = new RGBButtonPixel(354, rgb7);
 
-            }
+            RGBButtonPixel StripThreeButton1 = new RGBButtonPixel(474, rgb2);
+            RGBButtonPixel StripThreeButton2 = new RGBButtonPixel(519, rgb4);
+            RGBButtonPixel StripThreeButton3 = new RGBButtonPixel(534, rgb5);
+            RGBButtonPixel StripThreeButton4 = new RGBButtonPixel(590, rgb8);
+
+
+            RGBButtonPixel StripFourButton2 = new RGBButtonPixel(747, rgb1);
+            RGBButtonPixel StripFourButton1 = new RGBButtonPixel(783, rgb3);
+            RGBButtonPixel StripFourButton3 = new RGBButtonPixel(823, rgb6);
+            RGBButtonPixel StripFourButton4 = new RGBButtonPixel(840, rgb7);
+
+            RGBButtonPixel StripFiveButton1 = new RGBButtonPixel(955, rgb2);
+            RGBButtonPixel StripFiveButton3 = new RGBButtonPixel(975, rgb4);
+            RGBButtonPixel StripFiveButton2 = new RGBButtonPixel(997, rgb5);
+            RGBButtonPixel StripFiveButton4 = new RGBButtonPixel(1041, rgb8);
+
+
+            RGBButtonPixel StripSixButton1 = new RGBButtonPixel(1092, rgb7);
+            RGBButtonPixel StripSixButton3 = new RGBButtonPixel(1106, rgb6);
+            RGBButtonPixel StripSixButton2 = new RGBButtonPixel(1136, rgb3);
+            RGBButtonPixel StripSixButton4 = new RGBButtonPixel(1152, rgb2);
+
+            //var rgb2 = new RGBButton(RGBButtonPin.RGBR4, RGBButtonPin.RGBG4, RGBButtonPin.RGBB4, RGBButtonPin.RGBPB4);
+            //var rgb3 = new RGBButton(RGBButtonPin.RGBR5, RGBButtonPin.RGBG5, RGBButtonPin.RGBB5, RGBButtonPin.RGBPB5);
+            //var rgb4 = new RGBButton(RGBButtonPin.RGBR8, RGBButtonPin.RGBG8, RGBButtonPin.RGBB8, RGBButtonPin.RGBPB8);
+            //while (true)
+            //{
+            //    Console.WriteLine("RED");
+            //    rgb1.TurnColorOn(RGBColor.Red);
+            //    rgb2.TurnColorOn(RGBColor.Red);
+            //    rgb3.TurnColorOn(RGBColor.Red);
+            //    rgb4.TurnColorOn(RGBColor.Red);
+            //    Thread.Sleep(2000);
+            //    Console.WriteLine("Green");
+
+            //    rgb1.TurnColorOn(RGBColor.Green);
+            //    rgb2.TurnColorOn(RGBColor.Green);
+            //    rgb4.TurnColorOn(RGBColor.Green);
+            //    rgb3.TurnColorOn(RGBColor.Green);
+            //    Thread.Sleep(2000);
+            //    Console.WriteLine("Blue");
+
+            //    rgb1.TurnColorOn(RGBColor.Blue);
+            //    rgb2.TurnColorOn(RGBColor.Blue);
+            //    rgb4.TurnColorOn(RGBColor.Blue);
+            //    rgb3.TurnColorOn(RGBColor.Blue);
+            //    Thread.Sleep(2000);
+
+            //}
 
 
             //Init Strip
-            //strip1 = new Strip(RGBColor.Yellow, 0, 89, rGBButton1Pixel, rGBButton2Pixel, rGBButton3Pixel, rGBButton4Pixel);
+            StripList.Add(new Strip(RGBColor.Yellow, 0, 212, StripOneButton1, StripOneButton2, StripOneButton3, StripOneButton4));
+            StripList.Add(new Strip(RGBColor.Yellow, 213, 438, StripTwoButton1, StripTwoButton2, StripTwoButton3, StripTwoButton4));
+            StripList.Add(new Strip(RGBColor.Yellow, 439, 664, StripThreeButton1, StripThreeButton2, StripThreeButton3, StripThreeButton4));
+            StripList.Add(new Strip(RGBColor.Yellow, 665, 880, StripFourButton1, StripFourButton2, StripFourButton3, StripFourButton4));
+            StripList.Add(new Strip(RGBColor.Yellow, 881, 1073, StripFiveButton1, StripFiveButton2, StripFiveButton3, StripFiveButton4));
+            StripList.Add(new Strip(RGBColor.Yellow, 1074, 1236, StripFiveButton1, StripFiveButton2, StripFiveButton3, StripFiveButton4));
 
 
             // Init the RGBStrip 
             RGBWS2811.Init();
             // Init RGB Button 
-
+            LevelTime.Start();
 
 
 
@@ -72,10 +124,38 @@ namespace CatchyGame.Service
 
         private async Task ControlRGBLight(CancellationToken cancellationToken)
         {
+
             while (!cancellationToken.IsCancellationRequested)
             {
-                RGBWS2811.SetColor(strip1.currentLed, strip1.rgbColor);
-                RGBWS2811.Commit();
+                UnSelectAllStrap();
+                NumberOfStripToStart = NumberOfStrapsInLevel(CurrentLevel);
+                RandomSelectStrip(NumberOfStripToStart);
+
+
+                // Start The Timer 
+                LevelTime.Restart();
+                while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
+                {
+                    int delayMs = 100 - (int)(LevelTime.ElapsedMilliseconds / 1000);
+                    foreach (var strap in StripList)
+                    {
+                        RGBWS2811.SetColor(strap.isActive, strap.currentLed, strap.rgbColor);
+                        strap.NextLed();
+                    }
+                    RGBWS2811.Commit();
+                    Thread.Sleep(delayMs);
+
+
+                    //RGBWS2811.SetColor(strip1.isActive, strip1.currentLed, strip1.rgbColor);
+                    //RGBWS2811.SetColor(strip1.isActive, strip1.currentLed, strip1.rgbColor);
+                    //RGBWS2811.SetColor(strip1.isActive, strip1.currentLed, strip1.rgbColor);
+                    //RGBWS2811.SetColor(strip1.isActive, strip1.currentLed, strip1.rgbColor);
+                }
+                CurrentLevel = NextLevel(CurrentLevel);
+
+
+                //RGBWS2811.SetColor(strip1.isActive, strip1.currentLed, strip1.rgbColor);
+                //RGBWS2811.Commit();
                 //strip1.NextLed();
                 //if (strip1.rGBButton1.Pixel == strip1.currentLed)
                 //{
@@ -100,5 +180,55 @@ namespace CatchyGame.Service
         {
             throw new NotImplementedException();
         }
+
+        private void Restart()
+        {
+            CurrentLevel = Level.Level1;
+        }
+
+        // ========== Number Of Straps
+        private int NumberOfStrapsInLevel(Level currentLevel)
+        {
+            if (currentLevel == Level.Level1) return 2;
+            else if (currentLevel == Level.Level2) return 3;
+            else if (currentLevel == Level.Level3) return 4;
+            else if (currentLevel == Level.Level4) return 5;
+            else if (currentLevel == Level.Level5) return 6;
+            return 0;
+        }
+
+        // ======== Private To The Next Room
+        private Level NextLevel(Level currentLevel)
+        {
+            if (currentLevel == Level.Level5)
+                return Level.Finished;
+            return (Level)((int)currentLevel + 1);
+        }
+        private void RandomSelectStrip(int numberOfStripToSelect)
+        {
+            int selected = 0;
+            while (numberOfStripToSelect < selected)
+            {
+                var selectedIndex = random.Next(0, StripList.Count);
+                if (!StripList[selectedIndex].isActive)
+                {
+                    StripList[selectedIndex].isActive = true;
+                    numberOfStripToSelect++;
+                }
+            }
+        }
+        private void UnSelectAllStrap()
+        {
+            foreach (var item in StripList)
+                item.isActive = false;
+        }
+        private void AddPoint()
+        {
+
+        }
+        private void SubstractPoint()
+        {
+        }
+
     }
 }

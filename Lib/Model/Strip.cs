@@ -13,6 +13,7 @@ namespace Library.Model
         public int startRGBLed { get; set; }
         public int endRGBLed { get; set; }
         public int currentLed { get; set; }
+        public bool isActive { get; set; } = false;
         public RGBButtonPixel rGBButton1 { get; set; }
         public RGBButtonPixel rGBButton2 { get; set; }
         public RGBButtonPixel rGBButton3 { get; set; }
@@ -30,11 +31,14 @@ namespace Library.Model
         }
         public void NextLed()
         {
+            if (!isActive)
+                return;
             if (currentLed < endRGBLed)
                 currentLed++;
-            else { 
+            else
+            {
                 currentLed = startRGBLed;
-                Console.WriteLine( "Rset ..");
+                Console.WriteLine("Rset ..");
             }
 
             //if (currentLed == rGBButton1.Pixel)
