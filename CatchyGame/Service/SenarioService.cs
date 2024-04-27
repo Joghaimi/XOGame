@@ -203,7 +203,7 @@ namespace CatchyGame.Service
 
                 // Start The Timer 
                 LevelTime.Restart();
-                while (true)//LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
+                while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
                 {
                     int delayMs = 70 - (int)(LevelTime.ElapsedMilliseconds / 1000);
                     if (delayMs < 0) { delayMs = 1; }
