@@ -128,6 +128,10 @@ namespace CatchyGame.Service
 
             while (!cancellationToken.IsCancellationRequested)
             {
+
+
+
+                ResetAllLine();
                 UnSelectAllStrap();
                 NumberOfStripToStart = NumberOfStrapsInLevel(CurrentLevel);
                 RandomSelectStrip(NumberOfStripToStart);
@@ -140,24 +144,19 @@ namespace CatchyGame.Service
                 while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
                 {
                     int delayMs = 70 - (int)(LevelTime.ElapsedMilliseconds / 1000);
-                    foreach (var strap in StripList)
+                    foreach (var strip in StripList)
                     {
-                        RGBWS2811.SetColor(strap.isActive, strap.currentLed, strap.rgbColor);
-                        strap.NextLed();
-                        if (strap.isActive && strap.resetLine) { 
-                            ResetLine(strap.startRGBLed, strap.endRGBLed);
-                            strap.LineReseted();
+                        RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                        strip.NextLed();
+                        if (strip.isActive && strip.resetLine)
+                        {
+                            ResetLine(strip.startRGBLed, strip.endRGBLed);
+                            strip.LineReseted();
                         }
 
                     }
                     RGBWS2811.Commit();
                     Thread.Sleep(delayMs);
-
-
-                    //RGBWS2811.SetColor(strip1.isActive, strip1.currentLed, strip1.rgbColor);
-                    //RGBWS2811.SetColor(strip1.isActive, strip1.currentLed, strip1.rgbColor);
-                    //RGBWS2811.SetColor(strip1.isActive, strip1.currentLed, strip1.rgbColor);
-                    //RGBWS2811.SetColor(strip1.isActive, strip1.currentLed, strip1.rgbColor);
                 }
                 CurrentLevel = NextLevel(CurrentLevel);
 
@@ -245,6 +244,17 @@ namespace CatchyGame.Service
             {
                 RGBWS2811.SetColor(true, i, RGBColor.Off);
             }
+        }
+
+        private void ResetAllLine()
+        {
+
+            foreach (var strip in StripList)
+            {
+                ResetLine(strip.startRGBLed, strip.endRGBLed);
+                strip.LineReseted();
+            }
+            RGBWS2811.Commit();
         }
 
     }
