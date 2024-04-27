@@ -13,7 +13,7 @@ namespace CatchyGame.Service
 
 
         List<Strip> StripList = new List<Strip>();
-
+        List<RGBButton> RGBButtonList = new List<RGBButton>();
 
         Strip strip1, strip2, strip3, strip4;
         //RGBButton rgb1;
@@ -38,6 +38,16 @@ namespace CatchyGame.Service
             var rgb6 = new RGBButton(RGBButtonPin.RGBR6, RGBButtonPin.RGBG6, RGBButtonPin.RGBB6, RGBButtonPin.RGBPB6);
             var rgb7 = new RGBButton(RGBButtonPin.RGBR7, RGBButtonPin.RGBG7, RGBButtonPin.RGBB7, RGBButtonPin.RGBPB7);
             var rgb8 = new RGBButton(RGBButtonPin.RGBR8, RGBButtonPin.RGBG8, RGBButtonPin.RGBB8, RGBButtonPin.RGBPB8);
+
+            RGBButtonList.Add(rgb1);
+            RGBButtonList.Add(rgb2);
+            RGBButtonList.Add(rgb3);
+            RGBButtonList.Add(rgb4);
+            RGBButtonList.Add(rgb5);
+            RGBButtonList.Add(rgb6);
+            RGBButtonList.Add(rgb7);
+            RGBButtonList.Add(rgb8);
+
             //while (true)
             //{
             //    if(!rgb1.CurrentStatus())
@@ -171,7 +181,7 @@ namespace CatchyGame.Service
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => ControlRGBLight(_cts.Token));
-            //Task.Run(() => ControlRGBButton(_cts2.Token));
+            Task.Run(() => ControlRGBButton(_cts2.Token));
             return Task.CompletedTask;
         }
 
@@ -188,7 +198,7 @@ namespace CatchyGame.Service
                 NumberOfStripToStart = NumberOfStrapsInLevel(CurrentLevel);
                 //RandomSelectStrip(NumberOfStripToStart);
                 StripList[4].isActive = true;
-                StripList[5].isActive = true;
+                //StripList[5].isActive = true;
                 Console.WriteLine(CurrentLevel.ToString());
                 Console.WriteLine($"Number Of Selected Strip {NumberOfStripToStart}");
 
@@ -330,6 +340,18 @@ namespace CatchyGame.Service
             RGBWS2811.Commit();
         }
 
+
+        // ===== 
+        private async Task ControlRGBButton(CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                //foreach(var )
+
+
+                    Thread.Sleep(50);
+            }
+        }
 
 
     }
