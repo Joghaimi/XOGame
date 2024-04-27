@@ -167,7 +167,7 @@ namespace CatchyGame.Service
             StripList.Add(new Strip(RGBColor.Red, 213, 438, StripTwoButton1, StripTwoButton2, StripTwoButton3, StripTwoButton4));
             StripList.Add(new Strip(RGBColor.Red, 439, 664, StripThreeButton1, StripThreeButton2, StripThreeButton3, StripThreeButton4));
             StripList.Add(new Strip(RGBColor.Red, 665, 880, StripFourButton1, StripFourButton2, StripFourButton3, StripFourButton4));
-            StripList.Add(new Strip(RGBColor.Red, 881, 1073, StripFiveButton1, StripFiveButton2, StripFiveButton3, StripFiveButton4));
+            StripList.Add(new Strip(RGBColor.Red, 881, 1075, StripFiveButton1, StripFiveButton2, StripFiveButton3, StripFiveButton4));
             StripList.Add(new Strip(RGBColor.Red, 1074, 1236, StripFiveButton1, StripFiveButton2, StripFiveButton3, StripFiveButton4));
 
 
@@ -217,20 +217,22 @@ namespace CatchyGame.Service
                             strip.rGBButton2.Pixel == strip.currentLed ||
                             strip.rGBButton3.Pixel == strip.currentLed ||
                             strip.rGBButton4.Pixel == strip.currentLed;
-                        if (nextOneIsTargetButton)
-                        {
-                            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                            strip.NextLed();
-                        }
-                        else
-                        {
-                            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                            strip.NextLed();
-                            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                            strip.NextLed();
-                            //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                            //strip.NextLed();
-                        }
+                        //if (nextOneIsTargetButton)
+                        //{
+                        //    RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                        //    strip.NextLed();
+                        //}
+                        //else
+                        //{
+                        //    RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                        //    strip.NextLed();
+                        //    RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                        //    strip.NextLed();
+                        //    //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                        //    //strip.NextLed();
+                        //}
+                        RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                        strip.NextLed();
                         if (strip.isActive && strip.resetLine)
                         {
                             ResetLine(strip.startRGBLed, strip.endRGBLed);
@@ -315,10 +317,12 @@ namespace CatchyGame.Service
         }
         private void AddPoint()
         {
+            Console.WriteLine("Add Point");
 
         }
         private void SubstractPoint()
         {
+            Console.WriteLine("Substract Point");
         }
 
         private void ResetLine(int startLed, int endLed)
@@ -346,10 +350,18 @@ namespace CatchyGame.Service
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                //foreach(var )
+                foreach (var button in RGBButtonList)
+                {
+                    if (!button.CurrentStatus())
+                    {
+                        if (button.isSet())
+                            AddPoint();
+                        else
+                            SubstractPoint();
 
-
-                    Thread.Sleep(50);
+                    }
+                }
+                Thread.Sleep(50);
             }
         }
 
