@@ -41,17 +41,17 @@ namespace Library.Model
                 resetLine = true;
             }
 
-            //if (currentLed == rGBButton1.Pixel)
-            //{
-            //    Console.WriteLine($"Turn RGBOne {rgbColor}");
-            //    rGBButton1.Button.Set(true);
-            //    //rGBButton1.Button.TurnColorOn(RGBColor.Red);
-            //}
-            //else
-            //{
-            //    rGBButton1.Button.Set(false);
-            //    //rGBButton1.Button.TurnColorOn(RGBColor.Off);
-            //}
+            if (currentLed == rGBButton1.Pixel)
+            {
+                Console.WriteLine($"Turn RGBOne {rgbColor}");
+                //rGBButton1.Button.Set(true);
+                //rGBButton1.Button.TurnColorOn(RGBColor.Red);
+            }
+            else
+            {
+                //rGBButton1.Button.Set(false);
+                //rGBButton1.Button.TurnColorOn(RGBColor.Off);
+            }
 
 
 
