@@ -41,7 +41,7 @@ namespace Library.Model
                 resetLine = true;
             }
 
-            if (currentLed == rGBButton1.Pixel)
+            if (currentLed - 1 == rGBButton1.Pixel)
             {
                 Console.WriteLine($"Turn RGBOne {rgbColor}");
                 rGBButton1.Button.Set(true);
@@ -52,7 +52,7 @@ namespace Library.Model
                 rGBButton1.Button.Set(false);
                 rGBButton1.Button.TurnColorOn(RGBColor.Off);
             }
-            if (currentLed == rGBButton2.Pixel)
+            if (currentLed - 1 == rGBButton2.Pixel)
             {
                 Console.WriteLine($"Turn RGB2 {rgbColor}");
                 rGBButton2.Button.Set(true);
@@ -64,7 +64,7 @@ namespace Library.Model
                 rGBButton2.Button.TurnColorOn(RGBColor.Off);
             }
 
-            if (currentLed == rGBButton3.Pixel)
+            if (currentLed - 1 == rGBButton3.Pixel)
             {
                 Console.WriteLine($"Turn RGB3 {rgbColor}");
                 rGBButton3.Button.Set(true);
@@ -76,7 +76,7 @@ namespace Library.Model
                 rGBButton3.Button.TurnColorOn(RGBColor.Off);
             }
 
-            if (currentLed == rGBButton4.Pixel)
+            if (currentLed - 1 == rGBButton4.Pixel)
             {
                 Console.WriteLine($"Turn RGB4 {rgbColor}");
                 rGBButton4.Button.Set(true);
@@ -91,7 +91,8 @@ namespace Library.Model
 
 
         }
-        public void LineReseted() {
+        public void LineReseted()
+        {
             resetLine = false;
             currentLed = startRGBLed;
         }
