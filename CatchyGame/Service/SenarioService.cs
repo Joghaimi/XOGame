@@ -4,6 +4,7 @@ using Library.RGBLib;
 using Library.Model;
 using Library.PinMapping;
 using System.Diagnostics;
+using System.IO;
 
 namespace CatchyGame.Service
 {
@@ -143,6 +144,9 @@ namespace CatchyGame.Service
                     {
                         RGBWS2811.SetColor(strap.isActive, strap.currentLed, strap.rgbColor);
                         strap.NextLed();
+                        if (strap.isActive && strap.resetLine)
+                            ResetLine(strap.startRGBLed, strap.endRGBLed);
+
                     }
                     RGBWS2811.Commit();
                     Thread.Sleep(delayMs);
@@ -231,6 +235,14 @@ namespace CatchyGame.Service
         }
         private void SubstractPoint()
         {
+        }
+
+        private void ResetLine(int startLed, int endLed)
+        {
+            for (int i = startLed; i <= endLed; i++)
+            {
+                RGBWS2811.SetColor(true, i, RGBColor.Off);
+            }
         }
 
     }

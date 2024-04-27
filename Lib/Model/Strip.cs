@@ -14,6 +14,7 @@ namespace Library.Model
         public int endRGBLed { get; set; }
         public int currentLed { get; set; }
         public bool isActive { get; set; } = false;
+        public bool resetLine { get; set; } = false;
         public RGBButtonPixel rGBButton1 { get; set; }
         public RGBButtonPixel rGBButton2 { get; set; }
         public RGBButtonPixel rGBButton3 { get; set; }
@@ -37,7 +38,8 @@ namespace Library.Model
                 currentLed++;
             else
             {
-                currentLed = startRGBLed;
+                resetLine = true;
+               
             }
 
             //if (currentLed == rGBButton1.Pixel)
@@ -55,5 +57,11 @@ namespace Library.Model
 
 
         }
+        public void LineReseted() {
+            resetLine = false;
+            currentLed = startRGBLed;
+        }
+
+
     }
 }
