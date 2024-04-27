@@ -214,8 +214,8 @@ namespace CatchyGame.Service
                         {
                             RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
                             strip.NextLed();
-                            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                            strip.NextLed();
+                            //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                            //strip.NextLed();
                             //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
                             //strip.NextLed();
                         }
