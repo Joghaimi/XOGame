@@ -262,7 +262,25 @@ namespace CatchyGame.Service
                 Console.Write(".");
             }
         }
-
+        // ===== 
+        private async Task ControlRGBButton(CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                foreach (var button in RGBButtonList)
+                {
+                    if (!button.CurrentStatusWithCheckForDelay())
+                    {
+                        button.BlockForATimeInMs(200);
+                        if (button.isSet())
+                            AddPoint();
+                        else
+                            SubstractPoint();
+                    }
+                }
+                Thread.Sleep(50);
+            }
+        }
         public Task StopAsync(CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
@@ -277,6 +295,17 @@ namespace CatchyGame.Service
         {
             CurrentLevel = Level.Level1;
         }
+
+
+
+
+
+
+
+
+
+
+
 
         // ========== Number Of Straps
         private int NumberOfStrapsInLevel(Level currentLevel)
@@ -345,25 +374,7 @@ namespace CatchyGame.Service
         }
 
 
-        // ===== 
-        private async Task ControlRGBButton(CancellationToken cancellationToken)
-        {
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                foreach (var button in RGBButtonList)
-                {
-                    if (!button.CurrentStatus())
-                    {
-                        if (button.isSet())
-                            AddPoint();
-                        else
-                            SubstractPoint();
-
-                    }
-                }
-                Thread.Sleep(50);
-            }
-        }
+       
 
 
     }

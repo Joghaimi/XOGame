@@ -105,6 +105,15 @@ namespace Library.RGBLib
                 _isBlocked = false;
             });
         }
+        public void BlockForATimeInMs(int time)
+        {
+            Task.Run(async () =>
+            {
+                _isBlocked = true;
+                await Task.Delay(time);
+                _isBlocked = false;
+            });
+        }
 
         public bool isSet()
         {
