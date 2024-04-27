@@ -144,8 +144,10 @@ namespace CatchyGame.Service
                     {
                         RGBWS2811.SetColor(strap.isActive, strap.currentLed, strap.rgbColor);
                         strap.NextLed();
-                        if (strap.isActive && strap.resetLine)
+                        if (strap.isActive && strap.resetLine) { 
                             ResetLine(strap.startRGBLed, strap.endRGBLed);
+                            strap.LineReseted();
+                        }
 
                     }
                     RGBWS2811.Commit();
