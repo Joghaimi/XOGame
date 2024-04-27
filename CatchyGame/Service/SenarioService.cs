@@ -38,7 +38,43 @@ namespace CatchyGame.Service
             var rgb6 = new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1);
             var rgb7 = new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1);
             var rgb8 = new RGBButton(RGBButtonPin.RGBR8, RGBButtonPin.RGBG8, RGBButtonPin.RGBB8, RGBButtonPin.RGBPB8);
+            while (true)
+            {
+                Console.WriteLine("Red");
+                rgb1.TurnColorOn(RGBColor.Red);
+                rgb2.TurnColorOn(RGBColor.Red);
+                rgb3.TurnColorOn(RGBColor.Red);
+                rgb4.TurnColorOn(RGBColor.Red);
+                rgb5.TurnColorOn(RGBColor.Red);
+                rgb6.TurnColorOn(RGBColor.Red);
+                rgb7.TurnColorOn(RGBColor.Red);
+                rgb8.TurnColorOn(RGBColor.Red);
+                Thread.Sleep(2000);
 
+                Console.WriteLine("Green");
+                rgb1.TurnColorOn(RGBColor.Green);
+                rgb2.TurnColorOn(RGBColor.Green);
+                rgb3.TurnColorOn(RGBColor.Green);
+                rgb4.TurnColorOn(RGBColor.Green);
+                rgb5.TurnColorOn(RGBColor.Green);
+                rgb6.TurnColorOn(RGBColor.Green);
+                rgb7.TurnColorOn(RGBColor.Green);
+                rgb8.TurnColorOn(RGBColor.Green);
+                Thread.Sleep(2000);
+
+                Console.WriteLine("Blue");
+                rgb1.TurnColorOn(RGBColor.Blue);
+                rgb2.TurnColorOn(RGBColor.Blue);
+                rgb3.TurnColorOn(RGBColor.Blue);
+                rgb4.TurnColorOn(RGBColor.Blue);
+                rgb5.TurnColorOn(RGBColor.Blue);
+                rgb6.TurnColorOn(RGBColor.Blue);
+                rgb7.TurnColorOn(RGBColor.Blue);
+                rgb8.TurnColorOn(RGBColor.Blue);
+                Thread.Sleep(2000);
+
+
+            }
             RGBButtonPixel StripOneButton1 = new RGBButtonPixel(20, rgb1);
             RGBButtonPixel StripOneButton2 = new RGBButtonPixel(60, rgb4);
             RGBButtonPixel StripOneButton3 = new RGBButtonPixel(82, rgb5);
@@ -276,5 +312,7 @@ namespace CatchyGame.Service
             RGBWS2811.Commit();
         }
 
+
+     
     }
 }
