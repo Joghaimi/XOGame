@@ -130,6 +130,8 @@ namespace CatchyGame.Service
                 UnSelectAllStrap();
                 NumberOfStripToStart = NumberOfStrapsInLevel(CurrentLevel);
                 RandomSelectStrip(NumberOfStripToStart);
+                Console.WriteLine(CurrentLevel.ToString());
+                Console.WriteLine($"Number Of Selected Strip {NumberOfStripToStart}");
 
 
                 // Start The Timer 
@@ -214,6 +216,7 @@ namespace CatchyGame.Service
                 {
                     StripList[selectedIndex].isActive = true;
                     numberOfStripToSelect++;
+                    Console.WriteLine($"Selected Strip #{selectedIndex}");
                 }
             }
         }
