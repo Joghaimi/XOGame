@@ -64,7 +64,7 @@ namespace Library.Model
                 rGBButton2.Button.TurnColorOn(RGBColor.Off);
             }
 
-            if (currentLed == rGBButton1.Pixel)
+            if (currentLed == rGBButton3.Pixel)
             {
                 Console.WriteLine($"Turn RGB3 {rgbColor}");
                 rGBButton3.Button.Set(true);
@@ -76,7 +76,7 @@ namespace Library.Model
                 rGBButton3.Button.TurnColorOn(RGBColor.Off);
             }
 
-            if (currentLed == rGBButton1.Pixel)
+            if (currentLed == rGBButton4.Pixel)
             {
                 Console.WriteLine($"Turn RGB4 {rgbColor}");
                 rGBButton4.Button.Set(true);
