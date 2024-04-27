@@ -47,8 +47,11 @@ namespace Library.Model
                 rGBButton1.Button.Set(true);
                 rGBButton1.Button.TurnColorOn(rgbColor);
             }
-            else if (currentLed + 1 == rGBButton1.Pixel)
-            { }
+            else if (currentLed + 1 == rGBButton1.Pixel || currentLed == rGBButton1.Pixel)
+            {
+                rGBButton1.Button.TurnColorOn(RGBColor.Off);
+
+            }
             else
             {
                 rGBButton1.Button.Set(false);
@@ -60,8 +63,10 @@ namespace Library.Model
                 rGBButton2.Button.Set(true);
                 rGBButton2.Button.TurnColorOn(rgbColor);
             }
-            else if (currentLed + 1 == rGBButton2.Pixel)
-            { }
+            else if (currentLed + 1 == rGBButton2.Pixel || currentLed == rGBButton2.Pixel)
+            {
+                rGBButton2.Button.TurnColorOn(RGBColor.Off);
+            }
             else
             {
 
@@ -75,8 +80,10 @@ namespace Library.Model
                 rGBButton3.Button.Set(true);
                 rGBButton3.Button.TurnColorOn(rgbColor);
             }
-            else if (currentLed + 1 == rGBButton3.Pixel)
-            { }
+            else if (currentLed + 1 == rGBButton3.Pixel || currentLed == rGBButton3.Pixel)
+            {
+                rGBButton3.Button.TurnColorOn(RGBColor.Off);
+            }
             else
             {
 
@@ -90,8 +97,10 @@ namespace Library.Model
                 rGBButton4.Button.Set(true);
                 rGBButton4.Button.TurnColorOn(rgbColor);
             }
-            else if (currentLed + 1 == rGBButton4.Pixel)
-            { }
+            else if (currentLed + 1 == rGBButton4.Pixel || currentLed == rGBButton4.Pixel)
+            {
+                rGBButton4.Button.TurnColorOn(RGBColor.Off);
+            }
             else
             {
                 rGBButton4.Button.Set(false);
