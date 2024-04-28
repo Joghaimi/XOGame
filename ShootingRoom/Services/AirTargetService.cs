@@ -124,15 +124,12 @@ namespace ShootingRoom.Services
                                     LevelTimer.Restart();
                                     Console.WriteLine("Start The Level");
                                     while (
-                                        (LevelScore > VariableControlService.LevelScore || VariableControlService.GameRound == Round.Round5) && 
+                                        (LevelScore > VariableControlService.LevelScore || VariableControlService.GameRound == Round.Round5) &&
                                         LevelTimer.ElapsedMilliseconds < 60000 ||
                                         (
                                             VariableControlService.GameRound == Round.Round5 &&
                                             VariableControlService.CurrentTime < VariableControlService.RoomTiming
-
-                                        )
-                                        
-                                        )
+                                        ))
                                     {
                                         if (!IsGameStartedOrInGoing())
                                             break;
@@ -150,7 +147,7 @@ namespace ShootingRoom.Services
                                                     break;
                                                 if (VariableControlService.LevelScore >= LevelScore && VariableControlService.GameRound != Round.Round5)
                                                     break;
-                                                if (LevelTimer.ElapsedMilliseconds > 60000)
+                                                if (LevelTimer.ElapsedMilliseconds > 60000 && VariableControlService.GameRound != Round.Round5)
                                                     break;
                                                 foreach (var element in AirTargetList)
                                                 {
