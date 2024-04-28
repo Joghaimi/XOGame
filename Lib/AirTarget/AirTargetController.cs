@@ -65,7 +65,7 @@ namespace Library.AirTarget
         }
         public void Select()
         {
-            MCP23Controller.Write(_ShelfLight.Pin, PinState.High);
+            MCP23Controller.WriteDelay(_ShelfLight.Pin, PinState.High);
             _ShelfLight.isSelected = true;
             _Target1.isSelected = true;
             _Target2.isSelected = true;
@@ -161,7 +161,7 @@ namespace Library.AirTarget
 
         public void UnSelectTarget(bool finishLevel)
         {
-            MCP23Controller.Write(_ShelfLight.Pin, PinState.Low);
+            MCP23Controller.WriteDelay(_ShelfLight.Pin, PinState.Low);
 
             _ShelfLight.isSelected = false;
             _Target1.isSelected = false;
