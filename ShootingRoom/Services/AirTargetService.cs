@@ -207,6 +207,9 @@ namespace ShootingRoom.Services
                             }
                             ControlPin(GunShootRelay, false);
                             StopAirTargetService();
+                            VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
+
+
                         }
                         else if (!IsGameStartedOrInGoing() && VariableControlService.IsAirTargetServiceStarted)
                         {
@@ -234,7 +237,7 @@ namespace ShootingRoom.Services
             {
                 if (!IsGameStartedOrInGoing())
                     break;
-                if (MCP23Controller.Read(MasterDI.IN1))
+                if (MCP23Controller.ReadDelay(MasterDI.IN1))
                 {
 
                     VariableControlService.LevelScore++;

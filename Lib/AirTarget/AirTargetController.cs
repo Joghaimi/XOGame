@@ -59,7 +59,7 @@ namespace Library.AirTarget
         public void test()
         {
 
-            Console.WriteLine($"{MCP23Controller.Read(_Target1.Pin)} {MCP23Controller.Read(_Target2.Pin)} {MCP23Controller.Read(_Target3.Pin)} {MCP23Controller.Read(_Target4.Pin)} {MCP23Controller.Read(_Target5.Pin)}");
+            Console.WriteLine($"{MCP23Controller.ReadDelay(_Target1.Pin)} {MCP23Controller.ReadDelay(_Target2.Pin)} {MCP23Controller.ReadDelay(_Target3.Pin)} {MCP23Controller.ReadDelay(_Target4.Pin)} {MCP23Controller.ReadDelay(_Target5.Pin)}");
 
 
         }
@@ -84,7 +84,7 @@ namespace Library.AirTarget
             if (!_Target1.isShoot)
             {
 
-                if (!MCP23Controller.Read(_Target1.Pin))
+                if (!MCP23Controller.ReadDelay(_Target1.Pin))
                 {
                     _Target1.isShoot = true;
                     numberOfTargetDown++;
@@ -96,7 +96,7 @@ namespace Library.AirTarget
             }
             if (!_Target2.isShoot)
             {
-                if (!MCP23Controller.Read(_Target2.Pin))
+                if (!MCP23Controller.ReadDelay(_Target2.Pin))
                 {
                     _Target2.isShoot = true;
                     numberOfTargetDown++;
@@ -108,7 +108,7 @@ namespace Library.AirTarget
             }
             if (!_Target3.isShoot)
             {
-                if (!MCP23Controller.Read(_Target3.Pin))
+                if (!MCP23Controller.ReadDelay(_Target3.Pin))
                 {
                     _Target3.isShoot = true;
                     numberOfTargetDown++;
@@ -121,7 +121,7 @@ namespace Library.AirTarget
             if (!_Target4.isShoot)
             {
 
-                if (!MCP23Controller.Read(_Target4.Pin))
+                if (!MCP23Controller.ReadDelay(_Target4.Pin))
                 {
                     _Target4.isShoot = true;
                     numberOfTargetDown++;
@@ -134,7 +134,7 @@ namespace Library.AirTarget
 
             if (!_Target5.isShoot)
             {
-                if (!MCP23Controller.Read(_Target5.Pin))
+                if (!MCP23Controller.ReadDelay(_Target5.Pin))
                 {
                     _Target5.isShoot = true;
                     numberOfTargetDown++;
