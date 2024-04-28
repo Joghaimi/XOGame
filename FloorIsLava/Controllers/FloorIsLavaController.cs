@@ -54,6 +54,12 @@ namespace FloorIsLava.Controllers
         [HttpGet("ReturnScore")]
         public IActionResult ReturnScore()
         {
+            VariableControlService.TeamScore.Total =
+                VariableControlService.TeamScore.FortRoomScore +
+                VariableControlService.TeamScore.ShootingRoomScore +
+                VariableControlService.TeamScore.DivingRoomScore +
+                VariableControlService.TeamScore.DarkRoomScore +
+                VariableControlService.TeamScore.FloorIsLavaRoomScore;
             return Ok(VariableControlService.TeamScore);
         }
         [HttpGet("GoToTheNextRoom")]
