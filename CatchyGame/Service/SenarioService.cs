@@ -162,6 +162,10 @@ namespace CatchyGame.Service
                                 {
                                     ResetLine(strip.startRGBLed, strip.endRGBLed);
                                     strip.LineReseted();
+
+                                    // Random Select New Strips
+                                    strip.isActive = false;
+                                    RandomSelectStrip(1);
                                 }
 
                             }
