@@ -111,6 +111,7 @@ namespace CatchyGame.Service
             {
                 if (VariableControlService.GameStatus == GameStatus.Started)
                 {
+                    Console.WriteLine("Start Game ...");
                     // Restart The Game Parameter 
                     Restart();
                     while (VariableControlService.GameStatus == GameStatus.Started)
