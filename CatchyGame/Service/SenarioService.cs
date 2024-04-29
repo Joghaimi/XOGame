@@ -370,8 +370,11 @@ namespace CatchyGame.Service
         }
         private void UnSelectAllStrap()
         {
+            Console.Write("UnSelectAllStrap ..");
+
             foreach (var item in StripList)
                 item.isActive = false;
+            Console.WriteLine(" Done .");
         }
         private void AddPoint()
         {
@@ -394,12 +397,14 @@ namespace CatchyGame.Service
         private void ResetAllLine()
         {
 
+            Console.Write("Restart All Lines ...");
             foreach (var strip in StripList)
             {
                 ResetLine(strip.startRGBLed, strip.endRGBLed);
                 strip.LineReseted();
             }
             RGBWS2811.Commit();
+            Console.WriteLine(" Done .");
         }
 
 
