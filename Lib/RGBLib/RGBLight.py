@@ -5,7 +5,7 @@ strip = None
 
 def init_strip():
     global strip  # Use the global keyword to access the global variable
-    LED_COUNT = 300         # Number of LED pixels.
+    LED_COUNT = 1236         # Number of LED pixels.
     LED_PIN = 10           # GPIO pin connected to the pixels (must support PWM!).
     LED_FREQ_HZ = 800000   # LED signal frequency in hertz (usually 800khz)
     LED_DMA = 10           # DMA channel to use for generating signal (try 10)
