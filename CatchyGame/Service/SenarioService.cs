@@ -279,9 +279,9 @@ namespace CatchyGame.Service
         {
             while (!cancellationToken.IsCancellationRequested)
             {
+                VariableControlService.CurrentTime = (int)GameTiming.ElapsedMilliseconds;
                 if (VariableControlService.GameStatus == GameStatus.Started)
                 {
-                    VariableControlService.CurrentTime = (int)GameTiming.ElapsedMilliseconds;
 
                     bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.GameTiming;
                     bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.GameStatus == GameStatus.Started && VariableControlService.IsGameTimerStarted;
