@@ -19,7 +19,8 @@ namespace Library.Model
         public RGBButtonPixel rGBButton2 { get; set; }
         public RGBButtonPixel rGBButton3 { get; set; }
         public RGBButtonPixel rGBButton4 { get; set; }
-        public Strip(RGBColor rgbColor, int startRGBLed, int endRGBLed, RGBButtonPixel rGBButton1, RGBButtonPixel rGBButton2, RGBButtonPixel rGBButton3, RGBButtonPixel rGBButton4)
+        public RGBButton startLed { get; set; }
+        public Strip(RGBColor rgbColor, int startRGBLed, int endRGBLed, RGBButton startLed, RGBButtonPixel rGBButton1, RGBButtonPixel rGBButton2, RGBButtonPixel rGBButton3, RGBButtonPixel rGBButton4)
         {
             this.rgbColor = rgbColor;
             this.startRGBLed = startRGBLed;
@@ -29,11 +30,14 @@ namespace Library.Model
             this.rGBButton2 = rGBButton2;
             this.rGBButton3 = rGBButton3;
             this.rGBButton4 = rGBButton4;
+            this.startLed = startLed;
         }
         public void NextLed()
         {
             if (!isActive)
                 return;
+            if (currentLed == startRGBLed)
+                this.startLed.TurnColorOn(this.rgbColor);
             if (currentLed < endRGBLed)
                 currentLed++;
             else
@@ -116,6 +120,7 @@ namespace Library.Model
         {
             resetLine = false;
             currentLed = startRGBLed;
+            this.startLed.TurnColorOn(RGBColor.Off);
         }
 
 

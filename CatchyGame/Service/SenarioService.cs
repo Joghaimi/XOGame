@@ -36,6 +36,18 @@ namespace CatchyGame.Service
             var rgb7 = new RGBButton(RGBButtonPin.RGBR7, RGBButtonPin.RGBG7, RGBButtonPin.RGBB7, RGBButtonPin.RGBPB7);
             var rgb8 = new RGBButton(RGBButtonPin.RGBR8, RGBButtonPin.RGBG8, RGBButtonPin.RGBB8, RGBButtonPin.RGBPB8);
 
+
+            var startRGBButton1 = new RGBButton(RGBButtonPin.RGBR13, RGBButtonPin.RGBG13, RGBButtonPin.RGBB13, RGBButtonPin.RGBPB13);
+            var startRGBButton2 = new RGBButton(RGBButtonPin.RGBR14, RGBButtonPin.RGBG14, RGBButtonPin.RGBB14, RGBButtonPin.RGBPB14);
+            var startRGBButton3 = new RGBButton(RGBButtonPin.RGBR15, RGBButtonPin.RGBG15, RGBButtonPin.RGBB15, RGBButtonPin.RGBPB15);
+            var startRGBButton4 = new RGBButton(RGBButtonPin.RGBR9, RGBButtonPin.RGBG9, RGBButtonPin.RGBB9, RGBButtonPin.RGBPB9);
+            var startRGBButton5 = new RGBButton(RGBButtonPin.RGBR10, RGBButtonPin.RGBG10, RGBButtonPin.RGBB10, RGBButtonPin.RGBPB10);
+            var startRGBButton6 = new RGBButton(RGBButtonPin.RGBR12, RGBButtonPin.RGBG12, RGBButtonPin.RGBB12, RGBButtonPin.RGBPB12);
+
+
+
+
+
             RGBButtonList.Add(rgb1);
             RGBButtonList.Add(rgb2);
             RGBButtonList.Add(rgb3);
@@ -80,12 +92,12 @@ namespace CatchyGame.Service
 
 
             //Init Strip
-            StripList.Add(new Strip(RGBColor.purple, 0, 212, StripOneButton1, StripOneButton2, StripOneButton3, StripOneButton4));
-            StripList.Add(new Strip(RGBColor.purple, 213, 438, StripTwoButton1, StripTwoButton2, StripTwoButton3, StripTwoButton4));
-            StripList.Add(new Strip(RGBColor.purple, 439, 664, StripThreeButton1, StripThreeButton2, StripThreeButton3, StripThreeButton4));
-            StripList.Add(new Strip(RGBColor.purple, 665, 880, StripFourButton1, StripFourButton2, StripFourButton3, StripFourButton4));
-            StripList.Add(new Strip(RGBColor.purple, 881, 1073, StripFiveButton1, StripFiveButton2, StripFiveButton3, StripFiveButton4));
-            StripList.Add(new Strip(RGBColor.purple, 1074, 1236, StripSixButton1, StripSixButton2, StripSixButton3, StripSixButton4));
+            StripList.Add(new Strip(RGBColor.purple, 0, 212, startRGBButton1, StripOneButton1, StripOneButton2, StripOneButton3, StripOneButton4));
+            StripList.Add(new Strip(RGBColor.purple, 213, 438, startRGBButton2, StripTwoButton1, StripTwoButton2, StripTwoButton3, StripTwoButton4));
+            StripList.Add(new Strip(RGBColor.purple, 439, 664, startRGBButton3, StripThreeButton1, StripThreeButton2, StripThreeButton3, StripThreeButton4));
+            StripList.Add(new Strip(RGBColor.purple, 665, 880, startRGBButton4, StripFourButton1, StripFourButton2, StripFourButton3, StripFourButton4));
+            StripList.Add(new Strip(RGBColor.purple, 881, 1073, startRGBButton5, StripFiveButton1, StripFiveButton2, StripFiveButton3, StripFiveButton4));
+            StripList.Add(new Strip(RGBColor.purple, 1074, 1236, startRGBButton6, StripSixButton1, StripSixButton2, StripSixButton3, StripSixButton4));
 
 
             // Init the RGBStrip 
@@ -179,81 +191,7 @@ namespace CatchyGame.Service
 
 
 
-                //ResetAllLine();
-                //UnSelectAllStrap();
-                //NumberOfStripToStart = NumberOfStrapsInLevel(VariableControlService.GameRound);
-                //RandomSelectStrip(NumberOfStripToStart);
-                //Console.WriteLine(VariableControlService.GameRound.ToString());
-                //Console.WriteLine($"Number Of Selected Strip {NumberOfStripToStart}");
 
-
-                // Start The Timer 
-                //LevelTime.Restart();
-                //while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
-                //{
-                //    int delayMs = 70 - (int)(LevelTime.ElapsedMilliseconds / 1000);
-                //    if (delayMs < 0) { delayMs = 1; }
-
-                //    foreach (var strip in StripList)
-                //    {
-                //        bool nextOneIsTargetButton =
-                //            strip.rGBButton1.Pixel == strip.currentLed ||
-                //            strip.rGBButton2.Pixel == strip.currentLed ||
-                //            strip.rGBButton3.Pixel == strip.currentLed ||
-                //            strip.rGBButton4.Pixel == strip.currentLed;
-                //        if (nextOneIsTargetButton || LevelTime.ElapsedMilliseconds < 20)
-                //        {
-                //            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                //            strip.NextLed();
-                //        }
-                //        else if (LevelTime.ElapsedMilliseconds > 20 || LevelTime.ElapsedMilliseconds < 40)
-                //        {
-                //            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                //            strip.NextLed();
-                //            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                //            strip.NextLed();
-                //            //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                //            //strip.NextLed();
-                //        }
-                //        else
-                //        {
-
-                //            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                //            strip.NextLed();
-                //            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                //            strip.NextLed();
-                //            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                //            strip.NextLed();
-                //        }
-                //        //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                //        //strip.NextLed();
-                //        if (strip.isActive && strip.resetLine)
-                //        {
-                //            ResetLine(strip.startRGBLed, strip.endRGBLed);
-                //            strip.LineReseted();
-                //        }
-
-                //    }
-                //    RGBWS2811.Commit();
-                //    //Thread.Sleep(delayMs);
-                //}
-                //VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
-
-
-                //RGBWS2811.SetColor(strip1.isActive, strip1.currentLed, strip1.rgbColor);
-                //RGBWS2811.Commit();
-                //strip1.NextLed();
-                //if (strip1.rGBButton1.Pixel == strip1.currentLed)
-                //{
-                //    strip1.rGBButton1.Button.TurnColorOn(RGBColor.Red);
-                //}
-                //else
-                //{
-                //    rgb1.TurnColorOn(RGBColor.Blue);
-                //}
-                //rgb1
-                //Thread.Sleep(1000);
-                //Console.Write(".");
             }
         }
         // ===== 
@@ -261,6 +199,7 @@ namespace CatchyGame.Service
         {
             while (!cancellationToken.IsCancellationRequested)
             {
+                byte buttonIndex = 0;
                 foreach (var button in RGBButtonList)
                 {
                     if (!button.CurrentStatusWithCheckForDelay())
@@ -268,12 +207,13 @@ namespace CatchyGame.Service
                         button.BlockForATimeInMs(200);
                         if (button.isSet())
                         {
-                            AddPoint();
+                            AddPoint(ButtonNumberToPlayerIndex(buttonIndex));
                             button.BlockForATimeInMs(200);
                         }
                         else
-                            SubstractPoint();
+                            SubstractPoint(ButtonNumberToPlayerIndex(buttonIndex));
                     }
+                    buttonIndex++;
                 }
                 Thread.Sleep(50);
             }
@@ -292,20 +232,6 @@ namespace CatchyGame.Service
                     if (GameFinishedByTimer)
                         StopTheGame();
                 }
-
-
-                //VariableControlService.CurrentTime = (int)GameTiming.ElapsedMilliseconds;
-                //if ((VariableControlService.GameStatus == GameStatus.Started && !VariableControlService.IsGameTimerStarted))
-                //{
-                //    Console.WriteLine("Restart The Timer");
-                //    GameTiming.Restart();
-                //    Thread.Sleep(1000);
-                //    VariableControlService.IsGameTimerStarted = true;
-                //}
-                //bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.GameTiming;
-                //bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.GameStatus == GameStatus.Started && VariableControlService.IsGameTimerStarted;
-                //if (GameFinishedByTimer)
-                //    StopTheGame();
             }
         }
         public Task StopAsync(CancellationToken cancellationToken)
@@ -380,12 +306,29 @@ namespace CatchyGame.Service
                 item.isActive = false;
             Console.WriteLine(" Done .");
         }
-        private void AddPoint()
+        private int ButtonNumberToPlayerIndex(int buttonIndex)
         {
-            Console.WriteLine("Add Point");
-
+            if (buttonIndex == 0 || buttonIndex == 1)
+                return 0;
+            else if (buttonIndex == 2 || buttonIndex == 3)
+                return 1;
+            else if (buttonIndex == 4 || buttonIndex == 5)
+                return 2;
+            else if (buttonIndex == 6 || buttonIndex == 7)
+                return 3;
+            return 0;
         }
-        private void SubstractPoint()
+
+
+        private void AddPoint(int playerIndex)
+        {
+            if (playerIndex > VariableControlService.Team.player.Count() - 1)
+                return;
+
+            VariableControlService.Team.player[playerIndex].score += 1;
+            Console.WriteLine($"Add Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
+        }
+        private void SubstractPoint(int playerIndex)
         {
             Console.WriteLine("Substract Point");
         }
@@ -511,3 +454,80 @@ namespace CatchyGame.Service
 //    Thread.Sleep(2000);
 
 //}
+
+
+//ResetAllLine();
+//UnSelectAllStrap();
+//NumberOfStripToStart = NumberOfStrapsInLevel(VariableControlService.GameRound);
+//RandomSelectStrip(NumberOfStripToStart);
+//Console.WriteLine(VariableControlService.GameRound.ToString());
+//Console.WriteLine($"Number Of Selected Strip {NumberOfStripToStart}");
+
+
+// Start The Timer 
+//LevelTime.Restart();
+//while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
+//{
+//    int delayMs = 70 - (int)(LevelTime.ElapsedMilliseconds / 1000);
+//    if (delayMs < 0) { delayMs = 1; }
+
+//    foreach (var strip in StripList)
+//    {
+//        bool nextOneIsTargetButton =
+//            strip.rGBButton1.Pixel == strip.currentLed ||
+//            strip.rGBButton2.Pixel == strip.currentLed ||
+//            strip.rGBButton3.Pixel == strip.currentLed ||
+//            strip.rGBButton4.Pixel == strip.currentLed;
+//        if (nextOneIsTargetButton || LevelTime.ElapsedMilliseconds < 20)
+//        {
+//            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+//            strip.NextLed();
+//        }
+//        else if (LevelTime.ElapsedMilliseconds > 20 || LevelTime.ElapsedMilliseconds < 40)
+//        {
+//            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+//            strip.NextLed();
+//            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+//            strip.NextLed();
+//            //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+//            //strip.NextLed();
+//        }
+//        else
+//        {
+
+//            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+//            strip.NextLed();
+//            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+//            strip.NextLed();
+//            RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+//            strip.NextLed();
+//        }
+//        //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+//        //strip.NextLed();
+//        if (strip.isActive && strip.resetLine)
+//        {
+//            ResetLine(strip.startRGBLed, strip.endRGBLed);
+//            strip.LineReseted();
+//        }
+
+//    }
+//    RGBWS2811.Commit();
+//    //Thread.Sleep(delayMs);
+//}
+//VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
+
+
+//RGBWS2811.SetColor(strip1.isActive, strip1.currentLed, strip1.rgbColor);
+//RGBWS2811.Commit();
+//strip1.NextLed();
+//if (strip1.rGBButton1.Pixel == strip1.currentLed)
+//{
+//    strip1.rGBButton1.Button.TurnColorOn(RGBColor.Red);
+//}
+//else
+//{
+//    rgb1.TurnColorOn(RGBColor.Blue);
+//}
+//rgb1
+//Thread.Sleep(1000);
+//Console.Write(".");

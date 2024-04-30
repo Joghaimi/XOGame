@@ -1,5 +1,6 @@
 ﻿using CatchyGame.Service;
 using Library;
+using Library.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,7 @@ namespace CatchyGame.Controllers
         [HttpGet("GetScore")]
         public IActionResult GetScore()
         {
-            return Ok(VariableControlService.PlayerScore);
+            return Ok(VariableControlService.Team);
         }
 
         [HttpGet("CurrentTime")]
@@ -33,6 +34,13 @@ namespace CatchyGame.Controllers
         {
             VariableControlService.GameStatus = gameStatus;
             return Ok(VariableControlService.GameStatus);
+        }
+        [HttpPost("ReceiveScore")]
+        public IActionResult ReceiveScore(CatchyTeam TeamScore)
+        {
+            VariableControlService.Team = TeamScore;
+            VariableControlService.GameStatus = GameStatus.Started;
+            return Ok();
         }
     }
 }

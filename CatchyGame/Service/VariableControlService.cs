@@ -1,4 +1,5 @@
 ﻿using Library;
+using Library.Model;
 
 namespace CatchyGame.Service
 {
@@ -21,5 +22,8 @@ namespace CatchyGame.Service
 
         public static int PlayerScore = 0;
         public static bool IsGameTimerStarted=false;
+
+        public static CatchyTeam Team { get; set; } = new CatchyTeam();
+
     }
 }
