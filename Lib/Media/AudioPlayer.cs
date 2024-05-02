@@ -214,6 +214,12 @@ namespace Library.Media
                 case SoundType.Charge:
                     soundFilePath = $"{HomePath()}/audio/Charg.wav";
                     break;
+                case SoundType.Success:
+                    soundFilePath = $"{HomePath()}/audio/Success.wav";
+                    break;
+                case SoundType.Failure:
+                    soundFilePath = $"{HomePath()}/audio/Failure.wav";
+                    break;
                 default:
                     break;
             }
@@ -238,6 +244,8 @@ namespace Library.Media
                     return "/home/gathering/XOGame";
                 case Room.Shooting:
                     return "/home/shooting/XOGame";
+                case Room.Catchy:
+                    return "/home/catchy/XOGame";
                 default:
                     return "/home/pi/XOGame";
             }
@@ -259,6 +267,8 @@ namespace Library.Media
                     return "GatheringBG.wav";
                 case Room.Shooting:
                     return "ShootingBackTrack.wav";
+                case Room.Catchy:
+                    return "CatchyBackground.wav";
                 default:
                     return "/home/pi/XOGame";
             }

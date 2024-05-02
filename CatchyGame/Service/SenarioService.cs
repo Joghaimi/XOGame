@@ -5,6 +5,7 @@ using Library.Model;
 using Library.PinMapping;
 using System.Diagnostics;
 using System.IO;
+using Library.Media;
 
 namespace CatchyGame.Service
 {
@@ -20,7 +21,7 @@ namespace CatchyGame.Service
         Stopwatch GameTiming = new Stopwatch();
         Stopwatch LevelTime = new Stopwatch();
         Random random = new Random();
-
+        bool backgroundSoundStarted = false;
         public Task StartAsync(CancellationToken cancellationToken)
         {
 
@@ -104,6 +105,7 @@ namespace CatchyGame.Service
             RGBWS2811.Init();
             // Init RGB Button 
             LevelTime.Start();
+            AudioPlayer.Init(Room.Catchy);
 
 
 
@@ -124,6 +126,8 @@ namespace CatchyGame.Service
                 if (VariableControlService.GameStatus == GameStatus.Started)
                 {
                     Console.WriteLine("Start Game ...");
+                    if (!backgroundSoundStarted)
+                        AudioPlayer.PIBackgroundSound(SoundType.Background);
                     // Restart The Game Parameter 
                     Restart();
                     while (VariableControlService.GameStatus == GameStatus.Started)
@@ -187,6 +191,8 @@ namespace CatchyGame.Service
                             VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
                         VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
                     }
+                    if (backgroundSoundStarted)
+                        AudioPlayer.PIStopAudio();
                 }
 
 
@@ -326,11 +332,13 @@ namespace CatchyGame.Service
                 return;
 
             VariableControlService.Team.player[playerIndex].score += 1;
+            AudioPlayer.PIStartAudio(SoundType.Success);
             Console.WriteLine($"Add Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
         }
         private void SubstractPoint(int playerIndex)
         {
             Console.WriteLine("Substract Point");
+            AudioPlayer.PIStartAudio(SoundType.Failure);
         }
 
         private void ResetLine(int startLed, int endLed)

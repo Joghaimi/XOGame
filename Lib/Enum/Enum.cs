@@ -38,6 +38,8 @@ namespace Library
         DoubleScore,
         LightsChange,
         Charge,
+        Success,
+        Failure
     }
     public enum Room
     {
