@@ -94,7 +94,7 @@ namespace Library.Model
             this.rGBButton0 = rGBButton0;
             this.wormLength = wormLength;
 
-            this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, startRGBLed, -1 * wormLength));
+            this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 5, 0));
 
             //this.Worms.Add(new RGBWorm(startRGBLed, -1 * wormLength));
 
