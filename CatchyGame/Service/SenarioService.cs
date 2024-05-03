@@ -136,6 +136,7 @@ namespace CatchyGame.Service
             //RGBWS2811.SetColor(this.isActive, worm1.startPixel, this.rgbColor);
             //int startPixel = 0;
             //int endPixel = -5;
+            Restart();
             while (!cancellationToken.IsCancellationRequested)
             {
 
