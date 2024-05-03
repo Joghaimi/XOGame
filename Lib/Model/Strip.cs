@@ -19,16 +19,21 @@ namespace Library.Model
         public bool isActive { get; set; } = true;
         public bool resetLine { get; set; } = false;
 
+
         public RGBButtonPixel rGBButton0 { get; set; }
         public RGBButtonPixel rGBButton1 { get; set; }
         public RGBButtonPixel rGBButton2 { get; set; }
         public RGBButtonPixel rGBButton3 { get; set; }
         public RGBButtonPixel rGBButton4 { get; set; }
 
+
+
+
         public int buttonOneWormIndex = -1;
 
         public int wormLength { get; set; } = 5;
         public List<RGBWorm> Worms = new List<RGBWorm>();
+        public List<RGBButtonPixel> Buttons = new List<RGBButtonPixel>();
 
 
 
@@ -84,6 +89,7 @@ namespace Library.Model
             this.startRGBLed = startRGBLed;
             this.endRGBLed = endRGBLed;
             this.currentLed = startRGBLed;
+
             this.rGBButton1 = rGBButton1;
             this.rGBButton2 = rGBButton2;
             this.rGBButton3 = rGBButton3;
@@ -93,10 +99,17 @@ namespace Library.Model
 
             Console.WriteLine("Init Worms");
             this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 5, 0));
-            //this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 3, 1));
-            //this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 4, 2));
-            //this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 5, 3));
+            this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 3, 1));
+            this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 4, 2));
+            this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 5, 3));
             Console.WriteLine("End Init Worms");
+
+            Buttons.Add(rGBButton0);
+            Buttons.Add(rGBButton1);
+            Buttons.Add(rGBButton2);
+            Buttons.Add(rGBButton3);
+            Buttons.Add(rGBButton4);
+
 
             this.rgbOffColor = rgbOffColor;
 
@@ -123,27 +136,65 @@ namespace Library.Model
                 if (theTailIsShown)
                     RGBWS2811.SetColor(this.isActive, worm.endPixel, this.rgbOffColor);
 
-                bool rgbButtonInRange = InRange(rGBButton1.Pixel, worm.endPixel, worm.startPixel);
-                bool notOccupied = rGBButton1.WormIndex == -1;
-                bool OccupiedFromTheSameWorm = rGBButton1.WormIndex == Index;
-                Console.WriteLine($"pixel {rGBButton1.Pixel} rgbButtonInRange {rgbButtonInRange} occupied {!notOccupied} OccupiedFromTheSameWorm {OccupiedFromTheSameWorm}");
-                if (rgbButtonInRange && notOccupied)
+
+                foreach (var button in Buttons)
                 {
-                    // Set New Index 
-                    rGBButton1.WormIndex = Index;
-                    Console.WriteLine($"rGBButton0 In Range Of worm with {rGBButton1.WormIndex}");
-                    rGBButton1.Button.Set(true);
-                    rGBButton1.Button.TurnColorOn(rgbColor);
-                }
-                else if (OccupiedFromTheSameWorm && rGBButton1.Button.isSet() &&!rgbButtonInRange)
-                {
-                    Console.WriteLine($"Relese Button From Worm Index {Index}  button pixel {rGBButton0.Pixel} start {worm.endPixel} end {worm.startPixel}");
-                    rGBButton1.Button.TurnColorOn(RGBColor.Off);
-                    rGBButton1.Button.Set(false);
-                    rGBButton1.WormIndex = -1;
+                    bool rgbButtonInRange = InRange(button.Pixel, worm.endPixel, worm.startPixel);
+                    bool notOccupied = button.WormIndex == -1;
+                    bool OccupiedFromTheSameWorm = button.WormIndex == Index;
+
+                    if (rgbButtonInRange && notOccupied)
+                    {
+                        // Set New Index 
+                        button.WormIndex = Index;
+                        //Console.WriteLine($"rGBButton0 In Range Of worm with {rGBButton1.WormIndex}");
+                        button.Button.Set(true);
+                        button.Button.TurnColorOn(rgbColor);
+                    }
+                    else if (OccupiedFromTheSameWorm && button.Button.isSet() && !rgbButtonInRange)
+                    {
+                        //Console.WriteLine($"Relese Button From Worm Index {Index}  button pixel {rGBButton0.Pixel} start {worm.endPixel} end {worm.startPixel}");
+                        button.Button.TurnColorOn(RGBColor.Off);
+                        button.Button.Set(false);
+                        button.WormIndex = -1;
+                    }
                 }
 
                 Index++;
+
+
+
+                //bool rgbButton2InRange = InRange(rGBButton2.Pixel, worm.endPixel, worm.startPixel);
+                //bool notOccupied2 = rGBButton2.WormIndex == -1;
+                //bool OccupiedFromTheSameWorm2 = rGBButton2.WormIndex == Index;
+
+                //bool rgbButton3InRange = InRange(rGBButton3.Pixel, worm.endPixel, worm.startPixel);
+                //bool notOccupied3 = rGBButton3.WormIndex == -1;
+                //bool OccupiedFromTheSameWorm3 = rGBButton3.WormIndex == Index;
+
+                //bool rgbButton4InRange = InRange(rGBButton4.Pixel, worm.endPixel, worm.startPixel);
+                //bool notOccupied4 = rGBButton4.WormIndex == -1;
+                //bool OccupiedFromTheSameWorm4 = rGBButton4.WormIndex == Index;
+
+
+
+
+                //if (rgbButtonInRange && notOccupied)
+                //{
+                //    // Set New Index 
+                //    rGBButton1.WormIndex = Index;
+                //    //Console.WriteLine($"rGBButton0 In Range Of worm with {rGBButton1.WormIndex}");
+                //    rGBButton1.Button.Set(true);
+                //    rGBButton1.Button.TurnColorOn(rgbColor);
+                //}
+                //else if (OccupiedFromTheSameWorm && rGBButton1.Button.isSet() && !rgbButtonInRange)
+                //{
+                //    //Console.WriteLine($"Relese Button From Worm Index {Index}  button pixel {rGBButton0.Pixel} start {worm.endPixel} end {worm.startPixel}");
+                //    rGBButton1.Button.TurnColorOn(RGBColor.Off);
+                //    rGBButton1.Button.Set(false);
+                //    rGBButton1.WormIndex = -1;
+                //}
+
             }
         }
 
@@ -151,7 +202,7 @@ namespace Library.Model
         public bool InRange(int number, int min, int max)
         {
             bool inRange = number >= min && number <= max;
-            
+
             return inRange;
         }
         public void NextLed()
