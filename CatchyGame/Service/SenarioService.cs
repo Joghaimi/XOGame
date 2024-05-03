@@ -108,12 +108,12 @@ namespace CatchyGame.Service
             //    )
             //);
             StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 0, 212, startRGBButton1, StripTwoButton1, StripTwoButton2, StripTwoButton3, StripTwoButton4));
-            //StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 213, 439, startRGBButton1, StripTwoButton1, StripTwoButton2, StripTwoButton3, StripTwoButton4));
-            //StripList.Add(new Strip(RGBColor.Red, 213, 439, startRGBButton1, StripTwoButton1, StripTwoButton2, StripTwoButton3, StripTwoButton4));
-            //StripList.Add(new Strip(RGBColor.Red, 440, 665, startRGBButton3, StripThreeButton1, StripThreeButton2, StripThreeButton3, StripThreeButton4));
-            //StripList.Add(new Strip(RGBColor.Red, 666, 881, startRGBButton4, StripFourButton1, StripFourButton2, StripFourButton3, StripFourButton4));
-            //StripList.Add(new Strip(RGBColor.Red, 882, 1075, startRGBButton5, StripFiveButton1, StripFiveButton2, StripFiveButton3, StripFiveButton4));
-            //StripList.Add(new Strip(RGBColor.Red, 1076, 1236, startRGBButton6, StripSixButton1, StripSixButton2, StripSixButton3, StripSixButton4));
+            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 213, 439, startRGBButton1, StripTwoButton1, StripTwoButton2, StripTwoButton3, StripTwoButton4));
+            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 213, 439, startRGBButton1, StripTwoButton1, StripTwoButton2, StripTwoButton3, StripTwoButton4));
+            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 440, 665, startRGBButton3, StripThreeButton1, StripThreeButton2, StripThreeButton3, StripThreeButton4));
+            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 666, 881, startRGBButton4, StripFourButton1, StripFourButton2, StripFourButton3, StripFourButton4));
+            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 882, 1075, startRGBButton5, StripFiveButton1, StripFiveButton2, StripFiveButton3, StripFiveButton4));
+            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 1076, 1236, startRGBButton6, StripSixButton1, StripSixButton2, StripSixButton3, StripSixButton4));
 
             // Init the RGBStrip 
             RGBWS2811.Init();
