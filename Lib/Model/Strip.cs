@@ -123,15 +123,20 @@ namespace Library.Model
                 if (theTailIsShown)
                     RGBWS2811.SetColor(this.isActive, worm.endPixel, this.rgbOffColor);
 
-                if (rGBButton0.Pixel >= worm.endPixel && rGBButton0.Pixel <= worm.startPixel && rGBButton0.WormIndex == -1)
+                bool rgbButtonInRange = InRange(rGBButton0.Pixel, worm.endPixel, worm.startPixel);
+                bool notOccupied = rGBButton0.WormIndex == -1;
+                bool OccupiedFromTheSameWorm = rGBButton0.WormIndex == Index;
+                if (rgbButtonInRange && notOccupied)
                 {
-                    Console.WriteLine($"rGBButton0 In Range Of worm with {Index}");
+                    // Set New Index 
                     rGBButton0.WormIndex = Index;
+                    Console.WriteLine($"rGBButton0 In Range Of worm with {rGBButton0.WormIndex}");
                     rGBButton0.Button.Set(true);
                     rGBButton0.Button.TurnColorOn(rgbColor);
                 }
-                else if (rGBButton0.WormIndex == Index && rGBButton0.Button.isSet())
+                else if (OccupiedFromTheSameWorm && rGBButton0.Button.isSet())
                 {
+                    Console.WriteLine($"Relese Button From Worm Index {Index}");
                     rGBButton0.Button.TurnColorOn(RGBColor.Off);
                     rGBButton0.Button.Set(false);
                     rGBButton0.WormIndex = -1;
@@ -142,7 +147,10 @@ namespace Library.Model
         }
 
 
-
+        public bool InRange(int number, int min, int max)
+        {
+            return number >= min && rGBButton0.Pixel <= max;
+        }
         public void NextLed()
         {
             if (!isActive)
