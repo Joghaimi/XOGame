@@ -126,7 +126,7 @@ namespace Library.Model
                 bool rgbButtonInRange = InRange(rGBButton1.Pixel, worm.endPixel, worm.startPixel);
                 bool notOccupied = rGBButton1.WormIndex == -1;
                 bool OccupiedFromTheSameWorm = rGBButton1.WormIndex == Index;
-                Console.WriteLine($"pixel {rGBButton1.Pixel} rgbButtonInRange {rgbButtonInRange} occupied {notOccupied} OccupiedFromTheSameWorm {OccupiedFromTheSameWorm}");
+                Console.WriteLine($"pixel {rGBButton1.Pixel} rgbButtonInRange {rgbButtonInRange} occupied {!notOccupied} OccupiedFromTheSameWorm {OccupiedFromTheSameWorm}");
                 if (rgbButtonInRange && notOccupied)
                 {
                     // Set New Index 
