@@ -107,11 +107,11 @@ namespace CatchyGame.Service
             List<RGBButtonPixel> RGBButtonPixel5 = new List<RGBButtonPixel>();
             List<RGBButtonPixel> RGBButtonPixel6 = new List<RGBButtonPixel>();
 
-            RGBButtonPixel1.Add(StripOneButton0);
+            //RGBButtonPixel1.Add(StripOneButton0);
             RGBButtonPixel1.Add(StripOneButton1);
-            RGBButtonPixel1.Add(StripOneButton2);
-            RGBButtonPixel1.Add(StripOneButton3);
-            RGBButtonPixel1.Add(StripOneButton4);
+            //RGBButtonPixel1.Add(StripOneButton2);
+            //RGBButtonPixel1.Add(StripOneButton3);
+            //RGBButtonPixel1.Add(StripOneButton4);
 
             RGBButtonPixel2.Add(StripTwoButton0);
             RGBButtonPixel2.Add(StripTwoButton1);
