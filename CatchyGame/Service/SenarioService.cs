@@ -190,7 +190,7 @@ namespace CatchyGame.Service
                 foreach (var strip in StripList)
                 {
 
-                    strip.Move();
+                    //strip.Move();
                     strip.Move();
                 }
                 //StripList[0].Move();
