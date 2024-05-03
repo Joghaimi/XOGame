@@ -38,12 +38,12 @@ namespace CatchyGame.Service
             var rgb8 = new RGBButton(RGBButtonPin.RGBR8, RGBButtonPin.RGBG8, RGBButtonPin.RGBB8, RGBButtonPin.RGBPB8);
 
 
-            var startRGBButton1 = new RGBButton(RGBButtonPin.RGBR13, RGBButtonPin.RGBG13, RGBButtonPin.RGBB13, RGBButtonPin.RGBPB13);
-            var startRGBButton2 = new RGBButton(RGBButtonPin.RGBR14, RGBButtonPin.RGBG14, RGBButtonPin.RGBB14, RGBButtonPin.RGBPB14);
-            var startRGBButton3 = new RGBButton(RGBButtonPin.RGBR15, RGBButtonPin.RGBG15, RGBButtonPin.RGBB15, RGBButtonPin.RGBPB15);
-            var startRGBButton4 = new RGBButton(RGBButtonPin.RGBR9, RGBButtonPin.RGBG9, RGBButtonPin.RGBB9, RGBButtonPin.RGBPB9);
-            var startRGBButton5 = new RGBButton(RGBButtonPin.RGBR10, RGBButtonPin.RGBG10, RGBButtonPin.RGBB10, RGBButtonPin.RGBPB10);
-            var startRGBButton6 = new RGBButton(RGBButtonPin.RGBR12, RGBButtonPin.RGBG12, RGBButtonPin.RGBB12, RGBButtonPin.RGBPB12);
+            var startRGBButton1 = new RGBButton(RGBButtonPin.RGBB13, RGBButtonPin.RGBG13, RGBButtonPin.RGBR13, RGBButtonPin.RGBPB13);
+            var startRGBButton2 = new RGBButton(RGBButtonPin.RGBB14, RGBButtonPin.RGBG14, RGBButtonPin.RGBR14, RGBButtonPin.RGBPB14);
+            var startRGBButton3 = new RGBButton(RGBButtonPin.RGBB15, RGBButtonPin.RGBG15, RGBButtonPin.RGBR15, RGBButtonPin.RGBPB15);
+            var startRGBButton4 = new RGBButton(RGBButtonPin.RGBB9, RGBButtonPin.RGBG9, RGBButtonPin.RGBR9, RGBButtonPin.RGBPB9);
+            var startRGBButton5 = new RGBButton(RGBButtonPin.RGBB10, RGBButtonPin.RGBG10, RGBButtonPin.RGBR10, RGBButtonPin.RGBPB10);
+            var startRGBButton6 = new RGBButton(RGBButtonPin.RGBB12, RGBButtonPin.RGBG12, RGBButtonPin.RGBR12, RGBButtonPin.RGBPB12);
 
 
 
