@@ -211,20 +211,15 @@ namespace CatchyGame.Service
                     Console.WriteLine("Start Game ...");
                     if (!backgroundSoundStarted)
                         AudioPlayer.PIBackgroundSound(SoundType.Background);
-                    // Restart The Game Parameter 
                     Restart();
                     while (VariableControlService.GameStatus == GameStatus.Started)
                     {
                         ResetAllLine();
-                        //UnSelectAllStrap();
-
                         WormLengthInTheLevel = WormLengthInLevel(VariableControlService.GameRound);
                         foreach (var strip in StripList)
                         {
                             strip.UpdateLength(WormLengthInTheLevel);
                         }
-
-
 
                         Console.WriteLine(VariableControlService.GameRound.ToString());
                         Console.WriteLine($"WormLengthInTheLevel {WormLengthInTheLevel}");
@@ -261,9 +256,6 @@ namespace CatchyGame.Service
 
                             }
 
-
-
-
                             RGBWS2811.Commit();
                         }
                         if (VariableControlService.GameRound == Round.Round5)
@@ -273,10 +265,6 @@ namespace CatchyGame.Service
                     if (backgroundSoundStarted)
                         AudioPlayer.PIStopAudio();
                 }
-
-
-
-
             }
         }
         // ===== 
@@ -290,16 +278,14 @@ namespace CatchyGame.Service
 
                     foreach (var button in RGBButtonList)
                     {
-                        //Console.WriteLine(button.isSet());
-                        //Thread.Sleep(1000);
                         if (!button.CurrentStatusWithCheckForDelay())
                         {
                             button.BlockForATimeInMs(200);
                             if (button.isSet())
                             {
                                 Console.WriteLine("Is Set");
-                                AddPoint(0);
-                                //AddPoint(ButtonNumberToPlayerIndex(buttonIndex));
+                                //AddPoint(0);
+                                AddPoint(ButtonNumberToPlayerIndex(buttonIndex));
                                 button.BlockForATimeInMs(200);
                                 button.clickedForOnce = true;
                                 button.Set(false);
