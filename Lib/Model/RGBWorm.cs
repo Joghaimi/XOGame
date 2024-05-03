@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnitsNet;
 
 namespace Library.Model
 {
@@ -23,11 +24,18 @@ namespace Library.Model
             int numberOfRGBLed = (endStripPixel - startStripPixel) / 5;
             Console.WriteLine($"Strip Led Number {numberOfRGBLed}");
             Random random = new Random();
-            this.startPixel =(startStripPixel) +-1 * (numberOfRGBLed * WormIndex + random.Next(0, numberOfRGBLed));
+            this.startPixel = (startStripPixel) + -1 * (numberOfRGBLed * WormIndex + random.Next(0, numberOfRGBLed));
             this.initStartPixel = startPixel;
             this.endPixel = this.startPixel - length;
             this.initendPixel = endPixel;
             Console.WriteLine($"Worm Start Pixel {endPixel}");
+        }
+
+
+        public void updateLength(int newLength)
+        {
+            this.endPixel = this.startPixel - newLength;
+            this.initendPixel = endPixel;
         }
     }
 }

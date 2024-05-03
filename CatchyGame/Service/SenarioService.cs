@@ -216,9 +216,16 @@ namespace CatchyGame.Service
                     while (VariableControlService.GameStatus == GameStatus.Started)
                     {
                         ResetAllLine();
-                        UnSelectAllStrap();
-                        
+                        //UnSelectAllStrap();
+
                         WormLengthInTheLevel = WormLengthInLevel(VariableControlService.GameRound);
+                        foreach (var strip in StripList)
+                        {
+                            strip.UpdateLength(WormLengthInTheLevel);
+                        }
+
+
+
                         Console.WriteLine(VariableControlService.GameRound.ToString());
                         Console.WriteLine($"WormLengthInTheLevel {WormLengthInTheLevel}");
                         // Start The Timer 
