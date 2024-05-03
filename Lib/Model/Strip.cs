@@ -131,7 +131,11 @@ namespace Library.Model
                 else
                     worm.endPixel = worm.initendPixel;
 
-                bool canMoveForward = worm.endPixel <= this.endRGBLed;
+
+
+
+
+                bool canMoveForward = worm.startPixel >= this.startRGBLed;
                 bool theTailIsShown = worm.endPixel >= startRGBLed;
 
                 if (canMoveForward)
