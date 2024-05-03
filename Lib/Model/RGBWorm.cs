@@ -37,5 +37,12 @@ namespace Library.Model
             this.endPixel = this.startPixel - newLength;
             this.initendPixel = endPixel;
         }
+
+        public void reset()
+        {
+            this.startPixel = this.initStartPixel;
+            this.endPixel = this.initendPixel;
+
+        }
     }
 }
