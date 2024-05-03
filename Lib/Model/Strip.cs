@@ -88,7 +88,8 @@ namespace Library.Model
                 worm1.endPixel = startRGBLed;
 
             RGBWS2811.SetColor(this.isActive, worm1.startPixel, this.rgbColor);
-            RGBWS2811.SetColor(this.isActive, worm1.endPixel, this.rgbOffColor);
+            if (worm1.endPixel >= 0)
+                RGBWS2811.SetColor(this.isActive, worm1.endPixel, this.rgbOffColor);
 
 
 
