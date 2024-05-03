@@ -152,7 +152,7 @@ namespace CatchyGame.Service
 
                 StripList[0].NextLed();
                 RGBWS2811.Commit();
-                Thread.Sleep(500);
+                Thread.Sleep(50);
 
 
 
