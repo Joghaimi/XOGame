@@ -201,40 +201,6 @@ namespace Library.Model
                 }
 
                 Index++;
-
-
-
-                //bool rgbButton2InRange = InRange(rGBButton2.Pixel, worm.endPixel, worm.startPixel);
-                //bool notOccupied2 = rGBButton2.WormIndex == -1;
-                //bool OccupiedFromTheSameWorm2 = rGBButton2.WormIndex == Index;
-
-                //bool rgbButton3InRange = InRange(rGBButton3.Pixel, worm.endPixel, worm.startPixel);
-                //bool notOccupied3 = rGBButton3.WormIndex == -1;
-                //bool OccupiedFromTheSameWorm3 = rGBButton3.WormIndex == Index;
-
-                //bool rgbButton4InRange = InRange(rGBButton4.Pixel, worm.endPixel, worm.startPixel);
-                //bool notOccupied4 = rGBButton4.WormIndex == -1;
-                //bool OccupiedFromTheSameWorm4 = rGBButton4.WormIndex == Index;
-
-
-
-
-                //if (rgbButtonInRange && notOccupied)
-                //{
-                //    // Set New Index 
-                //    rGBButton1.WormIndex = Index;
-                //    //Console.WriteLine($"rGBButton0 In Range Of worm with {rGBButton1.WormIndex}");
-                //    rGBButton1.Button.Set(true);
-                //    rGBButton1.Button.TurnColorOn(rgbColor);
-                //}
-                //else if (OccupiedFromTheSameWorm && rGBButton1.Button.isSet() && !rgbButtonInRange)
-                //{
-                //    //Console.WriteLine($"Relese Button From Worm Index {Index}  button pixel {rGBButton0.Pixel} start {worm.endPixel} end {worm.startPixel}");
-                //    rGBButton1.Button.TurnColorOn(RGBColor.Off);
-                //    rGBButton1.Button.Set(false);
-                //    rGBButton1.WormIndex = -1;
-                //}
-
             }
         }
 
