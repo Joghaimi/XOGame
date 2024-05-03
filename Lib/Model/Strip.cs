@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Library.Model
 {
@@ -17,20 +18,16 @@ namespace Library.Model
         public int currentLed { get; set; }
         public bool isActive { get; set; } = true;
         public bool resetLine { get; set; } = false;
-        public RGBButton rGBButton0 { get; set; }
+
+        public RGBButtonPixel rGBButton0 { get; set; }
         public RGBButtonPixel rGBButton1 { get; set; }
         public RGBButtonPixel rGBButton2 { get; set; }
         public RGBButtonPixel rGBButton3 { get; set; }
         public RGBButtonPixel rGBButton4 { get; set; }
 
-        public RGBWorm worm1 { get; set; }
-        public RGBWorm worm2 { get; set; }
-        public RGBWorm worm3 { get; set; }
-        public RGBWorm worm4 { get; set; }
+        public int buttonOneWormIndex = -1;
 
         public int wormLength { get; set; } = 5;
-
-
         public List<RGBWorm> Worms = new List<RGBWorm>();
 
 
@@ -75,7 +72,7 @@ namespace Library.Model
           RGBColor rgbOffColor,
           int startRGBLed,
           int endRGBLed,
-          RGBButton rGBButton0,
+          RGBButtonPixel rGBButton0,
           RGBButtonPixel rGBButton1,
           RGBButtonPixel rGBButton2,
           RGBButtonPixel rGBButton3,
@@ -101,25 +98,13 @@ namespace Library.Model
             this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 5, 3));
             Console.WriteLine("End Init Worms");
 
-
-
-
-            //this.worm1 = new RGBWorm(startRGBLed, -1 * wormLength);
             this.rgbOffColor = rgbOffColor;
-            //this.worm2 = worm2;
-            //this.worm3 = worm3;
-            //this.worm4 = worm4;
+
         }
 
         public void Move()
         {
-
-            // Turn RGB Light On 
-            //RGBWS2811.SetColor(startPixel, RGBColor.Red);
-            //startPixel++;
-            //if (endPixel >= 0)
-            //    RGBWS2811.SetColor(endPixel, RGBColor.Off);
-            //endPixel++;
+            int Index = 0;
             foreach (var worm in Worms)
             {
                 if (worm.startPixel < endRGBLed)
@@ -130,11 +115,6 @@ namespace Library.Model
                     worm.endPixel++;
                 else
                     worm.endPixel = worm.initendPixel;
-
-
-
-
-
                 bool canMoveForward = worm.startPixel >= this.startRGBLed;
                 bool theTailIsShown = worm.endPixel >= startRGBLed;
 
@@ -142,22 +122,12 @@ namespace Library.Model
                     RGBWS2811.SetColor(this.isActive, worm.startPixel, this.rgbColor);
                 if (theTailIsShown)
                     RGBWS2811.SetColor(this.isActive, worm.endPixel, this.rgbOffColor);
+                if (rGBButton0.Pixel >= worm.endPixel && rGBButton0.Pixel <= worm.startPixel)
+                {
+                    Console.WriteLine($"rGBButton0 In Range Of worm with {Index}");
+                }
+                Index++;
             }
-
-
-
-            //if (worm1.startPixel < endRGBLed)
-            //    worm1.startPixel++;
-            //else
-            //    worm1.startPixel = startRGBLed;
-            // Move the Start one and the end one
-            //if (worm1.startPixel >= 0)
-            //    RGBWS2811.SetColor(this.isActive, worm1.endPixel, this.rgbOffColor);
-            //if (worm1.endPixel < endRGBLed)
-            //    worm1.endPixel++;
-            //else
-            //    worm1.endPixel = startRGBLed;
-            // Check the RGB Button
         }
 
 
@@ -169,7 +139,7 @@ namespace Library.Model
             RGBWS2811.SetColor(isActive, currentLed, rgbColor);
 
             if (currentLed == startRGBLed)
-                this.rGBButton0.TurnColorOn(this.rgbColor);
+                this.rGBButton0.Button.TurnColorOn(this.rgbColor);
             if (currentLed < endRGBLed)
                 currentLed++;
             else
@@ -252,7 +222,7 @@ namespace Library.Model
         {
             resetLine = false;
             currentLed = startRGBLed;
-            this.rGBButton0.TurnColorOn(RGBColor.Off);
+            this.rGBButton0.Button.TurnColorOn(RGBColor.Off);
         }
 
 
