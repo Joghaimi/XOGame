@@ -211,27 +211,23 @@ namespace Library.Model
                 if (button.Button.stripIndex == -1 || button.Button.stripIndex == stripIndex)
                 {
                     bool buttonState = false;
-                    int index = 0;
                     foreach (var worm in Worms)
                     {
                         buttonState = buttonState || InRange(button.Pixel, worm.endPixel, worm.startPixel);
-                        //Console.WriteLine($"buttonState {buttonState}");
-                        index++;
                     }
 
-                    if (buttonState && !button.Button.isSet())
+                    if (buttonState && !button.Button.isSet() && !button.Button.clickedForOnce)
                     {
                         button.Button.Set(true);
                         button.Button.TurnColorOn(rgbColor);
                         button.Button.stripIndex = stripIndex;
-                        //Console.WriteLine($"Turn {buttonIndex} On {buttonState} at strip {stripIndex}");
                     }
-                    else if(!buttonState && button.Button.isSet())
+                    else if (!buttonState && (button.Button.isSet() || button.Button.clickedForOnce))
                     {
                         button.Button.TurnColorOn(RGBColor.Off);
                         button.Button.Set(false);
                         button.Button.stripIndex = -1;
-                        //Console.WriteLine($"Turn {buttonIndex} Off {buttonState} at strip {stripIndex}");
+                        button.Button.clickedForOnce = false;
 
                     }
 

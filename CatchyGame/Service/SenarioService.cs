@@ -306,7 +306,9 @@ namespace CatchyGame.Service
                                 Console.WriteLine("Is Set");
                                 AddPoint(0);
                                 //AddPoint(ButtonNumberToPlayerIndex(buttonIndex));
-                                button.BlockForATimeInMs(400);
+                                button.BlockForATimeInMs(200);
+                                button.clickedForOnce = true;
+                                button.Set(false);
                             }
                             else
                                 SubstractPoint(ButtonNumberToPlayerIndex(buttonIndex));

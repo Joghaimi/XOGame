@@ -17,6 +17,7 @@ namespace Library.RGBLib
         bool _isSet = false;
         bool _isBlocked = false;
         public int stripIndex = -1;
+        public bool clickedForOnce = false;
         MCP23Pin _PushButtonPin, _RGBRPin, _RGBGPin, _RGBBPin;
         public RGBButton(MCP23Pin RPin, MCP23Pin GPin, MCP23Pin BPin, MCP23Pin Button)
         {
