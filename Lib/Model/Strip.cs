@@ -69,6 +69,7 @@ namespace Library.Model
 
         public Strip(
           RGBColor rgbColor,
+          RGBColor rgbOffColor,
           int startRGBLed,
           int endRGBLed,
           RGBButton rGBButton0,
@@ -78,6 +79,7 @@ namespace Library.Model
           RGBButtonPixel rGBButton4
           )
         {
+            this.rgbOffColor = rgbOffColor;
             this.rgbColor = rgbColor;
             this.startRGBLed = startRGBLed;
             this.endRGBLed = endRGBLed;
@@ -119,8 +121,8 @@ namespace Library.Model
                 worm1.endPixel++;
             else
                 worm1.endPixel = startRGBLed;
-
-            RGBWS2811.SetColor(this.isActive, worm1.startPixel, this.rgbColor);
+            if (worm1.endPixel <= this.endRGBLed)
+                RGBWS2811.SetColor(this.isActive, worm1.startPixel, this.rgbColor);
             if (worm1.endPixel >= 0)
                 RGBWS2811.SetColor(this.isActive, worm1.endPixel, this.rgbOffColor);
 
