@@ -122,10 +122,21 @@ namespace Library.Model
                     RGBWS2811.SetColor(this.isActive, worm.startPixel, this.rgbColor);
                 if (theTailIsShown)
                     RGBWS2811.SetColor(this.isActive, worm.endPixel, this.rgbOffColor);
-                if (rGBButton0.Pixel >= worm.endPixel && rGBButton0.Pixel <= worm.startPixel)
+
+                if (rGBButton0.Pixel >= worm.endPixel && rGBButton0.Pixel <= worm.startPixel && rGBButton0.WormIndex == -1)
                 {
                     Console.WriteLine($"rGBButton0 In Range Of worm with {Index}");
+                    rGBButton0.WormIndex = Index;
+                    rGBButton0.Button.Set(true);
+                    rGBButton1.Button.TurnColorOn(rgbColor);
                 }
+                else if (rGBButton0.WormIndex == Index && rGBButton0.Button.isSet())
+                {
+                    rGBButton1.Button.TurnColorOn(RGBColor.Off);
+                    rGBButton0.Button.Set(false);
+                    rGBButton0.WormIndex = -1;
+                }
+
                 Index++;
             }
         }
