@@ -205,9 +205,10 @@ namespace Library.Model
             }
 
             // RGB Button Control 
+            int buttonIndex = 0;
             foreach (var button in Buttons)
             {
-                if (button.stripIndex == -1 || button.stripIndex ==stripIndex)
+                if (button.stripIndex == -1 || button.stripIndex == stripIndex)
                 {
                     bool buttonState = false;
                     int index = 0;
@@ -217,13 +218,13 @@ namespace Library.Model
                         //Console.WriteLine($"buttonState {buttonState}");
                         index++;
                     }
-                    
+
                     if (buttonState)
                     {
                         button.Button.Set(true);
                         button.Button.TurnColorOn(rgbColor);
                         button.stripIndex = stripIndex;
-                        Console.WriteLine($"Turn On {buttonState} at strip {stripIndex}");
+                        Console.WriteLine($"Turn {buttonIndex} On {buttonState} at strip {stripIndex}");
                     }
                     else
                     {
@@ -233,8 +234,10 @@ namespace Library.Model
                     }
 
                 }
+                buttonIndex++;
 
-               
+
+
 
 
             }
