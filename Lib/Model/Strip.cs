@@ -69,22 +69,40 @@ namespace Library.Model
 
         public void Move()
         {
-            if (!isActive)
-                return;
-            // Turn RGB Light On 
 
-            RGBWS2811.SetColor(this.isActive, worm1.startPixel, this.rgbColor);
+            // Turn RGB Light On 
+            //RGBWS2811.SetColor(startPixel, RGBColor.Red);
+            //startPixel++;
+            //if (endPixel >= 0)
+            //    RGBWS2811.SetColor(endPixel, RGBColor.Off);
+            //endPixel++;
+
             if (worm1.startPixel < endRGBLed)
                 worm1.startPixel++;
             else
                 worm1.startPixel = startRGBLed;
-            // Move the Start one and the end one
-            if (worm1.startPixel >= 0)
-                RGBWS2811.SetColor(this.isActive, worm1.endPixel, this.rgbOffColor);
+
             if (worm1.endPixel < endRGBLed)
                 worm1.endPixel++;
             else
                 worm1.endPixel = startRGBLed;
+
+            RGBWS2811.SetColor(this.isActive, worm1.startPixel, this.rgbColor);
+            RGBWS2811.SetColor(this.isActive, worm1.endPixel, this.rgbOffColor);
+
+
+
+            //if (worm1.startPixel < endRGBLed)
+            //    worm1.startPixel++;
+            //else
+            //    worm1.startPixel = startRGBLed;
+            // Move the Start one and the end one
+            //if (worm1.startPixel >= 0)
+            //    RGBWS2811.SetColor(this.isActive, worm1.endPixel, this.rgbOffColor);
+            //if (worm1.endPixel < endRGBLed)
+            //    worm1.endPixel++;
+            //else
+            //    worm1.endPixel = startRGBLed;
             // Check the RGB Button
         }
 

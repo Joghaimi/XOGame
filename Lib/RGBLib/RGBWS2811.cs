@@ -40,6 +40,7 @@ namespace Library.RGBLib
             if (!isActive)
                 return;
             SetColor(rgbNumber, rGBColor);
+            Console.WriteLine($"rgbNumber {rgbNumber} rGBColor{rGBColor} ");
             //PyObject[] pyParams = RGBColorToPyObj(rgbNumber, rGBColor);
             //python.InvokeMethod("set_color", pyParams);
         }
