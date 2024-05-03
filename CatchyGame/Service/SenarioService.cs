@@ -150,9 +150,9 @@ namespace CatchyGame.Service
                 //RGBWS2811.Commit();
                 //Thread.Sleep(100);
 
-                StripList[0].NextLed();
+                StripList[0].Move();
                 RGBWS2811.Commit();
-                Thread.Sleep(50);
+                Thread.Sleep(100);
 
 
 
