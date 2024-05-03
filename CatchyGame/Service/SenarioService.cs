@@ -147,10 +147,10 @@ namespace CatchyGame.Service
 
             StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 0, 212, RGBButtonPixel1));
             StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 213, 439, RGBButtonPixel2));
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 440, 665, RGBButtonPixel3));
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 666, 881, RGBButtonPixel4));
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 882, 1075, RGBButtonPixel5));
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 1076, 1236, RGBButtonPixel6));
+            //StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 440, 665, RGBButtonPixel3));
+            //StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 666, 881, RGBButtonPixel4));
+            //StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 882, 1075, RGBButtonPixel5));
+            //StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 1076, 1236, RGBButtonPixel6));
 
             // Init the RGBStrip 
             RGBWS2811.Init();
@@ -191,7 +191,7 @@ namespace CatchyGame.Service
                 {
 
                     strip.Move();
-                    strip.Move();
+                    //strip.Move();
                 }
                 //StripList[0].Move();
                 //StripList[0].Move();
