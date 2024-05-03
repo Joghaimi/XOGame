@@ -231,7 +231,7 @@ namespace Library.Model
                         button.Button.TurnColorOn(RGBColor.Off);
                         button.Button.Set(false);
                         button.stripIndex = -1;
-                        Console.WriteLine($"Turn {buttonIndex} On {buttonState} at strip {stripIndex}");
+                        Console.WriteLine($"Turn {buttonIndex} Off {buttonState} at strip {stripIndex}");
 
                     }
 
