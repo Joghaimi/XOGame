@@ -263,7 +263,8 @@ namespace CatchyGame.Service
                         if (button.isSet())
                         {
                             Console.WriteLine("Is Set");
-                            AddPoint(ButtonNumberToPlayerIndex(buttonIndex));
+                            AddPoint(0);
+                            //AddPoint(ButtonNumberToPlayerIndex(buttonIndex));
                             button.BlockForATimeInMs(200);
                         }
                         else
@@ -381,7 +382,7 @@ namespace CatchyGame.Service
             //if (playerIndex > VariableControlService.Team.player.Count() - 1)
             //    return;
 
-            VariableControlService.Team.player[playerIndex].score += 1;
+            //VariableControlService.Team.player[playerIndex].score += 1;
             AudioPlayer.PIStartAudio(SoundType.Success);
             Console.WriteLine($"Add Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
         }
