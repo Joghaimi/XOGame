@@ -297,20 +297,22 @@ namespace CatchyGame.Service
 
                     foreach (var button in RGBButtonList)
                     {
-                        if (!button.CurrentStatusWithCheckForDelay())
-                        {
-                            button.BlockForATimeInMs(200);
-                            if (button.isSet())
-                            {
-                                Console.WriteLine("Is Set");
-                                AddPoint(0);
-                                //AddPoint(ButtonNumberToPlayerIndex(buttonIndex));
-                                button.BlockForATimeInMs(200);
-                            }
-                            else
-                                SubstractPoint(ButtonNumberToPlayerIndex(buttonIndex));
-                        }
-                        buttonIndex++;
+                        Console.WriteLine(button.isSet());
+                        Thread.Sleep(1000);
+                        //if (!button.CurrentStatusWithCheckForDelay())
+                        //{
+                        //    button.BlockForATimeInMs(200);
+                        //    if (button.isSet())
+                        //    {
+                        //        Console.WriteLine("Is Set");
+                        //        AddPoint(0);
+                        //        //AddPoint(ButtonNumberToPlayerIndex(buttonIndex));
+                        //        button.BlockForATimeInMs(200);
+                        //    }
+                        //    else
+                        //        SubstractPoint(ButtonNumberToPlayerIndex(buttonIndex));
+                        //}
+                        //buttonIndex++;
                     }
                     Thread.Sleep(50);
 
