@@ -152,9 +152,8 @@ namespace CatchyGame.Service
             StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 882, 1075, RGBButtonPixel5, 4));
             StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 1076, 1236, RGBButtonPixel6, 5));
 
-            // Init the RGBStrip 
+            
             RGBWS2811.Init();
-            // Init RGB Button 
             LevelTime.Start();
             AudioPlayer.Init(Room.Catchy);
 
@@ -307,7 +306,7 @@ namespace CatchyGame.Service
                                 Console.WriteLine("Is Set");
                                 AddPoint(0);
                                 //AddPoint(ButtonNumberToPlayerIndex(buttonIndex));
-                                button.BlockForATimeInMs(200);
+                                button.BlockForATimeInMs(400);
                             }
                             else
                                 SubstractPoint(ButtonNumberToPlayerIndex(buttonIndex));

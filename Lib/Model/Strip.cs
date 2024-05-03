@@ -224,7 +224,7 @@ namespace Library.Model
                         button.Button.Set(true);
                         button.Button.TurnColorOn(rgbColor);
                         button.Button.stripIndex = stripIndex;
-                        Console.WriteLine($"Turn {buttonIndex} On {buttonState} at strip {stripIndex}");
+                        //Console.WriteLine($"Turn {buttonIndex} On {buttonState} at strip {stripIndex}");
                     }
                     else if(!buttonState && button.Button.isSet())
                     {
