@@ -100,7 +100,7 @@ namespace CatchyGame.Service
 
 
             // Random 5 Work For Each Line
-            List<RGBButtonPixel> Buttons1=new List<RGBButtonPixel>();
+            List<RGBButtonPixel> Buttons1 = new List<RGBButtonPixel>();
 
             Buttons1.Add(StripOneButton0);
             Buttons1.Add(StripOneButton1);
@@ -255,24 +255,34 @@ namespace CatchyGame.Service
             while (!cancellationToken.IsCancellationRequested)
             {
                 byte buttonIndex = 0;
-                foreach (var button in RGBButtonList)
+                try
                 {
-                    if (!button.CurrentStatusWithCheckForDelay())
+
+                    foreach (var button in RGBButtonList)
                     {
-                        button.BlockForATimeInMs(200);
-                        if (button.isSet())
+                        if (!button.CurrentStatusWithCheckForDelay())
                         {
-                            Console.WriteLine("Is Set");
-                            AddPoint(0);
-                            //AddPoint(ButtonNumberToPlayerIndex(buttonIndex));
                             button.BlockForATimeInMs(200);
+                            if (button.isSet())
+                            {
+                                Console.WriteLine("Is Set");
+                                AddPoint(0);
+                                //AddPoint(ButtonNumberToPlayerIndex(buttonIndex));
+                                button.BlockForATimeInMs(200);
+                            }
+                            else
+                                SubstractPoint(ButtonNumberToPlayerIndex(buttonIndex));
                         }
-                        else
-                            SubstractPoint(ButtonNumberToPlayerIndex(buttonIndex));
+                        buttonIndex++;
                     }
-                    buttonIndex++;
+                    Thread.Sleep(50);
+
                 }
-                Thread.Sleep(50);
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Exception {ex.Message}");
+                }
+
             }
         }
 
