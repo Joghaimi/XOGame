@@ -378,8 +378,8 @@ namespace CatchyGame.Service
 
         private void AddPoint(int playerIndex)
         {
-            if (playerIndex > VariableControlService.Team.player.Count() - 1)
-                return;
+            //if (playerIndex > VariableControlService.Team.player.Count() - 1)
+            //    return;
 
             VariableControlService.Team.player[playerIndex].score += 1;
             AudioPlayer.PIStartAudio(SoundType.Success);
