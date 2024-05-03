@@ -17,7 +17,7 @@ namespace CatchyGame.Service
         List<RGBButton> RGBButtonList = new List<RGBButton>();
 
         private CancellationTokenSource _cts, _cts2, _cts3;
-        private int NumberOfStripToStart = 0;
+        private int WormLengthInTheLevel = 0;
         Stopwatch GameTiming = new Stopwatch();
         Stopwatch LevelTime = new Stopwatch();
         Random random = new Random();
@@ -152,7 +152,7 @@ namespace CatchyGame.Service
             StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 882, 1075, RGBButtonPixel5, 4));
             StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 1076, 1236, RGBButtonPixel6, 5));
 
-            
+
             RGBWS2811.Init();
             LevelTime.Start();
             AudioPlayer.Init(Room.Catchy);
@@ -170,9 +170,7 @@ namespace CatchyGame.Service
 
         private async Task ControlRGBLight(CancellationToken cancellationToken)
         {
-            //RGBWS2811.SetColor(this.isActive, worm1.startPixel, this.rgbColor);
-            //int startPixel = 0;
-            //int endPixel = -5;
+
             Restart();
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -186,16 +184,16 @@ namespace CatchyGame.Service
                 //StripList[0].Move();
                 //RGBWS2811.Commit();
                 //Thread.Sleep(100);
-                foreach (var strip in StripList)
-                {
+                //foreach (var strip in StripList)
+                //{
 
-                    //strip.Move();
-                    strip.Move();
-                }
+                //    //strip.Move();
+                //    strip.Move();
+                //}
                 //StripList[0].Move();
                 //StripList[0].Move();
                 //RGBWS2811.Commit();
-                RGBWS2811.Commit();
+                //RGBWS2811.Commit();
                 //Thread.Sleep(200);
 
 
@@ -208,77 +206,66 @@ namespace CatchyGame.Service
 
 
 
-                //if (VariableControlService.GameStatus == GameStatus.Started)
-                //{
-                //    Console.WriteLine("Start Game ...");
-                //    if (!backgroundSoundStarted)
-                //        AudioPlayer.PIBackgroundSound(SoundType.Background);
-                //    // Restart The Game Parameter 
-                //    Restart();
-                //    while (VariableControlService.GameStatus == GameStatus.Started)
-                //    {
-                //        ResetAllLine();
-                //        UnSelectAllStrap();
-                //        NumberOfStripToStart = NumberOfStrapsInLevel(VariableControlService.GameRound);
-                //        RandomSelectStrip(NumberOfStripToStart);
-                //        Console.WriteLine(VariableControlService.GameRound.ToString());
-                //        Console.WriteLine($"Number Of Selected Strip {NumberOfStripToStart}");
-                //        // Start The Timer 
-                //        LevelTime.Restart();
-                //        while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
-                //        {
-                //            int delayMs = 70 - (int)(LevelTime.ElapsedMilliseconds / 1000);
-                //            if (delayMs < 0) { delayMs = 1; }
+                if (VariableControlService.GameStatus == GameStatus.Started)
+                {
+                    Console.WriteLine("Start Game ...");
+                    if (!backgroundSoundStarted)
+                        AudioPlayer.PIBackgroundSound(SoundType.Background);
+                    // Restart The Game Parameter 
+                    Restart();
+                    while (VariableControlService.GameStatus == GameStatus.Started)
+                    {
+                        ResetAllLine();
+                        UnSelectAllStrap();
+                        
+                        WormLengthInTheLevel = WormLengthInLevel(VariableControlService.GameRound);
+                        Console.WriteLine(VariableControlService.GameRound.ToString());
+                        Console.WriteLine($"WormLengthInTheLevel {WormLengthInTheLevel}");
+                        // Start The Timer 
+                        LevelTime.Restart();
+                        while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
+                        {
+                            int delayMs = 70 - (int)(LevelTime.ElapsedMilliseconds / 1000);
+                            if (delayMs < 0) { delayMs = 1; }
 
-                //            foreach (var strip in StripList)
-                //            {
-                //                bool nextOneIsTargetButton =
-                //                    strip.rGBButton1.Pixel == strip.currentLed ||
-                //                    strip.rGBButton2.Pixel == strip.currentLed ||
-                //                    strip.rGBButton3.Pixel == strip.currentLed ||
-                //                    strip.rGBButton4.Pixel == strip.currentLed;
-                //                if (nextOneIsTargetButton || LevelTime.ElapsedMilliseconds < 20)
-                //                {
-                //                    //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                //                    strip.NextLed();
-                //                }
-                //                else if (LevelTime.ElapsedMilliseconds > 20 || LevelTime.ElapsedMilliseconds < 40)
-                //                {
-                //                    //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                //                    strip.NextLed();
-                //                    //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                //                    strip.NextLed();
-                //                }
-                //                else
-                //                {
+                            foreach (var strip in StripList)
+                            {
+                                if (LevelTime.ElapsedMilliseconds < 20)
+                                {
+                                    strip.Move();
+                                }
+                                else if (LevelTime.ElapsedMilliseconds > 20 || LevelTime.ElapsedMilliseconds < 40)
+                                {
+                                    strip.Move();
+                                    strip.Move();
+                                }
+                                else
+                                {
 
-                //                    //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                //                    strip.NextLed();
-                //                    //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                //                    strip.NextLed();
-                //                    //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
-                //                    strip.NextLed();
-                //                }
-                //                if (strip.isActive && strip.resetLine)
-                //                {
-                //                    ResetLine(strip.startRGBLed, strip.endRGBLed);
-                //                    strip.LineReseted();
+                                    strip.Move();
+                                    strip.Move();
+                                    strip.Move();
+                                }
+                                if (strip.isActive && strip.resetLine)
+                                {
+                                    ResetLine(strip.startRGBLed, strip.endRGBLed);
+                                    strip.LineReseted();
+                                }
 
-                //                    // Random Select New Strips
-                //                    strip.isActive = false;
-                //                    RandomSelectStrip(1);
-                //                }
+                            }
 
-                //            }
-                //            RGBWS2811.Commit();
-                //        }
-                //        if (VariableControlService.GameRound == Round.Round5)
-                //            VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
-                //        VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
-                //    }
-                //    if (backgroundSoundStarted)
-                //        AudioPlayer.PIStopAudio();
-                //}
+
+
+
+                            RGBWS2811.Commit();
+                        }
+                        if (VariableControlService.GameRound == Round.Round5)
+                            VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
+                        VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
+                    }
+                    if (backgroundSoundStarted)
+                        AudioPlayer.PIStopAudio();
+                }
 
 
 
@@ -356,6 +343,7 @@ namespace CatchyGame.Service
             VariableControlService.GameRound = Round.Round1;
             VariableControlService.PlayerScore = 0;
             GameTiming.Restart();
+
         }
         private void StopTheGame()
         {
@@ -382,6 +370,17 @@ namespace CatchyGame.Service
             else if (currentRound == Round.Round4) return 5;
             else if (currentRound == Round.Round5) return 6;
             return 0;
+        }
+
+
+        private int WormLengthInLevel(Round currentRound)
+        {
+            if (currentRound == Round.Round1) return 5;
+            else if (currentRound == Round.Round2) return 4;
+            else if (currentRound == Round.Round3) return 3;
+            else if (currentRound == Round.Round4) return 2;
+            else if (currentRound == Round.Round5) return 1;
+            return 5;
         }
 
         // ======== Private To The Next Room
@@ -429,12 +428,12 @@ namespace CatchyGame.Service
 
         private void AddPoint(int playerIndex)
         {
-            //if (playerIndex > VariableControlService.Team.player.Count() - 1)
-            //    return;
+            if (playerIndex > VariableControlService.Team.player.Count() - 1)
+                return;
 
-            //VariableControlService.Team.player[playerIndex].score += 1;
+            VariableControlService.Team.player[playerIndex].score += 1;
             AudioPlayer.PIStartAudio(SoundType.Success);
-            //Console.WriteLine($"Add Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
+            Console.WriteLine($"Add Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
         }
         private void SubstractPoint(int playerIndex)
         {
@@ -461,7 +460,14 @@ namespace CatchyGame.Service
             }
             RGBWS2811.Commit();
             Console.WriteLine(" Done .");
+
+            foreach (var button in RGBButtonList)
+            {
+                button.Set(false);
+                button.clickedForOnce = false;
+            }
         }
+
 
 
 
