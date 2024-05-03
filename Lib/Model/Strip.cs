@@ -100,8 +100,8 @@ namespace Library.Model
 
             Console.WriteLine("Init Worms");
             this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 5, 0));
-            this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 3, 1));
-            this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 4, 2));
+            this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 5, 1));
+            this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 5, 2));
             this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 5, 3));
             Console.WriteLine("End Init Worms");
 

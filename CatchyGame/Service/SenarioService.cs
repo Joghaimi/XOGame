@@ -191,13 +191,13 @@ namespace CatchyGame.Service
                 {
 
                     strip.Move();
-                    //strip.Move();
+                    strip.Move();
                 }
                 //StripList[0].Move();
                 //StripList[0].Move();
                 //RGBWS2811.Commit();
                 RGBWS2811.Commit();
-                Thread.Sleep(100);
+                Thread.Sleep(1000);
 
 
 
