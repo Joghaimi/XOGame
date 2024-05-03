@@ -26,7 +26,7 @@ namespace CatchyGame.Service
         public static CatchyTeam Team { get; set; } = new CatchyTeam();
 
         public static RGBColor WormColor { get; set; } = RGBColor.Red;
-        public static RGBColor DefaultColor { get; set; } = RGBColor.Blue;
+        public static RGBColor DefaultColor { get; set; } = RGBColor.Off;
 
 
     }

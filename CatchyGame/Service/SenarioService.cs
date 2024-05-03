@@ -132,13 +132,25 @@ namespace CatchyGame.Service
 
         private async Task ControlRGBLight(CancellationToken cancellationToken)
         {
-
+            //RGBWS2811.SetColor(this.isActive, worm1.startPixel, this.rgbColor);
+            int startPixel = 0;
+            int endPixel = -5;
             while (!cancellationToken.IsCancellationRequested)
             {
 
-                StripList[0].Move();
+
+
+
+
+                RGBWS2811.SetColor(startPixel, RGBColor.Red);
+                startPixel++;
+                if (endPixel >= 0)
+                    RGBWS2811.SetColor(startPixel, RGBColor.Off);
+                endPixel++;
+
+                //StripList[0].Move();
                 RGBWS2811.Commit();
-                Thread.Sleep(3000);
+                Thread.Sleep(100);
 
 
 
