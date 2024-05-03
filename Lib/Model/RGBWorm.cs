@@ -8,8 +8,13 @@ namespace Library.Model
 {
     public class RGBWorm
     {
+
         public int startPixel = -5;
         public int endPixel = 0;
-        public int numberOfPixel = 5;
+        public RGBWorm(int startPixel, int endPixel)
+        {
+            this.startPixel = startPixel;
+            this.endPixel = endPixel;
+        }
     }
 }

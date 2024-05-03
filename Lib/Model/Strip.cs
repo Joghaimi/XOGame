@@ -10,21 +10,40 @@ namespace Library.Model
     public class Strip
     {
         public RGBColor rgbColor { get; set; }
+        public RGBColor rgbOffColor { get; set; }
+
         public int startRGBLed { get; set; }
         public int endRGBLed { get; set; }
         public int currentLed { get; set; }
         public bool isActive { get; set; } = false;
         public bool resetLine { get; set; } = false;
+        public RGBButtonPixel rGBButton0 { get; set; }
         public RGBButtonPixel rGBButton1 { get; set; }
         public RGBButtonPixel rGBButton2 { get; set; }
         public RGBButtonPixel rGBButton3 { get; set; }
         public RGBButtonPixel rGBButton4 { get; set; }
-        public RGBButton startLed { get; set; }
+
+        public RGBWorm worm1 { get; set; }
+        public RGBWorm worm2 { get; set; }
+        public RGBWorm worm3 { get; set; }
+        public RGBWorm worm4 { get; set; }
+
+        public int wormLength { get; set; } = 5;
 
 
 
-
-        public Strip(RGBColor rgbColor, int startRGBLed, int endRGBLed, RGBButton startLed, RGBButtonPixel rGBButton1, RGBButtonPixel rGBButton2, RGBButtonPixel rGBButton3, RGBButtonPixel rGBButton4)
+        public Strip(
+            RGBColor rgbColor,
+            RGBColor rgbOffColor,
+            int startRGBLed,
+            int endRGBLed,
+            RGBButtonPixel rGBButton0,
+            RGBButtonPixel rGBButton1,
+            RGBButtonPixel rGBButton2,
+            RGBButtonPixel rGBButton3,
+            RGBButtonPixel rGBButton4,
+            int wormLength
+            )
         {
             this.rgbColor = rgbColor;
             this.startRGBLed = startRGBLed;
@@ -34,14 +53,49 @@ namespace Library.Model
             this.rGBButton2 = rGBButton2;
             this.rGBButton3 = rGBButton3;
             this.rGBButton4 = rGBButton4;
-            this.startLed = startLed;
+            this.rGBButton0 = rGBButton0;
+            this.wormLength = wormLength;
+
+
+
+
+
+            this.worm1 = new RGBWorm(startRGBLed, -1 * wormLength);
+            this.rgbOffColor = rgbOffColor;
+            //this.worm2 = worm2;
+            //this.worm3 = worm3;
+            //this.worm4 = worm4;
         }
+
+        public void Move()
+        {
+            if (!isActive)
+                return;
+            // Turn RGB Light On 
+
+            RGBWS2811.SetColor(this.isActive, worm1.startPixel, this.rgbColor);
+            if (worm1.startPixel < endRGBLed)
+                worm1.startPixel++;
+            else
+                worm1.startPixel = startRGBLed;
+            // Move the Start one and the end one
+            if (worm1.startPixel >= 0)
+                RGBWS2811.SetColor(this.isActive, worm1.endPixel, this.rgbOffColor);
+            if (worm1.endPixel < endRGBLed)
+                worm1.endPixel++;
+            else
+                worm1.endPixel = startRGBLed;
+            // Check the RGB Button
+        }
+
+
+
         public void NextLed()
         {
             if (!isActive)
                 return;
             if (currentLed == startRGBLed)
-                this.startLed.TurnColorOn(this.rgbColor);
+                this.rGBButton0.Button.TurnColorOn(this.rgbColor);
             if (currentLed < endRGBLed)
                 currentLed++;
             else
@@ -124,7 +178,7 @@ namespace Library.Model
         {
             resetLine = false;
             currentLed = startRGBLed;
-            this.startLed.TurnColorOn(RGBColor.Off);
+            this.rGBButton0.Button.TurnColorOn(RGBColor.Off);
         }
 
 

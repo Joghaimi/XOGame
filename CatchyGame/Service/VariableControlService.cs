@@ -21,9 +21,13 @@ namespace CatchyGame.Service
         public static int LevelTime = 60000;
 
         public static int PlayerScore = 0;
-        public static bool IsGameTimerStarted=false;
+        public static bool IsGameTimerStarted = false;
 
         public static CatchyTeam Team { get; set; } = new CatchyTeam();
+
+        public static RGBColor WormColor { get; set; } = RGBColor.Red;
+        public static RGBColor DefaultColor { get; set; } = RGBColor.Blue;
+
 
     }
 }
