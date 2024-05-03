@@ -13,6 +13,9 @@ namespace Library.Model
         public RGBButton Button { get; set; }
         public int WormIndex = -1;
         public int stripIndex = -1;
+
+
+
         public RGBButtonPixel(int pixel, RGBButton button)
         {
             Pixel = pixel;
