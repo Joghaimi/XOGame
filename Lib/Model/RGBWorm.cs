@@ -23,7 +23,7 @@ namespace Library.Model
             int numberOfRGBLed = (endStripPixel - startStripPixel) / 5;
             Console.WriteLine($"Strip Led Number {numberOfRGBLed}");
             Random random = new Random();
-            this.startPixel = -1 * (numberOfRGBLed * (WormIndex) + random.Next(0, numberOfRGBLed));
+            this.startPixel = -1 * (numberOfRGBLed * WormIndex + random.Next(0, numberOfRGBLed));
             this.initStartPixel = startPixel;
             this.endPixel = this.startPixel - length;
             this.initendPixel = endPixel;

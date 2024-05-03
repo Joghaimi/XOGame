@@ -95,6 +95,7 @@ namespace Library.Model
             this.wormLength = wormLength;
 
             this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 5, 0));
+            this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 3, 1));
 
             //this.Worms.Add(new RGBWorm(startRGBLed, -1 * wormLength));
 
