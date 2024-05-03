@@ -210,9 +210,12 @@ namespace Library.Model
                 if (button.stripIndex == -1)
                 {
                     bool buttonState = false;
+                    int index = 0;
                     foreach (var worm in Worms)
                     {
                         buttonState = buttonState || InRange(button.Pixel, worm.endPixel, worm.startPixel);
+                        Console.WriteLine($"buttonState {buttonState}");
+                        index++;
                     }
                     if (buttonState)
                     {
