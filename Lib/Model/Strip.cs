@@ -129,17 +129,17 @@ namespace Library.Model
                 if (rgbButtonInRange && notOccupied)
                 {
                     // Set New Index 
-                    rGBButton0.WormIndex = Index;
+                    rGBButton1.WormIndex = Index;
                     Console.WriteLine($"rGBButton0 In Range Of worm with {rGBButton0.WormIndex}");
-                    rGBButton0.Button.Set(true);
-                    rGBButton0.Button.TurnColorOn(rgbColor);
+                    rGBButton1.Button.Set(true);
+                    rGBButton1.Button.TurnColorOn(rgbColor);
                 }
                 else if (OccupiedFromTheSameWorm && rGBButton0.Button.isSet() &&!rgbButtonInRange)
                 {
                     Console.WriteLine($"Relese Button From Worm Index {Index}  button pixel {rGBButton0.Pixel} start {worm.endPixel} end {worm.startPixel}");
-                    rGBButton0.Button.TurnColorOn(RGBColor.Off);
-                    rGBButton0.Button.Set(false);
-                    rGBButton0.WormIndex = -1;
+                    rGBButton1.Button.TurnColorOn(RGBColor.Off);
+                    rGBButton1.Button.Set(false);
+                    rGBButton1.WormIndex = -1;
                 }
 
                 Index++;
