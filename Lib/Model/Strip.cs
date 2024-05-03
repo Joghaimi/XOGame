@@ -15,7 +15,7 @@ namespace Library.Model
         public int startRGBLed { get; set; }
         public int endRGBLed { get; set; }
         public int currentLed { get; set; }
-        public bool isActive { get; set; } = t;
+        public bool isActive { get; set; } = true;
         public bool resetLine { get; set; } = false;
         public RGBButtonPixel rGBButton0 { get; set; }
         public RGBButtonPixel rGBButton1 { get; set; }
