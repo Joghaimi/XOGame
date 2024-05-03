@@ -18,20 +18,16 @@ namespace Library.RGBLib
             python.InvokeMethod("init_strip");
         }
 
-        public static void SetColor(int rgbNumber, byte red, byte green, byte blue, byte white)
-        {
-            PyObject[] pyParams = new PyObject[5]; // This is an array of python parameters passed into a function
-            pyParams[0] = rgbNumber.ToPython();
-            pyParams[1] = red.ToPython();
-            pyParams[2] = green.ToPython();
-            pyParams[3] = blue.ToPython();
-            pyParams[4] = white.ToPython();
-            python.InvokeMethod("set_color", pyParams);
-        }
+
         public static void Commit()
         {
             python.InvokeMethod("commit");
         }
+
+
+
+
+
         public static void SetColor(int rgbNumber, RGBColor rGBColor)
         {
             PyObject[] pyParams = RGBColorToPyObj(rgbNumber, rGBColor);
@@ -41,10 +37,10 @@ namespace Library.RGBLib
         {
             if (!isActive)
                 return;
-            PyObject[] pyParams = RGBColorToPyObj(rgbNumber, rGBColor);
-            python.InvokeMethod("set_color", pyParams);
+            SetColor(rgbNumber, rGBColor);
+            //PyObject[] pyParams = RGBColorToPyObj(rgbNumber, rGBColor);
+            //python.InvokeMethod("set_color", pyParams);
         }
-
         public static PyObject[] RGBColorToPyObj(int rgbNumber, RGBColor rGBColor)
         {
             int defaultWhite = 0;
@@ -104,5 +100,16 @@ namespace Library.RGBLib
             return pyParams;
         }
 
+        [Obsolete]
+        public static void SetColor(int rgbNumber, byte red, byte green, byte blue, byte white)
+        {
+            PyObject[] pyParams = new PyObject[5]; // This is an array of python parameters passed into a function
+            pyParams[0] = rgbNumber.ToPython();
+            pyParams[1] = red.ToPython();
+            pyParams[2] = green.ToPython();
+            pyParams[3] = blue.ToPython();
+            pyParams[4] = white.ToPython();
+            python.InvokeMethod("set_color", pyParams);
+        }
     }
 }

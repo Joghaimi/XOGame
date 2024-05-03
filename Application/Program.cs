@@ -38,24 +38,24 @@ RGBWS2811.Init();
 while (true)
 {
     Console.WriteLine("Set Red");
-    for (int i = 0; i < 1000; i++)
-    {
-        RGBWS2811.SetColor(i, 255, 0, 0, 0);
-    }
-    RGBWS2811.Commit();
-    Thread.Sleep(2000);
-    for (int i = 0; i < 1000; i++)
-    {
-        RGBWS2811.SetColor(i, 0, 255, 0, 0);
-    }
-    RGBWS2811.Commit();
-    Thread.Sleep(2000);
-    for (int i = 0; i < 1000; i++)
-    {
-        RGBWS2811.SetColor(i, 0, 0, 255, 0);
-    }
-    RGBWS2811.Commit();
-    Thread.Sleep(2000);
+    //for (int i = 0; i < 1000; i++)
+    //{
+    //    RGBWS2811.SetColor(i, 255, 0, 0, 0);
+    //}
+    //RGBWS2811.Commit();
+    //Thread.Sleep(2000);
+    //for (int i = 0; i < 1000; i++)
+    //{
+    //    RGBWS2811.SetColor(i, 0, 255, 0, 0);
+    //}
+    //RGBWS2811.Commit();
+    //Thread.Sleep(2000);
+    //for (int i = 0; i < 1000; i++)
+    //{
+    //    RGBWS2811.SetColor(i, 0, 0, 255, 0);
+    //}
+    //RGBWS2811.Commit();
+    //Thread.Sleep(2000);
 
     //RGBWS2811.SetColor(1, 255, 0, 0, 0);
     //RGBWS2811.SetColor(15, 255, 0, 0, 0);

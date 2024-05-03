@@ -20,6 +20,10 @@ namespace Library.Model
         public RGBButtonPixel rGBButton3 { get; set; }
         public RGBButtonPixel rGBButton4 { get; set; }
         public RGBButton startLed { get; set; }
+
+
+
+
         public Strip(RGBColor rgbColor, int startRGBLed, int endRGBLed, RGBButton startLed, RGBButtonPixel rGBButton1, RGBButtonPixel rGBButton2, RGBButtonPixel rGBButton3, RGBButtonPixel rGBButton4)
         {
             this.rgbColor = rgbColor;
