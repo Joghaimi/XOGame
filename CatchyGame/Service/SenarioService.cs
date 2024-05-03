@@ -107,6 +107,7 @@ namespace CatchyGame.Service
             //    5
             //    )
             //);
+            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 0, 212, startRGBButton1, StripTwoButton1, StripTwoButton2, StripTwoButton3, StripTwoButton4));
             StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 213, 439, startRGBButton1, StripTwoButton1, StripTwoButton2, StripTwoButton3, StripTwoButton4));
             //StripList.Add(new Strip(RGBColor.Red, 213, 439, startRGBButton1, StripTwoButton1, StripTwoButton2, StripTwoButton3, StripTwoButton4));
             //StripList.Add(new Strip(RGBColor.Red, 440, 665, startRGBButton3, StripThreeButton1, StripThreeButton2, StripThreeButton3, StripThreeButton4));
