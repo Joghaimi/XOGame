@@ -123,11 +123,11 @@ namespace Library.Model
             this.endRGBLed = endRGBLed;
             this.currentLed = startRGBLed;
 
-            this.rGBButton1 = rGBButton1;
-            this.rGBButton2 = rGBButton2;
-            this.rGBButton3 = rGBButton3;
-            this.rGBButton4 = rGBButton4;
-            this.rGBButton0 = rGBButton0;
+            //this.rGBButton1 = rGBButton1;
+            //this.rGBButton2 = rGBButton2;
+            //this.rGBButton3 = rGBButton3;
+            //this.rGBButton4 = rGBButton4;
+            //this.rGBButton0 = rGBButton0;
             this.wormLength = wormLength;
 
             Console.WriteLine("Init Worms");
