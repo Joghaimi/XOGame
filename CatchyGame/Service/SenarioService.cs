@@ -104,11 +104,11 @@ namespace CatchyGame.Service
 
 
             StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 0, 212, StripOneButton0, StripTwoButton1, StripTwoButton2, StripTwoButton3, StripTwoButton4));
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 213, 439, StripTwoButton0, StripTwoButton1, StripTwoButton2, StripTwoButton3, StripTwoButton4));
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 440, 665, StripThreeButton0, StripThreeButton1, StripThreeButton2, StripThreeButton3, StripThreeButton4));
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 666, 881, StripFourButton0, StripFourButton1, StripFourButton2, StripFourButton3, StripFourButton4));
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 882, 1075, StripFiveButton0, StripFiveButton1, StripFiveButton2, StripFiveButton3, StripFiveButton4));
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 1076, 1236, StripSixButton0, StripSixButton1, StripSixButton2, StripSixButton3, StripSixButton4));
+            //StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 213, 439, StripTwoButton0, StripTwoButton1, StripTwoButton2, StripTwoButton3, StripTwoButton4));
+            //StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 440, 665, StripThreeButton0, StripThreeButton1, StripThreeButton2, StripThreeButton3, StripThreeButton4));
+            //StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 666, 881, StripFourButton0, StripFourButton1, StripFourButton2, StripFourButton3, StripFourButton4));
+            //StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 882, 1075, StripFiveButton0, StripFiveButton1, StripFiveButton2, StripFiveButton3, StripFiveButton4));
+            //StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 1076, 1236, StripSixButton0, StripSixButton1, StripSixButton2, StripSixButton3, StripSixButton4));
 
             // Init the RGBStrip 
             RGBWS2811.Init();
