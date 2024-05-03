@@ -17,7 +17,7 @@ namespace Library.Model
         public int currentLed { get; set; }
         public bool isActive { get; set; } = true;
         public bool resetLine { get; set; } = false;
-        public RGBButtonPixel rGBButton0 { get; set; }
+        public RGBButton rGBButton0 { get; set; }
         public RGBButtonPixel rGBButton1 { get; set; }
         public RGBButtonPixel rGBButton2 { get; set; }
         public RGBButtonPixel rGBButton3 { get; set; }
@@ -32,18 +32,51 @@ namespace Library.Model
 
 
 
+        //public Strip(
+        //    RGBColor rgbColor,
+        //    RGBColor rgbOffColor,
+        //    int startRGBLed,
+        //    int endRGBLed,
+        //    RGBButtonPixel rGBButton0,
+        //    RGBButtonPixel rGBButton1,
+        //    RGBButtonPixel rGBButton2,
+        //    RGBButtonPixel rGBButton3,
+        //    RGBButtonPixel rGBButton4,
+        //    int wormLength
+        //    )
+        //{
+        //    this.rgbColor = rgbColor;
+        //    this.startRGBLed = startRGBLed;
+        //    this.endRGBLed = endRGBLed;
+        //    this.currentLed = startRGBLed;
+        //    this.rGBButton1 = rGBButton1;
+        //    this.rGBButton2 = rGBButton2;
+        //    this.rGBButton3 = rGBButton3;
+        //    this.rGBButton4 = rGBButton4;
+        //    this.rGBButton0 = rGBButton0;
+        //    this.wormLength = wormLength;
+
+
+
+
+
+        //    this.worm1 = new RGBWorm(startRGBLed, -1 * wormLength);
+        //    this.rgbOffColor = rgbOffColor;
+        //    //this.worm2 = worm2;
+        //    //this.worm3 = worm3;
+        //    //this.worm4 = worm4;
+        //}
+
         public Strip(
-            RGBColor rgbColor,
-            RGBColor rgbOffColor,
-            int startRGBLed,
-            int endRGBLed,
-            RGBButtonPixel rGBButton0,
-            RGBButtonPixel rGBButton1,
-            RGBButtonPixel rGBButton2,
-            RGBButtonPixel rGBButton3,
-            RGBButtonPixel rGBButton4,
-            int wormLength
-            )
+          RGBColor rgbColor,
+          int startRGBLed,
+          int endRGBLed,
+          RGBButton rGBButton0,
+          RGBButtonPixel rGBButton1,
+          RGBButtonPixel rGBButton2,
+          RGBButtonPixel rGBButton3,
+          RGBButtonPixel rGBButton4
+          )
         {
             this.rgbColor = rgbColor;
             this.startRGBLed = startRGBLed;
@@ -114,7 +147,7 @@ namespace Library.Model
             if (!isActive)
                 return;
             if (currentLed == startRGBLed)
-                this.rGBButton0.Button.TurnColorOn(this.rgbColor);
+                this.rGBButton0.TurnColorOn(this.rgbColor);
             if (currentLed < endRGBLed)
                 currentLed++;
             else
@@ -197,7 +230,7 @@ namespace Library.Model
         {
             resetLine = false;
             currentLed = startRGBLed;
-            this.rGBButton0.Button.TurnColorOn(RGBColor.Off);
+            this.rGBButton0.TurnColorOn(RGBColor.Off);
         }
 
 
