@@ -46,35 +46,7 @@ namespace CatchyGame.Service
             var startRGBButton6 = new RGBButton(RGBButtonPin.RGBR12, RGBButtonPin.RGBG12, RGBButtonPin.RGBB12, RGBButtonPin.RGBPB12);
 
 
-            while (true)
-            {
-                Console.WriteLine("Blue");
-                startRGBButton1.TurnColorOn(RGBColor.Blue);
-                startRGBButton2.TurnColorOn(RGBColor.Blue);
-                startRGBButton3.TurnColorOn(RGBColor.Blue);
-                startRGBButton4.TurnColorOn(RGBColor.Blue);
-                startRGBButton5.TurnColorOn(RGBColor.Blue);
-                startRGBButton6.TurnColorOn(RGBColor.Blue);
-                
-                
-                Thread.Sleep(1000);
-                startRGBButton1.TurnColorOn(RGBColor.Red);
-                startRGBButton2.TurnColorOn(RGBColor.Red);
-                startRGBButton3.TurnColorOn(RGBColor.Red);
-                startRGBButton4.TurnColorOn(RGBColor.Red);
-                startRGBButton5.TurnColorOn(RGBColor.Red);
-                startRGBButton6.TurnColorOn(RGBColor.Red);
-
-                Thread.Sleep(1000);
-                startRGBButton1.TurnColorOn(RGBColor.Green);
-                startRGBButton2.TurnColorOn(RGBColor.Green);
-                startRGBButton3.TurnColorOn(RGBColor.Green);
-                startRGBButton4.TurnColorOn(RGBColor.Green);
-                startRGBButton5.TurnColorOn(RGBColor.Green);
-                startRGBButton6.TurnColorOn(RGBColor.Green);
-                Thread.Sleep(1000);
-            }
-
+          
 
             RGBButtonList.Add(rgb1);
             RGBButtonList.Add(rgb2);
@@ -192,6 +164,35 @@ namespace CatchyGame.Service
             Task.Run(() => ControlRGBLight(_cts.Token));
             Task.Run(() => ControlRGBButton(_cts2.Token));
             Task.Run(() => ControlGameTiming(_cts3.Token));
+            while (true)
+            {
+                Console.WriteLine("Blue");
+                startRGBButton1.TurnColorOn(RGBColor.Blue);
+                startRGBButton2.TurnColorOn(RGBColor.Blue);
+                startRGBButton3.TurnColorOn(RGBColor.Blue);
+                startRGBButton4.TurnColorOn(RGBColor.Blue);
+                startRGBButton5.TurnColorOn(RGBColor.Blue);
+                startRGBButton6.TurnColorOn(RGBColor.Blue);
+
+
+                Thread.Sleep(1000);
+                startRGBButton1.TurnColorOn(RGBColor.Red);
+                startRGBButton2.TurnColorOn(RGBColor.Red);
+                startRGBButton3.TurnColorOn(RGBColor.Red);
+                startRGBButton4.TurnColorOn(RGBColor.Red);
+                startRGBButton5.TurnColorOn(RGBColor.Red);
+                startRGBButton6.TurnColorOn(RGBColor.Red);
+
+                Thread.Sleep(1000);
+                startRGBButton1.TurnColorOn(RGBColor.Green);
+                startRGBButton2.TurnColorOn(RGBColor.Green);
+                startRGBButton3.TurnColorOn(RGBColor.Green);
+                startRGBButton4.TurnColorOn(RGBColor.Green);
+                startRGBButton5.TurnColorOn(RGBColor.Green);
+                startRGBButton6.TurnColorOn(RGBColor.Green);
+                Thread.Sleep(1000);
+            }
+
             return Task.CompletedTask;
         }
 
