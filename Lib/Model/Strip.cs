@@ -134,7 +134,7 @@ namespace Library.Model
                     rGBButton0.Button.Set(true);
                     rGBButton0.Button.TurnColorOn(rgbColor);
                 }
-                else if (OccupiedFromTheSameWorm && rGBButton0.Button.isSet())
+                else if (OccupiedFromTheSameWorm && rGBButton0.Button.isSet() &&!rgbButtonInRange)
                 {
                     Console.WriteLine($"Relese Button From Worm Index {Index}  button pixel {rGBButton0.Pixel} start {worm.endPixel} end {worm.startPixel}");
                     rGBButton0.Button.TurnColorOn(RGBColor.Off);
