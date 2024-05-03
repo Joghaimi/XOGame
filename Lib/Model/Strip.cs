@@ -77,6 +77,53 @@ namespace Library.Model
           RGBColor rgbOffColor,
           int startRGBLed,
           int endRGBLed,
+          List<RGBButtonPixel> Buttons
+          //RGBButtonPixel rGBButton0,
+          //RGBButtonPixel rGBButton1,
+          //RGBButtonPixel rGBButton2,
+          //RGBButtonPixel rGBButton3,
+          //RGBButtonPixel rGBButton4
+          )
+        {
+            this.rgbOffColor = rgbOffColor;
+            this.rgbColor = rgbColor;
+            this.startRGBLed = startRGBLed;
+            this.endRGBLed = endRGBLed;
+            this.currentLed = startRGBLed;
+
+            //this.rGBButton1 = rGBButton1;
+            //this.rGBButton2 = rGBButton2;
+            //this.rGBButton3 = rGBButton3;
+            //this.rGBButton4 = rGBButton4;
+            //this.rGBButton0 = rGBButton0;
+            //this.wormLength = wormLength;
+
+            Console.WriteLine("Init Worms");
+            this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 5, 0));
+            this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 3, 1));
+            this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 4, 2));
+            this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 5, 3));
+            Console.WriteLine("End Init Worms");
+
+            this.Buttons=Buttons;
+            //Buttons.Add(rGBButton1);
+            //Buttons.Add(rGBButton2);
+            //Buttons.Add(rGBButton3);
+            //Buttons.Add(rGBButton4);
+
+
+            this.rgbOffColor = rgbOffColor;
+
+        }
+
+
+
+
+        public Strip(
+          RGBColor rgbColor,
+          RGBColor rgbOffColor,
+          int startRGBLed,
+          int endRGBLed,
           RGBButtonPixel rGBButton0,
           RGBButtonPixel rGBButton1,
           RGBButtonPixel rGBButton2,

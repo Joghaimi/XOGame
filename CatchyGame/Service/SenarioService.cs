@@ -100,10 +100,15 @@ namespace CatchyGame.Service
 
 
             // Random 5 Work For Each Line
+            List<RGBButtonPixel> Buttons1=new List<RGBButtonPixel>();
 
+            Buttons1.Add(StripOneButton0);
+            Buttons1.Add(StripOneButton1);
+            Buttons1.Add(StripOneButton2);
+            Buttons1.Add(StripOneButton3);
+            Buttons1.Add(StripOneButton4);
 
-
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 0, 212, StripOneButton0, StripOneButton1, StripOneButton2, StripOneButton3, StripOneButton4));
+            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 0, 212, Buttons1));
             //StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 213, 439, StripTwoButton0, StripTwoButton1, StripTwoButton2, StripTwoButton3, StripTwoButton4));
             //StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 440, 665, StripThreeButton0, StripThreeButton1, StripThreeButton2, StripThreeButton3, StripThreeButton4));
             //StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 666, 881, StripFourButton0, StripFourButton1, StripFourButton2, StripFourButton3, StripFourButton4));
