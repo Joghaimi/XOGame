@@ -128,11 +128,11 @@ namespace Library.Model
                     Console.WriteLine($"rGBButton0 In Range Of worm with {Index}");
                     rGBButton0.WormIndex = Index;
                     rGBButton0.Button.Set(true);
-                    rGBButton1.Button.TurnColorOn(rgbColor);
+                    rGBButton0.Button.TurnColorOn(rgbColor);
                 }
                 else if (rGBButton0.WormIndex == Index && rGBButton0.Button.isSet())
                 {
-                    rGBButton1.Button.TurnColorOn(RGBColor.Off);
+                    rGBButton0.Button.TurnColorOn(RGBColor.Off);
                     rGBButton0.Button.Set(false);
                     rGBButton0.WormIndex = -1;
                 }
