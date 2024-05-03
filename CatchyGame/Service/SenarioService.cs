@@ -125,8 +125,8 @@ namespace CatchyGame.Service
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => ControlRGBLight(_cts.Token));
-            Task.Run(() => ControlRGBButton(_cts2.Token));
-            Task.Run(() => ControlGameTiming(_cts3.Token));
+            //Task.Run(() => ControlRGBButton(_cts2.Token));
+            //Task.Run(() => ControlGameTiming(_cts3.Token));
             return Task.CompletedTask;
         }
 
@@ -138,7 +138,7 @@ namespace CatchyGame.Service
 
                 StripList[0].Move();
                 RGBWS2811.Commit();
-                Thread.Sleep(100);
+                Thread.Sleep(3000);
 
 
 
