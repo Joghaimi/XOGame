@@ -145,7 +145,7 @@ namespace CatchyGame.Service
                 RGBWS2811.SetColor(startPixel, RGBColor.Red);
                 startPixel++;
                 if (endPixel >= 0)
-                    RGBWS2811.SetColor(startPixel, RGBColor.Off);
+                    RGBWS2811.SetColor(endPixel, RGBColor.Off);
                 endPixel++;
 
                 //StripList[0].Move();

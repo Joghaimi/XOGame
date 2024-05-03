@@ -30,6 +30,8 @@ namespace Library.RGBLib
 
         public static void SetColor(int rgbNumber, RGBColor rGBColor)
         {
+            if (rgbNumber < 0)
+                return;
             PyObject[] pyParams = RGBColorToPyObj(rgbNumber, rGBColor);
             python.InvokeMethod("set_color", pyParams);
         }
