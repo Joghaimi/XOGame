@@ -94,12 +94,12 @@ namespace Library.Model
             this.rGBButton0 = rGBButton0;
             this.wormLength = wormLength;
 
+            Console.WriteLine("Init Worms");
             this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 5, 0));
             this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 3, 1));
             this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 4, 2));
             this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 5, 3));
-
-            //this.Worms.Add(new RGBWorm(startRGBLed, -1 * wormLength));
+            Console.WriteLine("End Init Worms");
 
 
 
