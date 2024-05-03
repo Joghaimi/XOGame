@@ -226,11 +226,13 @@ namespace Library.Model
                         button.stripIndex = stripIndex;
                         Console.WriteLine($"Turn {buttonIndex} On {buttonState} at strip {stripIndex}");
                     }
-                    else if(!buttonState)
+                    else if(!buttonState && button.Button.isSet())
                     {
                         button.Button.TurnColorOn(RGBColor.Off);
                         button.Button.Set(false);
                         button.stripIndex = -1;
+                        Console.WriteLine($"Turn {buttonIndex} On {buttonState} at strip {stripIndex}");
+
                     }
 
                 }
