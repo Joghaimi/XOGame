@@ -262,6 +262,7 @@ namespace CatchyGame.Service
                         button.BlockForATimeInMs(200);
                         if (button.isSet())
                         {
+                            Console.WriteLine("Is Set");
                             AddPoint(ButtonNumberToPlayerIndex(buttonIndex));
                             button.BlockForATimeInMs(200);
                         }
