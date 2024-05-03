@@ -383,28 +383,28 @@ namespace CatchyGame.Service
                 return Round.Round5;
             return (Round)((int)currentRound + 1);
         }
-        private void RandomSelectStrip(int numberOfStripToSelect)
-        {
-            int selected = 0;
-            while (numberOfStripToSelect > selected)
-            {
-                var selectedIndex = random.Next(0, StripList.Count);
-                if (!StripList[selectedIndex].isActive)
-                {
-                    StripList[selectedIndex].isActive = true;
-                    selected++;
-                    Console.WriteLine($"Selected Strip #{selectedIndex + 1}");
-                }
-            }
-        }
-        private void UnSelectAllStrap()
-        {
-            Console.Write("UnSelectAllStrap ..");
+        //private void RandomSelectStrip(int numberOfStripToSelect)
+        //{
+        //    int selected = 0;
+        //    while (numberOfStripToSelect > selected)
+        //    {
+        //        var selectedIndex = random.Next(0, StripList.Count);
+        //        if (!StripList[selectedIndex].isActive)
+        //        {
+        //            StripList[selectedIndex].isActive = true;
+        //            selected++;
+        //            Console.WriteLine($"Selected Strip #{selectedIndex + 1}");
+        //        }
+        //    }
+        //}
+        //private void UnSelectAllStrap()
+        //{
+        //    Console.Write("UnSelectAllStrap ..");
 
-            foreach (var item in StripList)
-                item.isActive = false;
-            Console.WriteLine(" Done .");
-        }
+        //    foreach (var item in StripList)
+        //        item.isActive = false;
+        //    Console.WriteLine(" Done .");
+        //}
         private int ButtonNumberToPlayerIndex(int buttonIndex)
         {
             if (buttonIndex == 0 || buttonIndex == 1)
@@ -438,7 +438,7 @@ namespace CatchyGame.Service
         {
             for (int i = startLed; i <= endLed; i++)
             {
-                RGBWS2811.SetColor(true, i, RGBColor.Blue);
+                RGBWS2811.SetColor(true, i, RGBColor.Off);
             }
         }
 

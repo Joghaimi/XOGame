@@ -20,11 +20,11 @@ namespace Library.Model
         public bool resetLine { get; set; } = false;
 
 
-        public RGBButtonPixel rGBButton0 { get; set; }
-        public RGBButtonPixel rGBButton1 { get; set; }
-        public RGBButtonPixel rGBButton2 { get; set; }
-        public RGBButtonPixel rGBButton3 { get; set; }
-        public RGBButtonPixel rGBButton4 { get; set; }
+        //public RGBButtonPixel rGBButton0 { get; set; }
+        //public RGBButtonPixel rGBButton1 { get; set; }
+        //public RGBButtonPixel rGBButton2 { get; set; }
+        //public RGBButtonPixel rGBButton3 { get; set; }
+        //public RGBButtonPixel rGBButton4 { get; set; }
 
         public int stripIndex = -1;
 
@@ -226,97 +226,99 @@ namespace Library.Model
 
             return inRange;
         }
-        public void NextLed()
-        {
-            if (!isActive)
-                return;
-            RGBWS2811.SetColor(isActive, currentLed, rgbColor);
+        //public void NextLed()
+        //{
+        //    if (!isActive)
+        //        return;
+        //    RGBWS2811.SetColor(isActive, currentLed, rgbColor);
 
-            if (currentLed == startRGBLed)
-                this.rGBButton0.Button.TurnColorOn(this.rgbColor);
-            if (currentLed < endRGBLed)
-                currentLed++;
-            else
-            {
-                resetLine = true;
-            }
+        //    if (currentLed == startRGBLed)
+        //        this.rGBButton0.Button.TurnColorOn(this.rgbColor);
+        //    if (currentLed < endRGBLed)
+        //        currentLed++;
+        //    else
+        //    {
+        //        resetLine = true;
+        //    }
 
-            if (currentLed - 1 == rGBButton1.Pixel)
-            {
-                Console.WriteLine($"Turn RGBOne {rgbColor}");
-                rGBButton1.Button.Set(true);
-                rGBButton1.Button.TurnColorOn(rgbColor);
-            }
-            else if (currentLed - 2 == rGBButton1.Pixel || currentLed == rGBButton1.Pixel || currentLed + 1 == rGBButton1.Pixel)
-            {
-                rGBButton1.Button.TurnColorOn(RGBColor.Off);
+        //    if (currentLed - 1 == rGBButton1.Pixel)
+        //    {
+        //        Console.WriteLine($"Turn RGBOne {rgbColor}");
+        //        rGBButton1.Button.Set(true);
+        //        rGBButton1.Button.TurnColorOn(rgbColor);
+        //    }
+        //    else if (currentLed - 2 == rGBButton1.Pixel || currentLed == rGBButton1.Pixel || currentLed + 1 == rGBButton1.Pixel)
+        //    {
+        //        rGBButton1.Button.TurnColorOn(RGBColor.Off);
 
-            }
-            else
-            {
-                rGBButton1.Button.Set(false);
-                rGBButton1.Button.TurnColorOn(RGBColor.Off);
-            }
-            if (currentLed - 1 == rGBButton2.Pixel)
-            {
-                Console.WriteLine($"Turn RGB2 {rgbColor}");
-                rGBButton2.Button.Set(true);
-                rGBButton2.Button.TurnColorOn(rgbColor);
-            }
-            else if (currentLed - 2 == rGBButton2.Pixel || currentLed == rGBButton2.Pixel || currentLed + 1 == rGBButton2.Pixel)
+        //    }
+        //    else
+        //    {
+        //        rGBButton1.Button.Set(false);
+        //        rGBButton1.Button.TurnColorOn(RGBColor.Off);
+        //    }
+        //    if (currentLed - 1 == rGBButton2.Pixel)
+        //    {
+        //        Console.WriteLine($"Turn RGB2 {rgbColor}");
+        //        rGBButton2.Button.Set(true);
+        //        rGBButton2.Button.TurnColorOn(rgbColor);
+        //    }
+        //    else if (currentLed - 2 == rGBButton2.Pixel || currentLed == rGBButton2.Pixel || currentLed + 1 == rGBButton2.Pixel)
 
-            {
-                rGBButton2.Button.TurnColorOn(RGBColor.Off);
-            }
-            else
-            {
+        //    {
+        //        rGBButton2.Button.TurnColorOn(RGBColor.Off);
+        //    }
+        //    else
+        //    {
 
-                rGBButton2.Button.Set(false);
-                rGBButton2.Button.TurnColorOn(RGBColor.Off);
-            }
+        //        rGBButton2.Button.Set(false);
+        //        rGBButton2.Button.TurnColorOn(RGBColor.Off);
+        //    }
 
-            if (currentLed - 1 == rGBButton3.Pixel)
-            {
-                Console.WriteLine($"Turn RGB3 {rgbColor}");
-                rGBButton3.Button.Set(true);
-                rGBButton3.Button.TurnColorOn(rgbColor);
-            }
+        //    if (currentLed - 1 == rGBButton3.Pixel)
+        //    {
+        //        Console.WriteLine($"Turn RGB3 {rgbColor}");
+        //        rGBButton3.Button.Set(true);
+        //        rGBButton3.Button.TurnColorOn(rgbColor);
+        //    }
 
-            else if (currentLed - 2 == rGBButton3.Pixel || currentLed == rGBButton3.Pixel || currentLed + 1 == rGBButton3.Pixel)
-            {
-                rGBButton3.Button.TurnColorOn(RGBColor.Off);
-            }
-            else
-            {
+        //    else if (currentLed - 2 == rGBButton3.Pixel || currentLed == rGBButton3.Pixel || currentLed + 1 == rGBButton3.Pixel)
+        //    {
+        //        rGBButton3.Button.TurnColorOn(RGBColor.Off);
+        //    }
+        //    else
+        //    {
 
-                rGBButton3.Button.Set(false);
-                rGBButton3.Button.TurnColorOn(RGBColor.Off);
-            }
+        //        rGBButton3.Button.Set(false);
+        //        rGBButton3.Button.TurnColorOn(RGBColor.Off);
+        //    }
 
-            if (currentLed - 1 == rGBButton4.Pixel)
-            {
-                Console.WriteLine($"Turn RGB4 {rgbColor}");
-                rGBButton4.Button.Set(true);
-                rGBButton4.Button.TurnColorOn(rgbColor);
-            }
-            else if (currentLed - 2 == rGBButton4.Pixel || currentLed == rGBButton4.Pixel || currentLed + 1 == rGBButton4.Pixel)
-            {
-                rGBButton4.Button.TurnColorOn(RGBColor.Off);
-            }
-            else
-            {
-                rGBButton4.Button.Set(false);
-                rGBButton4.Button.TurnColorOn(RGBColor.Off);
-            }
+        //    if (currentLed - 1 == rGBButton4.Pixel)
+        //    {
+        //        Console.WriteLine($"Turn RGB4 {rgbColor}");
+        //        rGBButton4.Button.Set(true);
+        //        rGBButton4.Button.TurnColorOn(rgbColor);
+        //    }
+        //    else if (currentLed - 2 == rGBButton4.Pixel || currentLed == rGBButton4.Pixel || currentLed + 1 == rGBButton4.Pixel)
+        //    {
+        //        rGBButton4.Button.TurnColorOn(RGBColor.Off);
+        //    }
+        //    else
+        //    {
+        //        rGBButton4.Button.Set(false);
+        //        rGBButton4.Button.TurnColorOn(RGBColor.Off);
+        //    }
 
 
 
-        }
+        //}
+       
+        
         public void LineReseted()
         {
             resetLine = false;
             currentLed = startRGBLed;
-            this.rGBButton0.Button.TurnColorOn(RGBColor.Off);
+            //this.rGBButton0.Button.TurnColorOn(RGBColor.Off);
         }
 
 
