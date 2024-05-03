@@ -146,6 +146,8 @@ namespace Library.Model
         {
             if (!isActive)
                 return;
+            RGBWS2811.SetColor(isActive, currentLed, rgbColor);
+
             if (currentLed == startRGBLed)
                 this.rGBButton0.TurnColorOn(this.rgbColor);
             if (currentLed < endRGBLed)

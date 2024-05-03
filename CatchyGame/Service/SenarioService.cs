@@ -191,24 +191,24 @@ namespace CatchyGame.Service
                                     strip.rGBButton4.Pixel == strip.currentLed;
                                 if (nextOneIsTargetButton || LevelTime.ElapsedMilliseconds < 20)
                                 {
-                                    RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                                    //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
                                     strip.NextLed();
                                 }
                                 else if (LevelTime.ElapsedMilliseconds > 20 || LevelTime.ElapsedMilliseconds < 40)
                                 {
-                                    RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                                    //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
                                     strip.NextLed();
-                                    RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                                    //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
                                     strip.NextLed();
                                 }
                                 else
                                 {
 
-                                    RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                                    //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
                                     strip.NextLed();
-                                    RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                                    //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
                                     strip.NextLed();
-                                    RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
+                                    //RGBWS2811.SetColor(strip.isActive, strip.currentLed, strip.rgbColor);
                                     strip.NextLed();
                                 }
                                 if (strip.isActive && strip.resetLine)
