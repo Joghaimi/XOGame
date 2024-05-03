@@ -214,14 +214,16 @@ namespace Library.Model
                     foreach (var worm in Worms)
                     {
                         buttonState = buttonState || InRange(button.Pixel, worm.endPixel, worm.startPixel);
-                        Console.WriteLine($"buttonState {buttonState} in {index}");
+                        //Console.WriteLine($"buttonState {buttonState}");
                         index++;
                     }
+                    
                     if (buttonState)
                     {
                         button.Button.Set(true);
                         button.Button.TurnColorOn(rgbColor);
                         button.stripIndex = stripIndex;
+                        Console.WriteLine($"Turn On {buttonState} at strip {stripIndex}");
                     }
                     else
                     {
