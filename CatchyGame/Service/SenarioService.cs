@@ -248,11 +248,11 @@ namespace CatchyGame.Service
                                     strip.Move();
                                     strip.Move();
                                 }
-                                if (strip.isActive && strip.resetLine)
-                                {
-                                    ResetLine(strip.startRGBLed, strip.endRGBLed);
-                                    strip.LineReseted();
-                                }
+                                //if (strip.isActive && strip.resetLine)
+                                //{
+                                //    ResetLine(strip.startRGBLed, strip.endRGBLed);
+                                //    strip.LineReseted();
+                                //}
 
                             }
 
