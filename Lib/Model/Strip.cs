@@ -123,18 +123,18 @@ namespace Library.Model
                 if (theTailIsShown)
                     RGBWS2811.SetColor(this.isActive, worm.endPixel, this.rgbOffColor);
 
-                bool rgbButtonInRange = InRange(rGBButton0.Pixel, worm.endPixel, worm.startPixel);
-                bool notOccupied = rGBButton0.WormIndex == -1;
-                bool OccupiedFromTheSameWorm = rGBButton0.WormIndex == Index;
+                bool rgbButtonInRange = InRange(rGBButton1.Pixel, worm.endPixel, worm.startPixel);
+                bool notOccupied = rGBButton1.WormIndex == -1;
+                bool OccupiedFromTheSameWorm = rGBButton1.WormIndex == Index;
                 if (rgbButtonInRange && notOccupied)
                 {
                     // Set New Index 
                     rGBButton1.WormIndex = Index;
-                    Console.WriteLine($"rGBButton0 In Range Of worm with {rGBButton0.WormIndex}");
+                    Console.WriteLine($"rGBButton0 In Range Of worm with {rGBButton1.WormIndex}");
                     rGBButton1.Button.Set(true);
                     rGBButton1.Button.TurnColorOn(rgbColor);
                 }
-                else if (OccupiedFromTheSameWorm && rGBButton0.Button.isSet() &&!rgbButtonInRange)
+                else if (OccupiedFromTheSameWorm && rGBButton1.Button.isSet() &&!rgbButtonInRange)
                 {
                     Console.WriteLine($"Relese Button From Worm Index {Index}  button pixel {rGBButton0.Pixel} start {worm.endPixel} end {worm.startPixel}");
                     rGBButton1.Button.TurnColorOn(RGBColor.Off);
@@ -149,7 +149,7 @@ namespace Library.Model
 
         public bool InRange(int number, int min, int max)
         {
-            bool inRange = number >= min && rGBButton0.Pixel <= max;
+            bool inRange = number >= min && number <= max;
             
             return inRange;
         }
