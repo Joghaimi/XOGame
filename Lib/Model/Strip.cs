@@ -93,9 +93,9 @@ namespace Library.Model
 
             Console.WriteLine("Init Worms");
             this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 5, 0));
-            this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 3, 1));
-            this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 4, 2));
-            this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 5, 3));
+            //this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 3, 1));
+            //this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 4, 2));
+            //this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, 5, 3));
             Console.WriteLine("End Init Worms");
 
             this.rgbOffColor = rgbOffColor;
@@ -136,7 +136,7 @@ namespace Library.Model
                 }
                 else if (OccupiedFromTheSameWorm && rGBButton0.Button.isSet())
                 {
-                    Console.WriteLine($"Relese Button From Worm Index {Index}");
+                    Console.WriteLine($"Relese Button From Worm Index {Index}  button pixel {rGBButton0.Pixel} start {worm.endPixel} end {worm.startPixel}");
                     rGBButton0.Button.TurnColorOn(RGBColor.Off);
                     rGBButton0.Button.Set(false);
                     rGBButton0.WormIndex = -1;
@@ -149,7 +149,9 @@ namespace Library.Model
 
         public bool InRange(int number, int min, int max)
         {
-            return number >= min && rGBButton0.Pixel <= max;
+            bool inRange = number >= min && rGBButton0.Pixel <= max;
+            
+            return inRange;
         }
         public void NextLed()
         {
