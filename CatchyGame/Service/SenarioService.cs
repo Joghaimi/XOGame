@@ -174,6 +174,7 @@ namespace CatchyGame.Service
             Restart();
             while (!cancellationToken.IsCancellationRequested)
             {
+                if (VariableControlService.GameStatus == GameStatus.Started)
                 {
                     Console.WriteLine("Start Game ...");
                     if (!backgroundSoundStarted)
@@ -187,7 +188,7 @@ namespace CatchyGame.Service
                         {
                             strip.UpdateLength(WormLengthInTheLevel);
                         }
-                        
+
                         Console.WriteLine(VariableControlService.GameRound.ToString());
                         Console.WriteLine($"WormLengthInTheLevel {WormLengthInTheLevel}");
                         // Start The Timer 

@@ -81,8 +81,6 @@ namespace Library.Model
 
             // RGB Button Control 
             RGBButtonStateAndColor();
-
-
         }
 
 
