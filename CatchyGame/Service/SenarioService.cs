@@ -100,20 +100,57 @@ namespace CatchyGame.Service
 
 
             // Random 5 Work For Each Line
-            List<RGBButtonPixel> Buttons1 = new List<RGBButtonPixel>();
+            List<RGBButtonPixel> RGBButtonPixel1 = new List<RGBButtonPixel>();
+            List<RGBButtonPixel> RGBButtonPixel2 = new List<RGBButtonPixel>();
+            List<RGBButtonPixel> RGBButtonPixel3 = new List<RGBButtonPixel>();
+            List<RGBButtonPixel> RGBButtonPixel4 = new List<RGBButtonPixel>();
+            List<RGBButtonPixel> RGBButtonPixel5 = new List<RGBButtonPixel>();
+            List<RGBButtonPixel> RGBButtonPixel6 = new List<RGBButtonPixel>();
 
-            Buttons1.Add(StripOneButton0);
-            Buttons1.Add(StripOneButton1);
-            Buttons1.Add(StripOneButton2);
-            Buttons1.Add(StripOneButton3);
-            Buttons1.Add(StripOneButton4);
+            RGBButtonPixel1.Add(StripOneButton0);
+            RGBButtonPixel1.Add(StripOneButton1);
+            RGBButtonPixel1.Add(StripOneButton2);
+            RGBButtonPixel1.Add(StripOneButton3);
+            RGBButtonPixel1.Add(StripOneButton4);
 
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 0, 212, Buttons1));
-            //StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 213, 439, StripTwoButton0, StripTwoButton1, StripTwoButton2, StripTwoButton3, StripTwoButton4));
-            //StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 440, 665, StripThreeButton0, StripThreeButton1, StripThreeButton2, StripThreeButton3, StripThreeButton4));
-            //StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 666, 881, StripFourButton0, StripFourButton1, StripFourButton2, StripFourButton3, StripFourButton4));
-            //StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 882, 1075, StripFiveButton0, StripFiveButton1, StripFiveButton2, StripFiveButton3, StripFiveButton4));
-            //StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 1076, 1236, StripSixButton0, StripSixButton1, StripSixButton2, StripSixButton3, StripSixButton4));
+            RGBButtonPixel2.Add(StripTwoButton0);
+            RGBButtonPixel2.Add(StripTwoButton1);
+            RGBButtonPixel2.Add(StripTwoButton2);
+            RGBButtonPixel2.Add(StripTwoButton3);
+            RGBButtonPixel2.Add(StripTwoButton4);
+
+            RGBButtonPixel3.Add(StripThreeButton0);
+            RGBButtonPixel3.Add(StripThreeButton1);
+            RGBButtonPixel3.Add(StripThreeButton2);
+            RGBButtonPixel3.Add(StripThreeButton3);
+            RGBButtonPixel3.Add(StripThreeButton4);
+
+            RGBButtonPixel4.Add(StripFourButton0);
+            RGBButtonPixel4.Add(StripFourButton1);
+            RGBButtonPixel4.Add(StripFourButton2);
+            RGBButtonPixel4.Add(StripFourButton4);
+            RGBButtonPixel4.Add(StripFourButton3);
+
+            RGBButtonPixel5.Add(StripFiveButton0);
+            RGBButtonPixel5.Add(StripFiveButton1);
+            RGBButtonPixel5.Add(StripFiveButton2);
+            RGBButtonPixel5.Add(StripFiveButton4);
+            RGBButtonPixel5.Add(StripFiveButton3);
+
+            RGBButtonPixel6.Add(StripSixButton0);
+            RGBButtonPixel6.Add(StripSixButton1);
+            RGBButtonPixel6.Add(StripSixButton2);
+            RGBButtonPixel6.Add(StripSixButton4);
+            RGBButtonPixel6.Add(StripSixButton3);
+
+
+
+            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 0, 212, RGBButtonPixel1));
+            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 213, 439, RGBButtonPixel2));
+            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 440, 665, RGBButtonPixel3));
+            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 666, 881, RGBButtonPixel4));
+            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 882, 1075, RGBButtonPixel5));
+            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 1076, 1236, RGBButtonPixel6));
 
             // Init the RGBStrip 
             RGBWS2811.Init();
@@ -394,7 +431,7 @@ namespace CatchyGame.Service
 
             //VariableControlService.Team.player[playerIndex].score += 1;
             AudioPlayer.PIStartAudio(SoundType.Success);
-            Console.WriteLine($"Add Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
+            //Console.WriteLine($"Add Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
         }
         private void SubstractPoint(int playerIndex)
         {
