@@ -208,7 +208,7 @@ namespace Library.Model
             int buttonIndex = 0;
             foreach (var button in Buttons)
             {
-                if (button.stripIndex == -1 || button.stripIndex == stripIndex)
+                if (button.Button.stripIndex == -1 || button.Button.stripIndex == stripIndex)
                 {
                     bool buttonState = false;
                     int index = 0;
@@ -223,14 +223,14 @@ namespace Library.Model
                     {
                         button.Button.Set(true);
                         button.Button.TurnColorOn(rgbColor);
-                        button.stripIndex = stripIndex;
+                        button.Button.stripIndex = stripIndex;
                         Console.WriteLine($"Turn {buttonIndex} On {buttonState} at strip {stripIndex}");
                     }
                     else if(!buttonState && button.Button.isSet())
                     {
                         button.Button.TurnColorOn(RGBColor.Off);
                         button.Button.Set(false);
-                        button.stripIndex = -1;
+                        button.Button.stripIndex = -1;
                         //Console.WriteLine($"Turn {buttonIndex} Off {buttonState} at strip {stripIndex}");
 
                     }
