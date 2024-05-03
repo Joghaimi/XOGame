@@ -219,7 +219,7 @@ namespace Library.Model
                         index++;
                     }
 
-                    if (buttonState)
+                    if (buttonState && !button.Button.isSet())
                     {
                         button.Button.Set(true);
                         button.Button.TurnColorOn(rgbColor);
