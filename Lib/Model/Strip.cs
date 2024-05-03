@@ -31,6 +31,9 @@ namespace Library.Model
         public int wormLength { get; set; } = 5;
 
 
+        public List<RGBWorm> Worms = new List<RGBWorm>();
+
+
 
         //public Strip(
         //    RGBColor rgbColor,
@@ -91,11 +94,14 @@ namespace Library.Model
             this.rGBButton0 = rGBButton0;
             this.wormLength = wormLength;
 
+            this.Worms.Add(new RGBWorm(startRGBLed, endRGBLed, startRGBLed, -1 * wormLength));
+
+            //this.Worms.Add(new RGBWorm(startRGBLed, -1 * wormLength));
 
 
 
 
-            this.worm1 = new RGBWorm(startRGBLed, -1 * wormLength);
+            //this.worm1 = new RGBWorm(startRGBLed, -1 * wormLength);
             this.rgbOffColor = rgbOffColor;
             //this.worm2 = worm2;
             //this.worm3 = worm3;
@@ -111,20 +117,25 @@ namespace Library.Model
             //if (endPixel >= 0)
             //    RGBWS2811.SetColor(endPixel, RGBColor.Off);
             //endPixel++;
+            foreach (var worm in Worms)
+            {
+                if (worm.startPixel < endRGBLed)
+                    worm.startPixel++;
+                else
+                    worm.startPixel = worm.initendPixel;
+                if (worm.endPixel < endRGBLed)
+                    worm.endPixel++;
+                else
+                    worm.endPixel = worm.initendPixel;
 
-            if (worm1.startPixel < endRGBLed)
-                worm1.startPixel++;
-            else
-                worm1.startPixel = startRGBLed;
+                bool canMoveForward = worm.endPixel <= this.endRGBLed;
+                bool theTailIsShown = worm.endPixel >= startRGBLed;
 
-            if (worm1.endPixel < endRGBLed)
-                worm1.endPixel++;
-            else
-                worm1.endPixel = startRGBLed;
-            if (worm1.endPixel <= this.endRGBLed)
-                RGBWS2811.SetColor(this.isActive, worm1.startPixel, this.rgbColor);
-            if (worm1.endPixel >= 0)
-                RGBWS2811.SetColor(this.isActive, worm1.endPixel, this.rgbOffColor);
+                if (canMoveForward)
+                    RGBWS2811.SetColor(this.isActive, worm.startPixel, this.rgbColor);
+                if (theTailIsShown)
+                    RGBWS2811.SetColor(this.isActive, worm.endPixel, this.rgbOffColor);
+            }
 
 
 

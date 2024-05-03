@@ -9,12 +9,25 @@ namespace Library.Model
     public class RGBWorm
     {
 
-        public int startPixel = -5;
+        public int startStripPixel = -5;
+        public int endStripPixel = 0;
+        public int startPixel = 0;
         public int endPixel = 0;
-        public RGBWorm(int startPixel, int endPixel)
+        public int initStartPixel = 0;
+        public int initendPixel = 0;
+        public RGBWorm(int startStripPixel, int endStripPixel, int length, int WormIndex)
         {
-            this.startPixel = startPixel;
-            this.endPixel = endPixel;
+            this.startStripPixel = startStripPixel;
+            this.endStripPixel = endStripPixel;
+
+            int numberOfRGBLed = (endStripPixel - startStripPixel) / 5;
+            Console.WriteLine($"Strip Led Number {numberOfRGBLed}");
+            Random random = new Random();
+            this.startPixel = -1 * (numberOfRGBLed * (WormIndex) + random.Next(0, numberOfRGBLed));
+            this.initStartPixel = startPixel;
+            this.endPixel = this.startPixel - length;
+            this.initendPixel = endPixel;
+            Console.WriteLine($"Worm Start Pixel {endPixel}");
         }
     }
 }
