@@ -207,7 +207,7 @@ namespace Library.Model
             // RGB Button Control 
             foreach (var button in Buttons)
             {
-                if (button.stripIndex == -1)
+                if (button.stripIndex == -1 || button.stripIndex ==stripIndex)
                 {
                     bool buttonState = false;
                     int index = 0;
