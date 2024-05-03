@@ -214,7 +214,7 @@ namespace Library.Model
                     foreach (var worm in Worms)
                     {
                         buttonState = buttonState || InRange(button.Pixel, worm.endPixel, worm.startPixel);
-                        Console.WriteLine($"buttonState {buttonState}");
+                        Console.WriteLine($"buttonState {buttonState} in {index}");
                         index++;
                     }
                     if (buttonState)
