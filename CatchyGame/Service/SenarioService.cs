@@ -38,23 +38,42 @@ namespace CatchyGame.Service
             var rgb8 = new RGBButton(RGBButtonPin.RGBR8, RGBButtonPin.RGBG8, RGBButtonPin.RGBB8, RGBButtonPin.RGBPB8);
 
 
-            var startRGBButton1 = new RGBButton(RGBButtonPin.RGBB13, RGBButtonPin.RGBG13, RGBButtonPin.RGBR13, RGBButtonPin.RGBPB13);
-            var startRGBButton2 = new RGBButton(RGBButtonPin.RGBB14, RGBButtonPin.RGBG14, RGBButtonPin.RGBR14, RGBButtonPin.RGBPB14);
-            var startRGBButton3 = new RGBButton(RGBButtonPin.RGBB15, RGBButtonPin.RGBG15, RGBButtonPin.RGBR15, RGBButtonPin.RGBPB15);
-            var startRGBButton4 = new RGBButton(RGBButtonPin.RGBB9, RGBButtonPin.RGBG9, RGBButtonPin.RGBR9, RGBButtonPin.RGBPB9);
-            var startRGBButton5 = new RGBButton(RGBButtonPin.RGBB10, RGBButtonPin.RGBG10, RGBButtonPin.RGBR10, RGBButtonPin.RGBPB10);
-            var startRGBButton6 = new RGBButton(RGBButtonPin.RGBB12, RGBButtonPin.RGBG12, RGBButtonPin.RGBR12, RGBButtonPin.RGBPB12);
-
-            startRGBButton1.TurnColorOn(RGBColor.Red);
-            startRGBButton2.TurnColorOn(RGBColor.Red);
-            startRGBButton3.TurnColorOn(RGBColor.Red);
-            startRGBButton4.TurnColorOn(RGBColor.Red);
-            startRGBButton5.TurnColorOn(RGBColor.Red);
-            startRGBButton6.TurnColorOn(RGBColor.Red);
+            var startRGBButton1 = new RGBButton(RGBButtonPin.RGBR13, RGBButtonPin.RGBG13, RGBButtonPin.RGBB13, RGBButtonPin.RGBPB13);
+            var startRGBButton2 = new RGBButton(RGBButtonPin.RGBR14, RGBButtonPin.RGBG14, RGBButtonPin.RGBB14, RGBButtonPin.RGBPB14);
+            var startRGBButton3 = new RGBButton(RGBButtonPin.RGBR15, RGBButtonPin.RGBG15, RGBButtonPin.RGBB15, RGBButtonPin.RGBPB15);
+            var startRGBButton4 = new RGBButton(RGBButtonPin.RGBR9, RGBButtonPin.RGBG9, RGBButtonPin.RGBB9, RGBButtonPin.RGBPB9);
+            var startRGBButton5 = new RGBButton(RGBButtonPin.RGBR10, RGBButtonPin.RGBG10, RGBButtonPin.RGBB10, RGBButtonPin.RGBPB10);
+            var startRGBButton6 = new RGBButton(RGBButtonPin.RGBR12, RGBButtonPin.RGBG12, RGBButtonPin.RGBB12, RGBButtonPin.RGBPB12);
 
 
-            while (true) { }
+            while (true)
+            {
+                Console.WriteLine("Blue");
+                startRGBButton1.TurnColorOn(RGBColor.Blue);
+                startRGBButton2.TurnColorOn(RGBColor.Blue);
+                startRGBButton3.TurnColorOn(RGBColor.Blue);
+                startRGBButton4.TurnColorOn(RGBColor.Blue);
+                startRGBButton5.TurnColorOn(RGBColor.Blue);
+                startRGBButton6.TurnColorOn(RGBColor.Blue);
+                
+                
+                Thread.Sleep(1000);
+                startRGBButton1.TurnColorOn(RGBColor.Red);
+                startRGBButton2.TurnColorOn(RGBColor.Red);
+                startRGBButton3.TurnColorOn(RGBColor.Red);
+                startRGBButton4.TurnColorOn(RGBColor.Red);
+                startRGBButton5.TurnColorOn(RGBColor.Red);
+                startRGBButton6.TurnColorOn(RGBColor.Red);
 
+                Thread.Sleep(1000);
+                startRGBButton1.TurnColorOn(RGBColor.Green);
+                startRGBButton2.TurnColorOn(RGBColor.Green);
+                startRGBButton3.TurnColorOn(RGBColor.Green);
+                startRGBButton4.TurnColorOn(RGBColor.Green);
+                startRGBButton5.TurnColorOn(RGBColor.Green);
+                startRGBButton6.TurnColorOn(RGBColor.Green);
+                Thread.Sleep(1000);
+            }
 
 
             RGBButtonList.Add(rgb1);
