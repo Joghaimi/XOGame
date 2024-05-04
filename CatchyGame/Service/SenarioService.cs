@@ -46,12 +46,12 @@ namespace CatchyGame.Service
             var startRGBButton1 = new RGBButton(RGBButtonPin.RGBB13, RGBButtonPin.RGBR13, RGBButtonPin.RGBB13, RGBButtonPin.RGBPB13);
             var startRGBButton2 = new RGBButton(RGBButtonPin.RGBB14, RGBButtonPin.RGBR14, RGBButtonPin.RGBB14, RGBButtonPin.RGBPB14);
             var startRGBButton3 = new RGBButton(RGBButtonPin.RGBB15, RGBButtonPin.RGBR15, RGBButtonPin.RGBB15, RGBButtonPin.RGBPB15);
-            var startRGBButton4 = new RGBButton(RGBButtonPin.RGBB9, RGBButtonPin.RGBR9,   RGBButtonPin.RGBB9, RGBButtonPin.RGBPB9);
+            var startRGBButton4 = new RGBButton(RGBButtonPin.RGBB9, RGBButtonPin.RGBR9, RGBButtonPin.RGBB9, RGBButtonPin.RGBPB9);
             var startRGBButton5 = new RGBButton(RGBButtonPin.RGBB10, RGBButtonPin.RGBR10, RGBButtonPin.RGBB10, RGBButtonPin.RGBPB10);
             var startRGBButton6 = new RGBButton(RGBButtonPin.RGBB12, RGBButtonPin.RGBR12, RGBButtonPin.RGBB12, RGBButtonPin.RGBPB12);
 
 
-          
+
 
             RGBButtonList.Add(rgb1);
             RGBButtonList.Add(rgb2);
@@ -155,12 +155,12 @@ namespace CatchyGame.Service
 
 
 
-            StripList.Add(new Strip(onColor, offColor, 0, 211, RGBButtonPixel1, 0));
+            //StripList.Add(new Strip(onColor, offColor, 0, 211, RGBButtonPixel1, 0));
             StripList.Add(new Strip(onColor, offColor, 212, 238, RGBButtonPixel2, 1));
-            StripList.Add(new Strip(onColor, offColor, 439, 664, RGBButtonPixel3, 2));
-            StripList.Add(new Strip(onColor, offColor, 665, 880, RGBButtonPixel4, 3));
-            StripList.Add(new Strip(onColor, offColor, 881, 1074, RGBButtonPixel5, 4));
-            StripList.Add(new Strip(onColor, offColor, 1075, 1240, RGBButtonPixel6, 5));
+            //StripList.Add(new Strip(onColor, offColor, 439, 664, RGBButtonPixel3, 2));
+            //StripList.Add(new Strip(onColor, offColor, 665, 880, RGBButtonPixel4, 3));
+            //StripList.Add(new Strip(onColor, offColor, 881, 1074, RGBButtonPixel5, 4));
+            //StripList.Add(new Strip(onColor, offColor, 1075, 1240, RGBButtonPixel6, 5));
 
             RGBWS2811.Init();
             LevelTime.Start();
@@ -227,12 +227,15 @@ namespace CatchyGame.Service
 
                             RGBWS2811.Commit();
                         }
+                        Console.WriteLine("Round Finish");
                         if (VariableControlService.GameRound == Round.Round5)
                             VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
                         VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
                     }
+
                     if (backgroundSoundStarted)
                         AudioPlayer.PIStopAudio();
+                    Console.WriteLine("Stop Game");
                 }
             }
         }

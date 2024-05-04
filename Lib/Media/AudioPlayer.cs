@@ -98,6 +98,7 @@ namespace Library.Media
                 audioProcess.StartInfo.RedirectStandardOutput = false;
                 audioProcess.StartInfo.RedirectStandardError = false;
                 audioProcess.Start();
+                Console.WriteLine("Stop Sound");
 
             }
             catch (Exception ex)
