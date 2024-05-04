@@ -96,7 +96,7 @@ namespace Library.Model
                     bool buttonState = false;
                     foreach (var worm in Worms)
                     {
-                        buttonState = buttonState || InRange(button.Pixel, worm.endPixel, worm.startPixel);
+                        buttonState = buttonState || ButtonTouchTheWorm(button.Pixel, worm.endPixel, worm.startPixel);
                     }
 
                     if (buttonState && !button.Button.isSet() && !button.Button.clickedForOnce)
@@ -122,12 +122,21 @@ namespace Library.Model
 
 
 
-        public bool InRange(int number, int min, int max)
+        public bool ButtonTouchTheWorm(int buttonPixel, int wormTailPixel, int wormHeadPiexel)
         {
-            bool inRange = number >= min && number <= max;
-
-            return inRange;
+            bool inRange = buttonPixel >= wormTailPixel && buttonPixel <= wormHeadPiexel;
+            bool wormPassTheLastPixelInStrip = (wormTailPixel > wormHeadPiexel);
+            bool inLastBitsOfTheLine = wormPassTheLastPixelInStrip && buttonPixel > wormHeadPiexel;
+            return inRange || inLastBitsOfTheLine;
         }
+
+
+        //public bool InRange(int number, int min, int max)
+        //{
+        //    bool inRange = number >= min && number <= max;
+        //    bool inLastBitsOfTheLine = (min > max) && number > max;
+        //    return inRange || inLastBitsOfTheLine;
+        //}
 
 
         public void LineReseted()
