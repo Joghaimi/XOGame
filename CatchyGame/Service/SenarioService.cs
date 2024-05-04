@@ -184,8 +184,10 @@ namespace CatchyGame.Service
                 if (VariableControlService.GameStatus == GameStatus.Started)
                 {
                     Console.WriteLine("Start Game ...");
-                    if (!backgroundSoundStarted)
+                    if (!backgroundSoundStarted) {
+                        backgroundSoundStarted = true;
                         AudioPlayer.PIBackgroundSound(SoundType.Background);
+                    }
                     Restart();
                     while (VariableControlService.GameStatus == GameStatus.Started)
                     {
@@ -233,8 +235,10 @@ namespace CatchyGame.Service
                         VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
                     }
 
-                    if (backgroundSoundStarted)
+                    if (backgroundSoundStarted) {
+                        backgroundSoundStarted = false;
                         AudioPlayer.PIStopAudio();
+                    }
                     Console.WriteLine("Stop Game");
                 }
             }
