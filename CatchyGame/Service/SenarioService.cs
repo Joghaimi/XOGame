@@ -363,11 +363,11 @@ namespace CatchyGame.Service
         {
             if (buttonIndex == 0 || buttonIndex == 1 || buttonIndex == 8)
                 return 0;
-            else if (buttonIndex == 2 || buttonIndex == 3 || buttonIndex == 9)
+            else if (buttonIndex == 2 || buttonIndex == 3 || buttonIndex == 10)
                 return 1;
-            else if (buttonIndex == 4 || buttonIndex == 5 || buttonIndex == 10)
+            else if (buttonIndex == 4 || buttonIndex == 5 || buttonIndex == 11)
                 return 2;
-            else if (buttonIndex == 6 || buttonIndex == 7 || buttonIndex == 11)
+            else if (buttonIndex == 6 || buttonIndex == 7 || buttonIndex == 13)
                 return 3;
             return 0;
         }
