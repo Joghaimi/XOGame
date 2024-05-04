@@ -96,7 +96,7 @@ namespace Library.Model
                     bool buttonState = false;
                     foreach (var worm in Worms)
                     {
-                        buttonState = buttonState || ButtonTouchTheWorm(button.Pixel, worm.endPixel, worm.startPixel);
+                        buttonState = buttonState || ButtonTouchTheWorm(button.Pixel, worm.endPixel, worm.startPixel, buttonIndex == 0);
                     }
 
                     if (buttonState && !button.Button.isSet() && !button.Button.clickedForOnce)
@@ -122,11 +122,11 @@ namespace Library.Model
 
 
 
-        public bool ButtonTouchTheWorm(int buttonPixel, int wormTailPixel, int wormHeadPiexel)
+        public bool ButtonTouchTheWorm(int buttonPixel, int wormTailPixel, int wormHeadPixel, bool itsStartButton)
         {
-            bool inRange = buttonPixel >= wormTailPixel && buttonPixel <= wormHeadPiexel;
-            bool wormPassTheLastPixelInStrip = (wormTailPixel > wormHeadPiexel);
-            bool inLastBitsOfTheLine = wormPassTheLastPixelInStrip && buttonPixel > wormHeadPiexel;
+            bool inRange = buttonPixel >= wormTailPixel && buttonPixel <= wormHeadPixel;
+            bool wormPassTheLastPixelInStrip = (wormTailPixel > wormHeadPixel);
+            bool inLastBitsOfTheLine = wormPassTheLastPixelInStrip && (buttonPixel > wormHeadPixel) && itsStartButton;
             return inRange || inLastBitsOfTheLine;
         }
 
