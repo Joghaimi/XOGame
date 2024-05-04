@@ -72,7 +72,7 @@ namespace CatchyGame.Service
             RGBButtonPixel StripOneButton0 = new RGBButtonPixel(0, startRGBButton1);
             RGBButtonPixel StripOneButton1 = new RGBButtonPixel(19, rgb1);
             RGBButtonPixel StripOneButton2 = new RGBButtonPixel(60, rgb4);
-            //RGBButtonPixel StripOneButton3 = new RGBButtonPixel(82, rgb5);
+            RGBButtonPixel StripOneButton3 = new RGBButtonPixel(82, rgb5);
             RGBButtonPixel StripOneButton4 = new RGBButtonPixel(123, rgb8);
 
             RGBButtonPixel StripTwoButton0 = new RGBButtonPixel(213, startRGBButton2);
@@ -82,9 +82,9 @@ namespace CatchyGame.Service
             RGBButtonPixel StripTwoButton4 = new RGBButtonPixel(355, rgb7);
 
             RGBButtonPixel StripThreeButton0 = new RGBButtonPixel(440, startRGBButton3);
-            //RGBButtonPixel StripThreeButton1 = new RGBButtonPixel(475, rgb2);
+            RGBButtonPixel StripThreeButton1 = new RGBButtonPixel(475, rgb2);
             RGBButtonPixel StripThreeButton2 = new RGBButtonPixel(520, rgb4);
-            //RGBButtonPixel StripThreeButton3 = new RGBButtonPixel(535, rgb5);
+            RGBButtonPixel StripThreeButton3 = new RGBButtonPixel(535, rgb5);
             RGBButtonPixel StripThreeButton4 = new RGBButtonPixel(591, rgb8);
 
             RGBButtonPixel StripFourButton0 = new RGBButtonPixel(666, startRGBButton4);
@@ -95,16 +95,16 @@ namespace CatchyGame.Service
 
 
             RGBButtonPixel StripFiveButton0 = new RGBButtonPixel(882, startRGBButton5);
-            //RGBButtonPixel StripFiveButton1 = new RGBButtonPixel(945, rgb2);
+            RGBButtonPixel StripFiveButton1 = new RGBButtonPixel(945, rgb2);
             RGBButtonPixel StripFiveButton3 = new RGBButtonPixel(976, rgb4);
-            //RGBButtonPixel StripFiveButton2 = new RGBButtonPixel(998, rgb5);
+            RGBButtonPixel StripFiveButton2 = new RGBButtonPixel(998, rgb5);
             RGBButtonPixel StripFiveButton4 = new RGBButtonPixel(1043, rgb8);
 
             RGBButtonPixel StripSixButton0 = new RGBButtonPixel(1076, startRGBButton6);
             RGBButtonPixel StripSixButton1 = new RGBButtonPixel(1094, rgb7);
             RGBButtonPixel StripSixButton3 = new RGBButtonPixel(1107, rgb6);
             RGBButtonPixel StripSixButton2 = new RGBButtonPixel(1137, rgb3);
-            //RGBButtonPixel StripSixButton4 = new RGBButtonPixel(1153, rgb2);
+            RGBButtonPixel StripSixButton4 = new RGBButtonPixel(1153, rgb2);
 
 
 
@@ -120,7 +120,7 @@ namespace CatchyGame.Service
             RGBButtonPixel1.Add(StripOneButton0);
             RGBButtonPixel1.Add(StripOneButton1);
             RGBButtonPixel1.Add(StripOneButton2);
-            //RGBButtonPixel1.Add(StripOneButton3);
+            RGBButtonPixel1.Add(StripOneButton3);
             RGBButtonPixel1.Add(StripOneButton4);
 
             RGBButtonPixel2.Add(StripTwoButton0);
@@ -130,9 +130,9 @@ namespace CatchyGame.Service
             RGBButtonPixel2.Add(StripTwoButton4);
 
             RGBButtonPixel3.Add(StripThreeButton0);
-            //RGBButtonPixel3.Add(StripThreeButton1);
+            RGBButtonPixel3.Add(StripThreeButton1);
             RGBButtonPixel3.Add(StripThreeButton2);
-            //RGBButtonPixel3.Add(StripThreeButton3);
+            RGBButtonPixel3.Add(StripThreeButton3);
             RGBButtonPixel3.Add(StripThreeButton4);
 
             RGBButtonPixel4.Add(StripFourButton0);
@@ -142,15 +142,15 @@ namespace CatchyGame.Service
             RGBButtonPixel4.Add(StripFourButton3);
 
             RGBButtonPixel5.Add(StripFiveButton0);
-            //RGBButtonPixel5.Add(StripFiveButton1);
-            //RGBButtonPixel5.Add(StripFiveButton2);
+            RGBButtonPixel5.Add(StripFiveButton1);
+            RGBButtonPixel5.Add(StripFiveButton2);
             RGBButtonPixel5.Add(StripFiveButton4);
             RGBButtonPixel5.Add(StripFiveButton3);
 
             RGBButtonPixel6.Add(StripSixButton0);
             RGBButtonPixel6.Add(StripSixButton1);
             RGBButtonPixel6.Add(StripSixButton2);
-            //RGBButtonPixel6.Add(StripSixButton4);
+            RGBButtonPixel6.Add(StripSixButton4);
             RGBButtonPixel6.Add(StripSixButton3);
 
 
@@ -344,12 +344,12 @@ namespace CatchyGame.Service
 
         private int WormLengthInLevel(Round currentRound)
         {
-            if (currentRound == Round.Round1) return 5;
-            else if (currentRound == Round.Round2) return 4;
-            else if (currentRound == Round.Round3) return 3;
-            else if (currentRound == Round.Round4) return 2;
-            else if (currentRound == Round.Round5) return 1;
-            return 5;
+            if (currentRound == Round.Round1) return 7;
+            else if (currentRound == Round.Round2) return 6;
+            else if (currentRound == Round.Round3) return 5;
+            else if (currentRound == Round.Round4) return 4;
+            else if (currentRound == Round.Round5) return 3;
+            return 7;
         }
 
         // ======== Private To The Next Room
@@ -361,13 +361,13 @@ namespace CatchyGame.Service
         }
         private int ButtonNumberToPlayerIndex(int buttonIndex)
         {
-            if (buttonIndex == 0 || buttonIndex == 1)
+            if (buttonIndex == 0 || buttonIndex == 1 || buttonIndex == 8)
                 return 0;
-            else if (buttonIndex == 2 || buttonIndex == 3)
+            else if (buttonIndex == 2 || buttonIndex == 3 || buttonIndex == 9)
                 return 1;
-            else if (buttonIndex == 4 || buttonIndex == 5)
+            else if (buttonIndex == 4 || buttonIndex == 5 || buttonIndex == 10)
                 return 2;
-            else if (buttonIndex == 6 || buttonIndex == 7)
+            else if (buttonIndex == 6 || buttonIndex == 7 || buttonIndex == 11)
                 return 3;
             return 0;
         }
