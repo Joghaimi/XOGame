@@ -184,7 +184,8 @@ namespace CatchyGame.Service
                 if (VariableControlService.GameStatus == GameStatus.Started)
                 {
                     Console.WriteLine("Start Game ...");
-                    if (!backgroundSoundStarted) {
+                    if (!backgroundSoundStarted)
+                    {
                         backgroundSoundStarted = true;
                         AudioPlayer.PIBackgroundSound(SoundType.Background);
                     }
@@ -235,7 +236,8 @@ namespace CatchyGame.Service
                         VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
                     }
 
-                    if (backgroundSoundStarted) {
+                    if (backgroundSoundStarted)
+                    {
                         backgroundSoundStarted = false;
                         AudioPlayer.PIStopAudio();
                     }
@@ -259,7 +261,7 @@ namespace CatchyGame.Service
                             if (button.isSet())
                             {
                                 Console.WriteLine("Is Set");
-                                AddPoint(ButtonNumberToPlayerIndex(buttonIndex));
+                                AddPoint(ButtonNumberToPlayerIndex(buttonIndex), buttonIndex > 7);
                                 button.BlockForATimeInMs(200);
                                 button.clickedForOnce = true;
                                 button.Set(false);
@@ -329,15 +331,15 @@ namespace CatchyGame.Service
 
 
         // ========== Number Of Straps
-        private int NumberOfStrapsInLevel(Round currentRound)
-        {
-            if (currentRound == Round.Round1) return 2;
-            else if (currentRound == Round.Round2) return 3;
-            else if (currentRound == Round.Round3) return 4;
-            else if (currentRound == Round.Round4) return 5;
-            else if (currentRound == Round.Round5) return 6;
-            return 0;
-        }
+        //private int NumberOfStrapsInLevel(Round currentRound)
+        //{
+        //    if (currentRound == Round.Round1) return 2;
+        //    else if (currentRound == Round.Round2) return 3;
+        //    else if (currentRound == Round.Round3) return 4;
+        //    else if (currentRound == Round.Round4) return 5;
+        //    else if (currentRound == Round.Round5) return 6;
+        //    return 0;
+        //}
 
 
         private int WormLengthInLevel(Round currentRound)
@@ -371,12 +373,14 @@ namespace CatchyGame.Service
         }
 
 
-        private void AddPoint(int playerIndex)
+        private void AddPoint(int playerIndex, bool isDubleScore)
         {
             if (playerIndex > VariableControlService.Team.player.Count() - 1)
                 return;
-
-            VariableControlService.Team.player[playerIndex].score += 1;
+            if (isDubleScore)
+                VariableControlService.Team.player[playerIndex].score += 2;
+            else
+                VariableControlService.Team.player[playerIndex].score += 1;
             AudioPlayer.PIStartAudio(SoundType.Success);
             Console.WriteLine($"Add Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
         }
@@ -384,6 +388,9 @@ namespace CatchyGame.Service
         {
             Console.WriteLine("Substract Point");
             AudioPlayer.PIStartAudio(SoundType.Failure);
+            VariableControlService.Team.player[playerIndex].score -= 1;
+            Console.WriteLine($"Substract Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
+
         }
 
         private void ResetLine(int startLed, int endLed)
