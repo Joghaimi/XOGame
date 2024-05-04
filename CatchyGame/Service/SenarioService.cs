@@ -22,6 +22,11 @@ namespace CatchyGame.Service
         Stopwatch LevelTime = new Stopwatch();
         Random random = new Random();
         bool backgroundSoundStarted = false;
+
+        RGBColor onColor = RGBColor.Red;
+        RGBColor offColor = RGBColor.Blue;
+
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
 
@@ -150,18 +155,16 @@ namespace CatchyGame.Service
 
 
 
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Blue, 0, 211, RGBButtonPixel1, 0));
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Blue, 212, 238, RGBButtonPixel2, 1));
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Blue, 439, 664, RGBButtonPixel3, 2));
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Blue, 665, 880, RGBButtonPixel4, 3));
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Blue, 881, 1074, RGBButtonPixel5, 4));
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Blue, 1075, 1240, RGBButtonPixel6, 5));
+            StripList.Add(new Strip(onColor, offColor, 0, 211, RGBButtonPixel1, 0));
+            StripList.Add(new Strip(onColor, offColor, 212, 238, RGBButtonPixel2, 1));
+            StripList.Add(new Strip(onColor, offColor, 439, 664, RGBButtonPixel3, 2));
+            StripList.Add(new Strip(onColor, offColor, 665, 880, RGBButtonPixel4, 3));
+            StripList.Add(new Strip(onColor, offColor, 881, 1074, RGBButtonPixel5, 4));
+            StripList.Add(new Strip(onColor, offColor, 1075, 1240, RGBButtonPixel6, 5));
 
             RGBWS2811.Init();
             LevelTime.Start();
             AudioPlayer.Init(Room.Catchy);
-
-
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -169,35 +172,6 @@ namespace CatchyGame.Service
             Task.Run(() => ControlRGBLight(_cts.Token));
             Task.Run(() => ControlRGBButton(_cts2.Token));
             Task.Run(() => ControlGameTiming(_cts3.Token));
-            //while (true)
-            //{
-            //    Console.WriteLine("Blue");
-            //    startRGBButton1.TurnColorOn(RGBColor.Blue);
-            //    startRGBButton2.TurnColorOn(RGBColor.Blue);
-            //    startRGBButton3.TurnColorOn(RGBColor.Blue);
-            //    startRGBButton4.TurnColorOn(RGBColor.Blue);
-            //    startRGBButton5.TurnColorOn(RGBColor.Blue);
-            //    startRGBButton6.TurnColorOn(RGBColor.Blue);
-
-
-            //    Thread.Sleep(1000);
-            //    startRGBButton1.TurnColorOn(RGBColor.Red);
-            //    startRGBButton2.TurnColorOn(RGBColor.Red);
-            //    startRGBButton3.TurnColorOn(RGBColor.Red);
-            //    startRGBButton4.TurnColorOn(RGBColor.Red);
-            //    startRGBButton5.TurnColorOn(RGBColor.Red);
-            //    startRGBButton6.TurnColorOn(RGBColor.Red);
-
-            //    Thread.Sleep(1000);
-            //    startRGBButton1.TurnColorOn(RGBColor.Green);
-            //    startRGBButton2.TurnColorOn(RGBColor.Green);
-            //    startRGBButton3.TurnColorOn(RGBColor.Green);
-            //    startRGBButton4.TurnColorOn(RGBColor.Green);
-            //    startRGBButton5.TurnColorOn(RGBColor.Green);
-            //    startRGBButton6.TurnColorOn(RGBColor.Green);
-            //    Thread.Sleep(1000);
-            //}
-
             return Task.CompletedTask;
         }
 
@@ -409,7 +383,7 @@ namespace CatchyGame.Service
         {
             for (int i = startLed; i <= endLed; i++)
             {
-                RGBWS2811.SetColor(true, i, RGBColor.Off);
+                RGBWS2811.SetColor(true, i, offColor);
             }
         }
 
