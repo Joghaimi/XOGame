@@ -150,13 +150,12 @@ namespace CatchyGame.Service
 
 
 
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 0, 212, RGBButtonPixel1, 0));
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 213, 439, RGBButtonPixel2, 1));
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 440, 665, RGBButtonPixel3, 2));
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 666, 881, RGBButtonPixel4, 3));
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 882, 1075, RGBButtonPixel5, 4));
-            StripList.Add(new Strip(RGBColor.Red, RGBColor.Off, 1076, 1236, RGBButtonPixel6, 5));
-
+            StripList.Add(new Strip(RGBColor.Red, RGBColor.Blue, 0, 211, RGBButtonPixel1, 0));
+            StripList.Add(new Strip(RGBColor.Red, RGBColor.Blue, 212, 238, RGBButtonPixel2, 1));
+            StripList.Add(new Strip(RGBColor.Red, RGBColor.Blue, 439, 664, RGBButtonPixel3, 2));
+            StripList.Add(new Strip(RGBColor.Red, RGBColor.Blue, 665, 880, RGBButtonPixel4, 3));
+            StripList.Add(new Strip(RGBColor.Red, RGBColor.Blue, 881, 1074, RGBButtonPixel5, 4));
+            StripList.Add(new Strip(RGBColor.Red, RGBColor.Blue, 1075, 1240, RGBButtonPixel6, 5));
 
             RGBWS2811.Init();
             LevelTime.Start();
