@@ -115,6 +115,10 @@ namespace FortRoom.Controllers
             var totalTime = (VariableControlService.RoomTiming - VariableControlService.CurrentTime) / 1000;
             totalTime = totalTime < 0 ? 0 : totalTime;
             (int, string) timeAndStatus = (totalTime, VariableControlService.GameStatus.ToString());
+            Console.WriteLine(totalTime);
+            Console.WriteLine(VariableControlService.GameStatus.ToString());
+            Console.WriteLine(timeAndStatus);
+
             return Ok(timeAndStatus);
         }
 
