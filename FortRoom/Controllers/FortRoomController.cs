@@ -109,5 +109,15 @@ namespace FortRoom.Controllers
             return Ok(totalTime < 0 ? 0 : totalTime);
         }
 
+        [HttpGet("TimeAndStatus")]
+        public IActionResult TimeAndStatus()
+        {
+            var totalTime = (VariableControlService.RoomTiming - VariableControlService.CurrentTime) / 1000;
+            totalTime = totalTime < 0 ? 0 : totalTime;
+            (int, string) timeAndStatus = (totalTime, VariableControlService.GameStatus.ToString());
+            return Ok(timeAndStatus);
+        }
+
+
     }
 }
