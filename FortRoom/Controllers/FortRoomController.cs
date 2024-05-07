@@ -137,7 +137,7 @@ namespace FortRoom.Controllers
             return Ok();
         }
 
-        [HttpGet("RGBColor")]
+        //[HttpGet("RGBColor")]
 
 
 
