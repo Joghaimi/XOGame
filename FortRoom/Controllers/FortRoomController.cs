@@ -110,7 +110,7 @@ namespace FortRoom.Controllers
         }
 
         [HttpGet("TimeAndStatus")]
-        public IActionResult TimeAndStatus()
+        public ActionResult<(int, string)> GetTimeAndStatus()
         {
             var totalTime = (VariableControlService.RoomTiming - VariableControlService.CurrentTime) / 1000;
             totalTime = totalTime < 0 ? 0 : totalTime;
