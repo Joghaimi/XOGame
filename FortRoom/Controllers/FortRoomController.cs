@@ -21,7 +21,7 @@ namespace FortRoom.Controllers
         public IActionResult Get()
         {
             //return Ok(VariableControlService.IsOccupied);
-            return Ok(VariableControlService.GameStatus !=GameStatus.Empty);
+            return Ok(VariableControlService.GameStatus != GameStatus.Empty);
         }
         [HttpGet("SetAsOccupied")]
         public IActionResult SetAsOccupied(bool IsOccupied)
@@ -88,7 +88,6 @@ namespace FortRoom.Controllers
         public IActionResult IsGameStarted()
         {
             return Ok(VariableControlService.GameStatus == GameStatus.Started);
-            //return Ok(VariableControlService.IsTheGameStarted);
         }
 
 
@@ -110,21 +109,26 @@ namespace FortRoom.Controllers
         }
 
         [HttpGet("TimeAndStatus")]
-        public ActionResult<(int, string)> GetTimeAndStatus()
+        public IActionResult GetTimeAndStatus()
         {
             var totalTime = (VariableControlService.RoomTiming - VariableControlService.CurrentTime) / 1000;
             totalTime = totalTime < 0 ? 0 : totalTime;
-            (int, string) timeAndStatus = (totalTime, VariableControlService.GameStatus.ToString());
-            Console.WriteLine(totalTime);
-            Console.WriteLine(VariableControlService.GameStatus.ToString());
-            Console.WriteLine(timeAndStatus);
             var result = new { Time = totalTime, Status = VariableControlService.GameStatus.ToString() };
-
-
-
             return Ok(result);
         }
 
+        [HttpGet("RoomInfo")]
+        public IActionResult RoomInfo()
+        {
+            var result = new
+            {
+                TeamName = VariableControlService.TeamScore.Name,
+                Score = VariableControlService.TeamScore.FortRoomScore,
+                DoorStatus = VariableControlService.CurrentDoorStatus,
+                Status = VariableControlService.GameStatus.ToString()
+            };
+            return Ok(result);
+        }
 
     }
 }
