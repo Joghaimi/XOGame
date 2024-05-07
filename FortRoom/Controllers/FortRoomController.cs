@@ -119,7 +119,7 @@ namespace FortRoom.Controllers
             Console.WriteLine(VariableControlService.GameStatus.ToString());
             Console.WriteLine(timeAndStatus);
 
-            return Ok(timeAndStatus);
+            return Ok((totalTime, VariableControlService.GameStatus.ToString()));
         }
 
 
