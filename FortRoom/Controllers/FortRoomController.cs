@@ -1,6 +1,7 @@
 ﻿using FortRoom.Services;
 using Library;
 using Library.Model;
+using Library.RGBLib;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -129,6 +130,16 @@ namespace FortRoom.Controllers
             };
             return Ok(result);
         }
+        [HttpGet("RGBColor")]
+        public IActionResult RGBColor(RGBColor newColor)
+        {
+            RGBLight.SetColor(newColor);
+            return Ok();
+        }
+
+        [HttpGet("RGBColor")]
+
+
 
     }
 }
