@@ -1,5 +1,6 @@
 ﻿using FortRoom.Services;
 using Library;
+using Library.Modbus;
 using Library.Model;
 using Library.RGBLib;
 using Microsoft.AspNetCore.Cors;
@@ -137,8 +138,15 @@ namespace FortRoom.Controllers
             return Ok();
         }
 
-        //[HttpGet("RGBColor")]
-
+        [HttpGet("Obstacle")]
+        public IActionResult Obstacle(bool status)
+        {
+            if (status)
+                ObstructionLib.Start();
+            else
+                ObstructionLib.Stop();
+            return Ok();
+        }
 
 
     }

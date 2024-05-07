@@ -11,7 +11,7 @@ namespace FortRoom.Services
 {
     public class ObstructionControlService : IHostedService, IDisposable
     {
-        private ModbusLib Modbus = new ModbusLib();
+        //private ModbusLib Modbus = new ModbusLib();
         private readonly ILogger<ObstructionControlService> _logger;
         private CancellationTokenSource _cts1;
 
@@ -23,7 +23,8 @@ namespace FortRoom.Services
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Start Obstruction Service");
-            Modbus.Init(SerialPort.Serial);
+            //Modbus.Init(SerialPort.Serial);
+            ObstructionLib.init(SerialPort.Serial);
             _cts1 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task task1 = Task.Run(() => RunService1(_cts1.Token));
             return Task.CompletedTask;
@@ -113,8 +114,9 @@ namespace FortRoom.Services
         }
         private void RunCommand(ModbusSlave slave, MotorSpeed speed, MotorStatus status)
         {
-            Modbus.WriteSingleRegister((byte)slave, (int)ModbusAddress.Speed, (ushort)speed);  // Start As Mode #1 
-            Modbus.WriteSingleRegister((byte)slave, (int)ModbusAddress.startStop, (ushort)status);
+            ObstructionLib.RunCommand(slave,speed, status);
+            //Modbus.WriteSingleRegister((byte)slave, (int)ModbusAddress.Speed, (ushort)speed);  // Start As Mode #1 
+            //Modbus.WriteSingleRegister((byte)slave, (int)ModbusAddress.startStop, (ushort)status);
             Thread.Sleep(500);
         }
 
@@ -150,7 +152,8 @@ namespace FortRoom.Services
             _logger.LogInformation("Obstruction Stopped");
             StopObstructionService();
             RGBLight.SetColor(VariableControlService.DefaultColor);
-            Modbus.ReleasePort();
+            //Modbus.ReleasePort();
+            ObstructionLib.Release();
             _logger.LogInformation("Obstruction - Port Released");
         }
 
