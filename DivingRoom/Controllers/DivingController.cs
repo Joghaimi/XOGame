@@ -1,6 +1,7 @@
 ﻿using DivingRoom.Services;
 using Library;
 using Library.Model;
+using Library.OSControl;
 using Library.RGBLib;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -136,6 +137,14 @@ namespace DivingRoom.Controllers
             RGBLight.SetColor(newColor);
             return Ok();
         }
+
+        [HttpGet("RestartService")]
+        public IActionResult RestartService()
+        {
+            OSLib.ResetService("xogame.service");
+            return Ok();
+        }
+
 
     }
 }

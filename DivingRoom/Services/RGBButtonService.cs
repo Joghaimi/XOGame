@@ -144,6 +144,7 @@ namespace DivingRoom.Services
                     StopRGBButtonService();
                     Reset();
                     IsEnterdTheRoom = false;
+
                 }
                 Thread.Sleep(10);
 
@@ -292,6 +293,7 @@ namespace DivingRoom.Services
             VariableControlService.TeamScore.DivingRoomScore = 0;
             CurrentColor = 0;
             difficulty = 6;
+            VariableControlService.GameRound = Round.Round1;
         }
 
 
