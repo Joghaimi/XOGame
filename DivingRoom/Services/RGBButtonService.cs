@@ -142,8 +142,8 @@ namespace DivingRoom.Services
                 {
                     _logger.LogInformation("RGB Service Stopped");
                     StopRGBButtonService();
-                    //Reset();
-                    //IsEnterdTheRoom = false;
+                    Reset();
+                    IsEnterdTheRoom = false;
                 }
                 Thread.Sleep(10);
 
