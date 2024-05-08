@@ -150,6 +150,7 @@ namespace DivingRoom.Controllers
         public IActionResult RetrieveData()
         {
             var loadedData = LocalStorage.LoadData<Team>("data.json");
+            Console.WriteLine(loadedData);
             return Ok(loadedData);
         }
 
