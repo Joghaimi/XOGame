@@ -124,7 +124,7 @@ namespace ShootingRoom.Controllers
             var result = new
             {
                 TeamName = VariableControlService.TeamScore.Name,
-                Score = VariableControlService.TeamScore.FortRoomScore,
+                Score = VariableControlService.TeamScore.ShootingRoomScore,
                 DoorStatus = VariableControlService.CurrentDoorStatus,
                 Status = VariableControlService.GameStatus.ToString()
             };

@@ -121,7 +121,7 @@ namespace DarkRoom.Controllers
             var result = new
             {
                 TeamName = VariableControlService.TeamScore.Name,
-                Score = VariableControlService.TeamScore.FortRoomScore,
+                Score = VariableControlService.TeamScore.DarkRoomScore,
                 DoorStatus = VariableControlService.CurrentDoorStatus,
                 Status = VariableControlService.GameStatus.ToString()
             };
