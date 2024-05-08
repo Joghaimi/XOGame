@@ -16,7 +16,7 @@ namespace Library.LocalStorage
         }
         public static T LoadData<T>(string filePath)
         {
-            if (!File.Exists(filePath))
+            if (File.Exists(filePath))
             {
                 string jsonData = File.ReadAllText(filePath);
                 return JsonConvert.DeserializeObject<T>(jsonData);
