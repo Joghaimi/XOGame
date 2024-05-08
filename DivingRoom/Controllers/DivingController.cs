@@ -65,7 +65,7 @@ namespace DivingRoom.Controllers
             VariableControlService.TeamScore = TeamScore;
             VariableControlService.IsOccupied = true;
             VariableControlService.GameStatus = GameStatus.NotStarted;
-            LocalStorage.SaveData(VariableControlService.TeamScore , "data.json");
+            LocalStorage.SaveData(VariableControlService.TeamScore, "data.json");
             return Ok();
         }
         [HttpGet("ReturnScore")]
@@ -150,6 +150,9 @@ namespace DivingRoom.Controllers
         public IActionResult RetrieveData()
         {
             var loadedData = LocalStorage.LoadData<Team>("data.json");
+            if (loadedData != null)
+                VariableControlService.TeamScore = loadedData;
+
             Console.WriteLine(loadedData);
             return Ok(loadedData);
         }
