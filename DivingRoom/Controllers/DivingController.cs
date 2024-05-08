@@ -1,10 +1,13 @@
 ﻿using DivingRoom.Services;
 using Library;
+using Library.LocalStorage;
 using Library.Model;
 using Library.OSControl;
 using Library.RGBLib;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Modbus.Data;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DivingRoom.Controllers
 {
@@ -62,8 +65,7 @@ namespace DivingRoom.Controllers
             VariableControlService.TeamScore = TeamScore;
             VariableControlService.IsOccupied = true;
             VariableControlService.GameStatus = GameStatus.NotStarted;
-
-
+            LocalStorage.SaveData(VariableControlService.TeamScore , "data.json");
             return Ok();
         }
         [HttpGet("ReturnScore")]
@@ -143,6 +145,12 @@ namespace DivingRoom.Controllers
         {
             OSLib.ResetService("xogame.service");
             return Ok();
+        }
+        [HttpGet("RetrieveData")]
+        public IActionResult RetrieveData()
+        {
+            var loadedData = LocalStorage.LoadData<Team>("data.json");
+            return Ok(loadedData);
         }
 
 
