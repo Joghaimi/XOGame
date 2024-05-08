@@ -1,7 +1,9 @@
 ﻿using FortRoom.Services;
 using Library;
+using Library.LocalStorage;
 using Library.Modbus;
 using Library.Model;
+using Library.OSControl;
 using Library.RGBLib;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
@@ -63,6 +65,8 @@ namespace FortRoom.Controllers
             VariableControlService.TeamScore = TeamScore;
             VariableControlService.IsOccupied = true;
             VariableControlService.GameStatus = GameStatus.NotStarted;
+            LocalStorage.SaveData(VariableControlService.TeamScore, "data.json");
+
             return Ok();
         }
         [HttpGet("ReturnScore")]
@@ -147,6 +151,24 @@ namespace FortRoom.Controllers
                 ObstructionLib.Stop();
             return Ok();
         }
+
+        [HttpGet("RestartService")]
+        public IActionResult RestartService()
+        {
+            OSLib.ResetService("xogame.service");
+            return Ok();
+        }
+        [HttpGet("RetrieveData")]
+        public IActionResult RetrieveData()
+        {
+            var loadedData = LocalStorage.LoadData<Team>("data.json");
+            if (loadedData != null)
+                VariableControlService.TeamScore = loadedData;
+
+            Console.WriteLine(loadedData);
+            return Ok(loadedData);
+        }
+
 
 
     }
