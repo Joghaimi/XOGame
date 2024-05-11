@@ -81,6 +81,7 @@ namespace Library.GPIOLib
         {
             try
             {
+                Console.WriteLine("Init 0x20");
                 var connectionSettings = new I2cConnectionSettings(1, 0x20);
                 var i2cDevice = I2cDevice.Create(connectionSettings);
                 mcp23017x20 = new Mcp23017(i2cDevice);
@@ -122,24 +123,31 @@ namespace Library.GPIOLib
                         mcp23017x24 = new Mcp23017(i2cDevice);
                         break;
                     default:
+                        Console.WriteLine("Init 0x21");
                         connectionSettings = new I2cConnectionSettings(1, 0x21);
                         i2cDevice = I2cDevice.Create(connectionSettings);
                         mcp23017x21 = new Mcp23017(i2cDevice);
+                        Console.WriteLine("Init 0x22");
                         connectionSettings = new I2cConnectionSettings(1, 0x22);
                         i2cDevice = I2cDevice.Create(connectionSettings);
                         mcp23017x22 = new Mcp23017(i2cDevice);
+                        Console.WriteLine("Init 0x23");
                         connectionSettings = new I2cConnectionSettings(1, 0x23);
                         i2cDevice = I2cDevice.Create(connectionSettings);
                         mcp23017x23 = new Mcp23017(i2cDevice);
+                        Console.WriteLine("Init 0x24");
                         connectionSettings = new I2cConnectionSettings(1, 0x24);
                         i2cDevice = I2cDevice.Create(connectionSettings);
                         mcp23017x24 = new Mcp23017(i2cDevice);
+                        Console.WriteLine("Init 0x25");
                         connectionSettings = new I2cConnectionSettings(1, 0x25);
                         i2cDevice = I2cDevice.Create(connectionSettings);
                         mcp23017x25 = new Mcp23017(i2cDevice);
+                        Console.WriteLine("Init 0x26");
                         connectionSettings = new I2cConnectionSettings(1, 0x26);
                         i2cDevice = I2cDevice.Create(connectionSettings);
                         mcp23017x26 = new Mcp23017(i2cDevice);
+                        Console.WriteLine("Init 0x27");
                         connectionSettings = new I2cConnectionSettings(1, 0x27);
                         i2cDevice = I2cDevice.Create(connectionSettings);
                         mcp23017x27 = new Mcp23017(i2cDevice);
