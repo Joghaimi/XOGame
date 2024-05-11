@@ -3,6 +3,7 @@ using Library;
 using Library.LocalStorage;
 using Library.Model;
 using Library.OSControl;
+using Library.RGBLib;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -108,6 +109,37 @@ namespace FloorIsLava.Controllers
             totalTime = totalTime / 1000;
             return Ok(totalTime < 0 ? 0 : totalTime);
         }
+
+
+        [HttpGet("TimeAndStatus")]
+        public IActionResult GetTimeAndStatus()
+        {
+            var totalTime = (VariableControlService.RoomTiming - VariableControlService.CurrentTime) / 1000;
+            totalTime = totalTime < 0 ? 0 : totalTime;
+            var result = new { Time = totalTime, Status = VariableControlService.GameStatus.ToString() };
+            return Ok(result);
+        }
+
+        [HttpGet("RoomInfo")]
+        public IActionResult RoomInfo()
+        {
+            var result = new
+            {
+                TeamName = VariableControlService.TeamScore.Name,
+                Score = VariableControlService.TeamScore.FortRoomScore,
+                DoorStatus = VariableControlService.CurrentDoorStatus,
+                Status = VariableControlService.GameStatus.ToString()
+            };
+            return Ok(result);
+        }
+        [HttpGet("RGBColor")]
+        public IActionResult RGBColor(RGBColor newColor)
+        {
+            RGBLight.SetColor(newColor);
+            return Ok();
+        }
+
+
         [HttpGet("GetScore")]
         public IActionResult GetScore()
         {
