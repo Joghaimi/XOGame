@@ -149,6 +149,11 @@ namespace Library.GPIOLib
             catch (Exception ex)
             {
                 Console.WriteLine($"MCP23Controller Init fn Exception {ex.Message}");
+
+                Console.WriteLine($"Init Again");
+                Thread.Sleep(1000);
+                Init(currentRoom);
+
             }
         }
 
