@@ -172,7 +172,7 @@ namespace DivingRoom.Services
                 RGBButtonList[index].BlockForASec();
                 VariableControlService.TeamScore.DivingRoomScore -= 5;
                 AudioPlayer.PIStartAudio(SoundType.Descend);
-                Console.WriteLine($"- score {RGBButtonList[index]} {VariableControlService.TeamScore.DivingRoomScore} and Blocked now For 1 sec");
+                Console.WriteLine($"- score {index} {VariableControlService.TeamScore.DivingRoomScore} and Blocked now For 1 sec");
             }
 
         }
