@@ -16,7 +16,7 @@ namespace FortRoom.Services
     {
         private CancellationTokenSource _cts;
         private readonly ILogger<PressureMatService> _logger;
-        private bool oldPressureMateValue = false;
+
         public PressureMatService(ILogger<PressureMatService> logger)
         {
             _logger = logger;

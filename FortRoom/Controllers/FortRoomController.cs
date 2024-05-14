@@ -24,7 +24,6 @@ namespace FortRoom.Controllers
         [HttpGet("IsOccupied")]
         public IActionResult Get()
         {
-            //return Ok(VariableControlService.IsOccupied);
             return Ok(VariableControlService.GameStatus != GameStatus.Empty);
         }
         [HttpGet("SetAsOccupied")]
@@ -66,7 +65,7 @@ namespace FortRoom.Controllers
             VariableControlService.IsOccupied = true;
             VariableControlService.GameStatus = GameStatus.NotStarted;
             LocalStorage.SaveData(VariableControlService.TeamScore, "data.json");
-
+            _logger.LogInformation("New Team Enter : {0} and Current Game Status is {1}" , VariableControlService.TeamScore.Name , VariableControlService.GameStatus);
             return Ok();
         }
         [HttpGet("ReturnScore")]

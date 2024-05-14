@@ -17,7 +17,6 @@ namespace FortRoom.Services
         private readonly ILogger<MainService> _logger;
         private GPIOController _controller;
         private MCP23Pin DoorPin = MasterOutputPin.OUTPUT7;
-        //private MCP23Pin LaserPin = MasterOutputPin.OUTPUT2;
 
         bool EnterRGBButtonStatus = false;
         private MCP23Pin EnterRGBButton = MasterOutputPin.OUTPUT8;
@@ -30,10 +29,8 @@ namespace FortRoom.Services
 
         private CancellationTokenSource _cts, _cts2, _cts3, _cts4;
         public bool isTheirAreSomeOneInTheRoom = false;
-        private bool PIR1, PIR2, PIR3, PIR4 = false; // PIR Sensor
         bool thereAreBackgroundSoundPlays = false;
         bool thereAreInstructionSoundPlays = false;
-        bool FinishAudioNotStarted = false;
         Stopwatch GameTiming = new Stopwatch();
 
 
@@ -49,8 +46,8 @@ namespace FortRoom.Services
             _controller = new GPIOController();
             RGBLight.Init(MasterOutputPin.Clk, MasterOutputPin.Data, Room.Fort);
             AudioPlayer.Init(Room.Fort);
-            MCP23Controller.Init(Room.Fort);
 
+            MCP23Controller.Init(Room.Fort);
             MCP23Controller.PinModeSetup(EnterRoomPB, PinMode.Input);
             MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
@@ -59,7 +56,6 @@ namespace FortRoom.Services
             RGBLight.SetColor(VariableControlService.DefaultColor);
 
             DoorControl.Control(DoorPin, DoorStatus.Close);
-            //MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Output);
 
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -68,7 +64,6 @@ namespace FortRoom.Services
             _cts4 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
             Task.Run(() => RunService(_cts.Token));
-            //Task.Run(() => CheckIFRoomIsEmpty(_cts2.Token));
             Task.Run(() => GameTimingService(_cts3.Token));
             Task.Run(() => DoorLockControl(_cts4.Token));
 
@@ -83,18 +78,6 @@ namespace FortRoom.Services
                 ControlEnteringRGBButton();
                 await CheckNextRoomStatus();
                 await ControlExitingRGBButton();
-            }
-        }
-        private async Task CheckIFRoomIsEmpty(CancellationToken cancellationToken)
-        {
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                if (VariableControlService.IsTheirAnyOneInTheRoom && !VariableControlService.IsTheGameStarted)
-                {
-                    VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4;
-                    Thread.Sleep(10000);
-                }
-
             }
         }
 
@@ -151,12 +134,12 @@ namespace FortRoom.Services
                 bool PBPressed = !MCP23Controller.Read(EnterRoomPB);
                 if (PBPressed)
                 {
-                    _logger.LogTrace("Start The Game Pressed");
-                    Console.WriteLine(PBPressed);
                     EnterRGBButtonStatus = false;
                     RelayController.Status(NextRoomPBLight, false);
                     VariableControlService.GameStatus = GameStatus.Started;
                     VariableControlService.IsGameTimerStarted = false;
+                    _logger.LogTrace("Start The Game Btn Pressed, Game Status {0}", VariableControlService.GameStatus);
+
                 }
             }
         }
@@ -165,7 +148,7 @@ namespace FortRoom.Services
         {
             if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && !NextRoomRGBButtonStatus)
             {
-                Console.WriteLine("Ready To Leave .. Turn RGB Button On");
+                _logger.LogTrace("Ready To Leave .. Turn RGB Button On");
                 NextRoomRGBButtonStatus = true;
                 RelayController.Status(NextRoomPBLight, true);
             }
@@ -197,8 +180,6 @@ namespace FortRoom.Services
 
 
                 }
-                // This Will be Moved to run after PB Is Preessed 
-
             }
         }
 
@@ -228,7 +209,8 @@ namespace FortRoom.Services
                 VariableControlService.CurrentTime = (int)GameTiming.ElapsedMilliseconds;
                 if ((VariableControlService.GameStatus == GameStatus.Started && !VariableControlService.IsGameTimerStarted))
                 {
-                    Console.WriteLine("Restart The Timer");
+                    _logger.LogTrace($"New Game Started , Restart The Time");
+                    //Console.WriteLine("Restart The Timer");
                     GameTiming.Restart();
                     Thread.Sleep(1000);
                     VariableControlService.IsGameTimerStarted = true;
@@ -256,7 +238,7 @@ namespace FortRoom.Services
 
         private void StopTheGame()
         {
-            Console.WriteLine("Stoped By Time For Test");
+            _logger.LogTrace("Stop The Game By Timer , Game Score {0} For Team {1}", VariableControlService.TeamScore.Name, VariableControlService.TeamScore.FortRoomScore);
             VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
             VariableControlService.IsTheGameStarted = false;
             VariableControlService.IsTheGameFinished = true;

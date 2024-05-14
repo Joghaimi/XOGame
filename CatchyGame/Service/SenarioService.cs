@@ -299,12 +299,12 @@ namespace CatchyGame.Service
         }
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         private void Restart()

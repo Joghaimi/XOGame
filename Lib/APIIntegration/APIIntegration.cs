@@ -75,7 +75,6 @@ namespace Library.APIIntegration
             return null;
         }
 
-
         public async static Task<string> NextRoomStatus(string nextRoomURL)
         {
             HttpClientHandler handler = new HttpClientHandler();
@@ -123,7 +122,7 @@ namespace Library.APIIntegration
                     StringContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
                     HttpResponseMessage response = await httpClient.PostAsync(nextRoomURL, content);
                     Console.WriteLine($"response.IsSuccessStatusCode {response.IsSuccessStatusCode} {response.StatusCode}");
-                    
+
                     if (response.IsSuccessStatusCode)
                         return true;
                     else
@@ -153,11 +152,25 @@ namespace Library.APIIntegration
             }
         }
 
-
         static bool ValidateCertificate(HttpRequestMessage requestMessage, X509Certificate2 certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
             return true; // Always accept the certificate
         }
+
+        public async static Task<string> GetSignature()
+        {
+
+            return null;
+        }
+
+        public async static Task<bool> SendFinalScore()
+        {
+            return false;
+        }
+
+
+
+
 
     }
 }
