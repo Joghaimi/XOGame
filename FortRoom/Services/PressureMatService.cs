@@ -55,6 +55,7 @@ namespace FortRoom.Services
                             scoreJustDecreased = true;
                             timer.Restart();
                             VariableControlService.TeamScore.FortRoomScore -= 20;
+                            _logger.LogTrace("Time {0} - Pressure mate Hit new Score {1}", (VariableControlService.RoomTiming - VariableControlService.CurrentTime) / 1000, VariableControlService.TeamScore.FortRoomScore);
 
                         }
                         if (scoreJustDecreased && timer.ElapsedMilliseconds >= 3000)
