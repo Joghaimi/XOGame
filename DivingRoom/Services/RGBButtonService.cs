@@ -291,7 +291,6 @@ namespace DivingRoom.Services
 
         private void Reset()
         {
-            VariableControlService.TeamScore.DivingRoomScore = 0;
             CurrentColor = 0;
             difficulty = 6;
             VariableControlService.GameRound = Round.Round1;
