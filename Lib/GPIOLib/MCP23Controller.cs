@@ -396,47 +396,48 @@ namespace Library.GPIOLib
 
 
 
-        //public static bool Read(MCP23Pin _MCP23Pin, bool preferState)
-        //{
-        //    try
-        //    {
-        //        // The Working One
-        //        switch (_MCP23Pin.Chip)
-        //        {
-        //            case MCP23017.MCP2301720:
-        //                byte gpioStatus1 = mcp23017x20.ReadByte(Register.GPIO, _MCP23Pin.port);
-        //                return ((gpioStatus1 >> _MCP23Pin.PinNumber) & 0x01) == 1;
-        //            case MCP23017.MCP2301721:
-        //                byte gpioStatus2 = mcp23017x21.ReadByte(Register.GPIO, _MCP23Pin.port);
-        //                return ((gpioStatus2 >> _MCP23Pin.PinNumber) & 0x01) == 1;
-        //            case MCP23017.MCP2301722:
-        //                byte gpioStatus3 = mcp23017x22.ReadByte(Register.GPIO, _MCP23Pin.port);
-        //                return ((gpioStatus3 >> _MCP23Pin.PinNumber) & 0x01) == 1;
-        //            case MCP23017.MCP2301723:
-        //                byte gpioStatus4 = mcp23017x23.ReadByte(Register.GPIO, _MCP23Pin.port);
-        //                return ((gpioStatus4 >> _MCP23Pin.PinNumber) & 0x01) == 1;
-        //            case MCP23017.MCP2301724:
-        //                byte gpioStatus5 = mcp23017x24.ReadByte(Register.GPIO, _MCP23Pin.port);
-        //                return ((gpioStatus5 >> _MCP23Pin.PinNumber) & 0x01) == 1;
-        //            case MCP23017.MCP2301725:
-        //                byte gpioStatus6 = mcp23017x25.ReadByte(Register.GPIO, _MCP23Pin.port);
-        //                return ((gpioStatus6 >> _MCP23Pin.PinNumber) & 0x01) == 1;
-        //            case MCP23017.MCP2301726:
-        //                byte gpioStatus7 = mcp23017x26.ReadByte(Register.GPIO, _MCP23Pin.port);
-        //                return ((gpioStatus7 >> _MCP23Pin.PinNumber) & 0x01) == 1;
-        //            case MCP23017.MCP2301727:
-        //                byte gpioStatus8 = mcp23017x27.ReadByte(Register.GPIO, _MCP23Pin.port);
-        //                return ((gpioStatus8 >> _MCP23Pin.PinNumber) & 0x01) == 1;
-        //            default:
-        //                throw new ArgumentException("Invalid Chip Selected");
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return preferState;
-        //    }
+        public static bool Read(MCP23Pin _MCP23Pin, bool preferState)
+        {
+            return Read(_MCP23Pin);
+            try
+            {
+                // The Working One
+                switch (_MCP23Pin.Chip)
+                {
+                    case MCP23017.MCP2301720:
+                        byte gpioStatus1 = mcp23017x20.ReadByte(Register.GPIO, _MCP23Pin.port);
+                        return ((gpioStatus1 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                    case MCP23017.MCP2301721:
+                        byte gpioStatus2 = mcp23017x21.ReadByte(Register.GPIO, _MCP23Pin.port);
+                        return ((gpioStatus2 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                    case MCP23017.MCP2301722:
+                        byte gpioStatus3 = mcp23017x22.ReadByte(Register.GPIO, _MCP23Pin.port);
+                        return ((gpioStatus3 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                    case MCP23017.MCP2301723:
+                        byte gpioStatus4 = mcp23017x23.ReadByte(Register.GPIO, _MCP23Pin.port);
+                        return ((gpioStatus4 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                    case MCP23017.MCP2301724:
+                        byte gpioStatus5 = mcp23017x24.ReadByte(Register.GPIO, _MCP23Pin.port);
+                        return ((gpioStatus5 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                    case MCP23017.MCP2301725:
+                        byte gpioStatus6 = mcp23017x25.ReadByte(Register.GPIO, _MCP23Pin.port);
+                        return ((gpioStatus6 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                    case MCP23017.MCP2301726:
+                        byte gpioStatus7 = mcp23017x26.ReadByte(Register.GPIO, _MCP23Pin.port);
+                        return ((gpioStatus7 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                    case MCP23017.MCP2301727:
+                        byte gpioStatus8 = mcp23017x27.ReadByte(Register.GPIO, _MCP23Pin.port);
+                        return ((gpioStatus8 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                    default:
+                        throw new ArgumentException("Invalid Chip Selected");
+                }
+            }
+            catch (Exception)
+            {
+                return preferState;
+            }
 
-        //}
+        }
 
 
         public static void WriteDelay(MCP23Pin _MCP23Pin, PinState PinState)
