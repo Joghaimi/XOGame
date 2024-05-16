@@ -245,36 +245,52 @@ namespace Library.GPIOLib
                 switch (_MCP23Pin.Chip)
                 {
                     case MCP23017.MCP2301720:
-                        byte gpioStatus1 = mcp23017x20.ReadByte(Register.GPIO, _MCP23Pin.port);
-                        returnStatus = ((gpioStatus1 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        if (_MCP23Pin.port == Port.PortA)
+                            returnStatus = ((_mcp23017x20.PortA >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        else
+                            returnStatus = ((_mcp23017x20.PortB >> _MCP23Pin.PinNumber) & 0x01) == 1;
                         break;
                     case MCP23017.MCP2301721:
-                        byte gpioStatus2 = mcp23017x21.ReadByte(Register.GPIO, _MCP23Pin.port);
-                        returnStatus = ((gpioStatus2 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        if (_MCP23Pin.port == Port.PortA)
+                            returnStatus = ((_mcp23017x21.PortA >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        else
+                            returnStatus = ((_mcp23017x21.PortB >> _MCP23Pin.PinNumber) & 0x01) == 1;
                         break;
                     case MCP23017.MCP2301722:
-                        byte gpioStatus3 = mcp23017x22.ReadByte(Register.GPIO, _MCP23Pin.port);
-                        returnStatus = ((gpioStatus3 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        if (_MCP23Pin.port == Port.PortA)
+                            returnStatus = ((_mcp23017x22.PortA >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        else
+                            returnStatus = ((_mcp23017x22.PortB >> _MCP23Pin.PinNumber) & 0x01) == 1;
                         break;
                     case MCP23017.MCP2301723:
-                        byte gpioStatus4 = mcp23017x23.ReadByte(Register.GPIO, _MCP23Pin.port);
-                        returnStatus = ((gpioStatus4 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        if (_MCP23Pin.port == Port.PortA)
+                            returnStatus = ((_mcp23017x23.PortA >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        else
+                            returnStatus = ((_mcp23017x23.PortB >> _MCP23Pin.PinNumber) & 0x01) == 1;
                         break;
                     case MCP23017.MCP2301724:
-                        byte gpioStatus5 = mcp23017x24.ReadByte(Register.GPIO, _MCP23Pin.port);
-                        returnStatus = ((gpioStatus5 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        if (_MCP23Pin.port == Port.PortA)
+                            returnStatus = ((_mcp23017x24.PortA >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        else
+                            returnStatus = ((_mcp23017x24.PortB >> _MCP23Pin.PinNumber) & 0x01) == 1;
                         break;
                     case MCP23017.MCP2301725:
-                        byte gpioStatus6 = mcp23017x25.ReadByte(Register.GPIO, _MCP23Pin.port);
-                        returnStatus = ((gpioStatus6 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        if (_MCP23Pin.port == Port.PortA)
+                            returnStatus = ((_mcp23017x25.PortA >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        else
+                            returnStatus = ((_mcp23017x25.PortB >> _MCP23Pin.PinNumber) & 0x01) == 1;
                         break;
                     case MCP23017.MCP2301726:
-                        byte gpioStatus7 = mcp23017x26.ReadByte(Register.GPIO, _MCP23Pin.port);
-                        returnStatus = ((gpioStatus7 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        if (_MCP23Pin.port == Port.PortA)
+                            returnStatus = ((_mcp23017x26.PortA >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        else
+                            returnStatus = ((_mcp23017x26.PortB >> _MCP23Pin.PinNumber) & 0x01) == 1;
                         break;
                     case MCP23017.MCP2301727:
-                        byte gpioStatus8 = mcp23017x27.ReadByte(Register.GPIO, _MCP23Pin.port);
-                        returnStatus = ((gpioStatus8 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        if (_MCP23Pin.port == Port.PortA)
+                            returnStatus = ((_mcp23017x27.PortA >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        else
+                            returnStatus = ((_mcp23017x27.PortB >> _MCP23Pin.PinNumber) & 0x01) == 1;
                         break;
                     default:
                         throw new ArgumentException("Invalid Chip Selected");
