@@ -301,7 +301,7 @@ namespace Library.GPIOLib
             {
                 Console.WriteLine($"Read MCPChip Exception {ex.Message} -- Try Again");
                 Thread.Sleep(10);
-                ReadAgain(_MCP23Pin);
+                return ReadAgain(_MCP23Pin);
                 return false;
             }
         }
