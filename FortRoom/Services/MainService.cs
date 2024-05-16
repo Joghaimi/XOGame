@@ -248,7 +248,7 @@ namespace FortRoom.Services
                 //    VariableControlService.CurrentDoorStatus = VariableControlService.NewDoorStatus;
                 //}
                 MCP23Controller.ReadAllChips();
-                Thread.Sleep(200);
+                Thread.Sleep(10);
 
             }
         }
