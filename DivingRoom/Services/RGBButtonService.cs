@@ -169,7 +169,7 @@ namespace DivingRoom.Services
             if (removeScore)
             {
                 RGBButtonList[index].TurnColorOn(RGBColor.Off);
-                RGBButtonList[index].BlockForASec();
+                //RGBButtonList[index].BlockForASec();
                 VariableControlService.TeamScore.DivingRoomScore -= 5;
                 AudioPlayer.PIStartAudio(SoundType.Descend);
                 Console.WriteLine($"- score {index} {VariableControlService.TeamScore.DivingRoomScore} and Blocked now For 1 sec");
