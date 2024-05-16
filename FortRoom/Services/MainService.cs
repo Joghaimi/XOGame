@@ -238,6 +238,7 @@ namespace FortRoom.Services
         }
         private async Task ReadMCPChip(CancellationToken cancellationToken)
         {
+            Console.WriteLine("ReadMCPChip Service");
             while (!cancellationToken.IsCancellationRequested)
             {
                 //if (VariableControlService.CurrentDoorStatus != VariableControlService.NewDoorStatus)
