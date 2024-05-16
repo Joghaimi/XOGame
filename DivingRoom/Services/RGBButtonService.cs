@@ -113,7 +113,7 @@ namespace DivingRoom.Services
                             {
                                 bool PressSelectedButton = !item.CurrentStatusWithCheckForDelay() && item.isSet();
                                 AddToScore(PressSelectedButton, index);
-                                bool PressUnselectedButton = !item.CurrentStatusWithCheckForDelay() && !item.isSet();
+                                bool PressUnselectedButton = !item.CurrentStatusWithCheckForDelay() && !item.isSet() && item.CurrentColor()!=RGBColor.Off;
                                 RemoveFromScore(PressUnselectedButton, index);
                                 index++;
                             }
@@ -168,7 +168,7 @@ namespace DivingRoom.Services
         {
             if (removeScore)
             {
-
+                RGBButtonList[index].TurnColorOn(RGBColor.Off);
                 RGBButtonList[index].BlockForASec();
                 VariableControlService.TeamScore.DivingRoomScore -= 5;
                 AudioPlayer.PIStartAudio(SoundType.Descend);
