@@ -177,70 +177,65 @@ namespace Library.GPIOLib
             }
         }
 
-        private static ref Mcp23017 ReturnMCPChip(MCP23017 chip)
-        {
-            switch (chip)
-            {
-                case MCP23017.MCP2301720:
-                    return ref mcp23017x20;
-                case MCP23017.MCP2301721:
-                    return ref mcp23017x21;
-                case MCP23017.MCP2301722:
-                    return ref mcp23017x22;
-                case MCP23017.MCP2301723:
-                    return ref mcp23017x23;
-                case MCP23017.MCP2301724:
-                    return ref mcp23017x24;
-                case MCP23017.MCP2301725:
-                    return ref mcp23017x25;
-                case MCP23017.MCP2301726:
-                    return ref mcp23017x26;
-                case MCP23017.MCP2301727:
-                    return ref mcp23017x27;
-                default: throw new ArgumentException($"ReturnMCPChip : Not Valid {chip}");
-            }
-        }
-
         public static void ReadAllChips() {
-           
+
+            if (_mcp23017x20.isEnable) {
                 _mcp23017x20.PortA = mcp23017x20.ReadByte(Register.GPIO, Port.PortA);
                 Thread.Sleep(10);
                 _mcp23017x20.PortB = mcp23017x20.ReadByte(Register.GPIO, Port.PortB);
                 Thread.Sleep(10);
+            }
+
+            if (_mcp23017x21.isEnable)
+            {
                 _mcp23017x21.PortA = mcp23017x21.ReadByte(Register.GPIO, Port.PortA);
                 Thread.Sleep(10);
                 _mcp23017x21.PortB = mcp23017x21.ReadByte(Register.GPIO, Port.PortB);
                 Thread.Sleep(10);
-                
+            }
+            if (_mcp23017x22.isEnable)
+            {
                 _mcp23017x22.PortA = mcp23017x22.ReadByte(Register.GPIO, Port.PortA);
                 Thread.Sleep(10);
                 _mcp23017x22.PortB = mcp23017x22.ReadByte(Register.GPIO, Port.PortB);
                 Thread.Sleep(10);
-
+            }
+            if (_mcp23017x23.isEnable)
+            {
                 _mcp23017x23.PortA = mcp23017x23.ReadByte(Register.GPIO, Port.PortA);
                 Thread.Sleep(10);
                 _mcp23017x23.PortB = mcp23017x23.ReadByte(Register.GPIO, Port.PortB);
                 Thread.Sleep(10);
-
+            }
+            if (_mcp23017x24.isEnable)
+            {
                 _mcp23017x24.PortA = mcp23017x24.ReadByte(Register.GPIO, Port.PortA);
                 Thread.Sleep(10);
                 _mcp23017x24.PortB = mcp23017x24.ReadByte(Register.GPIO, Port.PortB);
                 Thread.Sleep(10);
-
+            }
+            if (_mcp23017x25.isEnable)
+            {
                 _mcp23017x25.PortA = mcp23017x25.ReadByte(Register.GPIO, Port.PortA);
                 Thread.Sleep(10);
                 _mcp23017x25.PortB = mcp23017x25.ReadByte(Register.GPIO, Port.PortB);
                 Thread.Sleep(10);
+            }
+
+            if (_mcp23017x26.isEnable)
+            {
                 _mcp23017x26.PortA = mcp23017x26.ReadByte(Register.GPIO, Port.PortA);
                 Thread.Sleep(10);
                 _mcp23017x26.PortB = mcp23017x26.ReadByte(Register.GPIO, Port.PortB);
                 Thread.Sleep(10);
-                
+            }
+            if (_mcp23017x27.isEnable)
+            {
                 _mcp23017x27.PortA = mcp23017x27.ReadByte(Register.GPIO, Port.PortA);
                 Thread.Sleep(10);
                 _mcp23017x27.PortB = mcp23017x27.ReadByte(Register.GPIO, Port.PortB);
-               
-                Thread.Sleep(100);
+                Thread.Sleep(10);
+            }
         }
 
         public static bool ReadPortFromTheChip(MCP23Pin _MCP23Pin) {
@@ -307,50 +302,69 @@ namespace Library.GPIOLib
                 switch (_MCP23Pin.Chip)
                 {
                     case MCP23017.MCP2301720:
-                        if (Mode == PinMode.Input)
+                        if (Mode == PinMode.Input) { 
+                        
                             mcp23017x20.WriteByte(Register.IODIR, (byte)(mcp23017x20.ReadByte(Register.IODIR, _MCP23Pin.port) | (1 << _MCP23Pin.PinNumber)), _MCP23Pin.port);
+                            _mcp23017x20.isEnable = true;
+                        }
                         else
                             mcp23017x20.WriteByte(Register.IODIR, (byte)(mcp23017x20.ReadByte(Register.IODIR, _MCP23Pin.port) & ~(1 << _MCP23Pin.PinNumber)), _MCP23Pin.port);
+                       
+                        
                         break;
                     case MCP23017.MCP2301721:
-                        if (Mode == PinMode.Input)
+                        if (Mode == PinMode.Input) { 
                             mcp23017x21.WriteByte(Register.IODIR, (byte)(mcp23017x21.ReadByte(Register.IODIR, _MCP23Pin.port) | (1 << _MCP23Pin.PinNumber)), _MCP23Pin.port);
+                            _mcp23017x21.isEnable = true;
+                        }
                         else
                             mcp23017x21.WriteByte(Register.IODIR, (byte)(mcp23017x21.ReadByte(Register.IODIR, _MCP23Pin.port) & ~(1 << _MCP23Pin.PinNumber)), _MCP23Pin.port);
                         break;
                     case MCP23017.MCP2301722:
-                        if (Mode == PinMode.Input)
+                        if (Mode == PinMode.Input) { 
                             mcp23017x22.WriteByte(Register.IODIR, (byte)(mcp23017x22.ReadByte(Register.IODIR, _MCP23Pin.port) | (1 << _MCP23Pin.PinNumber)), _MCP23Pin.port);
+                        _mcp23017x22.isEnable=true;
+                        }
                         else
                             mcp23017x22.WriteByte(Register.IODIR, (byte)(mcp23017x22.ReadByte(Register.IODIR, _MCP23Pin.port) & ~(1 << _MCP23Pin.PinNumber)), _MCP23Pin.port);
                         break;
                     case MCP23017.MCP2301723:
-                        if (Mode == PinMode.Input)
+                        if (Mode == PinMode.Input) { 
                             mcp23017x23.WriteByte(Register.IODIR, (byte)(mcp23017x23.ReadByte(Register.IODIR, _MCP23Pin.port) | (1 << _MCP23Pin.PinNumber)), _MCP23Pin.port);
+                            _mcp23017x23.isEnable = true;
+                        }
                         else
                             mcp23017x23.WriteByte(Register.IODIR, (byte)(mcp23017x23.ReadByte(Register.IODIR, _MCP23Pin.port) & ~(1 << _MCP23Pin.PinNumber)), _MCP23Pin.port);
                         break;
                     case MCP23017.MCP2301724:
-                        if (Mode == PinMode.Input)
+                        if (Mode == PinMode.Input) { 
                             mcp23017x24.WriteByte(Register.IODIR, (byte)(mcp23017x24.ReadByte(Register.IODIR, _MCP23Pin.port) | (1 << _MCP23Pin.PinNumber)), _MCP23Pin.port);
+                            _mcp23017x24.isEnable = true;
+                        }
                         else
                             mcp23017x24.WriteByte(Register.IODIR, (byte)(mcp23017x24.ReadByte(Register.IODIR, _MCP23Pin.port) & ~(1 << _MCP23Pin.PinNumber)), _MCP23Pin.port);
                         break;
                     case MCP23017.MCP2301725:
-                        if (Mode == PinMode.Input)
+                        if (Mode == PinMode.Input) { 
                             mcp23017x25.WriteByte(Register.IODIR, (byte)(mcp23017x25.ReadByte(Register.IODIR, _MCP23Pin.port) | (1 << _MCP23Pin.PinNumber)), _MCP23Pin.port);
+                            _mcp23017x25.isEnable = true;
+                        }
                         else
                             mcp23017x25.WriteByte(Register.IODIR, (byte)(mcp23017x25.ReadByte(Register.IODIR, _MCP23Pin.port) & ~(1 << _MCP23Pin.PinNumber)), _MCP23Pin.port);
                         break;
                     case MCP23017.MCP2301726:
-                        if (Mode == PinMode.Input)
+                        if (Mode == PinMode.Input) { 
                             mcp23017x26.WriteByte(Register.IODIR, (byte)(mcp23017x26.ReadByte(Register.IODIR, _MCP23Pin.port) | (1 << _MCP23Pin.PinNumber)), _MCP23Pin.port);
+                            _mcp23017x26.isEnable = true;
+                        }
                         else
                             mcp23017x26.WriteByte(Register.IODIR, (byte)(mcp23017x26.ReadByte(Register.IODIR, _MCP23Pin.port) & ~(1 << _MCP23Pin.PinNumber)), _MCP23Pin.port);
                         break;
                     case MCP23017.MCP2301727:
-                        if (Mode == PinMode.Input)
+                        if (Mode == PinMode.Input) { 
                             mcp23017x27.WriteByte(Register.IODIR, (byte)(mcp23017x27.ReadByte(Register.IODIR, _MCP23Pin.port) | (1 << _MCP23Pin.PinNumber)), _MCP23Pin.port);
+                            _mcp23017x27.isEnable = true;
+                        }
                         else
                             mcp23017x27.WriteByte(Register.IODIR, (byte)(mcp23017x27.ReadByte(Register.IODIR, _MCP23Pin.port) & ~(1 << _MCP23Pin.PinNumber)), _MCP23Pin.port);
                         break;

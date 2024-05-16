@@ -66,6 +66,7 @@ namespace FortRoom.Services
             Task.Run(() => RunService(_cts.Token));
             Task.Run(() => GameTimingService(_cts3.Token));
             Task.Run(() => DoorLockControl(_cts4.Token));
+            Task.Run(() => ReadMCPChip(_cts2.Token));
 
 
             return Task.CompletedTask;
@@ -235,7 +236,21 @@ namespace FortRoom.Services
                 Thread.Sleep(500);
             }
         }
+        private async Task ReadMCPChip(CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                //if (VariableControlService.CurrentDoorStatus != VariableControlService.NewDoorStatus)
+                //{
+                //    _logger.LogTrace($"Door Status Changes :{VariableControlService.NewDoorStatus.ToString()}");
+                //    DoorControl.Control(DoorPin, VariableControlService.NewDoorStatus);
+                //    VariableControlService.CurrentDoorStatus = VariableControlService.NewDoorStatus;
+                //}
+                //Thread.Sleep(500);
+                //MCP23Controller.
 
+            }
+        }
         private void StopTheGame()
         {
             _logger.LogTrace("Stop The Game By Timer , Game Score {0} For Team {1}", VariableControlService.TeamScore.Name, VariableControlService.TeamScore.FortRoomScore);
