@@ -229,7 +229,7 @@ namespace Library.GPIOLib
                 _mcp23017x26.PortB = mcp23017x26.ReadByte(Register.GPIO, Port.PortB);
                 Thread.Sleep(10);
             }
-            if (_mcp23017x27.isEnable)
+            if (true)
             {
                 _mcp23017x27.PortA = mcp23017x27.ReadByte(Register.GPIO, Port.PortA);
                 Thread.Sleep(10);
