@@ -115,7 +115,7 @@ namespace FortRoom.Services
                                         }
 
                                         bool itemSelected = !item.CurrentStatusWithCheckForDelay() && item.isSet();// item.CurrentColor() == selectedColor;
-                                        bool itemOnButNotSelected = !item.CurrentStatusWithCheckForDelay() && !item.isSet();
+                                        bool itemOnButNotSelected = !item.CurrentStatusWithCheckForDelay() && !item.isSet() && item.CurrentColor()!=RGBColor.Off;
                                         if (itemSelected)
                                         {
                                             AudioPlayer.PIStartAudio(SoundType.Bonus);
@@ -129,7 +129,7 @@ namespace FortRoom.Services
                                             //VariableControlService.ActiveButtonPressed++;
                                             VariableControlService.TeamScore.FortRoomScore += 10;
                                             numberOfTurenedOnButton--;
-                                            Console.WriteLine($"Selected {numberOfTurenedOnButton} ");
+                                            Console.WriteLine($"Selected {numberOfTurenedOnButton} score {VariableControlService.TeamScore.FortRoomScore}");
                                         }
                                         else if (itemOnButNotSelected)
                                         {
@@ -137,9 +137,9 @@ namespace FortRoom.Services
                                             RGBLight.SetPriority(true);
                                             RGBLight.TurnRGBColorDelayedASecAndPriorityRemove(VariableControlService.DefaultColor);
                                             item.TurnColorOn(RGBColor.Off);
-                                            item.BlockForASec();
+                                            // item.BlockForASec();
                                             VariableControlService.TeamScore.FortRoomScore -= 5;
-                                            Console.WriteLine("UnSelected ");
+                                            Console.WriteLine($"UnSelected new score{VariableControlService.TeamScore.FortRoomScore}");
                                         }
                                     }
                                     else if (!isRGBButtonTurnedOffBecauseThePressureMate)
