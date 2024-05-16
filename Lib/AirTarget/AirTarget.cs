@@ -11,6 +11,6 @@ namespace Library.AirTarget
         public AirTargetModel(MCP23Pin Pin, int Score ) {
             this.Pin = Pin;
             this.Score = Score;
-        }
+        } 
     }
 }
