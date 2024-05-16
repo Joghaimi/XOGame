@@ -129,7 +129,7 @@ namespace FortRoom.Services
                                             //VariableControlService.ActiveButtonPressed++;
                                             VariableControlService.TeamScore.FortRoomScore += 10;
                                             numberOfTurenedOnButton--;
-                                            Console.WriteLine($"Selected {numberOfTurenedOnButton} ");
+                                            Console.WriteLine($"Selected {numberOfTurenedOnButton} score {VariableControlService.TeamScore.FortRoomScore}");
                                         }
                                         else if (itemOnButNotSelected)
                                         {
@@ -139,7 +139,7 @@ namespace FortRoom.Services
                                             item.TurnColorOn(RGBColor.Off);
                                             item.BlockForASec();
                                             VariableControlService.TeamScore.FortRoomScore -= 5;
-                                            Console.WriteLine("UnSelected ");
+                                            Console.WriteLine($"UnSelected pressed {VariableControlService.TeamScore.FortRoomScore}");
                                         }
                                     }
                                     else if (!isRGBButtonTurnedOffBecauseThePressureMate)
