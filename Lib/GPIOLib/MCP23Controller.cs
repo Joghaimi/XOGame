@@ -202,8 +202,7 @@ namespace Library.GPIOLib
         }
 
         public static void ReadAllChips() {
-            while (true)
-            {
+           
                 _mcp23017x20.PortA = mcp23017x20.ReadByte(Register.GPIO, Port.PortA);
                 Thread.Sleep(10);
                 _mcp23017x20.PortB = mcp23017x20.ReadByte(Register.GPIO, Port.PortB);
@@ -242,10 +241,61 @@ namespace Library.GPIOLib
                 _mcp23017x27.PortB = mcp23017x27.ReadByte(Register.GPIO, Port.PortB);
                
                 Thread.Sleep(100);
-            }
         }
 
+        public static bool ReadPortFromTheChip(MCP23Pin _MCP23Pin) {
+            try
+            {
+                bool returnStatus = false;
+                switch (_MCP23Pin.Chip)
+                {
+                    case MCP23017.MCP2301720:
+                        byte gpioStatus1 = mcp23017x20.ReadByte(Register.GPIO, _MCP23Pin.port);
+                        returnStatus = ((gpioStatus1 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        break;
+                    case MCP23017.MCP2301721:
+                        byte gpioStatus2 = mcp23017x21.ReadByte(Register.GPIO, _MCP23Pin.port);
+                        returnStatus = ((gpioStatus2 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        break;
+                    case MCP23017.MCP2301722:
+                        byte gpioStatus3 = mcp23017x22.ReadByte(Register.GPIO, _MCP23Pin.port);
+                        returnStatus = ((gpioStatus3 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        break;
+                    case MCP23017.MCP2301723:
+                        byte gpioStatus4 = mcp23017x23.ReadByte(Register.GPIO, _MCP23Pin.port);
+                        returnStatus = ((gpioStatus4 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        break;
+                    case MCP23017.MCP2301724:
+                        byte gpioStatus5 = mcp23017x24.ReadByte(Register.GPIO, _MCP23Pin.port);
+                        returnStatus = ((gpioStatus5 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        break;
+                    case MCP23017.MCP2301725:
+                        byte gpioStatus6 = mcp23017x25.ReadByte(Register.GPIO, _MCP23Pin.port);
+                        returnStatus = ((gpioStatus6 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        break;
+                    case MCP23017.MCP2301726:
+                        byte gpioStatus7 = mcp23017x26.ReadByte(Register.GPIO, _MCP23Pin.port);
+                        returnStatus = ((gpioStatus7 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        break;
+                    case MCP23017.MCP2301727:
+                        byte gpioStatus8 = mcp23017x27.ReadByte(Register.GPIO, _MCP23Pin.port);
+                        returnStatus = ((gpioStatus8 >> _MCP23Pin.PinNumber) & 0x01) == 1;
+                        break;
+                    default:
+                        throw new ArgumentException("Invalid Chip Selected");
+                }
+                Thread.Sleep(10);
+                return returnStatus;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Read MCPChip Exception {ex.Message} -- Try Again");
+                Thread.Sleep(10);
+                ReadAgain(_MCP23Pin);
+                return false;
+            }
 
+        }
 
 
 
@@ -314,6 +364,7 @@ namespace Library.GPIOLib
 
         public static bool ReadDelay(MCP23Pin _MCP23Pin)
         {
+            return ReadPortFromTheChip(_MCP23Pin);
             // The Working One
             try
             {
@@ -372,6 +423,8 @@ namespace Library.GPIOLib
 
         public static bool Read(MCP23Pin _MCP23Pin)
         {
+            return ReadPortFromTheChip( _MCP23Pin);
+
             // The Working One
             try
             {
