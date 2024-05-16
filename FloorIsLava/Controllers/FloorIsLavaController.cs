@@ -126,7 +126,7 @@ namespace FloorIsLava.Controllers
             var result = new
             {
                 TeamName = VariableControlService.TeamScore.Name,
-                Score = VariableControlService.TeamScore.FortRoomScore,
+                Score = VariableControlService.TeamScore.FloorIsLavaRoomScore,
                 DoorStatus = VariableControlService.CurrentDoorStatus,
                 Status = VariableControlService.GameStatus.ToString()
             };

@@ -346,7 +346,7 @@ namespace Library.GPIOLib
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Read MCPChip Exception {ex.Message} -- Try Again");
+                Console.WriteLine($"Read MCPChip {_MCP23Pin.Chip.ToString()} Exception {ex.Message} -- Try Again");
                 Thread.Sleep(10);
                 return Read(_MCP23Pin);
             }
@@ -389,7 +389,7 @@ namespace Library.GPIOLib
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Read MCPChip Exception {ex.Message}");
+                Console.WriteLine($"Read MCPChip {_MCP23Pin.Chip.ToString()} Exception {ex.Message}");
                 return false;
             }
         }
@@ -611,7 +611,7 @@ namespace Library.GPIOLib
             catch (Exception ex)
             {
                 Thread.Sleep(10);
-                Console.WriteLine($"MCP23 Write {ex.Message} -- Try other time");
+                Console.WriteLine($"MCP23 {_MCP23Pin.Chip.ToString()} Write {ex.Message} -- Try other time");
                 WriteAgain(_MCP23Pin, PinState);
             }
         }
