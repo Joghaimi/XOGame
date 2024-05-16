@@ -26,6 +26,18 @@ namespace Library.GPIOLib
         public static bool _isItHat = false;
         public static bool isLocked = false;
 
+        public static MCP23Chip _mcp23017x20 = new MCP23Chip();
+        public static MCP23Chip _mcp23017x21 = new MCP23Chip();
+        public static MCP23Chip _mcp23017x22 = new MCP23Chip();
+        public static MCP23Chip _mcp23017x23 = new MCP23Chip();
+        public static MCP23Chip _mcp23017x24 = new MCP23Chip();
+        public static MCP23Chip _mcp23017x25 = new MCP23Chip();
+        public static MCP23Chip _mcp23017x26 = new MCP23Chip();
+        public static MCP23Chip _mcp23017x27 = new MCP23Chip();
+
+
+
+
 
 
         [Obsolete("Not Recommended")]
@@ -188,6 +200,55 @@ namespace Library.GPIOLib
                 default: throw new ArgumentException($"ReturnMCPChip : Not Valid {chip}");
             }
         }
+
+        public static void ReadAllChips() {
+            while (true)
+            {
+                _mcp23017x20.PortA = mcp23017x20.ReadByte(Register.GPIO, Port.PortA);
+                Thread.Sleep(10);
+                _mcp23017x20.PortB = mcp23017x20.ReadByte(Register.GPIO, Port.PortB);
+                Thread.Sleep(10);
+                _mcp23017x21.PortA = mcp23017x21.ReadByte(Register.GPIO, Port.PortA);
+                Thread.Sleep(10);
+                _mcp23017x21.PortB = mcp23017x21.ReadByte(Register.GPIO, Port.PortB);
+                Thread.Sleep(10);
+                
+                _mcp23017x22.PortA = mcp23017x22.ReadByte(Register.GPIO, Port.PortA);
+                Thread.Sleep(10);
+                _mcp23017x22.PortB = mcp23017x22.ReadByte(Register.GPIO, Port.PortB);
+                Thread.Sleep(10);
+
+                _mcp23017x23.PortA = mcp23017x23.ReadByte(Register.GPIO, Port.PortA);
+                Thread.Sleep(10);
+                _mcp23017x23.PortB = mcp23017x23.ReadByte(Register.GPIO, Port.PortB);
+                Thread.Sleep(10);
+
+                _mcp23017x24.PortA = mcp23017x24.ReadByte(Register.GPIO, Port.PortA);
+                Thread.Sleep(10);
+                _mcp23017x24.PortB = mcp23017x24.ReadByte(Register.GPIO, Port.PortB);
+                Thread.Sleep(10);
+
+                _mcp23017x25.PortA = mcp23017x25.ReadByte(Register.GPIO, Port.PortA);
+                Thread.Sleep(10);
+                _mcp23017x25.PortB = mcp23017x25.ReadByte(Register.GPIO, Port.PortB);
+                Thread.Sleep(10);
+                _mcp23017x26.PortA = mcp23017x26.ReadByte(Register.GPIO, Port.PortA);
+                Thread.Sleep(10);
+                _mcp23017x26.PortB = mcp23017x26.ReadByte(Register.GPIO, Port.PortB);
+                Thread.Sleep(10);
+                
+                _mcp23017x27.PortA = mcp23017x27.ReadByte(Register.GPIO, Port.PortA);
+                Thread.Sleep(10);
+                _mcp23017x27.PortB = mcp23017x27.ReadByte(Register.GPIO, Port.PortB);
+               
+                Thread.Sleep(100);
+            }
+        }
+
+
+
+
+
         public static void PinModeSetup(MCP23Pin _MCP23Pin, PinMode Mode)
         {
 
