@@ -54,7 +54,7 @@ namespace Library.PinMapping
         };
         public static MCP23Pin IN8 = new MCP23Pin
         {
-            PinNumber = 1, // Set the PinNumber property
+            PinNumber = 0, // Set the PinNumber property
             Chip = MCP23017.MCP2301720, // Set the Chip property with the MCP23017 instance
             port = Port.PortA
         };
