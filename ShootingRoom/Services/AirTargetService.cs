@@ -26,7 +26,7 @@ namespace ShootingRoom.Services
         AirTargetModel ShelfLight2 = new AirTargetModel(MasterOutputPin.OUTPUT2, 0);
         AirTargetModel Target6 = new AirTargetModel(HatInputPin.IR6, 5);
         AirTargetModel Target7 = new AirTargetModel(HatInputPin.IR7, 10);
-        AirTargetModel Target8 = new AirTargetModel(HatInputPin.IR8, 5);
+        AirTargetModel Target8 = new AirTargetModel(MasterDI.IN5, 5);
         AirTargetModel Target9 = new AirTargetModel(HatInputPin.IR9, 5);
         AirTargetModel Target10 = new AirTargetModel(HatInputPin.IR10, 15);
         // Shelf Three
@@ -38,13 +38,13 @@ namespace ShootingRoom.Services
         AirTargetModel Target15 = new AirTargetModel(HatInputPin.IR15, 5);
         // Shelf Four
         AirTargetModel ShelfLight4 = new AirTargetModel(MasterOutputPin.OUTPUT4, 0);
-        AirTargetModel Target16 = new AirTargetModel(HatInputPin.IR16, 5);
+        AirTargetModel Target16 = new AirTargetModel(MasterDI.IN6, 5);
         AirTargetModel Target17 = new AirTargetModel(HatInputPin.IR17, 10);
         AirTargetModel Target18 = new AirTargetModel(HatInputPin.IR18, 5);
         AirTargetModel Target19 = new AirTargetModel(HatInputPin.IR19, 10);
         AirTargetModel Target20 = new AirTargetModel(HatInputPin.IR20, 15);
         MCP23Pin TargetMotorControl = MasterOutputPin.OUTPUT5;
-        MCP23Pin BigTargetIRSensor = MasterDI.IN1;
+        MCP23Pin BigTargetIRSensor = MasterDI.IN4;
 
         int BigTargetRelay = MasterOutputPin.GPIO23;
         int GunShootRelay = MasterOutputPin.GPIO24;
@@ -246,7 +246,7 @@ namespace ShootingRoom.Services
             {
                 if (!IsGameStartedOrInGoing())
                     break;
-                if (MCP23Controller.ReadDelay(MasterDI.IN1))
+                if (MCP23Controller.ReadDelay(MasterDI.IN4))
                 {
 
                     VariableControlService.LevelScore++;
