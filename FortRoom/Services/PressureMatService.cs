@@ -24,7 +24,7 @@ namespace FortRoom.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN2, PinMode.Input);
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => RunService(_cts.Token));
             return Task.CompletedTask;
@@ -40,7 +40,7 @@ namespace FortRoom.Services
                 {
                     try
                     {
-                        bool currentValue = MCP23Controller.Read(MasterDI.IN1);
+                        bool currentValue = MCP23Controller.Read(MasterDI.IN2);
                         VariableControlService.IsPressureMateActive = !currentValue;
                         if (!VariableControlService.IsPressureMateActive)
                             RGBLight.SetColor(VariableControlService.DefaultColor);

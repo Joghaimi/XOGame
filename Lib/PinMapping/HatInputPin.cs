@@ -52,12 +52,12 @@ namespace Library.PinMapping
             Chip = MCP23017.MCP2301721, // Set the Chip property with the MCP23017 instance
             port = Port.PortB
         };
-        public static MCP23Pin IR8 = new MCP23Pin
-        {
-            PinNumber = 7, // Set the PinNumber property
-            Chip = MCP23017.MCP2301721, // Set the Chip property with the MCP23017 instance
-            port = Port.PortB
-        };
+        //public static MCP23Pin IR8 = new MCP23Pin
+        //{
+        //    PinNumber = 7, // Set the PinNumber property
+        //    Chip = MCP23017.MCP2301721, // Set the Chip property with the MCP23017 instance
+        //    port = Port.PortB
+        //};
 
         public static MCP23Pin IR9 = new MCP23Pin
         {
@@ -101,12 +101,12 @@ namespace Library.PinMapping
             Chip = MCP23017.MCP2301721, // Set the Chip property with the MCP23017 instance
             port = Port.PortA
         };
-        public static MCP23Pin IR16 = new MCP23Pin
-        {
-            PinNumber = 7, // Set the PinNumber property
-            Chip = MCP23017.MCP2301721, // Set the Chip property with the MCP23017 instance
-            port = Port.PortA
-        };
+        //public static MCP23Pin IR16 = new MCP23Pin
+        //{
+        //    PinNumber = 7, // Set the PinNumber property
+        //    Chip = MCP23017.MCP2301721, // Set the Chip property with the MCP23017 instance
+        //    port = Port.PortA
+        //};
         public static MCP23Pin IR17 = new MCP23Pin
         {
             PinNumber = 0, // Set the PinNumber property

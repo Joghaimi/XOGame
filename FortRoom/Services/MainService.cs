@@ -50,7 +50,7 @@ namespace FortRoom.Services
             MCP23Controller.Init(Room.Fort);
             MCP23Controller.PinModeSetup(EnterRoomPB, PinMode.Input);
             MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
-            MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN2, PinMode.Input);
 
 
             RGBLight.SetColor(VariableControlService.DefaultColor);
