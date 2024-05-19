@@ -28,7 +28,7 @@ namespace DarkRoom.Services
         DarkRoomSensor IN5 = new DarkRoomSensor(HatInputPin.IR5, 10, false);
         DarkRoomSensor IN6 = new DarkRoomSensor(HatInputPin.IR6, -5, false);
         DarkRoomSensor IN7 = new DarkRoomSensor(HatInputPin.IR7, -10, false);
-        DarkRoomSensor IN8 = new DarkRoomSensor(HatInputPin.IR8, 40, false);
+        DarkRoomSensor IN8 = new DarkRoomSensor(HatInputPin.IR13, 40, false);
         DarkRoomSensor IN9 = new DarkRoomSensor(HatInputPin.IR9, -15, false);
         DarkRoomSensor IN10 = new DarkRoomSensor(HatInputPin.IR10, 30, false);
         DarkRoomSensor IN11 = new DarkRoomSensor(HatInputPin.IR11, -15, false);

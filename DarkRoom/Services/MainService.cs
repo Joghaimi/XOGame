@@ -56,7 +56,7 @@ namespace DarkRoom.Services
             MCP23Controller.PinModeSetup(EnterRoomPB, PinMode.Input);
             MCP23Controller.PinModeSetup(NextRoomPB, PinMode.Input);
 
-            MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
+            //MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
