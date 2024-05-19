@@ -166,7 +166,7 @@ namespace CatchyGame.Service
             LevelTime.Start();
             AudioPlayer.Init(Room.Catchy);
 
-            for (var i = 1241; i<=1250; i++) {
+            for (var i = 1241; i<=1491; i++) {
                 RGBWS2811.SetColor(i,RGBColor.White);
             }
             RGBWS2811.Commit();
