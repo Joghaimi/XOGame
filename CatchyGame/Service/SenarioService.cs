@@ -166,6 +166,10 @@ namespace CatchyGame.Service
             LevelTime.Start();
             AudioPlayer.Init(Room.Catchy);
 
+            for (var i = 1241; i<=1250; i++) {
+                RGBWS2811.SetColor(i,RGBColor.White);
+            }
+            RGBWS2811.Commit();
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
