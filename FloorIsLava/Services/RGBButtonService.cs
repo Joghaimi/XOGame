@@ -42,7 +42,7 @@ namespace FloorIsLava.Services
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR7, RGBButtonPin.RGBG7, RGBButtonPin.RGBB7, RGBButtonPin.RGBPB7));
             RGBButtonList[0].TurnColorOn(RGBColor.Off);
 
-            MCP23Controller.PinModeSetup(MasterDI.IN1, PinMode.Input);
+            MCP23Controller.PinModeSetup(MasterDI.IN8, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterDI.IN2, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterDI.IN3, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterDI.IN4, PinMode.Input);
@@ -300,7 +300,7 @@ namespace FloorIsLava.Services
         }
         private void pressureMat()
         {
-            bool currentValue = MCP23Controller.Read(MasterDI.IN1, false);
+            bool currentValue = MCP23Controller.Read(MasterDI.IN8, false);
             if (!currentValue && !justDecrease)
             {
                 VariableControlService.TeamScore.FloorIsLavaRoomScore -= 10;
