@@ -30,7 +30,7 @@ namespace CatchyGame.Service
 
         public static int DefaultWarmLength { get; set; } = 5;
 
-        public static RGBColor PlayerOneWarmColor { get; set; } = RGBColor.Red;
+        public static RGBColor PlayerOneWarmColor { get; set; } = RGBColor.Yellow;
         public static RGBColor PlayerOneStripDefaultColor { get; set; } = RGBColor.Off;
 
         public static int PlayerOneWarmLength { get; set; } = 5;

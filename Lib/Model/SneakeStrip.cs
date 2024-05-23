@@ -66,12 +66,13 @@ namespace Library.Model
             if (!this.isActive)
                 return;
             bool headerNotReachTheEndOfTheStrip = Worm.startPixel < endRGBLed;
-
+            Console.WriteLine($"headerNotReachTheEndOfTheStrip {headerNotReachTheEndOfTheStrip}");
             if (headerNotReachTheEndOfTheStrip)
                 Worm.startPixel++;
             else
                 Worm.startPixel = Worm.initendPixel;
             bool tailNotReachTheEndOfTheStrip = Worm.endPixel < endRGBLed;
+            Console.WriteLine($"tailNotReachTheEndOfTheStrip {headerNotReachTheEndOfTheStrip}");
 
             if (tailNotReachTheEndOfTheStrip)
                 Worm.endPixel++;
@@ -80,12 +81,12 @@ namespace Library.Model
 
             bool canMoveForward = Worm.startPixel >= this.startRGBLed;
             bool theTailIsShown = Worm.endPixel >= startRGBLed;
-
+            Console.WriteLine($"canMoveForward {canMoveForward}");
+            Console.WriteLine($"theTailIsShown {theTailIsShown}");
             if (canMoveForward)
                 RGBWS2811.SetColor(this.isActive, Worm.startPixel, this.rgbColor);
             if (theTailIsShown)
                 RGBWS2811.SetColor(this.isActive, Worm.endPixel, this.rgbOffColor);
-
 
             RGBButtonStateAndColor();// RGB Button Control 
         }
