@@ -83,7 +83,7 @@ namespace Library.Model
             if (tailNotReachTheEndOfTheLine)
                 Worm.endPixel++;
             else
-                Worm.endPixel = Worm.initendPixel;
+                Worm.endPixel = Worm.initendPixel - 1;
             //bool theTailNotReachTheEndOfTheLine = Worm.endPixel >= startRGBLed;
             //if (theTailNotReachTheEndOfTheLine)
             RGBWS2811.SetColor(this.isActive, Worm.endPixel, this.rgbOffColor);
