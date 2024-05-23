@@ -78,7 +78,7 @@ namespace Library.Model
         }
         private void MoveWormTailForward()
         {
-            bool tailNotReachTheEndOfTheLine = Worm.endPixel < endRGBLed;
+            bool tailNotReachTheEndOfTheLine = Worm.endPixel <= endRGBLed;
             if (tailNotReachTheEndOfTheLine)
                 Worm.endPixel++;
             else
