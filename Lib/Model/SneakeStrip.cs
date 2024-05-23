@@ -66,12 +66,12 @@ namespace Library.Model
             if (!this.isActive)
                 return;
             bool headerNotReachTheEndOfTheStrip = Worm.startPixel < endRGBLed;
-            bool tailNotReachTheEndOfTheStrip = Worm.endPixel < endRGBLed;
 
             if (headerNotReachTheEndOfTheStrip)
                 Worm.startPixel++;
             else
                 Worm.startPixel = Worm.initendPixel;
+            bool tailNotReachTheEndOfTheStrip = Worm.endPixel < endRGBLed;
 
             if (tailNotReachTheEndOfTheStrip)
                 Worm.endPixel++;

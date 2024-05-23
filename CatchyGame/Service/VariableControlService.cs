@@ -49,24 +49,30 @@ namespace CatchyGame.Service
         // Strip Defenition 
         public static int StripOneStartIndex { get; set; } = 0;
         public static int StripOneEndIndex { get; set; } = 211;
+        
         public static int StripTwoStartIndex { get; set; } = 212;
         public static int StripTwoEndIndex { get; set; } = 438;
+        
         public static int StripThreeStartIndex { get; set; } = 439;
         public static int StripThreeEndIndex { get; set; } = 664;
+        
         public static int StripFourStartIndex { get; set; } = 665;
         public static int StripFourEndIndex { get; set; } = 880;
+
         public static int StripFiveStartIndex { get; set; } = 881;
         public static int StripFiveEndIndex { get; set; } = 1074;
+        
         public static int StripSixStartIndex { get; set; } = 1075;
         public static int StripSixEndIndex { get; set; } = 1240;
+
         public static int StripSevenStartIndex { get; set; } = 1241;
         public static int StripSevenEndIndex { get; set; } = 1491;
         public static RGBColor StripSevenDefaultColor { get; set; } = RGBColor.White;
 
         public static RGBColor StripFiveWarmColor { get; set; } = RGBColor.Red;
-        public static RGBColor StripFiveStripDefaultColor { get; set; } = RGBColor.Blue;
+        public static RGBColor StripFiveStripDefaultColor { get; set; } = RGBColor.Off;
         public static RGBColor StripSixWarmColor { get; set; } = RGBColor.Red;
-        public static RGBColor StripSixStripDefaultColor { get; set; } = RGBColor.Blue;
+        public static RGBColor StripSixStripDefaultColor { get; set; } = RGBColor.Off;
 
 
 
