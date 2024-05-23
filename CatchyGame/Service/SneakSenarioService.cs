@@ -155,29 +155,29 @@ namespace CatchyGame.Service
             RGBButtonPixel6.Add(StripSixButton3);
 
             StripList.Add(new SneakeStrip(
-                VariableControlService.PlayerOneWarmColor,VariableControlService.PlayerOneStripDefaultColor,
-                VariableControlService.StripOneStartIndex,VariableControlService.StripOneEndIndex,
-                RGBButtonPixel1,0,0,VariableControlService.DefaultWarmLength));
+                VariableControlService.PlayerOneWarmColor, VariableControlService.PlayerOneStripDefaultColor,
+                VariableControlService.StripOneStartIndex, VariableControlService.StripOneEndIndex,
+                RGBButtonPixel1, 0, 0, VariableControlService.DefaultWarmLength));
             StripList.Add(new SneakeStrip(
                 VariableControlService.PlayerTwoWarmColor, VariableControlService.PlayerTwoStripDefaultColor,
                 VariableControlService.StripTwoStartIndex, VariableControlService.StripTwoEndIndex,
-                RGBButtonPixel2, 1,1, VariableControlService.DefaultWarmLength));
+                RGBButtonPixel2, 1, 1, VariableControlService.DefaultWarmLength));
             StripList.Add(new SneakeStrip(
                 VariableControlService.PlayerThreeWarmColor, VariableControlService.PlayerThreeStripDefaultColor,
                 VariableControlService.StripThreeStartIndex, VariableControlService.StripThreeEndIndex,
-                RGBButtonPixel3, 2,2, VariableControlService.DefaultWarmLength));
+                RGBButtonPixel3, 2, 2, VariableControlService.DefaultWarmLength));
             StripList.Add(new SneakeStrip(
                 VariableControlService.PlayerFourWarmColor, VariableControlService.PlayerFourStripDefaultColor,
-                VariableControlService.StripFourStartIndex, VariableControlService.StripFourEndIndex, 
-                RGBButtonPixel4, 3,3, VariableControlService.DefaultWarmLength));
+                VariableControlService.StripFourStartIndex, VariableControlService.StripFourEndIndex,
+                RGBButtonPixel4, 3, 3, VariableControlService.DefaultWarmLength));
             StripList.Add(new SneakeStrip(
                 VariableControlService.StripFiveWarmColor, VariableControlService.StripFiveStripDefaultColor,
                 VariableControlService.StripFiveStartIndex, VariableControlService.StripFiveEndIndex,
-                RGBButtonPixel5, 4,4, VariableControlService.DefaultWarmLength)); // TO Do
+                RGBButtonPixel5, 4, 4, VariableControlService.DefaultWarmLength)); // TO Do
             StripList.Add(new SneakeStrip(
                 VariableControlService.StripSixWarmColor, VariableControlService.StripSixStripDefaultColor,
                 VariableControlService.StripSixStartIndex, VariableControlService.StripSixEndIndex,
-                RGBButtonPixel6, 5,5, VariableControlService.DefaultWarmLength)); // TO DO
+                RGBButtonPixel6, 5, 5, VariableControlService.DefaultWarmLength)); // TO DO
 
             RGBWS2811.Init();
             LevelTime.Start();
@@ -201,7 +201,7 @@ namespace CatchyGame.Service
             {
                 if (VariableControlService.GameStatus == GameStatus.Started)
                 {
-                    _logger.LogTrace("Start Game ,Number of players {0}" , VariableControlService.Team.player.Count());
+                    _logger.LogTrace("Start Game ,Number of players {0}", VariableControlService.Team.player.Count());
                     if (!backgroundSoundStarted)
                     {
                         _logger.LogTrace("Play Background Sound");
@@ -209,10 +209,12 @@ namespace CatchyGame.Service
                         AudioPlayer.PIBackgroundSound(SoundType.Background);
                     }
                     Restart();
+                    UpdateStripState();
+
                     while (VariableControlService.GameStatus == GameStatus.Started)
                     {
                         ResetAllLine();
-                        _logger.LogTrace("New Round :- {0}",VariableControlService.GameRound.ToString());
+                        _logger.LogTrace("New Round :- {0}", VariableControlService.GameRound.ToString());
                         LevelTime.Restart();
                         while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
                         {
@@ -228,7 +230,7 @@ namespace CatchyGame.Service
                             }
                             RGBWS2811.Commit();
                         }
-                        _logger.LogTrace("Round {0} Finshed" ,VariableControlService.GameRound);
+                        _logger.LogTrace("Round {0} Finshed", VariableControlService.GameRound);
                         if (VariableControlService.GameRound == Round.Round5)
                             VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
                         VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
@@ -259,7 +261,7 @@ namespace CatchyGame.Service
                             if (button.isSet())
                             {
                                 Console.WriteLine("RGB Button Pressed for set Button");
-                                AddPoint(ButtonNumberToPlayerIndex(buttonIndex),button.AssignedFor(), buttonIndex > 7);
+                                AddPoint(ButtonNumberToPlayerIndex(buttonIndex), button.AssignedFor(), buttonIndex > 7);
                                 button.BlockForATimeInMs(200);
                                 button.clickedForOnce = true;
                                 button.Set(false);
@@ -317,16 +319,6 @@ namespace CatchyGame.Service
 
         }
 
-        //private int WormLengthInLevel(Round currentRound)
-        //{
-        //    if (currentRound == Round.Round1) return 7;
-        //    else if (currentRound == Round.Round2) return 6;
-        //    else if (currentRound == Round.Round3) return 5;
-        //    else if (currentRound == Round.Round4) return 4;
-        //    else if (currentRound == Round.Round5) return 3;
-        //    return 7;
-        //}
-
         // ======== Private To The Next Room
         private Round NextRound(Round currentRound)
         {
@@ -336,9 +328,9 @@ namespace CatchyGame.Service
         }
         private int ButtonNumberToPlayerIndex(int buttonIndex)
         {
-            bool playerOneButton    = buttonIndex == 0 || buttonIndex == 1 || buttonIndex == 8;
-            bool playerTwoButton    = buttonIndex == 2 || buttonIndex == 3 || buttonIndex == 10;
-            bool playerThreeButton  = buttonIndex == 4 || buttonIndex == 5 || buttonIndex == 11;
+            bool playerOneButton = buttonIndex == 0 || buttonIndex == 1 || buttonIndex == 8;
+            bool playerTwoButton = buttonIndex == 2 || buttonIndex == 3 || buttonIndex == 10;
+            bool playerThreeButton = buttonIndex == 4 || buttonIndex == 5 || buttonIndex == 11;
             bool playerFourButton = buttonIndex == 6 || buttonIndex == 7 || buttonIndex == 13;
             if (playerOneButton)
                 return 0;
@@ -352,7 +344,7 @@ namespace CatchyGame.Service
         }
 
 
-        private void AddPoint(int playerIndex,int buttonAssignedFor, bool isDubleScore)
+        private void AddPoint(int playerIndex, int buttonAssignedFor, bool isDubleScore)
         {
             if (playerIndex > VariableControlService.Team.player.Count() - 1)
                 return;
@@ -370,42 +362,68 @@ namespace CatchyGame.Service
             AudioPlayer.PIStartAudio(SoundType.Success);
         }
 
-        public void ChangeSneakSize(int playerIndex,int addedValue) {
-            if (addedValue>0) { 
-                 switch (playerIndex)
-                    {
-                        case 0:
-                            VariableControlService.PlayerOneWarmLength += addedValue;
-                            _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerOneWarmLength);
+        public void ChangeSneakSize(int playerIndex, int addedValue)
+        {
+            if (addedValue > 0)
+            {
+                switch (playerIndex)
+                {
+                    case 0:
+                        VariableControlService.PlayerOneWarmLength += addedValue;
+                        _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerOneWarmLength);
                         break;
-                        case 1:
-                            VariableControlService.PlayerTwoWarmLength += addedValue;
-                            _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerTwoWarmLength);
-                            break;
-                        case 2:
-                            VariableControlService.PlayerThreeWarmLength += addedValue;
-                            _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerThreeWarmLength);
+                    case 1:
+                        VariableControlService.PlayerTwoWarmLength += addedValue;
+                        _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerTwoWarmLength);
                         break;
-                        case 3:
-                            VariableControlService.PlayerFourWarmLength += addedValue;
-                            _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerFourWarmLength);
+                    case 2:
+                        VariableControlService.PlayerThreeWarmLength += addedValue;
+                        _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerThreeWarmLength);
                         break;
-                        default:
-                            break;
-                    }        
+                    case 3:
+                        VariableControlService.PlayerFourWarmLength += addedValue;
+                        _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerFourWarmLength);
+                        break;
+                    default:
+                        break;
+                }
             }
-            
-           
-        
+
+
+
         }
 
-        public void UpdateSneakSize() {
+        public void UpdateSneakSize()
+        {
             StripList[0].UpdateLength(VariableControlService.PlayerOneWarmLength);
             StripList[1].UpdateLength(VariableControlService.PlayerTwoWarmLength);
             StripList[2].UpdateLength(VariableControlService.PlayerThreeWarmLength);
             StripList[3].UpdateLength(VariableControlService.PlayerFourWarmLength);
         }
 
+        public void UpdateStripState()
+        {
+            if (VariableControlService.Team.player.Count() <= 2)
+            {
+                StripList[0].Activate(true);
+                StripList[1].Activate(true);
+                StripList[2].Activate(false);
+                StripList[3].Activate(false);
+            }
+            else if (VariableControlService.Team.player.Count() <= 3) {
+                StripList[0].Activate(true);
+                StripList[1].Activate(true);
+                StripList[2].Activate(true);
+                StripList[3].Activate(false);
+            }
+            else if (VariableControlService.Team.player.Count() <= 4)
+            {
+                StripList[0].Activate(true);
+                StripList[1].Activate(true);
+                StripList[2].Activate(true);
+                StripList[3].Activate(true);
+            }
+        }
 
 
         private void SubstractPoint(int playerIndex, int buttonAssignedFor)
@@ -417,7 +435,7 @@ namespace CatchyGame.Service
             ChangeSneakSize(playerIndex, -1);
         }
 
-        private void ResetLine(int startLed, int endLed,RGBColor offColor)
+        private void ResetLine(int startLed, int endLed, RGBColor offColor)
         {
             RGBWS2811.SetColorByRange(startLed, endLed, offColor);
         }

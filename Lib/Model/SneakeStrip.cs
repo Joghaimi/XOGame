@@ -25,10 +25,8 @@ namespace Library.Model
         public int wormLength { get; set; } = 5;
         RGBWorm Worm;
         public List<RGBButtonSneakPixel> Buttons = new List<RGBButtonSneakPixel>();
-
-
         private int playerAssignedToTheStrip;
-
+        public bool IsActive = true;
 
         public SneakeStrip(
           RGBColor rgbColor,
@@ -59,9 +57,14 @@ namespace Library.Model
             Worm.updateLength(wormLength);
         }
 
-
+        public void Activate(bool isActive)
+        {
+            this.isActive = isActive;
+        }
         public void Move()
         {
+            if (!this.isActive)
+                return;
             bool headerNotReachTheEndOfTheStrip = Worm.startPixel < endRGBLed;
             bool tailNotReachTheEndOfTheStrip = Worm.endPixel < endRGBLed;
 
@@ -74,7 +77,7 @@ namespace Library.Model
                 Worm.endPixel++;
             else
                 Worm.endPixel = Worm.initendPixel;
-            
+
             bool canMoveForward = Worm.startPixel >= this.startRGBLed;
             bool theTailIsShown = Worm.endPixel >= startRGBLed;
 
@@ -109,7 +112,7 @@ namespace Library.Model
 
                     if (buttonState && !button.Button.isSet() && !button.Button.clickedForOnce)
                     {
-                        button.Button.Set(true , playerAssignedToTheStrip);
+                        button.Button.Set(true, playerAssignedToTheStrip);
                         button.Button.TurnColorOn(rgbColor);
                         button.Button.stripIndex = stripIndex;
                     }
