@@ -74,7 +74,6 @@ namespace Library.Model
             if (TheWormHeadInTheRangeOfTheStripPixel)
                 RGBWS2811.SetColor(this.isActive, Worm.startPixel, this.rgbColor);
 
-            Console.WriteLine($"canMoveForward {TheWormHeadInTheRangeOfTheStripPixel} Sneak Head Pixel {Worm.startPixel}");
 
         }
         private void MoveWormTailForward()
@@ -87,7 +86,7 @@ namespace Library.Model
             //bool theTailNotReachTheEndOfTheLine = Worm.endPixel >= startRGBLed;
             //if (theTailNotReachTheEndOfTheLine)
             RGBWS2811.SetColor(this.isActive, Worm.endPixel, this.rgbOffColor);
-            Console.WriteLine($"theTailIsShown {tailNotReachTheEndOfTheLine} Snake Tail Pixel {Worm.endPixel}");
+            Console.WriteLine($"theTailIsShown {tailNotReachTheEndOfTheLine} Snake Tail Pixel {Worm.endPixel} Total Size {Worm.startPixel - Worm.endPixel}");
         }
         public void Move()
         {
