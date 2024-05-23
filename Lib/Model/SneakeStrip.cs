@@ -83,11 +83,10 @@ namespace Library.Model
                 Worm.endPixel++;
             else
                 Worm.endPixel = Worm.initendPixel;
-            bool theTailNotReachTheEndOfTheLine = Worm.endPixel >= startRGBLed;
-            if (theTailNotReachTheEndOfTheLine)
-                RGBWS2811.SetColor(this.isActive, Worm.endPixel, this.rgbOffColor);
-            Console.WriteLine($"theTailIsShown {theTailNotReachTheEndOfTheLine} Snake Tail Pixel {Worm.endPixel}");
-
+            //bool theTailNotReachTheEndOfTheLine = Worm.endPixel >= startRGBLed;
+            //if (theTailNotReachTheEndOfTheLine)
+            RGBWS2811.SetColor(this.isActive, Worm.endPixel, this.rgbOffColor);
+            //Console.WriteLine($"theTailIsShown {theTailNotReachTheEndOfTheLine} Snake Tail Pixel {Worm.endPixel}");
         }
         public void Move()
         {
