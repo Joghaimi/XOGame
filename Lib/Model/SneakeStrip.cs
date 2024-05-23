@@ -73,7 +73,7 @@ namespace Library.Model
             bool TheWormHeadInTheRangeOfTheStripPixel = Worm.startPixel >= this.startRGBLed;
             if (TheWormHeadInTheRangeOfTheStripPixel)
                 //RGBWS2811.SetColor(this.isActive, Worm.startPixel, this.rgbColor);
-                TurnPixelOn(Worm.startPixel);
+                TurnPixelOn(Worm.startPixel, this.rgbColor);
 
         }
         private void MoveWormTailForward()
@@ -83,13 +83,13 @@ namespace Library.Model
                 Worm.endPixel++;
             else
                 Worm.endPixel = Worm.initendPixel;
-            TurnPixelOn(Worm.endPixel);
+            TurnPixelOn(Worm.endPixel, this.rgbOffColor);
         }
-        private void TurnPixelOn(int pixelNumber)
+        private void TurnPixelOn(int pixelNumber,RGBColor rGBColor)
         {
             bool pixelInTheStrip = pixelNumber >= Worm.startPixel && pixelNumber <= Worm.endPixel;
             if (pixelInTheStrip)
-                RGBWS2811.SetColor(this.isActive, pixelNumber, this.rgbOffColor);
+                RGBWS2811.SetColor(this.isActive, pixelNumber, rGBColor);
 
         }
 
