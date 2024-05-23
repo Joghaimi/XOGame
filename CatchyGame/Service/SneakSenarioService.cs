@@ -406,11 +406,11 @@ namespace CatchyGame.Service
             if (VariableControlService.Team.player.Count() <= 2)
             {
                 StripList[0].Activate(true);
-                StripList[1].Activate(false);
+                StripList[1].Activate(true);
                 StripList[2].Activate(false);
                 StripList[3].Activate(false);
-                StripList[4].Activate(false);
-                StripList[5].Activate(false);
+                StripList[4].Activate(true);
+                StripList[5].Activate(true);
             }
             else if (VariableControlService.Team.player.Count() <= 3) {
                 StripList[0].Activate(true);
