@@ -54,39 +54,69 @@ namespace Library.Model
         }
         public void UpdateLength(int wormLength)
         {
-            Worm.updateLength(wormLength);
+            Worm.updateSneakLength(wormLength);
         }
 
         public void Activate(bool isActive)
         {
             this.isActive = isActive;
         }
+
+        private void MoveWormHeadForward()
+        {
+            bool HeadNotReachTheEndOfTheLine = Worm.startPixel <= endRGBLed;
+            if (HeadNotReachTheEndOfTheLine)
+                Worm.startPixel++;
+            else
+                Worm.startPixel = Worm.initendPixel; // Reset The Worm Head
+            bool TheWormHeadInTheRangeOfTheStripPixel = Worm.startPixel >= this.startRGBLed;
+            if (TheWormHeadInTheRangeOfTheStripPixel)
+                RGBWS2811.SetColor(this.isActive, Worm.startPixel, this.rgbColor);
+
+            Console.WriteLine($"canMoveForward {TheWormHeadInTheRangeOfTheStripPixel} Sneak Head Pixel {Worm.startPixel}");
+
+        }
+        private void MoveWormTailForward()
+        {
+            bool tailNotReachTheEndOfTheLine = Worm.endPixel < endRGBLed;
+            if (tailNotReachTheEndOfTheLine)
+                Worm.endPixel++;
+            else
+                Worm.endPixel = Worm.initendPixel;
+            bool theTailNotReachTheEndOfTheLine = Worm.endPixel >= startRGBLed;
+            if (theTailNotReachTheEndOfTheLine)
+                RGBWS2811.SetColor(this.isActive, Worm.endPixel, this.rgbOffColor);
+            Console.WriteLine($"theTailIsShown {theTailNotReachTheEndOfTheLine} Snake Tail Pixel {Worm.endPixel}");
+
+        }
         public void Move()
         {
             if (!this.isActive)
                 return;
-            bool headerNotReachTheEndOfTheStrip = Worm.startPixel <= endRGBLed;
-            bool tailNotReachTheEndOfTheStrip = Worm.endPixel < endRGBLed;
-            Console.WriteLine($"headerNotReachTheEndOfTheStrip {headerNotReachTheEndOfTheStrip}");
-            Console.WriteLine($"tailNotReachTheEndOfTheStrip {headerNotReachTheEndOfTheStrip}");
+            MoveWormHeadForward();
+            MoveWormTailForward();
+            //bool headerNotReachTheEndOfTheStrip = Worm.startPixel <= endRGBLed;
+            //bool tailNotReachTheEndOfTheStrip = Worm.endPixel < endRGBLed;
+            //Console.WriteLine($"headerNotReachTheEndOfTheStrip {headerNotReachTheEndOfTheStrip}");
+            //Console.WriteLine($"tailNotReachTheEndOfTheStrip {headerNotReachTheEndOfTheStrip}");
 
-            if (headerNotReachTheEndOfTheStrip)
-                Worm.startPixel++;
-            else
-                Worm.startPixel = Worm.initendPixel;
+            //if (headerNotReachTheEndOfTheStrip)
+            //    Worm.startPixel++;
+            //else
+            //    Worm.startPixel = Worm.initendPixel;
 
-            if (tailNotReachTheEndOfTheStrip)
-                Worm.endPixel++;
-            else
-                Worm.endPixel = Worm.initendPixel;
+            //if (tailNotReachTheEndOfTheStrip)
+            //    Worm.endPixel++;
+            //else
+            //    Worm.endPixel = Worm.initendPixel;
 
-            bool canMoveForward = Worm.startPixel >= this.startRGBLed;
-            bool theTailIsShown = Worm.endPixel >= startRGBLed;
+            //bool canMoveForward = Worm.startPixel >= this.startRGBLed;
+            //bool theTailIsShown = Worm.endPixel >= startRGBLed;
 
-            Console.WriteLine($"canMoveForward {canMoveForward} Sneak Head Pixel {Worm.startPixel}");
-            Console.WriteLine($"theTailIsShown {theTailIsShown} Snake Tail Pixel {Worm.endPixel}");
-            RGBWS2811.SetColor(this.isActive, Worm.startPixel, this.rgbColor);
-            RGBWS2811.SetColor(this.isActive, Worm.endPixel, this.rgbOffColor);
+            //Console.WriteLine($"canMoveForward {canMoveForward} Sneak Head Pixel {Worm.startPixel}");
+            //Console.WriteLine($"theTailIsShown {theTailIsShown} Snake Tail Pixel {Worm.endPixel}");
+            //RGBWS2811.SetColor(this.isActive, Worm.startPixel, this.rgbColor);
+            //RGBWS2811.SetColor(this.isActive, Worm.endPixel, this.rgbOffColor);
             //if (canMoveForward)
             //    RGBWS2811.SetColor(this.isActive, Worm.startPixel, this.rgbColor);
             //if (theTailIsShown)

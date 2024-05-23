@@ -38,6 +38,12 @@ namespace Library.Model
             this.initendPixel = endPixel;
         }
 
+        public void updateSneakLength(int newLength)
+        {
+            this.endPixel = this.startPixel - newLength;
+            //this.initendPixel = endPixel;
+        }
+
         public void reset()
         {
             this.startPixel = this.initStartPixel;
