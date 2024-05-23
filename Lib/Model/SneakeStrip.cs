@@ -65,7 +65,7 @@ namespace Library.Model
 
         private void MoveWormHeadForward()
         {
-            bool HeadNotReachTheEndOfTheLine = Worm.startPixel < endRGBLed;
+            bool HeadNotReachTheEndOfTheLine = Worm.startPixel <= endRGBLed;
             if (HeadNotReachTheEndOfTheLine)
                 Worm.startPixel++;
             else
@@ -83,7 +83,7 @@ namespace Library.Model
             if (tailNotReachTheEndOfTheLine)
                 Worm.endPixel++;
             else
-                Worm.endPixel = Worm.initendPixel - 1;
+                Worm.endPixel = Worm.initendPixel;
             //bool theTailNotReachTheEndOfTheLine = Worm.endPixel >= startRGBLed;
             //if (theTailNotReachTheEndOfTheLine)
             RGBWS2811.SetColor(this.isActive, Worm.endPixel, this.rgbOffColor);
