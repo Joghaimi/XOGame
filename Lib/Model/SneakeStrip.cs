@@ -64,7 +64,7 @@ namespace Library.Model
 
         private void MoveWormHeadForward()
         {
-            bool HeadNotReachTheEndOfTheLine = Worm.startPixel <= endRGBLed;
+            bool HeadNotReachTheEndOfTheLine = Worm.startPixel < endRGBLed;
             if (HeadNotReachTheEndOfTheLine)
                 Worm.startPixel++;
             else
