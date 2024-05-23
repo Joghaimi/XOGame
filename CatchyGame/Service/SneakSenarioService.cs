@@ -17,14 +17,10 @@ namespace CatchyGame.Service
         List<RGBButtonSneak> RGBButtonList = new List<RGBButtonSneak>();
 
         private CancellationTokenSource _cts, _cts2, _cts3;
-        private int WormLengthInTheLevel = 0;
         Stopwatch GameTiming = new Stopwatch();
         Stopwatch LevelTime = new Stopwatch();
-        Random random = new Random();
         bool backgroundSoundStarted = false;
 
-        RGBColor onColor = RGBColor.Red;
-        RGBColor offColor = RGBColor.Blue;
 
         private readonly ILogger<SneakSenarioService> _logger;
 
@@ -159,28 +155,37 @@ namespace CatchyGame.Service
             RGBButtonPixel6.Add(StripSixButton3);
 
             StripList.Add(new SneakeStrip(
-                VariableControlService.PlayerOneWarmColor,
-                VariableControlService.PlayerOneStripDefaultColor,
-                VariableControlService.StripOneStartIndex,
-                VariableControlService.StripOneEndIndex,
-                RGBButtonPixel1, 
-                0,
-                VariableControlService.DefaultWarmLength,
-                0
-                ));
-            StripList.Add(new SneakeStrip(VariableControlService.PlayerTwoWarmColor, VariableControlService.PlayerTwoStripDefaultColor, 212, 438, RGBButtonPixel2, 1, VariableControlService.DefaultWarmLength,1));
-            StripList.Add(new SneakeStrip(VariableControlService.PlayerThreeWarmColor, VariableControlService.PlayerThreeStripDefaultColor, 439, 664, RGBButtonPixel3, 2, VariableControlService.DefaultWarmLength, 2));
-            StripList.Add(new SneakeStrip(VariableControlService.PlayerFourWarmColor, VariableControlService.PlayerFourStripDefaultColor, 665, 880, RGBButtonPixel4, 3, VariableControlService.DefaultWarmLength, 3));
-            StripList.Add(new SneakeStrip(onColor, offColor, 881, 1074, RGBButtonPixel5, 4, VariableControlService.DefaultWarmLength, 4)); // TO Do
-            StripList.Add(new SneakeStrip(onColor, offColor, 1075, 1240, RGBButtonPixel6, 5, VariableControlService.DefaultWarmLength,5)); // TO DO
+                VariableControlService.PlayerOneWarmColor,VariableControlService.PlayerOneStripDefaultColor,
+                VariableControlService.StripOneStartIndex,VariableControlService.StripOneEndIndex,
+                RGBButtonPixel1,0,0,VariableControlService.DefaultWarmLength));
+            StripList.Add(new SneakeStrip(
+                VariableControlService.PlayerTwoWarmColor, VariableControlService.PlayerTwoStripDefaultColor,
+                VariableControlService.StripTwoStartIndex, VariableControlService.StripTwoEndIndex,
+                RGBButtonPixel2, 1,1, VariableControlService.DefaultWarmLength));
+            StripList.Add(new SneakeStrip(
+                VariableControlService.PlayerThreeWarmColor, VariableControlService.PlayerThreeStripDefaultColor,
+                VariableControlService.StripThreeStartIndex, VariableControlService.StripThreeEndIndex,
+                RGBButtonPixel3, 2,2, VariableControlService.DefaultWarmLength));
+            StripList.Add(new SneakeStrip(
+                VariableControlService.PlayerFourWarmColor, VariableControlService.PlayerFourStripDefaultColor,
+                VariableControlService.StripFourStartIndex, VariableControlService.StripFourEndIndex, 
+                RGBButtonPixel4, 3,3, VariableControlService.DefaultWarmLength));
+            StripList.Add(new SneakeStrip(
+                VariableControlService.StripFiveWarmColor, VariableControlService.StripFiveStripDefaultColor,
+                VariableControlService.StripFiveStartIndex, VariableControlService.StripFiveEndIndex,
+                RGBButtonPixel5, 4,4, VariableControlService.DefaultWarmLength)); // TO Do
+            StripList.Add(new SneakeStrip(
+                VariableControlService.StripSixWarmColor, VariableControlService.StripSixStripDefaultColor,
+                VariableControlService.StripSixStartIndex, VariableControlService.StripSixEndIndex,
+                RGBButtonPixel6, 5,5, VariableControlService.DefaultWarmLength)); // TO DO
 
             RGBWS2811.Init();
             LevelTime.Start();
             AudioPlayer.Init(Room.Catchy);
-
-            RGBWS2811.SetColorByRange(1241, 1491, RGBColor.White);
+            RGBWS2811.SetColorByRange(
+                VariableControlService.StripSevenStartIndex, VariableControlService.StripSevenEndIndex,
+                VariableControlService.StripSevenDefaultColor);
             RGBWS2811.Commit();
-
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -220,7 +225,6 @@ namespace CatchyGame.Service
                                     strip.MoveTwoPixel();
                                 else
                                     strip.MoveThreePixel();
-
                             }
                             RGBWS2811.Commit();
                         }
@@ -270,7 +274,7 @@ namespace CatchyGame.Service
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Exception {ex.Message}");
+                    _logger.LogError($"Exception {ex.Message}");
                 }
 
             }
@@ -313,15 +317,15 @@ namespace CatchyGame.Service
 
         }
 
-        private int WormLengthInLevel(Round currentRound)
-        {
-            if (currentRound == Round.Round1) return 7;
-            else if (currentRound == Round.Round2) return 6;
-            else if (currentRound == Round.Round3) return 5;
-            else if (currentRound == Round.Round4) return 4;
-            else if (currentRound == Round.Round5) return 3;
-            return 7;
-        }
+        //private int WormLengthInLevel(Round currentRound)
+        //{
+        //    if (currentRound == Round.Round1) return 7;
+        //    else if (currentRound == Round.Round2) return 6;
+        //    else if (currentRound == Round.Round3) return 5;
+        //    else if (currentRound == Round.Round4) return 4;
+        //    else if (currentRound == Round.Round5) return 3;
+        //    return 7;
+        //}
 
         // ======== Private To The Next Room
         private Round NextRound(Round currentRound)
@@ -332,13 +336,17 @@ namespace CatchyGame.Service
         }
         private int ButtonNumberToPlayerIndex(int buttonIndex)
         {
-            if (buttonIndex == 0 || buttonIndex == 1 || buttonIndex == 8)
+            bool playerOneButton    = buttonIndex == 0 || buttonIndex == 1 || buttonIndex == 8;
+            bool playerTwoButton    = buttonIndex == 2 || buttonIndex == 3 || buttonIndex == 10;
+            bool playerThreeButton  = buttonIndex == 4 || buttonIndex == 5 || buttonIndex == 11;
+            bool playerFourButton = buttonIndex == 6 || buttonIndex == 7 || buttonIndex == 13;
+            if (playerOneButton)
                 return 0;
-            else if (buttonIndex == 2 || buttonIndex == 3 || buttonIndex == 10)
+            else if (playerTwoButton)
                 return 1;
-            else if (buttonIndex == 4 || buttonIndex == 5 || buttonIndex == 11)
+            else if (playerThreeButton)
                 return 2;
-            else if (buttonIndex == 6 || buttonIndex == 7 || buttonIndex == 13)
+            else if (playerFourButton)
                 return 3;
             return 0;
         }
@@ -348,14 +356,11 @@ namespace CatchyGame.Service
         {
             if (playerIndex > VariableControlService.Team.player.Count() - 1)
                 return;
-
-
             // Control Player Score 
             if (isDubleScore)
                 VariableControlService.Team.player[playerIndex].score += 2;
             else
                 VariableControlService.Team.player[playerIndex].score += 1;
-
             // Control Sneak Size //@TODO
             if (playerIndex == buttonAssignedFor)
                 ChangeSneakSize(playerIndex, 1);
@@ -371,13 +376,11 @@ namespace CatchyGame.Service
                     {
                         case 0:
                             VariableControlService.PlayerOneWarmLength += addedValue;
-                            
                             _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerOneWarmLength);
                         break;
                         case 1:
                             VariableControlService.PlayerTwoWarmLength += addedValue;
                             _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerTwoWarmLength);
-
                             break;
                         case 2:
                             VariableControlService.PlayerThreeWarmLength += addedValue;
@@ -397,46 +400,43 @@ namespace CatchyGame.Service
         }
 
         public void UpdateSneakSize() {
-
             StripList[0].UpdateLength(VariableControlService.PlayerOneWarmLength);
-            StripList[0].UpdateLength(VariableControlService.PlayerTwoWarmLength);
-            StripList[0].UpdateLength(VariableControlService.PlayerThreeWarmLength);
-            StripList[0].UpdateLength(VariableControlService.PlayerFourWarmLength);
+            StripList[1].UpdateLength(VariableControlService.PlayerTwoWarmLength);
+            StripList[2].UpdateLength(VariableControlService.PlayerThreeWarmLength);
+            StripList[3].UpdateLength(VariableControlService.PlayerFourWarmLength);
         }
 
 
 
         private void SubstractPoint(int playerIndex, int buttonAssignedFor)
         {
-            Console.WriteLine("Substract Point");
+            _logger.LogTrace("Substract Point");
             AudioPlayer.PIStartAudio(SoundType.Failure);
             VariableControlService.Team.player[playerIndex].score -= 1;
-            Console.WriteLine($"Substract Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
+            _logger.LogTrace($"Substract Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
             ChangeSneakSize(playerIndex, -1);
         }
 
-        private void ResetLine(int startLed, int endLed)
+        private void ResetLine(int startLed, int endLed,RGBColor offColor)
         {
             RGBWS2811.SetColorByRange(startLed, endLed, offColor);
         }
 
         private void ResetAllLine()
         {
-
             _logger.LogTrace("Restart All Lines ...");
             foreach (var strip in StripList)
             {
-                ResetLine(strip.startRGBLed, strip.endRGBLed);
+                ResetLine(strip.startRGBLed, strip.endRGBLed, strip.rgbOffColor);
                 strip.LineReseted();
             }
             RGBWS2811.Commit();
-            _logger.LogTrace(" Done .");
-
             foreach (var button in RGBButtonList)
             {
                 button.Set(false);
                 button.clickedForOnce = false;
             }
+            _logger.LogTrace("Done .");
         }
 
     }

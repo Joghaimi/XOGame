@@ -1,5 +1,6 @@
 ﻿using FloorIsLava.Services;
 using Library;
+using Library.APIIntegration;
 using Library.LocalStorage;
 using Library.Model;
 using Library.OSControl;
@@ -162,6 +163,20 @@ namespace FloorIsLava.Controllers
             Console.WriteLine(loadedData);
             return Ok(loadedData);
         }
-
+        [HttpGet("Test")]
+        public async Task <IActionResult> Test()
+        {
+            Team newTeam = new Team();
+            newTeam.Name = "TestName";
+            newTeam.Total = 100;
+            var player = new Player();
+            player.Id = "12";
+            player.FirstName = "Test";
+            player.LastName = "Test@";
+            player.MobileNumber= "0795282626";
+            newTeam.player.Add(player);
+            await APIIntegration.GetSignature("https://admin.frenziworld.com/api/make-signature", newTeam);
+            return Ok();
+        }
     }
 }

@@ -107,6 +107,7 @@ namespace Library.APIIntegration
                     return null;
                 }
             }
+        
         }
 
         public async static Task<bool> SendScoreToTheNextRoom(string nextRoomURL, Team team)
@@ -157,8 +158,51 @@ namespace Library.APIIntegration
             return true; // Always accept the certificate
         }
 
-        public async static Task<string> GetSignature()
+        public async static Task<string> GetSignature(string baseUrl,Team team)
         {
+            MakeSignetureRequestDto requestBody = new MakeSignetureRequestDto();
+            requestBody.TeamName = team.Name;
+            requestBody.Score = team.Total;
+            requestBody.TeamId = 1;
+            requestBody.GameId = 1;
+            requestBody.TimeInUnix = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            foreach (var player in team.player) {
+                requestBody.PlayersMobile.Add(player.MobileNumber);
+            }
+            HttpClientHandler handler = new HttpClientHandler();
+            using (HttpClient httpClient = new HttpClient(handler))
+            {
+                try
+                {
+                    string jsonData = JsonConvert.SerializeObject(requestBody);
+                    HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                    var request = new HttpRequestMessage(HttpMethod.Get, baseUrl);
+                    request.Content = content;
+                    HttpResponseMessage response = await httpClient.SendAsync(request);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Read the response content as a string
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        Console.WriteLine("Response received:");
+                        Console.WriteLine(responseBody);
+                        return responseBody;
+                    }
+                    else
+                    {
+                        // Handle the unsuccessful response (non-success status code)
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        Console.WriteLine($"Error: {response.StatusCode}");
+                        Console.WriteLine($"Error: {responseBody}");
+                        return null;
+                    }
+                }
+                catch (HttpRequestException ex)
+                {
+                    // Handle any exceptions that occurred during the request
+                    Console.WriteLine($"Request failed: {ex.Message}");
+                    return null;
+                }
+            }
 
             return null;
         }
