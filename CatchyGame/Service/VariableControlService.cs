@@ -31,18 +31,19 @@ namespace CatchyGame.Service
         public static int DefaultWarmLength { get; set; } = 5;
 
         public static RGBColor PlayerOneWarmColor { get; set; } = RGBColor.Red;
-        public static RGBColor PlayerOneStripDefaultColor { get; set; } = RGBColor.Blue;
+        public static RGBColor PlayerOneStripDefaultColor { get; set; } = RGBColor.Off;
+
         public static int PlayerOneWarmLength { get; set; } = 5;
-        public static RGBColor PlayerTwoWarmColor { get; set; } = RGBColor.Red;
-        public static RGBColor PlayerTwoStripDefaultColor { get; set; } = RGBColor.Blue;
+        public static RGBColor PlayerTwoWarmColor { get; set; } = RGBColor.Green;
+        public static RGBColor PlayerTwoStripDefaultColor { get; set; } = RGBColor.Off;
         public static int PlayerTwoWarmLength { get; set; } = 5;
 
-        public static RGBColor PlayerThreeWarmColor { get; set; } = RGBColor.Red;
-        public static RGBColor PlayerThreeStripDefaultColor { get; set; } = RGBColor.Blue;
+        public static RGBColor PlayerThreeWarmColor { get; set; } = RGBColor.Yellow;
+        public static RGBColor PlayerThreeStripDefaultColor { get; set; } = RGBColor.Off;
         public static int PlayerThreeWarmLength { get; set; } = 5;
 
-        public static RGBColor PlayerFourWarmColor { get; set; } = RGBColor.Red;
-        public static RGBColor PlayerFourStripDefaultColor { get; set; } = RGBColor.Blue;
+        public static RGBColor PlayerFourWarmColor { get; set; } = RGBColor.Turquoise;
+        public static RGBColor PlayerFourStripDefaultColor { get; set; } = RGBColor.Off;
         public static int PlayerFourWarmLength { get; set; } = 5;
 
         // Strip Defenition 
