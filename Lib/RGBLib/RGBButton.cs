@@ -13,9 +13,9 @@ namespace Library.RGBLib
     public class RGBButton
     {
         public static bool IsMCP23ControllerInit = false;
-        RGBColor _CurrnetColor;
-        bool _isSet = false;
-        bool _isBlocked = false;
+        public RGBColor _CurrnetColor;
+        public bool _isSet = false;
+        public bool _isBlocked = false;
         public int stripIndex = -1;
         public bool clickedForOnce = false;
         MCP23Pin _PushButtonPin, _RGBRPin, _RGBGPin, _RGBBPin;

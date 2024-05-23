@@ -5,6 +5,7 @@ using Library.PinMapping;
 using Library.RGBLib;
 using Library;
 using System.Diagnostics;
+using Microsoft.Extensions.Logging;
 
 namespace CatchyGame.Service
 {
@@ -13,7 +14,7 @@ namespace CatchyGame.Service
 
 
         List<SneakeStrip> StripList = new List<SneakeStrip>();
-        List<RGBButton> RGBButtonList = new List<RGBButton>();
+        List<RGBButtonSneak> RGBButtonList = new List<RGBButtonSneak>();
 
         private CancellationTokenSource _cts, _cts2, _cts3;
         private int WormLengthInTheLevel = 0;
@@ -25,29 +26,34 @@ namespace CatchyGame.Service
         RGBColor onColor = RGBColor.Red;
         RGBColor offColor = RGBColor.Blue;
 
+        private readonly ILogger<SneakSenarioService> _logger;
 
+        public SneakSenarioService(ILogger<SneakSenarioService> logger)
+        {
+            _logger = logger;
+        }
         public Task StartAsync(CancellationToken cancellationToken)
         {
-
+            _logger.LogTrace("Init Sneak Senario");
             MCP23Controller.Init(Room.Fort);
 
             // RGB Pixel Button 
-            var rgb1 = new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1);
-            var rgb2 = new RGBButton(RGBButtonPin.RGBR2, RGBButtonPin.RGBG2, RGBButtonPin.RGBB2, RGBButtonPin.RGBPB2);
-            var rgb3 = new RGBButton(RGBButtonPin.RGBR3, RGBButtonPin.RGBG3, RGBButtonPin.RGBB3, RGBButtonPin.RGBPB3);
-            var rgb4 = new RGBButton(RGBButtonPin.RGBR16, RGBButtonPin.RGBG16, RGBButtonPin.RGBB16, RGBButtonPin.RGBPB16);
-            var rgb5 = new RGBButton(RGBButtonPin.RGBR5, RGBButtonPin.RGBG5, RGBButtonPin.RGBB5, RGBButtonPin.RGBPB5);
-            var rgb6 = new RGBButton(RGBButtonPin.RGBR6, RGBButtonPin.RGBG6, RGBButtonPin.RGBB6, RGBButtonPin.RGBPB6);
-            var rgb7 = new RGBButton(RGBButtonPin.RGBR7, RGBButtonPin.RGBG7, RGBButtonPin.RGBB7, RGBButtonPin.RGBPB7);
-            var rgb8 = new RGBButton(RGBButtonPin.RGBR8, RGBButtonPin.RGBG8, RGBButtonPin.RGBB8, RGBButtonPin.RGBPB8);
+            var rgb1 = new RGBButtonSneak(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1);
+            var rgb2 = new RGBButtonSneak(RGBButtonPin.RGBR2, RGBButtonPin.RGBG2, RGBButtonPin.RGBB2, RGBButtonPin.RGBPB2);
+            var rgb3 = new RGBButtonSneak(RGBButtonPin.RGBR3, RGBButtonPin.RGBG3, RGBButtonPin.RGBB3, RGBButtonPin.RGBPB3);
+            var rgb4 = new RGBButtonSneak(RGBButtonPin.RGBR16, RGBButtonPin.RGBG16, RGBButtonPin.RGBB16, RGBButtonPin.RGBPB16);
+            var rgb5 = new RGBButtonSneak(RGBButtonPin.RGBR5, RGBButtonPin.RGBG5, RGBButtonPin.RGBB5, RGBButtonPin.RGBPB5);
+            var rgb6 = new RGBButtonSneak(RGBButtonPin.RGBR6, RGBButtonPin.RGBG6, RGBButtonPin.RGBB6, RGBButtonPin.RGBPB6);
+            var rgb7 = new RGBButtonSneak(RGBButtonPin.RGBR7, RGBButtonPin.RGBG7, RGBButtonPin.RGBB7, RGBButtonPin.RGBPB7);
+            var rgb8 = new RGBButtonSneak(RGBButtonPin.RGBR8, RGBButtonPin.RGBG8, RGBButtonPin.RGBB8, RGBButtonPin.RGBPB8);
 
 
-            var startRGBButton1 = new RGBButton(RGBButtonPin.RGBB13, RGBButtonPin.RGBR13, RGBButtonPin.RGBB13, RGBButtonPin.RGBPB13);
-            var startRGBButton2 = new RGBButton(RGBButtonPin.RGBB14, RGBButtonPin.RGBR14, RGBButtonPin.RGBB14, RGBButtonPin.RGBPB14);
-            var startRGBButton3 = new RGBButton(RGBButtonPin.RGBB15, RGBButtonPin.RGBR15, RGBButtonPin.RGBB15, RGBButtonPin.RGBPB15);
-            var startRGBButton4 = new RGBButton(RGBButtonPin.RGBB9, RGBButtonPin.RGBR9, RGBButtonPin.RGBB9, RGBButtonPin.RGBPB9);
-            var startRGBButton5 = new RGBButton(RGBButtonPin.RGBB10, RGBButtonPin.RGBR10, RGBButtonPin.RGBB10, RGBButtonPin.RGBPB10);
-            var startRGBButton6 = new RGBButton(RGBButtonPin.RGBB11, RGBButtonPin.RGBB11, RGBButtonPin.RGBB11, RGBButtonPin.RGBB11);
+            var startRGBButton1 = new RGBButtonSneak(RGBButtonPin.RGBB13, RGBButtonPin.RGBR13, RGBButtonPin.RGBB13, RGBButtonPin.RGBPB13);
+            var startRGBButton2 = new RGBButtonSneak(RGBButtonPin.RGBB14, RGBButtonPin.RGBR14, RGBButtonPin.RGBB14, RGBButtonPin.RGBPB14);
+            var startRGBButton3 = new RGBButtonSneak(RGBButtonPin.RGBB15, RGBButtonPin.RGBR15, RGBButtonPin.RGBB15, RGBButtonPin.RGBPB15);
+            var startRGBButton4 = new RGBButtonSneak(RGBButtonPin.RGBB9, RGBButtonPin.RGBR9, RGBButtonPin.RGBB9, RGBButtonPin.RGBPB9);
+            var startRGBButton5 = new RGBButtonSneak(RGBButtonPin.RGBB10, RGBButtonPin.RGBR10, RGBButtonPin.RGBB10, RGBButtonPin.RGBPB10);
+            var startRGBButton6 = new RGBButtonSneak(RGBButtonPin.RGBB11, RGBButtonPin.RGBB11, RGBButtonPin.RGBB11, RGBButtonPin.RGBB11);
 
 
 
@@ -68,53 +74,53 @@ namespace CatchyGame.Service
             RGBButtonList.Add(startRGBButton6);
 
 
-            RGBButtonPixel StripOneButton0 = new RGBButtonPixel(0, startRGBButton1);
-            RGBButtonPixel StripOneButton1 = new RGBButtonPixel(19, rgb1);
-            RGBButtonPixel StripOneButton2 = new RGBButtonPixel(60, rgb4);
-            RGBButtonPixel StripOneButton3 = new RGBButtonPixel(82, rgb5);
-            RGBButtonPixel StripOneButton4 = new RGBButtonPixel(123, rgb8);
+            RGBButtonSneakPixel StripOneButton0 = new RGBButtonSneakPixel(0, startRGBButton1);
+            RGBButtonSneakPixel StripOneButton1 = new RGBButtonSneakPixel(19, rgb1);
+            RGBButtonSneakPixel StripOneButton2 = new RGBButtonSneakPixel(60, rgb4);
+            RGBButtonSneakPixel StripOneButton3 = new RGBButtonSneakPixel(82, rgb5);
+            RGBButtonSneakPixel StripOneButton4 = new RGBButtonSneakPixel(123, rgb8);
 
-            RGBButtonPixel StripTwoButton0 = new RGBButtonPixel(213, startRGBButton2);
-            RGBButtonPixel StripTwoButton1 = new RGBButtonPixel(242, rgb1);
-            RGBButtonPixel StripTwoButton2 = new RGBButtonPixel(280, rgb3);
-            RGBButtonPixel StripTwoButton3 = new RGBButtonPixel(320, rgb6);
-            RGBButtonPixel StripTwoButton4 = new RGBButtonPixel(355, rgb7);
+            RGBButtonSneakPixel StripTwoButton0 = new RGBButtonSneakPixel(213, startRGBButton2);
+            RGBButtonSneakPixel StripTwoButton1 = new RGBButtonSneakPixel(242, rgb1);
+            RGBButtonSneakPixel StripTwoButton2 = new RGBButtonSneakPixel(280, rgb3);
+            RGBButtonSneakPixel StripTwoButton3 = new RGBButtonSneakPixel(320, rgb6);
+            RGBButtonSneakPixel StripTwoButton4 = new RGBButtonSneakPixel(355, rgb7);
 
-            RGBButtonPixel StripThreeButton0 = new RGBButtonPixel(440, startRGBButton3);
-            RGBButtonPixel StripThreeButton1 = new RGBButtonPixel(475, rgb2);
-            RGBButtonPixel StripThreeButton2 = new RGBButtonPixel(520, rgb4);
-            RGBButtonPixel StripThreeButton3 = new RGBButtonPixel(535, rgb5);
-            RGBButtonPixel StripThreeButton4 = new RGBButtonPixel(591, rgb8);
+            RGBButtonSneakPixel StripThreeButton0 = new RGBButtonSneakPixel(440, startRGBButton3);
+            RGBButtonSneakPixel StripThreeButton1 = new RGBButtonSneakPixel(475, rgb2);
+            RGBButtonSneakPixel StripThreeButton2 = new RGBButtonSneakPixel(520, rgb4);
+            RGBButtonSneakPixel StripThreeButton3 = new RGBButtonSneakPixel(535, rgb5);
+            RGBButtonSneakPixel StripThreeButton4 = new RGBButtonSneakPixel(591, rgb8);
 
-            RGBButtonPixel StripFourButton0 = new RGBButtonPixel(666, startRGBButton4);
-            RGBButtonPixel StripFourButton2 = new RGBButtonPixel(748, rgb1);
-            RGBButtonPixel StripFourButton1 = new RGBButtonPixel(784, rgb3);
-            RGBButtonPixel StripFourButton3 = new RGBButtonPixel(824, rgb6);
-            RGBButtonPixel StripFourButton4 = new RGBButtonPixel(841, rgb7);
+            RGBButtonSneakPixel StripFourButton0 = new RGBButtonSneakPixel(666, startRGBButton4);
+            RGBButtonSneakPixel StripFourButton2 = new RGBButtonSneakPixel(748, rgb1);
+            RGBButtonSneakPixel StripFourButton1 = new RGBButtonSneakPixel(784, rgb3);
+            RGBButtonSneakPixel StripFourButton3 = new RGBButtonSneakPixel(824, rgb6);
+            RGBButtonSneakPixel StripFourButton4 = new RGBButtonSneakPixel(841, rgb7);
 
 
-            RGBButtonPixel StripFiveButton0 = new RGBButtonPixel(882, startRGBButton5);
-            RGBButtonPixel StripFiveButton1 = new RGBButtonPixel(945, rgb2);
-            RGBButtonPixel StripFiveButton3 = new RGBButtonPixel(976, rgb4);
-            RGBButtonPixel StripFiveButton2 = new RGBButtonPixel(998, rgb5);
-            RGBButtonPixel StripFiveButton4 = new RGBButtonPixel(1043, rgb8);
+            RGBButtonSneakPixel StripFiveButton0 = new RGBButtonSneakPixel(882, startRGBButton5);
+            RGBButtonSneakPixel StripFiveButton1 = new RGBButtonSneakPixel(945, rgb2);
+            RGBButtonSneakPixel StripFiveButton3 = new RGBButtonSneakPixel(976, rgb4);
+            RGBButtonSneakPixel StripFiveButton2 = new RGBButtonSneakPixel(998, rgb5);
+            RGBButtonSneakPixel StripFiveButton4 = new RGBButtonSneakPixel(1043, rgb8);
 
-            RGBButtonPixel StripSixButton0 = new RGBButtonPixel(1076, startRGBButton6);
-            RGBButtonPixel StripSixButton1 = new RGBButtonPixel(1094, rgb7);
-            RGBButtonPixel StripSixButton3 = new RGBButtonPixel(1107, rgb6);
-            RGBButtonPixel StripSixButton2 = new RGBButtonPixel(1137, rgb3);
-            RGBButtonPixel StripSixButton4 = new RGBButtonPixel(1153, rgb2);
+            RGBButtonSneakPixel StripSixButton0 = new RGBButtonSneakPixel(1076, startRGBButton6);
+            RGBButtonSneakPixel StripSixButton1 = new RGBButtonSneakPixel(1094, rgb7);
+            RGBButtonSneakPixel StripSixButton3 = new RGBButtonSneakPixel(1107, rgb6);
+            RGBButtonSneakPixel StripSixButton2 = new RGBButtonSneakPixel(1137, rgb3);
+            RGBButtonSneakPixel StripSixButton4 = new RGBButtonSneakPixel(1153, rgb2);
 
 
 
 
             // Random 5 Work For Each Line
-            List<RGBButtonPixel> RGBButtonPixel1 = new List<RGBButtonPixel>();
-            List<RGBButtonPixel> RGBButtonPixel2 = new List<RGBButtonPixel>();
-            List<RGBButtonPixel> RGBButtonPixel3 = new List<RGBButtonPixel>();
-            List<RGBButtonPixel> RGBButtonPixel4 = new List<RGBButtonPixel>();
-            List<RGBButtonPixel> RGBButtonPixel5 = new List<RGBButtonPixel>();
-            List<RGBButtonPixel> RGBButtonPixel6 = new List<RGBButtonPixel>();
+            List<RGBButtonSneakPixel> RGBButtonPixel1 = new List<RGBButtonSneakPixel>();
+            List<RGBButtonSneakPixel> RGBButtonPixel2 = new List<RGBButtonSneakPixel>();
+            List<RGBButtonSneakPixel> RGBButtonPixel3 = new List<RGBButtonSneakPixel>();
+            List<RGBButtonSneakPixel> RGBButtonPixel4 = new List<RGBButtonSneakPixel>();
+            List<RGBButtonSneakPixel> RGBButtonPixel5 = new List<RGBButtonSneakPixel>();
+            List<RGBButtonSneakPixel> RGBButtonPixel6 = new List<RGBButtonSneakPixel>();
 
             RGBButtonPixel1.Add(StripOneButton0);
             RGBButtonPixel1.Add(StripOneButton1);
@@ -152,12 +158,21 @@ namespace CatchyGame.Service
             RGBButtonPixel6.Add(StripSixButton4);
             RGBButtonPixel6.Add(StripSixButton3);
 
-            StripList.Add(new SneakeStrip(VariableControlService.PlayerOneWarmColor, VariableControlService.PlayerOneStripDefaultColor, 0, 211, RGBButtonPixel1, 0, VariableControlService.DefaultWarmLength));
-            StripList.Add(new SneakeStrip(VariableControlService.PlayerTwoWarmColor, VariableControlService.PlayerTwoStripDefaultColor, 212, 438, RGBButtonPixel2, 1, VariableControlService.DefaultWarmLength));
-            StripList.Add(new SneakeStrip(VariableControlService.PlayerThreeWarmColor, VariableControlService.PlayerThreeStripDefaultColor, 439, 664, RGBButtonPixel3, 2, VariableControlService.DefaultWarmLength));
-            StripList.Add(new SneakeStrip(VariableControlService.PlayerFourWarmColor, VariableControlService.PlayerFourStripDefaultColor, 665, 880, RGBButtonPixel4, 3, VariableControlService.DefaultWarmLength));
-            StripList.Add(new SneakeStrip(onColor, offColor, 881, 1074, RGBButtonPixel5, 4, VariableControlService.DefaultWarmLength));
-            StripList.Add(new SneakeStrip(onColor, offColor, 1075, 1240, RGBButtonPixel6, 5, VariableControlService.DefaultWarmLength));
+            StripList.Add(new SneakeStrip(
+                VariableControlService.PlayerOneWarmColor,
+                VariableControlService.PlayerOneStripDefaultColor,
+                VariableControlService.StripOneStartIndex,
+                VariableControlService.StripOneEndIndex,
+                RGBButtonPixel1, 
+                0,
+                VariableControlService.DefaultWarmLength,
+                0
+                ));
+            StripList.Add(new SneakeStrip(VariableControlService.PlayerTwoWarmColor, VariableControlService.PlayerTwoStripDefaultColor, 212, 438, RGBButtonPixel2, 1, VariableControlService.DefaultWarmLength,1));
+            StripList.Add(new SneakeStrip(VariableControlService.PlayerThreeWarmColor, VariableControlService.PlayerThreeStripDefaultColor, 439, 664, RGBButtonPixel3, 2, VariableControlService.DefaultWarmLength, 2));
+            StripList.Add(new SneakeStrip(VariableControlService.PlayerFourWarmColor, VariableControlService.PlayerFourStripDefaultColor, 665, 880, RGBButtonPixel4, 3, VariableControlService.DefaultWarmLength, 3));
+            StripList.Add(new SneakeStrip(onColor, offColor, 881, 1074, RGBButtonPixel5, 4, VariableControlService.DefaultWarmLength, 4)); // TO Do
+            StripList.Add(new SneakeStrip(onColor, offColor, 1075, 1240, RGBButtonPixel6, 5, VariableControlService.DefaultWarmLength,5)); // TO DO
 
             RGBWS2811.Init();
             LevelTime.Start();
@@ -177,14 +192,14 @@ namespace CatchyGame.Service
 
         private async Task ControlRGBLight(CancellationToken cancellationToken)
         {
-            //Restart();
             while (!cancellationToken.IsCancellationRequested)
             {
                 if (VariableControlService.GameStatus == GameStatus.Started)
                 {
-                    Console.WriteLine("Start Game ...");
+                    _logger.LogTrace("Start Game ,Number of players {0}" , VariableControlService.Team.player.Count());
                     if (!backgroundSoundStarted)
                     {
+                        _logger.LogTrace("Play Background Sound");
                         backgroundSoundStarted = true;
                         AudioPlayer.PIBackgroundSound(SoundType.Background);
                     }
@@ -192,18 +207,11 @@ namespace CatchyGame.Service
                     while (VariableControlService.GameStatus == GameStatus.Started)
                     {
                         ResetAllLine();
-                        WormLengthInTheLevel = WormLengthInLevel(VariableControlService.GameRound);
-                        foreach (var strip in StripList)
-                        {
-                            strip.UpdateLength(WormLengthInTheLevel);
-                        }
-
-                        Console.WriteLine(VariableControlService.GameRound.ToString());
-                        Console.WriteLine($"WormLengthInTheLevel {WormLengthInTheLevel}");
-                        // Start The Timer 
+                        _logger.LogTrace("New Round :- {0}",VariableControlService.GameRound.ToString());
                         LevelTime.Restart();
                         while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
                         {
+                            UpdateSneakSize();
                             foreach (var strip in StripList)
                             {
                                 if (LevelTime.ElapsedMilliseconds < 20)
@@ -212,11 +220,11 @@ namespace CatchyGame.Service
                                     strip.MoveTwoPixel();
                                 else
                                     strip.MoveThreePixel();
-                            }
 
+                            }
                             RGBWS2811.Commit();
                         }
-                        Console.WriteLine("Round Finish");
+                        _logger.LogTrace("Round {0} Finshed" ,VariableControlService.GameRound);
                         if (VariableControlService.GameRound == Round.Round5)
                             VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
                         VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
@@ -227,7 +235,7 @@ namespace CatchyGame.Service
                         backgroundSoundStarted = false;
                         AudioPlayer.PIStopAudio();
                     }
-                    Console.WriteLine("Stop Game");
+                    _logger.LogTrace("Game Finished ..");
                 }
             }
         }
@@ -247,13 +255,13 @@ namespace CatchyGame.Service
                             if (button.isSet())
                             {
                                 Console.WriteLine("Is Set");
-                                AddPoint(ButtonNumberToPlayerIndex(buttonIndex), buttonIndex > 7);
+                                AddPoint(ButtonNumberToPlayerIndex(buttonIndex),button.AssignedFor(), buttonIndex > 7);
                                 button.BlockForATimeInMs(200);
                                 button.clickedForOnce = true;
                                 button.Set(false);
                             }
                             else
-                                SubstractPoint(ButtonNumberToPlayerIndex(buttonIndex));
+                                SubstractPoint(ButtonNumberToPlayerIndex(buttonIndex), button.AssignedFor());
                         }
                         buttonIndex++;
                     }
@@ -294,6 +302,7 @@ namespace CatchyGame.Service
 
         private void Restart()
         {
+            _logger.LogTrace("Restart The Game , and prepere it for the new player");
             VariableControlService.GameRound = Round.Round1;
             VariableControlService.PlayerScore = 0;
             GameTiming.Restart();
@@ -335,46 +344,93 @@ namespace CatchyGame.Service
         }
 
 
-        private void AddPoint(int playerIndex, bool isDubleScore)
+        private void AddPoint(int playerIndex,int buttonAssignedFor, bool isDubleScore)
         {
             if (playerIndex > VariableControlService.Team.player.Count() - 1)
                 return;
+
+
+            // Control Player Score 
             if (isDubleScore)
                 VariableControlService.Team.player[playerIndex].score += 2;
             else
                 VariableControlService.Team.player[playerIndex].score += 1;
+
+            // Control Sneak Size //@TODO
+            if (playerIndex == buttonAssignedFor)
+                ChangeSneakSize(playerIndex, 1);
+            else
+                ChangeSneakSize(buttonAssignedFor, -1);
+            _logger.LogTrace($"Add Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
             AudioPlayer.PIStartAudio(SoundType.Success);
-            Console.WriteLine($"Add Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
         }
-        private void SubstractPoint(int playerIndex)
+
+        public void ChangeSneakSize(int playerIndex,int addedValue) {
+            if (addedValue>0) { 
+                 switch (playerIndex)
+                    {
+                        case 0:
+                            VariableControlService.PlayerOneWarmLength += addedValue;
+                            
+                            _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerOneWarmLength);
+                        break;
+                        case 1:
+                            VariableControlService.PlayerTwoWarmLength += addedValue;
+                            _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerTwoWarmLength);
+
+                            break;
+                        case 2:
+                            VariableControlService.PlayerThreeWarmLength += addedValue;
+                            _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerThreeWarmLength);
+                        break;
+                        case 3:
+                            VariableControlService.PlayerFourWarmLength += addedValue;
+                            _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerFourWarmLength);
+                        break;
+                        default:
+                            break;
+                    }        
+            }
+            
+           
+        
+        }
+
+        public void UpdateSneakSize() {
+
+            StripList[0].UpdateLength(VariableControlService.PlayerOneWarmLength);
+            StripList[0].UpdateLength(VariableControlService.PlayerTwoWarmLength);
+            StripList[0].UpdateLength(VariableControlService.PlayerThreeWarmLength);
+            StripList[0].UpdateLength(VariableControlService.PlayerFourWarmLength);
+        }
+
+
+
+        private void SubstractPoint(int playerIndex, int buttonAssignedFor)
         {
             Console.WriteLine("Substract Point");
             AudioPlayer.PIStartAudio(SoundType.Failure);
             VariableControlService.Team.player[playerIndex].score -= 1;
             Console.WriteLine($"Substract Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
-
+            ChangeSneakSize(playerIndex, -1);
         }
 
         private void ResetLine(int startLed, int endLed)
         {
             RGBWS2811.SetColorByRange(startLed, endLed, offColor);
-            //for (int i = startLed; i <= endLed; i++)
-            //{
-            //    RGBWS2811.SetColor(true, i, offColor);
-            //}
         }
 
         private void ResetAllLine()
         {
 
-            Console.Write("Restart All Lines ...");
+            _logger.LogTrace("Restart All Lines ...");
             foreach (var strip in StripList)
             {
                 ResetLine(strip.startRGBLed, strip.endRGBLed);
                 strip.LineReseted();
             }
             RGBWS2811.Commit();
-            Console.WriteLine(" Done .");
+            _logger.LogTrace(" Done .");
 
             foreach (var button in RGBButtonList)
             {

@@ -42,7 +42,6 @@ namespace Library.Model
         {
             this.startPixel = this.initStartPixel;
             this.endPixel = this.initendPixel;
-
         }
     }
 }
