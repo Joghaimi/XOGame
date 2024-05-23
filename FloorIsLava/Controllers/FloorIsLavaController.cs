@@ -175,8 +175,11 @@ namespace FloorIsLava.Controllers
             player.LastName = "Test@";
             player.MobileNumber= "0795282626";
             newTeam.player.Add(player);
-            await APIIntegration.GetSignature("https://admin.frenziworld.com/api/make-signature", newTeam);
-            return Ok();
+            var result =await APIIntegration.GetSignature("https://admin.frenziworld.com/api/make-signature", newTeam);
+            await APIIntegration.SendScore("https://admin.frenziworld.com/api/game-score", result.Item1 ,result.Item2);
+
+
+            return Ok(result);
         }
     }
 }

@@ -128,21 +128,7 @@ namespace Library.APIIntegration
                         return true;
                     else
                         return false;
-                    //HttpResponseMessage response = await httpClient.GetAsync(nextRoomURL);
-                    //if (response.IsSuccessStatusCode)
-                    //{
-                    //    // Read the response content as a string
-                    //    string responseBody = await response.Content.ReadAsStringAsync();
-                    //    Console.WriteLine("Response received:");
-                    //    Console.WriteLine(responseBody);
-                    //    return responseBody;
-                    //}
-                    //else
-                    //{
-                    //    // Handle the unsuccessful response (non-success status code)
-                    //    Console.WriteLine($"Error: {response.StatusCode}");
-                    //    return null;
-                    //}
+               
                 }
                 catch (HttpRequestException ex)
                 {
@@ -158,16 +144,43 @@ namespace Library.APIIntegration
             return true; // Always accept the certificate
         }
 
-        public async static Task<string> GetSignature(string baseUrl,Team team)
+
+        public async static Task<string> SendScore(string baseUrl, MakeSignetureRequestDto requestBody ,string hash) {
+            SendScoreRequestDto sendScore = new SendScoreRequestDto();
+            sendScore.team_id =requestBody.team_id;
+            sendScore.game_id =requestBody.game_id;
+            sendScore.date_time = requestBody.date_time;
+            sendScore.player_mobiles= requestBody.player_mobiles;
+            sendScore.signature = hash;
+            sendScore.score= requestBody.score;
+            sendScore.team_name = requestBody.team_name;
+            using (HttpClient httpClient = new HttpClient())
+            {
+                string jsonData = JsonConvert.SerializeObject(sendScore);
+                StringContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await httpClient.PostAsync(baseUrl, content);
+                Console.WriteLine($"response.IsSuccessStatusCode {response.IsSuccessStatusCode}");
+                Console.WriteLine($"response.IsSuccessStatusCode {response.Content}");
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"{responseContent}");
+                    return responseContent;
+                }
+            }
+            return null;
+        }
+
+        public async static Task<(MakeSignetureRequestDto, string)> GetSignature(string baseUrl,Team team)
         {
             MakeSignetureRequestDto requestBody = new MakeSignetureRequestDto();
-            requestBody.TeamName = team.Name;
-            requestBody.Score = team.Total;
-            requestBody.TeamId = 1;
-            requestBody.GameId = 1;
-            requestBody.TimeInUnix = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            requestBody.team_name = team.Name;
+            requestBody.score = team.Total;
+            requestBody.team_id = 1;
+            requestBody.game_id = 1;
+            requestBody.date_time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             foreach (var player in team.player) {
-                requestBody.PlayersMobile.Add(player.MobileNumber);
+                requestBody.player_mobiles.Add(player.MobileNumber);
             }
             HttpClientHandler handler = new HttpClientHandler();
             using (HttpClient httpClient = new HttpClient(handler))
@@ -182,29 +195,27 @@ namespace Library.APIIntegration
                     if (response.IsSuccessStatusCode)
                     {
                         // Read the response content as a string
-                        string responseBody = await response.Content.ReadAsStringAsync();
-                        Console.WriteLine("Response received:");
-                        Console.WriteLine(responseBody);
-                        return responseBody;
+                        //string responseBody = await response.Content.ReadAsStringAsync();
+                        //Console.WriteLine("Response received:");
+                        //Console.WriteLine(responseBody);
+                        //return (responseBody);
                     }
                     else
                     {
                         // Handle the unsuccessful response (non-success status code)
                         string responseBody = await response.Content.ReadAsStringAsync();
-                        Console.WriteLine($"Error: {response.StatusCode}");
-                        Console.WriteLine($"Error: {responseBody}");
-                        return null;
+                        var signetureDto = JsonConvert.DeserializeObject<SignetureDto>(responseBody);
+                        return (requestBody ,signetureDto.Hash);
                     }
                 }
                 catch (HttpRequestException ex)
                 {
                     // Handle any exceptions that occurred during the request
                     Console.WriteLine($"Request failed: {ex.Message}");
-                    return null;
+                    return (null,null);
                 }
+                return (null, null);
             }
-
-            return null;
         }
 
         public async static Task<bool> SendFinalScore()
