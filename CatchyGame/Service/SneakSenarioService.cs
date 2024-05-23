@@ -431,7 +431,7 @@ namespace CatchyGame.Service
         private void SubstractPoint(int playerIndex, int buttonAssignedFor)
         {
             _logger.LogTrace("Substract Point");
-            AudioPlayer.PIStartAudio(SoundType.Failure);
+          //  AudioPlayer.PIStartAudio(SoundType.Failure);
             VariableControlService.Team.player[playerIndex].score -= 1;
             _logger.LogTrace($"Substract Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
             ChangeSneakSize(playerIndex, -1);
