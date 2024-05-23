@@ -72,19 +72,29 @@ namespace Library.Model
                 Worm.startPixel = Worm.initendPixel; // Reset The Worm Head
             bool TheWormHeadInTheRangeOfTheStripPixel = Worm.startPixel >= this.startRGBLed;
             if (TheWormHeadInTheRangeOfTheStripPixel)
-                RGBWS2811.SetColor(this.isActive, Worm.startPixel, this.rgbColor);
-
+                //RGBWS2811.SetColor(this.isActive, Worm.startPixel, this.rgbColor);
+                TurnPixelOn(Worm.startPixel);
 
         }
         private void MoveWormTailForward()
         {
-            bool tailNotReachTheEndOfTheLine = Worm.endPixel <= endRGBLed;
+            bool tailNotReachTheEndOfTheLine = Worm.endPixel < endRGBLed;
             if (tailNotReachTheEndOfTheLine)
                 Worm.endPixel++;
             else
                 Worm.endPixel = Worm.initendPixel;
-            RGBWS2811.SetColor(this.isActive, Worm.endPixel, this.rgbOffColor);
+            TurnPixelOn(Worm.endPixel);
         }
+        private void TurnPixelOn(int pixelNumber)
+        {
+            bool pixelInTheStrip = pixelNumber >= Worm.startPixel && pixelNumber <= Worm.endPixel;
+            if (pixelInTheStrip)
+                RGBWS2811.SetColor(this.isActive, pixelNumber, this.rgbOffColor);
+
+        }
+
+
+
         public void Move()
         {
             if (!this.isActive)
