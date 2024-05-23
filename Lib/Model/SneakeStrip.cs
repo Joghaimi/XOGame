@@ -87,7 +87,7 @@ namespace Library.Model
         }
         private void TurnPixelOn(int pixelNumber,RGBColor rGBColor)
         {
-            bool pixelInTheStrip = pixelNumber >= Worm.startPixel && pixelNumber <= Worm.endPixel;
+            bool pixelInTheStrip = pixelNumber >= this.startRGBLed && pixelNumber <= this.endRGBLed;
             if (pixelInTheStrip)
                 RGBWS2811.SetColor(this.isActive, pixelNumber, rGBColor);
 
