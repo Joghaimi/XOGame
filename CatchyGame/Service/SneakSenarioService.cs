@@ -405,7 +405,7 @@ namespace CatchyGame.Service
         {
             if (VariableControlService.Team.player.Count() <= 2)
             {
-                StripList[0].Activate(false);
+                StripList[0].Activate(true);
                 StripList[1].Activate(false);
                 StripList[2].Activate(false);
                 StripList[3].Activate(false);
