@@ -258,7 +258,7 @@ namespace CatchyGame.Service
                             button.BlockForATimeInMs(200);
                             if (button.isSet())
                             {
-                                Console.WriteLine("Is Set");
+                                Console.WriteLine("RGB Button Pressed for set Button");
                                 AddPoint(ButtonNumberToPlayerIndex(buttonIndex),button.AssignedFor(), buttonIndex > 7);
                                 button.BlockForATimeInMs(200);
                                 button.clickedForOnce = true;
