@@ -35,12 +35,22 @@ namespace Library.RGBLib
             PyObject[] pyParams = RGBColorToPyObj(rgbNumber, rGBColor);
             python.InvokeMethod("set_color", pyParams);
         }
+
+        public static void SetColorByRange(int start, int end, RGBColor rGBColor)
+        {
+            for (int i = start; i <= end; i++)
+            {
+                PyObject[] pyParams = RGBColorToPyObj(i, rGBColor);
+                python.InvokeMethod("set_color", pyParams);
+            }
+        }
+
+
+
         public static void SetColor(bool isActive, int rgbNumber, RGBColor rGBColor)
         {
             if (!isActive)
                 return;
-            //SetColor(rgbNumber, rGBColor);
-            //Console.WriteLine($"rgbNumber {rgbNumber} rGBColor{rGBColor} ");
             PyObject[] pyParams = RGBColorToPyObj(rgbNumber, rGBColor);
             python.InvokeMethod("set_color", pyParams);
         }
@@ -103,16 +113,16 @@ namespace Library.RGBLib
             return pyParams;
         }
 
-        [Obsolete]
-        public static void SetColor(int rgbNumber, byte red, byte green, byte blue, byte white)
-        {
-            PyObject[] pyParams = new PyObject[5]; // This is an array of python parameters passed into a function
-            pyParams[0] = rgbNumber.ToPython();
-            pyParams[1] = red.ToPython();
-            pyParams[2] = green.ToPython();
-            pyParams[3] = blue.ToPython();
-            pyParams[4] = white.ToPython();
-            python.InvokeMethod("set_color", pyParams);
-        }
+        //[Obsolete]
+        //public static void SetColor(int rgbNumber, byte red, byte green, byte blue, byte white)
+        //{
+        //    PyObject[] pyParams = new PyObject[5]; // This is an array of python parameters passed into a function
+        //    pyParams[0] = rgbNumber.ToPython();
+        //    pyParams[1] = red.ToPython();
+        //    pyParams[2] = green.ToPython();
+        //    pyParams[3] = blue.ToPython();
+        //    pyParams[4] = white.ToPython();
+        //    python.InvokeMethod("set_color", pyParams);
+        //}
     }
 }

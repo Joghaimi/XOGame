@@ -28,6 +28,25 @@ namespace CatchyGame.Service
         public static RGBColor WormColor { get; set; } = RGBColor.Red;
         public static RGBColor DefaultColor { get; set; } = RGBColor.Off;
 
+        public static int DefaultWarmLength { get; set; } = 5;
+
+        public static RGBColor PlayerOneWarmColor { get; set; } = RGBColor.Red;
+        public static RGBColor PlayerOneStripDefaultColor { get; set; } = RGBColor.Blue;
+        public static int PlayerOneWarmLength { get; set; } = 5;
+
+        public static RGBColor PlayerTwoWarmColor { get; set; } = RGBColor.Red;
+        public static RGBColor PlayerTwoStripDefaultColor { get; set; } = RGBColor.Blue;
+        public static int PlayerTwoWarmLength { get; set; } = 5;
+
+        public static RGBColor PlayerThreeWarmColor { get; set; } = RGBColor.Red;
+        public static RGBColor PlayerThreeStripDefaultColor { get; set; } = RGBColor.Blue;
+        public static int PlayerThreeWarmLength { get; set; } = 5;
+
+        public static RGBColor PlayerFourWarmColor { get; set; } = RGBColor.Red;
+        public static RGBColor PlayerFourStripDefaultColor { get; set; } = RGBColor.Blue;
+        public static int PlayerFourWarmLength { get; set; } = 5;
+
+
 
     }
 }
