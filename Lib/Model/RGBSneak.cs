@@ -47,8 +47,7 @@ namespace Library.Model
             else
                 this.HeadPixel = this.StripStartPixel;
             ChangePixelColor(this.HeadPixel, this.onColor);
-            Console.WriteLine($"Head Forward {this.HeadPixel} , Color {this.onColor} ,HeadNotReachTheEndOfTheLine {HeadNotReachTheEndOfTheLine}");
-
+            //Console.WriteLine($"Head Forward {this.HeadPixel} , Color {this.onColor} ,HeadNotReachTheEndOfTheLine {HeadNotReachTheEndOfTheLine}");
         }
         private void MoveTailForward()
         {
@@ -58,7 +57,7 @@ namespace Library.Model
             else
                 this.TailPixel = this.StripStartPixel;
             ChangePixelColor(this.TailPixel, this.offColor);
-            Console.WriteLine($"Move Tail Forward {this.TailPixel} , Color {this.offColor} ,TailNotReachTheEndOfTheLine {TailNotReachTheEndOfTheLine}");
+            //Console.WriteLine($"Move Tail Forward {this.TailPixel} , Color {this.offColor} ,TailNotReachTheEndOfTheLine {TailNotReachTheEndOfTheLine}");
 
         }
         private void ChangePixelColor(int pixelNumber, RGBColor rGBColor)
