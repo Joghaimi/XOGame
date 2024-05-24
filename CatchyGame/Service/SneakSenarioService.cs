@@ -189,7 +189,7 @@ namespace CatchyGame.Service
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            Task.Run(() => ControlRGBLight(_cts.Token));
+            //Task.Run(() => ControlRGBLight(_cts.Token));
             Task.Run(() => ControlRGBButton(_cts2.Token));
             Task.Run(() => ControlGameTiming(_cts3.Token));
             return Task.CompletedTask;
@@ -246,21 +246,23 @@ namespace CatchyGame.Service
                     {
                         if (!button.CurrentStatusWithCheckForDelay())
                         {
+                            Console.WriteLine($"Button Pressed index {buttonIndex} , Activated By Warm in strip index {button.AssignedFor()} , For Player {ButtonNumberToPlayerIndex(buttonIndex)}");
                             button.BlockForATimeInMs(200);
-                            if (button.isSet())
-                            {
-                                Console.WriteLine("RGB Button Pressed for set Button");
-                                AddPoint(ButtonNumberToPlayerIndex(buttonIndex), button.AssignedFor(), buttonIndex > 7);
-                                button.BlockForATimeInMs(200);
-                                button.clickedForOnce = true;
-                                button.Set(false);
-                            }
-                            else
-                                SubstractPoint(ButtonNumberToPlayerIndex(buttonIndex), button.AssignedFor());
+                            //if (button.isSet())
+                            //{
+                            //    Console.WriteLine("RGB Button Pressed for set Button");
+                            //    AddPoint(ButtonNumberToPlayerIndex(buttonIndex), button.AssignedFor(), buttonIndex > 7);
+                            //    button.BlockForATimeInMs(200);
+                            //    button.clickedForOnce = true;
+                            //    button.Set(false);
+                            //}
+                            //else
+                            //    SubstractPoint(ButtonNumberToPlayerIndex(buttonIndex), button.AssignedFor());
                         }
                         buttonIndex++;
                     }
-                    Thread.Sleep(50);
+                    Thread.Sleep(2000);
+                    //Thread.Sleep(50);
 
                 }
                 catch (Exception ex)
