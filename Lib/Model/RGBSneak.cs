@@ -74,7 +74,7 @@ namespace Library.Model
         {
             if (newLength > this.SneakLength)
                 this.TailPixel--;
-            else
+            else if(newLength < this.SneakLength)
                 this.MoveTailForward();
             this.SneakLength = newLength;
         }
