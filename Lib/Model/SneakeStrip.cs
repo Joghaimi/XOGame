@@ -110,7 +110,8 @@ namespace Library.Model
 
         public bool ButtonTouchTheWorm(int buttonPixel, int wormTailPixel, int wormHeadPixel, bool itsStartButton)
         {
-            bool inRange = buttonPixel >= wormTailPixel && buttonPixel <= wormHeadPixel;
+            //bool inRange = buttonPixel >= wormTailPixel && buttonPixel <= wormHeadPixel;
+            bool inRange = buttonPixel >= wormHeadPixel && buttonPixel < wormHeadPixel + 3;
             bool wormPassTheLastPixelInStrip = (wormTailPixel > wormHeadPixel);
             bool inLastBitsOfTheLine = wormPassTheLastPixelInStrip && (buttonPixel > wormHeadPixel) && itsStartButton;
             return inRange || inLastBitsOfTheLine;
