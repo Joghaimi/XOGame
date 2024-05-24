@@ -47,6 +47,7 @@ namespace Library.Model
             else
                 this.HeadPixel = this.StripStartPixel;
             ChangePixelColor(this.HeadPixel, this.onColor);
+            Console.WriteLine($"Head Forward {this.HeadPixel} , Color {this.onColor} ,HeadNotReachTheEndOfTheLine {HeadNotReachTheEndOfTheLine}");
 
         }
         private void MoveTailForward()
