@@ -13,7 +13,7 @@ namespace CatchyGame.Service
     {
 
 
-        List<SneakeStrip> StripList = new List<SneakeStrip>();
+        List<SneakStrip> StripList = new List<SneakStrip>();
         List<RGBButtonSneak> RGBButtonList = new List<RGBButtonSneak>();
 
         private CancellationTokenSource _cts, _cts2, _cts3;
@@ -30,7 +30,7 @@ namespace CatchyGame.Service
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogTrace("Init Sneak Senario");
+            _logger.LogTrace("Start Thread ... Init");
             MCP23Controller.Init(Room.Fort);
 
             // RGB Pixel Button 
@@ -154,27 +154,27 @@ namespace CatchyGame.Service
             RGBButtonPixel6.Add(StripSixButton4);
             RGBButtonPixel6.Add(StripSixButton3);
 
-            StripList.Add(new SneakeStrip(
+            StripList.Add(new SneakStrip(
                 VariableControlService.PlayerOneWarmColor, VariableControlService.PlayerOneStripDefaultColor,
                 VariableControlService.StripOneStartIndex, VariableControlService.StripOneEndIndex,
                 RGBButtonPixel1, 0, 0, VariableControlService.DefaultWarmLength));
-            StripList.Add(new SneakeStrip(
+            StripList.Add(new SneakStrip(
                 VariableControlService.PlayerTwoWarmColor, VariableControlService.PlayerTwoStripDefaultColor,
                 VariableControlService.StripTwoStartIndex, VariableControlService.StripTwoEndIndex,
                 RGBButtonPixel2, 1, 1, VariableControlService.DefaultWarmLength));
-            StripList.Add(new SneakeStrip(
+            StripList.Add(new SneakStrip(
                 VariableControlService.PlayerThreeWarmColor, VariableControlService.PlayerThreeStripDefaultColor,
                 VariableControlService.StripThreeStartIndex, VariableControlService.StripThreeEndIndex,
                 RGBButtonPixel3, 2, 2, VariableControlService.DefaultWarmLength));
-            StripList.Add(new SneakeStrip(
+            StripList.Add(new SneakStrip(
                 VariableControlService.PlayerFourWarmColor, VariableControlService.PlayerFourStripDefaultColor,
                 VariableControlService.StripFourStartIndex, VariableControlService.StripFourEndIndex,
                 RGBButtonPixel4, 3, 3, VariableControlService.DefaultWarmLength));
-            StripList.Add(new SneakeStrip(
+            StripList.Add(new SneakStrip(
                 VariableControlService.StripFiveWarmColor, VariableControlService.StripFiveStripDefaultColor,
                 VariableControlService.StripFiveStartIndex, VariableControlService.StripFiveEndIndex,
                 RGBButtonPixel5, 4, 4, VariableControlService.DefaultWarmLength)); // TO Do
-            StripList.Add(new SneakeStrip(
+            StripList.Add(new SneakStrip(
                 VariableControlService.StripSixWarmColor, VariableControlService.StripSixStripDefaultColor,
                 VariableControlService.StripSixStartIndex, VariableControlService.StripSixEndIndex,
                 RGBButtonPixel6, 5, 5, VariableControlService.DefaultWarmLength)); // TO DO
@@ -202,15 +202,9 @@ namespace CatchyGame.Service
                 if (VariableControlService.GameStatus == GameStatus.Started)
                 {
                     _logger.LogTrace("Start Game ,Number of players {0}", VariableControlService.Team.player.Count());
-                    if (!backgroundSoundStarted)
-                    {
-                        _logger.LogTrace("Play Background Sound");
-                        backgroundSoundStarted = true;
-                        AudioPlayer.PIBackgroundSound(SoundType.Background);
-                    }
+                    StartBackgroundAudio();
                     Restart();
                     UpdateStripState();
-
                     while (VariableControlService.GameStatus == GameStatus.Started)
                     {
                         ResetAllLine();
@@ -235,12 +229,7 @@ namespace CatchyGame.Service
                             VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
                         VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
                     }
-
-                    if (backgroundSoundStarted)
-                    {
-                        backgroundSoundStarted = false;
-                        AudioPlayer.PIStopAudio();
-                    }
+                    StopBackGroundAudio();
                     _logger.LogTrace("Game Finished ..");
                 }
             }
@@ -319,7 +308,6 @@ namespace CatchyGame.Service
 
         }
 
-        // ======== Private To The Next Room
         private Round NextRound(Round currentRound)
         {
             if (currentRound == Round.Round5)
@@ -344,16 +332,81 @@ namespace CatchyGame.Service
         }
 
 
+
+
+
+        public void UpdateSneakSize()
+        {
+            StripList[0].UpdateLength(VariableControlService.PlayerOneWarmLength);
+            StripList[1].UpdateLength(VariableControlService.PlayerTwoWarmLength);
+            StripList[2].UpdateLength(VariableControlService.PlayerThreeWarmLength);
+            StripList[3].UpdateLength(VariableControlService.PlayerFourWarmLength);
+        }
+
+        public void UpdateStripState()
+        {
+            if (VariableControlService.Team.player.Count() <= 2)
+            {
+                StripList[0].Activate(true);
+                StripList[1].Activate(true);
+                StripList[2].Activate(false);
+                StripList[3].Activate(false);
+                StripList[4].Activate(true);
+                StripList[5].Activate(true);
+            }
+            else if (VariableControlService.Team.player.Count() <= 3)
+            {
+                StripList[0].Activate(true);
+                StripList[1].Activate(true);
+                StripList[2].Activate(true);
+                StripList[3].Activate(false);
+            }
+            else if (VariableControlService.Team.player.Count() <= 4)
+            {
+                StripList[0].Activate(true);
+                StripList[1].Activate(true);
+                StripList[2].Activate(true);
+                StripList[3].Activate(true);
+            }
+        }
+
+
+
+
+        private void ResetLine(int startLed, int endLed, RGBColor offColor)
+        {
+            RGBWS2811.SetColorByRange(startLed, endLed, offColor);
+        }
+
+        private void ResetAllLine()
+        {
+            _logger.LogTrace("Restart All Lines ...");
+            foreach (var strip in StripList)
+            {
+                ResetLine(strip.startRGBLed, strip.endRGBLed, strip.rgbOffColor);
+                strip.LineReset();
+            }
+            RGBWS2811.Commit();
+            foreach (var button in RGBButtonList)
+            {
+                button.Set(false);
+                button.clickedForOnce = false;
+            }
+            _logger.LogTrace("Done .");
+        }
+
+
+
+
+        #region Score System
         private void AddPoint(int playerIndex, int buttonAssignedFor, bool isDubleScore)
         {
             if (playerIndex > VariableControlService.Team.player.Count() - 1)
                 return;
-            // Control Player Score 
             if (isDubleScore)
                 VariableControlService.Team.player[playerIndex].score += 2;
             else
                 VariableControlService.Team.player[playerIndex].score += 1;
-            // Control Sneak Size //@TODO
             if (playerIndex == buttonAssignedFor)
                 ChangeSneakSize(playerIndex, 1);
             else
@@ -361,7 +414,14 @@ namespace CatchyGame.Service
             _logger.LogTrace($"Add Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
             AudioPlayer.PIStartAudio(SoundType.Success);
         }
-
+        private void SubstractPoint(int playerIndex, int buttonAssignedFor)
+        {
+            _logger.LogTrace("Substract Point");
+            //  AudioPlayer.PIStartAudio(SoundType.Failure);
+            VariableControlService.Team.player[playerIndex].score -= 1;
+            _logger.LogTrace($"Substract Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
+            ChangeSneakSize(playerIndex, -1);
+        }
         public void ChangeSneakSize(int playerIndex, int addedValue)
         {
             if (addedValue > 0)
@@ -388,76 +448,35 @@ namespace CatchyGame.Service
                         break;
                 }
             }
-
-
-
         }
 
-        public void UpdateSneakSize()
-        {
-            StripList[0].UpdateLength(VariableControlService.PlayerOneWarmLength);
-            StripList[1].UpdateLength(VariableControlService.PlayerTwoWarmLength);
-            StripList[2].UpdateLength(VariableControlService.PlayerThreeWarmLength);
-            StripList[3].UpdateLength(VariableControlService.PlayerFourWarmLength);
-        }
+        #endregion
 
-        public void UpdateStripState()
+        #region Control Audio 
+        private void StartBackgroundAudio()
         {
-            if (VariableControlService.Team.player.Count() <= 2)
+            if (!backgroundSoundStarted)
             {
-                StripList[0].Activate(true);
-                StripList[1].Activate(true);
-                StripList[2].Activate(false);
-                StripList[3].Activate(false);
-                StripList[4].Activate(true);
-                StripList[5].Activate(true);
-            }
-            else if (VariableControlService.Team.player.Count() <= 3) {
-                StripList[0].Activate(true);
-                StripList[1].Activate(true);
-                StripList[2].Activate(true);
-                StripList[3].Activate(false);
-            }
-            else if (VariableControlService.Team.player.Count() <= 4)
-            {
-                StripList[0].Activate(true);
-                StripList[1].Activate(true);
-                StripList[2].Activate(true);
-                StripList[3].Activate(true);
+                _logger.LogTrace("Play Background Sound");
+                backgroundSoundStarted = true;
+                AudioPlayer.PIBackgroundSound(SoundType.Background);
             }
         }
-
-
-        private void SubstractPoint(int playerIndex, int buttonAssignedFor)
+        private void StopBackGroundAudio()
         {
-            _logger.LogTrace("Substract Point");
-          //  AudioPlayer.PIStartAudio(SoundType.Failure);
-            VariableControlService.Team.player[playerIndex].score -= 1;
-            _logger.LogTrace($"Substract Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
-            ChangeSneakSize(playerIndex, -1);
+            if (backgroundSoundStarted)
+            {
+                backgroundSoundStarted = false;
+                AudioPlayer.PIStopAudio();
+            }
         }
 
-        private void ResetLine(int startLed, int endLed, RGBColor offColor)
-        {
-            RGBWS2811.SetColorByRange(startLed, endLed, offColor);
-        }
 
-        private void ResetAllLine()
-        {
-            _logger.LogTrace("Restart All Lines ...");
-            foreach (var strip in StripList)
-            {
-                ResetLine(strip.startRGBLed, strip.endRGBLed, strip.rgbOffColor);
-                strip.LineReseted();
-            }
-            RGBWS2811.Commit();
-            foreach (var button in RGBButtonList)
-            {
-                button.Set(false);
-                button.clickedForOnce = false;
-            }
-            _logger.LogTrace("Done .");
-        }
+        #endregion
+
+
+
+
 
     }
 

@@ -24,7 +24,7 @@ namespace Library.Model
             int numberOfRGBLed = (endStripPixel - startStripPixel) / 5;
             Console.WriteLine($"Strip Led Number {numberOfRGBLed}");
             Random random = new Random();
-            this.startPixel= startStripPixel;//= (startStripPixel) + -1 * (numberOfRGBLed * WormIndex + random.Next(0, numberOfRGBLed));
+            this.startPixel=  (startStripPixel) + -1 * (numberOfRGBLed * WormIndex + random.Next(0, numberOfRGBLed));
             this.initStartPixel = startPixel;
             this.endPixel = this.startPixel - length;
             this.initendPixel = endPixel;
@@ -41,7 +41,7 @@ namespace Library.Model
         public void updateSneakLength(int newLength)
         {
             this.endPixel = this.startPixel - newLength;
-            //this.initendPixel = endPixel;
+            this.initendPixel = endPixel;
         }
 
         public void reset()
