@@ -72,6 +72,8 @@ namespace Library.Model
         }
         public void UpdateSneakLength(int newLength)
         {
+            if (newLength > 1)
+                return;
             if (newLength > this.SneakLength)
             {
                 this.TailPixel--;

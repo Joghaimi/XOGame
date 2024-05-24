@@ -158,26 +158,36 @@ namespace CatchyGame.Service
                 VariableControlService.PlayerOneWarmColor, VariableControlService.PlayerOneStripDefaultColor,
                 VariableControlService.StripOneStartIndex, VariableControlService.StripOneEndIndex,
                 RGBButtonPixel1, 0, 0, VariableControlService.DefaultWarmLength));
-            StripList.Add(new SneakStrip(
-                VariableControlService.PlayerTwoWarmColor, VariableControlService.PlayerTwoStripDefaultColor,
-                VariableControlService.StripTwoStartIndex, VariableControlService.StripTwoEndIndex,
-                RGBButtonPixel2, 1, 1, VariableControlService.DefaultWarmLength));
+
+          
             StripList.Add(new SneakStrip(
                 VariableControlService.PlayerThreeWarmColor, VariableControlService.PlayerThreeStripDefaultColor,
                 VariableControlService.StripThreeStartIndex, VariableControlService.StripThreeEndIndex,
-                RGBButtonPixel3, 2, 2, VariableControlService.DefaultWarmLength));
+                RGBButtonPixel3, 1, 1, VariableControlService.DefaultWarmLength));
             StripList.Add(new SneakStrip(
                 VariableControlService.PlayerFourWarmColor, VariableControlService.PlayerFourStripDefaultColor,
                 VariableControlService.StripFourStartIndex, VariableControlService.StripFourEndIndex,
-                RGBButtonPixel4, 3, 3, VariableControlService.DefaultWarmLength));
+                RGBButtonPixel4, 2, 2, VariableControlService.DefaultWarmLength));
+            StripList.Add(new SneakStrip(
+            VariableControlService.StripSixWarmColor, VariableControlService.StripSixStripDefaultColor,
+            VariableControlService.StripSixStartIndex, VariableControlService.StripSixEndIndex,
+            RGBButtonPixel6, 3, 3, VariableControlService.DefaultWarmLength)); // TO DO
+
+
             StripList.Add(new SneakStrip(
                 VariableControlService.StripFiveWarmColor, VariableControlService.StripFiveStripDefaultColor,
                 VariableControlService.StripFiveStartIndex, VariableControlService.StripFiveEndIndex,
                 RGBButtonPixel5, 4, 4, VariableControlService.DefaultWarmLength)); // TO Do
+            //StripList.Add(new SneakStrip(
+            //    VariableControlService.StripSixWarmColor, VariableControlService.StripSixStripDefaultColor,
+            //    VariableControlService.StripSixStartIndex, VariableControlService.StripSixEndIndex,
+            //    RGBButtonPixel6, 5, 5, VariableControlService.DefaultWarmLength)); // TO DO
+
             StripList.Add(new SneakStrip(
-                VariableControlService.StripSixWarmColor, VariableControlService.StripSixStripDefaultColor,
-                VariableControlService.StripSixStartIndex, VariableControlService.StripSixEndIndex,
-                RGBButtonPixel6, 5, 5, VariableControlService.DefaultWarmLength)); // TO DO
+              VariableControlService.PlayerTwoWarmColor, VariableControlService.PlayerTwoStripDefaultColor,
+              VariableControlService.StripTwoStartIndex, VariableControlService.StripTwoEndIndex,
+              RGBButtonPixel2, 5, 5, VariableControlService.DefaultWarmLength));
+
 
             RGBWS2811.Init();
             LevelTime.Start();
@@ -364,8 +374,8 @@ namespace CatchyGame.Service
                 StripList[1].Activate(true);
                 StripList[2].Activate(false);
                 StripList[3].Activate(false);
-                StripList[4].Activate(false);
-                StripList[5].Activate(false);
+                StripList[4].Activate(true);
+                StripList[5].Activate(true);
             }
             else if (VariableControlService.Team.player.Count() <= 3)
             {
@@ -373,6 +383,8 @@ namespace CatchyGame.Service
                 StripList[1].Activate(true);
                 StripList[2].Activate(true);
                 StripList[3].Activate(false);
+                StripList[4].Activate(true);
+                StripList[5].Activate(true);
             }
             else if (VariableControlService.Team.player.Count() <= 4)
             {
@@ -380,6 +392,8 @@ namespace CatchyGame.Service
                 StripList[1].Activate(true);
                 StripList[2].Activate(true);
                 StripList[3].Activate(true);
+                StripList[4].Activate(true);
+                StripList[5].Activate(true);
             }
         }
 
