@@ -62,12 +62,12 @@ namespace CatchyGame.Service
             RGBButtonList.Add(rgb6);
             RGBButtonList.Add(rgb7);
             RGBButtonList.Add(rgb8);
-            RGBButtonList.Add(startRGBButton1);
-            RGBButtonList.Add(startRGBButton2);
-            RGBButtonList.Add(startRGBButton3);
-            RGBButtonList.Add(startRGBButton4);
-            RGBButtonList.Add(startRGBButton5);
-            RGBButtonList.Add(startRGBButton6);
+            //RGBButtonList.Add(startRGBButton1);
+            //RGBButtonList.Add(startRGBButton2);
+            //RGBButtonList.Add(startRGBButton3);
+            //RGBButtonList.Add(startRGBButton4);
+            //RGBButtonList.Add(startRGBButton5);
+            //RGBButtonList.Add(startRGBButton6);
 
 
             RGBButtonSneakPixel StripOneButton0 = new RGBButtonSneakPixel(0, startRGBButton1);
