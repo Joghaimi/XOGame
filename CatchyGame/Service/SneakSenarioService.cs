@@ -410,13 +410,16 @@ namespace CatchyGame.Service
             if (playerIndex == buttonAssignedFor)
                 ChangeSneakSize(playerIndex, 1);
             else
+            {
+                ChangeSneakSize(playerIndex, 1);
                 ChangeSneakSize(buttonAssignedFor, -1);
+            }
             _logger.LogTrace($"Add Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
             AudioPlayer.PIStartAudio(SoundType.Success);
         }
         private void SubstractPoint(int playerIndex, int buttonAssignedFor)
         {
-            _logger.LogTrace("Substract Point");
+            _logger.LogTrace($"Substract Point playerIndex {playerIndex}");
             //  AudioPlayer.PIStartAudio(SoundType.Failure);
             VariableControlService.Team.player[playerIndex].score -= 1;
             _logger.LogTrace($"Substract Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
@@ -424,29 +427,27 @@ namespace CatchyGame.Service
         }
         public void ChangeSneakSize(int playerIndex, int addedValue)
         {
-            if (addedValue > 0)
+
+            switch (playerIndex)
             {
-                switch (playerIndex)
-                {
-                    case 0:
-                        VariableControlService.PlayerOneWarmLength += addedValue;
-                        _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerOneWarmLength);
-                        break;
-                    case 1:
-                        VariableControlService.PlayerTwoWarmLength += addedValue;
-                        _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerTwoWarmLength);
-                        break;
-                    case 2:
-                        VariableControlService.PlayerThreeWarmLength += addedValue;
-                        _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerThreeWarmLength);
-                        break;
-                    case 3:
-                        VariableControlService.PlayerFourWarmLength += addedValue;
-                        _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerFourWarmLength);
-                        break;
-                    default:
-                        break;
-                }
+                case 0:
+                    VariableControlService.PlayerOneWarmLength += addedValue;
+                    _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerOneWarmLength);
+                    break;
+                case 1:
+                    VariableControlService.PlayerTwoWarmLength += addedValue;
+                    _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerTwoWarmLength);
+                    break;
+                case 2:
+                    VariableControlService.PlayerThreeWarmLength += addedValue;
+                    _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerThreeWarmLength);
+                    break;
+                case 3:
+                    VariableControlService.PlayerFourWarmLength += addedValue;
+                    _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerFourWarmLength);
+                    break;
+                default:
+                    break;
             }
         }
 
