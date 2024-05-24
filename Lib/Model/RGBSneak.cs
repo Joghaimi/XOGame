@@ -53,7 +53,7 @@ namespace Library.Model
         private void MoveTailForward()
         {
             bool TailNotReachTheEndOfTheLine = this.TailPixel <= this.StripEndPixel;
-            if (!TailNotReachTheEndOfTheLine)
+            if (TailNotReachTheEndOfTheLine)
                 this.TailPixel++;
             else
                 this.TailPixel = this.StripStartPixel;
@@ -63,7 +63,7 @@ namespace Library.Model
         }
         private void ChangePixelColor(int pixelNumber, RGBColor rGBColor)
         {
-            bool pixelInTheStrip = pixelNumber >= this.StripEndPixel && pixelNumber <= this.StripEndPixel;
+            bool pixelInTheStrip = pixelNumber >= this.StripStartPixel && pixelNumber <= this.StripEndPixel;
             if (pixelInTheStrip)
                 RGBWS2811.SetColor(this.ActiveSneak, pixelNumber, rGBColor);
         }
