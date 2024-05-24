@@ -260,8 +260,11 @@ namespace CatchyGame.Service
                                     button.clickedForOnce = true;
                                     button.Set(false);
                                 }
-                                else
+                                else {
+
+                                    Console.WriteLine($"Subtract ----***// buttonIndex {buttonIndex}");
                                     SubstractPoint(ButtonNumberToPlayerIndex(buttonIndex), button.AssignedFor());
+                                }
                             }
                             buttonIndex++;
                         }
