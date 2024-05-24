@@ -49,7 +49,7 @@ namespace Library.Model
         }
         public void UpdateLength(int wormLength)
         {
-            //return;
+            return;
             Sneak.UpdateSneakLength(wormLength);
         }
 

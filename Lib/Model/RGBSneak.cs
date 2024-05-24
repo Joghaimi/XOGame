@@ -47,6 +47,7 @@ namespace Library.Model
             else
                 this.HeadPixel = this.StripStartPixel;
             ChangePixelColor(this.HeadPixel, this.onColor);
+
         }
         private void MoveTailForward()
         {
