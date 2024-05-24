@@ -236,6 +236,7 @@ namespace CatchyGame.Service
         }
         private async Task ControlRGBButton(CancellationToken cancellationToken)
         {
+            // TO DO Work when game Started only
             while (!cancellationToken.IsCancellationRequested)
             {
                 byte buttonIndex = 0;
