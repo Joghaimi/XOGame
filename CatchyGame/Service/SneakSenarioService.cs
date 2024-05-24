@@ -217,7 +217,7 @@ namespace CatchyGame.Service
                     UpdateStripState();
                     while (VariableControlService.GameStatus == GameStatus.Started)
                     {
-                        ResetAllLine();
+                        //ResetAllLine();
                         _logger.LogTrace("New Round :- {0}", VariableControlService.GameRound.ToString());
                         LevelTime.Restart();
                         while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
