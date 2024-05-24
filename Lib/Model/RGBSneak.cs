@@ -75,13 +75,14 @@ namespace Library.Model
             if (newLength > this.SneakLength)
             {
                 this.TailPixel--;
+                this.SneakLength = newLength;
                 Console.WriteLine($"=> Increase Sneak Size {this.SneakLength} , {this.onColor}");
             }
             else if (newLength < this.SneakLength) { 
                 this.MoveTailForward();
+                this.SneakLength = newLength;
                 Console.WriteLine($"=> Decrease Sneak Size {this.SneakLength} , {this.onColor}");
             }
-            this.SneakLength = newLength;
         }
         public void Reset()
         {

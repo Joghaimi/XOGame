@@ -445,19 +445,19 @@ namespace CatchyGame.Service
             {
                 case 0:
                     VariableControlService.PlayerOneWarmLength += addedValue;
-                    _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerOneWarmLength);
+                    _logger.LogTrace("new Worm Size {1}", VariableControlService.PlayerOneWarmLength);
                     break;
                 case 1:
                     VariableControlService.PlayerTwoWarmLength += addedValue;
-                    _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerTwoWarmLength);
+                    _logger.LogTrace("new Worm Size {1}", VariableControlService.PlayerTwoWarmLength);
                     break;
                 case 2:
                     VariableControlService.PlayerThreeWarmLength += addedValue;
-                    _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerThreeWarmLength);
+                    _logger.LogTrace("new Worm Size {1}", VariableControlService.PlayerThreeWarmLength);
                     break;
                 case 3:
                     VariableControlService.PlayerFourWarmLength += addedValue;
-                    _logger.LogTrace("Increase new Worm Size {1}", VariableControlService.PlayerFourWarmLength);
+                    _logger.LogTrace("new Worm Size {1}", VariableControlService.PlayerFourWarmLength);
                     break;
                 default:
                     break;
