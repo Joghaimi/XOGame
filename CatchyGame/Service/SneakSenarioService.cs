@@ -159,7 +159,7 @@ namespace CatchyGame.Service
                 VariableControlService.StripOneStartIndex, VariableControlService.StripOneEndIndex,
                 RGBButtonPixel1, 0, 0, VariableControlService.DefaultWarmLength));
 
-          
+
             StripList.Add(new SneakStrip(
                 VariableControlService.PlayerThreeWarmColor, VariableControlService.PlayerThreeStripDefaultColor,
                 VariableControlService.StripThreeStartIndex, VariableControlService.StripThreeEndIndex,
