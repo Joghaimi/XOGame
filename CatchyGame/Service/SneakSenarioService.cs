@@ -201,14 +201,14 @@ namespace CatchyGame.Service
             {
                 if (VariableControlService.GameStatus == GameStatus.Started)
                 {
-                    Console.WriteLine("Start Game ,Number of players {0}", VariableControlService.Team.player.Count());
+                    _logger.LogTrace("Start Game ,Number of players {0}", VariableControlService.Team.player.Count());
                     StartBackgroundAudio();
                     Restart();
                     UpdateStripState();
                     while (VariableControlService.GameStatus == GameStatus.Started)
                     {
                         ResetAllLine();
-                        Console.WriteLine("New Round :- {0}", VariableControlService.GameRound.ToString());
+                        _logger.LogTrace("New Round :- {0}", VariableControlService.GameRound.ToString());
                         LevelTime.Restart();
                         while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
                         {
@@ -224,7 +224,7 @@ namespace CatchyGame.Service
                             }
                             RGBWS2811.Commit();
                         }
-                        Console.WriteLine("Round {0} Finshed", VariableControlService.GameRound);
+                        _logger.LogTrace("Round {0} Finshed", VariableControlService.GameRound);
                         if (VariableControlService.GameRound == Round.Round5)
                             VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
                         VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
