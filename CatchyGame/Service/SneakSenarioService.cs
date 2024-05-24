@@ -161,15 +161,15 @@ namespace CatchyGame.Service
 
 
             StripList.Add(new SneakStrip(
-                VariableControlService.PlayerThreeWarmColor, VariableControlService.PlayerThreeStripDefaultColor,
+                VariableControlService.PlayerTwoWarmColor, VariableControlService.PlayerTwoStripDefaultColor,
                 VariableControlService.StripThreeStartIndex, VariableControlService.StripThreeEndIndex,
                 RGBButtonPixel3, 1, 1, VariableControlService.DefaultWarmLength));
             StripList.Add(new SneakStrip(
-                VariableControlService.PlayerFourWarmColor, VariableControlService.PlayerFourStripDefaultColor,
+                VariableControlService.PlayerThreeWarmColor, VariableControlService.PlayerThreeStripDefaultColor,
                 VariableControlService.StripFourStartIndex, VariableControlService.StripFourEndIndex,
                 RGBButtonPixel4, 2, 2, VariableControlService.DefaultWarmLength));
             StripList.Add(new SneakStrip(
-            VariableControlService.StripSixWarmColor, VariableControlService.StripSixStripDefaultColor,
+            VariableControlService.PlayerFourWarmColor, VariableControlService.PlayerFourStripDefaultColor,
             VariableControlService.StripSixStartIndex, VariableControlService.StripSixEndIndex,
             RGBButtonPixel6, 3, 3, VariableControlService.DefaultWarmLength)); // TO DO
 
@@ -184,7 +184,7 @@ namespace CatchyGame.Service
             //    RGBButtonPixel6, 5, 5, VariableControlService.DefaultWarmLength)); // TO DO
 
             StripList.Add(new SneakStrip(
-              VariableControlService.PlayerTwoWarmColor, VariableControlService.PlayerTwoStripDefaultColor,
+              VariableControlService.StripSixWarmColor, VariableControlService.StripSixStripDefaultColor,
               VariableControlService.StripTwoStartIndex, VariableControlService.StripTwoEndIndex,
               RGBButtonPixel2, 5, 5, VariableControlService.DefaultWarmLength));
 
