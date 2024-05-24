@@ -58,6 +58,8 @@ namespace Library.Model
             else
                 this.TailPixel = this.StripStartPixel;
             ChangePixelColor(this.TailPixel, this.offColor);
+            Console.WriteLine($"Move Tail Forward {this.TailPixel} , Color {this.offColor} ,TailNotReachTheEndOfTheLine {TailNotReachTheEndOfTheLine}");
+
         }
         private void ChangePixelColor(int pixelNumber, RGBColor rGBColor)
         {
