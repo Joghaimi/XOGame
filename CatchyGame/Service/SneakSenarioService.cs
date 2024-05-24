@@ -212,7 +212,7 @@ namespace CatchyGame.Service
                         LevelTime.Restart();
                         while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
                         {
-                            //UpdateSneakSize();
+                            UpdateSneakSize();
                             foreach (var strip in StripList)
                             {
                                 if (LevelTime.ElapsedMilliseconds < 20)
