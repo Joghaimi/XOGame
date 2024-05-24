@@ -73,9 +73,14 @@ namespace Library.Model
         public void UpdateSneakLength(int newLength)
         {
             if (newLength > this.SneakLength)
+            {
                 this.TailPixel--;
-            else if(newLength < this.SneakLength)
+                Console.WriteLine("Increase Sneak Size");
+            }
+            else if (newLength < this.SneakLength) { 
                 this.MoveTailForward();
+                Console.WriteLine("Decrease Sneak Size");
+            }
             this.SneakLength = newLength;
         }
         public void Reset()
