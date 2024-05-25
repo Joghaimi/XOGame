@@ -205,6 +205,12 @@ namespace CatchyGame.Service
                 VariableControlService.StripSevenStartIndex, VariableControlService.StripSevenEndIndex,
                 VariableControlService.StripSevenDefaultColor);
             RGBWS2811.Commit();
+
+
+            WinningEffect(VariableControlService.StripOneStartIndex, VariableControlService.StripOneEndIndex);
+
+
+
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -376,6 +382,15 @@ namespace CatchyGame.Service
             StripList[2].UpdateLength(VariableControlService.PlayerThreeWarmLength);
             StripList[3].UpdateLength(VariableControlService.PlayerFourWarmLength);
 
+
+            if (VariableControlService.PlayerOneWarmLength >= StripOneMaxLength)
+            {
+                WinningEffect(VariableControlService.StripOneStartIndex , VariableControlService.StripOneEndIndex);
+                VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
+            }
+
+
+
             if (VariableControlService.PlayerOneWarmLength >= StripOneMaxLength
                 || VariableControlService.PlayerTwoWarmLength >= StripTwoMaxLength
                 || VariableControlService.PlayerThreeWarmLength >= StripThreeMaxLength
@@ -388,6 +403,27 @@ namespace CatchyGame.Service
 
 
         }
+
+        #region Winning Effect
+        private void WinningEffect(int startPixel , int EndPixel)
+        {
+            RGBWS2811.SetColorByRange(startPixel, EndPixel,
+                  VariableControlService.PlayerTwoWarmColor);
+            RGBWS2811.Commit();
+            Thread.Sleep(1000);
+            RGBWS2811.SetColorByRange(
+                startPixel, EndPixel,
+                VariableControlService.PlayerThreeWarmColor);
+            RGBWS2811.Commit();
+            Thread.Sleep(1000);
+            RGBWS2811.SetColorByRange(
+                startPixel, EndPixel,
+                VariableControlService.PlayerFourWarmColor);
+            Thread.Sleep(1000);
+        }
+        #endregion
+
+
 
         public void UpdateStripState()
         {
@@ -492,18 +528,26 @@ namespace CatchyGame.Service
             {
                 case 0:
                     VariableControlService.PlayerOneWarmLength += addedValue;
+                    if (VariableControlService.PlayerOneWarmLength < 0)
+                        VariableControlService.PlayerOneWarmLength = 0;
                     _logger.LogTrace("new Worm Size {1}", VariableControlService.PlayerOneWarmLength);
                     break;
                 case 1:
                     VariableControlService.PlayerTwoWarmLength += addedValue;
+                    if (VariableControlService.PlayerTwoWarmLength < 0)
+                        VariableControlService.PlayerTwoWarmLength = 0;
                     _logger.LogTrace("new Worm Size {1}", VariableControlService.PlayerTwoWarmLength);
                     break;
                 case 2:
                     VariableControlService.PlayerThreeWarmLength += addedValue;
+                    if (VariableControlService.PlayerThreeWarmLength < 0)
+                        VariableControlService.PlayerThreeWarmLength = 0;
                     _logger.LogTrace("new Worm Size {1}", VariableControlService.PlayerThreeWarmLength);
                     break;
                 case 3:
                     VariableControlService.PlayerFourWarmLength += addedValue;
+                    if (VariableControlService.PlayerFourWarmLength < 0)
+                        VariableControlService.PlayerFourWarmLength = 0;
                     _logger.LogTrace("new Worm Size {1}", VariableControlService.PlayerFourWarmLength);
                     break;
                 default:
