@@ -381,7 +381,7 @@ namespace CatchyGame.Service
                 )
             {
                 VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
-                //Console.WriteLine("one Off the player win");
+                Console.WriteLine("one Off the player win");
             }
 
 
