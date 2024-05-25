@@ -1,4 +1,5 @@
 ﻿using Library;
+using Library.Model;
 
 namespace GatheringRoom.Services
 {
