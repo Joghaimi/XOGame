@@ -20,9 +20,11 @@ namespace Library.Model
         public RGBColor onColor;
         public RGBColor offColor;
         public bool ActiveSneak = true;
+        public int SneakStartFrom = 0;
         public RGBSneak(RGBColor onColor, RGBColor offColor, int startStripPixel, int endStripPixel, int length, int index)
         {
-            this.StripStartPixel = startStripPixel;
+
+            this.SneakStartFrom =this.StripStartPixel = startStripPixel;
             this.StripEndPixel = endStripPixel;
             this.HeadPixel = startStripPixel;
             this.SneakLength = length;
@@ -33,9 +35,9 @@ namespace Library.Model
                 int numberOfRGBLed = (endStripPixel - startStripPixel) / 5;
                 Console.WriteLine($"Strip Led Number {numberOfRGBLed}");
                 Random random = new Random();
-                this.StripStartPixel = (startStripPixel) + -1 * (numberOfRGBLed * index + random.Next(0, numberOfRGBLed));
-                this.HeadPixel = this.StripStartPixel;
-                this.TailPixel = this.StripStartPixel - length;
+                this.SneakStartFrom = (startStripPixel) + -1 * (numberOfRGBLed * index + random.Next(0, numberOfRGBLed));
+                this.HeadPixel = this.SneakStartFrom;
+                this.TailPixel = this.SneakStartFrom - length;
             }
 
         }
@@ -54,7 +56,7 @@ namespace Library.Model
             if (HeadNotReachTheEndOfTheLine)
                 this.HeadPixel++;
             else
-                this.HeadPixel = this.StripStartPixel;
+                this.HeadPixel = this.SneakStartFrom;
             ChangePixelColor(this.HeadPixel, this.onColor);
         }
         private void MoveTailForward()
@@ -63,7 +65,7 @@ namespace Library.Model
             if (TailNotReachTheEndOfTheLine)
                 this.TailPixel++;
             else
-                this.TailPixel = this.StripStartPixel;
+                this.TailPixel = this.SneakStartFrom;
             ChangePixelColor(this.TailPixel, this.offColor);
         }
         private void ChangePixelColor(int pixelNumber, RGBColor rGBColor)
@@ -104,8 +106,8 @@ namespace Library.Model
         }
         public void Reset()
         {
-            this.HeadPixel = this.StripStartPixel;
-            this.TailPixel = this.StripStartPixel - this.SneakLength;
+            this.HeadPixel = this.SneakStartFrom;
+            this.TailPixel = this.SneakStartFrom - this.SneakLength;
         }
     }
 }

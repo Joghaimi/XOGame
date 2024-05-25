@@ -171,7 +171,7 @@ namespace CatchyGame.Service
             StripList.Add(new SneakStrip(
             VariableControlService.PlayerFourWarmColor, VariableControlService.PlayerFourStripDefaultColor,
             VariableControlService.StripSixStartIndex, VariableControlService.StripSixEndIndex,
-            RGBButtonPixel6, 3, 3, VariableControlService.DefaultWarmLength)); // TO DO
+            RGBButtonPixel6, 3, 3, VariableControlService.DefaultWarmLength));
 
 
             StripList.Add(new SneakStrip(
@@ -403,6 +403,8 @@ namespace CatchyGame.Service
 
         private void ResetAllLine()
         {
+
+
             _logger.LogTrace("Restart All Lines ...");
             foreach (var strip in StripList)
             {
@@ -410,11 +412,19 @@ namespace CatchyGame.Service
                 strip.LineReset();
             }
             RGBWS2811.Commit();
+            
             foreach (var button in RGBButtonList)
             {
                 button.Set(false);
                 button.clickedForOnce = false;
             }
+
+            VariableControlService.PlayerOneWarmLength= 
+                VariableControlService.PlayerTwoWarmLength =
+                VariableControlService.PlayerThreeWarmLength =
+                VariableControlService.PlayerFourWarmLength = VariableControlService.DefaultWarmLength;
+            UpdateSneakSize();
+
             _logger.LogTrace("Done .");
         }
 
