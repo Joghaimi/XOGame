@@ -69,9 +69,9 @@ namespace CatchyGame.Service
         public static int StripSevenEndIndex { get; set; } = 1491;
         public static RGBColor StripSevenDefaultColor { get; set; } = RGBColor.White;
 
-        public static RGBColor StripFiveWarmColor { get; set; } = RGBColor.Red;
+        public static RGBColor StripFiveWarmColor { get; set; } = RGBColor.purple;
         public static RGBColor StripFiveStripDefaultColor { get; set; } = RGBColor.Off;
-        public static RGBColor StripSixWarmColor { get; set; } = RGBColor.Red;
+        public static RGBColor StripSixWarmColor { get; set; } = RGBColor.purple
         public static RGBColor StripSixStripDefaultColor { get; set; } = RGBColor.Off;
 
 
