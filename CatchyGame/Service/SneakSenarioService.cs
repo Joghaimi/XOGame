@@ -234,6 +234,8 @@ namespace CatchyGame.Service
                         if (VariableControlService.GameRound == Round.Round5)
                             VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
                         VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
+                        ResetAllLine();
+
                     }
                     StopBackGroundAudio();
                     _logger.LogTrace("Game Finished ..");
