@@ -441,10 +441,10 @@ namespace CatchyGame.Service
             else
                 VariableControlService.Team.player[playerIndex].score += 1;
             if (playerIndex == buttonAssignedFor)
-                ChangeSneakSize(playerIndex, 1);
+                ChangeSneakSize(playerIndex, 2);
             else
             {
-                ChangeSneakSize(playerIndex, 1);
+                ChangeSneakSize(playerIndex, 2);
                 ChangeSneakSize(buttonAssignedFor, -1);
             }
             _logger.LogTrace($"Add Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
