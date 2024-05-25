@@ -177,8 +177,8 @@ namespace CatchyGame.Service
             StripList.Add(new SneakStrip(
                 VariableControlService.StripFiveWarmColor, VariableControlService.StripFiveStripDefaultColor,
                 VariableControlService.StripFiveStartIndex, VariableControlService.StripFiveEndIndex,
-                RGBButtonPixel5, 4, 4, VariableControlService.DefaultWarmLength,StripType.Extra)); // TO Do
-         
+                RGBButtonPixel5, 4, 4, VariableControlService.DefaultWarmLength, StripType.Extra)); // TO Do
+
             StripList.Add(new SneakStrip(
               VariableControlService.StripSixWarmColor, VariableControlService.StripSixStripDefaultColor,
               VariableControlService.StripTwoStartIndex, VariableControlService.StripTwoEndIndex,
@@ -234,9 +234,9 @@ namespace CatchyGame.Service
                         if (VariableControlService.GameRound == Round.Round5)
                             VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
                         VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
-                        ResetAllLine();
 
                     }
+                    ResetAllLine();
                     StopBackGroundAudio();
                     _logger.LogTrace("Game Finished ..");
                 }
@@ -412,14 +412,14 @@ namespace CatchyGame.Service
                 strip.LineReset();
             }
             RGBWS2811.Commit();
-            
+
             foreach (var button in RGBButtonList)
             {
                 button.Set(false);
                 button.clickedForOnce = false;
             }
 
-            VariableControlService.PlayerOneWarmLength= 
+            VariableControlService.PlayerOneWarmLength =
                 VariableControlService.PlayerTwoWarmLength =
                 VariableControlService.PlayerThreeWarmLength =
                 VariableControlService.PlayerFourWarmLength = VariableControlService.DefaultWarmLength;
