@@ -232,6 +232,8 @@ namespace CatchyGame.Service
                         while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
                         {
                             UpdateSneakSize();
+                            if (VariableControlService.GameStatus != GameStatus.Started)
+                                break;
                             foreach (var strip in StripList)
                             {
                                 if (LevelTime.ElapsedMilliseconds < 20)
@@ -381,7 +383,7 @@ namespace CatchyGame.Service
                 )
             {
                 VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
-                Console.WriteLine("one Off the player win");
+
             }
 
 
