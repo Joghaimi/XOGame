@@ -384,6 +384,7 @@ namespace CatchyGame.Service
             }
             else if (VariableControlService.Team.player.Count() <= 4)
             {
+                Console.WriteLine($"VariableControlService.Team.player.Count() ======={VariableControlService.Team.player.Count()}");
                 StripList[0].Activate(true);
                 StripList[1].Activate(true);
                 StripList[2].Activate(true);
