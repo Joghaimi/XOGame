@@ -407,19 +407,23 @@ namespace CatchyGame.Service
         #region Winning Effect
         private void WinningEffect(int startPixel , int EndPixel)
         {
-            RGBWS2811.SetColorByRange(startPixel, EndPixel,
-                  VariableControlService.PlayerTwoWarmColor);
+            Console.WriteLine("Green");
+            RGBWS2811.SetColorByRange(startPixel, EndPixel,VariableControlService.PlayerTwoWarmColor);
             RGBWS2811.Commit();
-            Thread.Sleep(1000);
+            Thread.Sleep(3000);
+            Console.WriteLine("Blue");
+
             RGBWS2811.SetColorByRange(
                 startPixel, EndPixel,
                 VariableControlService.PlayerThreeWarmColor);
             RGBWS2811.Commit();
-            Thread.Sleep(1000);
+            Thread.Sleep(3000);
+            Console.WriteLine("Red");
+
             RGBWS2811.SetColorByRange(
                 startPixel, EndPixel,
                 VariableControlService.PlayerFourWarmColor);
-            Thread.Sleep(1000);
+            Thread.Sleep(3000);
         }
         #endregion
 
