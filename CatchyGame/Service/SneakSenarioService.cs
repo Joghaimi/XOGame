@@ -160,7 +160,7 @@ namespace CatchyGame.Service
 
             StripOneMaxLength = VariableControlService.StripOneEndIndex - VariableControlService.StripOneStartIndex - 1;
             StripTwoMaxLength = VariableControlService.StripThreeEndIndex - VariableControlService.StripThreeStartIndex - 1;
-            StripThreeMaxLength = VariableControlService.StripFourEndIndex - VariableControlService.StripFourEndIndex - 1;
+            StripThreeMaxLength = VariableControlService.StripFourEndIndex - VariableControlService.StripFourStartIndex - 1;
             StripFourMaxLength = VariableControlService.StripSixEndIndex - VariableControlService.StripSixStartIndex - 1;
             Console.WriteLine($"StripOneMaxLength {StripOneMaxLength}");
             Console.WriteLine($"StripTwoMaxLength {StripTwoMaxLength}");
