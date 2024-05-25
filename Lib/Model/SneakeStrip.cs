@@ -21,10 +21,11 @@ namespace Library.Model
         public int stripIndex = -1;
 
         public int wormLength { get; set; } = 5;
-        RGBSneak Sneak;
+        public List<RGBSneak> Sneaks = new List<RGBSneak>();
         public List<RGBButtonSneakPixel> Buttons = new List<RGBButtonSneakPixel>();
         private int playerAssignedToTheStrip;
         public bool IsActive = true;
+        public StripType StripType { get; set; }
 
         public SneakStrip(
           RGBColor rgbColor,
@@ -34,23 +35,31 @@ namespace Library.Model
           List<RGBButtonSneakPixel> Buttons,
           int stripIndex,
           int playerAssignedToTheStrip,
-          int warmLength
+          int warmLength,
+          StripType type = StripType.player
           )
         {
+            this.StripType = type;
             this.rgbOffColor = rgbOffColor;
             this.rgbColor = rgbColor;
             this.startRGBLed = startRGBLed;
             this.endRGBLed = endRGBLed;
-            Sneak = new RGBSneak(rgbColor, rgbOffColor, startRGBLed, endRGBLed, warmLength);
+            Sneaks.Add(new RGBSneak(rgbColor, rgbOffColor, startRGBLed, endRGBLed, warmLength, 0));
+            if (type == StripType.Extra)
+            {
+                Sneaks.Add(new RGBSneak(rgbColor, rgbOffColor, startRGBLed, endRGBLed, warmLength, 1));
+                Sneaks.Add(new RGBSneak(rgbColor, rgbOffColor, startRGBLed, endRGBLed, warmLength, 2));
+                Sneaks.Add(new RGBSneak(rgbColor, rgbOffColor, startRGBLed, endRGBLed, warmLength, 3));
+            }
 
             this.Buttons = Buttons;
             this.stripIndex = stripIndex;
             this.playerAssignedToTheStrip = playerAssignedToTheStrip;
         }
+        // Only Update Length For Player Sneak
         public void UpdateLength(int wormLength)
         {
-            //return;
-            Sneak.UpdateSneakLength(wormLength);
+            Sneaks[0].UpdateSneakLength(wormLength);
         }
 
         public void Activate(bool isActive)
@@ -61,7 +70,10 @@ namespace Library.Model
         {
             if (!this.isActive)
                 return;
-            Sneak.MoveSneakForward();
+            foreach (var sneak in Sneaks)
+            {
+                sneak.MoveSneakForward();
+            }
             RGBButtonStateAndColor();// RGB Button Control 
         }
         public void MoveTwoPixel()
@@ -84,7 +96,12 @@ namespace Library.Model
             {
                 if (button.Button.stripIndex == -1 || button.Button.stripIndex == stripIndex)
                 {
-                    bool buttonState = ButtonTouchTheWorm(button.Pixel, Sneak.TailPixel, Sneak.HeadPixel, buttonIndex == 0);
+                    bool buttonState = false;
+                    foreach (var sneak in Sneaks)
+                    {
+                        buttonState = buttonState || ButtonTouchTheWorm(button.Pixel, sneak.TailPixel, sneak.HeadPixel, buttonIndex == 0);
+                    }
+                    //bool buttonState = ButtonTouchTheWorm(button.Pixel, Sneak.TailPixel, Sneak.HeadPixel, buttonIndex == 0);
 
                     if (buttonState && !button.Button.isSet() && !button.Button.clickedForOnce)
                     {
@@ -110,7 +127,7 @@ namespace Library.Model
 
         public bool ButtonTouchTheWorm(int buttonPixel, int wormTailPixel, int wormHeadPixel, bool itsStartButton)
         {
-            bool ButtonTouchTheHead = buttonPixel == wormHeadPixel || buttonPixel == wormHeadPixel -1 || buttonPixel == wormHeadPixel -2 || buttonPixel == wormHeadPixel - 3||buttonPixel == wormHeadPixel - 4;
+            bool ButtonTouchTheHead = buttonPixel == wormHeadPixel || buttonPixel == wormHeadPixel - 1 || buttonPixel == wormHeadPixel - 2 || buttonPixel == wormHeadPixel - 3 || buttonPixel == wormHeadPixel - 4;
 
 
             bool inRange = ButtonTouchTheHead;//buttonPixel >= wormTailPixel && buttonPixel <= wormHeadPixel;
@@ -122,7 +139,8 @@ namespace Library.Model
         public void LineReset()
         {
             resetLine = false;
-            Sneak.Reset();
+            foreach (var sneak in Sneaks)
+                sneak.Reset();
         }
     }
 }

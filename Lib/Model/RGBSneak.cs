@@ -20,7 +20,7 @@ namespace Library.Model
         public RGBColor onColor;
         public RGBColor offColor;
         public bool ActiveSneak = true;
-        public RGBSneak(RGBColor onColor, RGBColor offColor, int startStripPixel, int endStripPixel, int length)
+        public RGBSneak(RGBColor onColor, RGBColor offColor, int startStripPixel, int endStripPixel, int length, int index)
         {
             this.StripStartPixel = startStripPixel;
             this.StripEndPixel = endStripPixel;
@@ -29,6 +29,15 @@ namespace Library.Model
             this.TailPixel = startStripPixel - length;
             this.onColor = onColor;
             this.offColor = offColor;
+            if (index > 0) { 
+                int numberOfRGBLed = (endStripPixel - startStripPixel) / 5;
+                Console.WriteLine($"Strip Led Number {numberOfRGBLed}");
+                Random random = new Random();
+                this.StripStartPixel = (startStripPixel) + -1 * (numberOfRGBLed * index + random.Next(0, numberOfRGBLed));
+                this.HeadPixel = this.StripStartPixel;
+                this.TailPixel = this.StripStartPixel - length;
+            }
+
         }
 
         public void MoveSneakForward()
@@ -47,7 +56,6 @@ namespace Library.Model
             else
                 this.HeadPixel = this.StripStartPixel;
             ChangePixelColor(this.HeadPixel, this.onColor);
-            //Console.WriteLine($"Head Forward {this.HeadPixel} , Color {this.onColor} ,HeadNotReachTheEndOfTheLine {HeadNotReachTheEndOfTheLine}");
         }
         private void MoveTailForward()
         {
@@ -57,8 +65,6 @@ namespace Library.Model
             else
                 this.TailPixel = this.StripStartPixel;
             ChangePixelColor(this.TailPixel, this.offColor);
-            //Console.WriteLine($"Move Tail Forward {this.TailPixel} , Color {this.offColor} ,TailNotReachTheEndOfTheLine {TailNotReachTheEndOfTheLine}");
-
         }
         private void ChangePixelColor(int pixelNumber, RGBColor rGBColor)
         {
@@ -76,12 +82,22 @@ namespace Library.Model
                 return;
             if (newLength > this.SneakLength)
             {
-                this.TailPixel--;
+                int sizeDiff = newLength - this.SneakLength;
+                this.TailPixel -= sizeDiff;
+                //this.TailPixel--;
                 this.SneakLength = newLength;
                 Console.WriteLine($"=> Increase Sneak Size {this.SneakLength} , {this.onColor}");
             }
-            else if (newLength < this.SneakLength) { 
-                this.MoveTailForward();
+            else if (newLength < this.SneakLength)
+            {
+                //Start New For Test
+                int sizeDiff = this.SneakLength - newLength;
+                for (var i = 0; i < sizeDiff; i++)
+                {
+                    this.MoveTailForward();
+                }
+                //End New For Test
+                //this.MoveTailForward();
                 this.SneakLength = newLength;
                 Console.WriteLine($"=> Decrease Sneak Size {this.SneakLength} , {this.onColor}");
             }

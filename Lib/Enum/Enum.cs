@@ -189,4 +189,10 @@ namespace Library
         Undefined
     }
 
+    public enum StripType
+    {
+        player,
+        Extra
+    }
+
 }

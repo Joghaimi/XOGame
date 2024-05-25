@@ -177,16 +177,12 @@ namespace CatchyGame.Service
             StripList.Add(new SneakStrip(
                 VariableControlService.StripFiveWarmColor, VariableControlService.StripFiveStripDefaultColor,
                 VariableControlService.StripFiveStartIndex, VariableControlService.StripFiveEndIndex,
-                RGBButtonPixel5, 4, 4, VariableControlService.DefaultWarmLength)); // TO Do
-            //StripList.Add(new SneakStrip(
-            //    VariableControlService.StripSixWarmColor, VariableControlService.StripSixStripDefaultColor,
-            //    VariableControlService.StripSixStartIndex, VariableControlService.StripSixEndIndex,
-            //    RGBButtonPixel6, 5, 5, VariableControlService.DefaultWarmLength)); // TO DO
-
+                RGBButtonPixel5, 4, 4, VariableControlService.DefaultWarmLength,StripType.Extra)); // TO Do
+         
             StripList.Add(new SneakStrip(
               VariableControlService.StripSixWarmColor, VariableControlService.StripSixStripDefaultColor,
               VariableControlService.StripTwoStartIndex, VariableControlService.StripTwoEndIndex,
-              RGBButtonPixel2, 5, 5, VariableControlService.DefaultWarmLength));
+              RGBButtonPixel2, 5, 5, VariableControlService.DefaultWarmLength, StripType.Extra));
 
 
             RGBWS2811.Init();
@@ -234,7 +230,7 @@ namespace CatchyGame.Service
                             }
                             RGBWS2811.Commit();
                         }
-                        _logger.LogTrace("Round {0} Finshed", VariableControlService.GameRound);
+                        _logger.LogTrace("Round {0} Finished", VariableControlService.GameRound);
                         if (VariableControlService.GameRound == Round.Round5)
                             VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
                         VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
@@ -246,16 +242,14 @@ namespace CatchyGame.Service
         }
         private async Task ControlRGBButton(CancellationToken cancellationToken)
         {
-            // TO DO Work when game Started only
             while (!cancellationToken.IsCancellationRequested)
             {
-                if (VariableControlService.GameStatus == GameStatus.Started || true)
+                if (VariableControlService.GameStatus == GameStatus.Started)
                 {
 
                     byte buttonIndex = 0;
                     try
                     {
-
                         foreach (var button in RGBButtonList)
                         {
                             if (!button.CurrentStatusWithCheckForDelay())

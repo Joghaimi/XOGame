@@ -1,5 +1,6 @@
 using GatheringRoom.Services;
 using Library;
+using Library.RGBLib;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -61,6 +62,12 @@ namespace GatheringRoom.Controllers
         {
             VariableControlService.NewDoorStatus = doorStatus;
             return Ok(doorStatus);
+        }
+        [HttpGet("RGBColor")]
+        public IActionResult RGBColor(RGBColor newColor)
+        {
+            RGBLight.SetColor(newColor);
+            return Ok();
         }
     }
 }
