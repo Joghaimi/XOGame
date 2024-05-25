@@ -170,7 +170,7 @@ namespace CatchyGame.Service
                 RGBButtonPixel4, 2, 2, VariableControlService.DefaultWarmLength));
          
             StripList.Add(new SneakStrip(
-                VariableControlService.PlayerOneWarmColor, VariableControlService.PlayerFourStripDefaultColor,
+                VariableControlService.PlayerFourWarmColor, VariableControlService.PlayerFourStripDefaultColor,
                 VariableControlService.StripSixStartIndex, VariableControlService.StripSixEndIndex,
                 RGBButtonPixel6, 3, 3, VariableControlService.DefaultWarmLength));
    
@@ -361,13 +361,10 @@ namespace CatchyGame.Service
 
         public void UpdateSneakSize()
         {
-            Console.WriteLine("Update Snake Size");
             StripList[0].UpdateLength(VariableControlService.PlayerOneWarmLength);
             StripList[1].UpdateLength(VariableControlService.PlayerTwoWarmLength);
             StripList[2].UpdateLength(VariableControlService.PlayerThreeWarmLength);
             StripList[3].UpdateLength(VariableControlService.PlayerFourWarmLength);
-            Console.WriteLine("Update Snake Size Finished {}");
-
         }
 
         public void UpdateStripState()
@@ -392,7 +389,6 @@ namespace CatchyGame.Service
             }
             else if (VariableControlService.Team.player.Count() <= 4)
             {
-                Console.WriteLine($"VariableControlService.Team.player.Count() ======={VariableControlService.Team.player.Count()}");
                 StripList[0].Activate(true);
                 StripList[1].Activate(true);
                 StripList[2].Activate(true);
