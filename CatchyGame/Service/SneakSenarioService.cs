@@ -156,7 +156,7 @@ namespace CatchyGame.Service
 
             StripList.Add(new SneakStrip(
                 VariableControlService.PlayerOneWarmColor, VariableControlService.PlayerOneStripDefaultColor,
-                VariableControlService.StripOneStartIndex, VariableControlService.StripOneEndIndex,
+                VariableControlService.StripSixStartIndex, VariableControlService.StripSixEndIndex,
                 RGBButtonPixel1, 0, 0, VariableControlService.DefaultWarmLength));
 
 
@@ -377,12 +377,12 @@ namespace CatchyGame.Service
         {
             if (VariableControlService.Team.player.Count() <= 2)
             {
-                StripList[0].Activate(false);
-                StripList[1].Activate(false);
+                StripList[0].Activate(true);
+                StripList[1].Activate(true);
                 StripList[2].Activate(false);
-                StripList[3].Activate(true);
-                StripList[4].Activate(false);
-                StripList[5].Activate(false);
+                StripList[3].Activate(false);
+                StripList[4].Activate(true);
+                StripList[5].Activate(true);
             }
             else if (VariableControlService.Team.player.Count() <= 3)
             {
