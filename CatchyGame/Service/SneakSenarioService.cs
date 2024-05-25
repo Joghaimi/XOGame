@@ -207,7 +207,7 @@ namespace CatchyGame.Service
             RGBWS2811.Commit();
 
 
-            WinningEffect(VariableControlService.StripOneStartIndex, VariableControlService.StripOneEndIndex);
+            WinningEffect(VariableControlService.StripOneStartIndex, VariableControlService.StripOneEndIndex , VariableControlService.PlayerOneWarmColor);
 
 
 
@@ -385,7 +385,7 @@ namespace CatchyGame.Service
 
             if (VariableControlService.PlayerOneWarmLength >= StripOneMaxLength)
             {
-                WinningEffect(VariableControlService.StripOneStartIndex , VariableControlService.StripOneEndIndex);
+                WinningEffect(VariableControlService.StripOneStartIndex, VariableControlService.StripOneEndIndex, VariableControlService.PlayerOneWarmColor);
                 VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
             }
 
@@ -405,26 +405,21 @@ namespace CatchyGame.Service
         }
 
         #region Winning Effect
-        private void WinningEffect(int startPixel , int EndPixel)
+        private void WinningEffect(int startPixel, int EndPixel, RGBColor color)
         {
-            Console.WriteLine("Green");
-            RGBWS2811.SetColorByRange(startPixel, EndPixel,VariableControlService.PlayerTwoWarmColor);
-            RGBWS2811.Commit();
-            Thread.Sleep(3000);
-            Console.WriteLine("Blue");
 
-            RGBWS2811.SetColorByRange(
-                startPixel, EndPixel,
-                VariableControlService.PlayerThreeWarmColor);
-            RGBWS2811.Commit();
-            Thread.Sleep(3000);
-            Console.WriteLine("Red");
+            for (int i = 0; i < 5; i++)
+            {
+                RGBWS2811.SetColorByRange(startPixel, EndPixel, color);
+                RGBWS2811.Commit();
+                Thread.Sleep(1000);
+                RGBWS2811.SetColorByRange(startPixel, EndPixel, RGBColor.Off);
+                RGBWS2811.Commit();
+                Thread.Sleep(1000);
+            }
 
-            RGBWS2811.SetColorByRange(
-                startPixel, EndPixel,
-                VariableControlService.PlayerFourWarmColor);
-            RGBWS2811.Commit();
-            Thread.Sleep(3000);
+
+
         }
         #endregion
 
