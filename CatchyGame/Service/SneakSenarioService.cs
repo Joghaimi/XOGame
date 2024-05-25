@@ -158,11 +158,14 @@ namespace CatchyGame.Service
             RGBButtonPixel6.Add(StripSixButton3);
 
 
-            StripOneMaxLength = VariableControlService.StripOneEndIndex - VariableControlService.StripOneStartIndex -1;
-            StripTwoMaxLength = VariableControlService.StripThreeEndIndex - VariableControlService.StripThreeStartIndex -1;
+            StripOneMaxLength = VariableControlService.StripOneEndIndex - VariableControlService.StripOneStartIndex - 1;
+            StripTwoMaxLength = VariableControlService.StripThreeEndIndex - VariableControlService.StripThreeStartIndex - 1;
             StripThreeMaxLength = VariableControlService.StripFourEndIndex - VariableControlService.StripFourEndIndex - 1;
             StripFourMaxLength = VariableControlService.StripSixEndIndex - VariableControlService.StripSixStartIndex - 1;
-
+            Console.WriteLine($"StripOneMaxLength {StripOneMaxLength}");
+            Console.WriteLine($"StripTwoMaxLength {StripTwoMaxLength}");
+            Console.WriteLine($"StripThreeMaxLength {StripThreeMaxLength}");
+            Console.WriteLine($"StripFourMaxLength {StripFourMaxLength}");
 
             StripList.Add(new SneakStrip(
                 VariableControlService.PlayerOneWarmColor, VariableControlService.PlayerOneStripDefaultColor,
@@ -375,9 +378,10 @@ namespace CatchyGame.Service
                 || VariableControlService.PlayerTwoWarmLength >= StripTwoMaxLength
                 || VariableControlService.PlayerThreeWarmLength >= StripThreeMaxLength
                 || VariableControlService.PlayerFourWarmLength >= StripFourMaxLength
-                ) { 
-                    VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
-                Console.WriteLine("one Off the player win");
+                )
+            {
+                VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
+                //Console.WriteLine("one Off the player win");
             }
 
 
