@@ -376,7 +376,7 @@ namespace CatchyGame.Service
                 || VariableControlService.PlayerThreeWarmLength >= StripThreeMaxLength
                 || VariableControlService.PlayerFourWarmLength >= StripFourMaxLength
                 )
-                VariableControlService.GameStatus = GameStatus.Started;
+                VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
 
 
         }
