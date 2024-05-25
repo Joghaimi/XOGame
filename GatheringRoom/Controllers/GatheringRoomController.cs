@@ -69,5 +69,17 @@ namespace GatheringRoom.Controllers
             RGBLight.SetColor(newColor);
             return Ok();
         }
+        [HttpGet("RoomInfo")]
+        public IActionResult RoomInfo()
+        {
+            var result = new
+            {
+                TeamName = "",
+                Score = 0,
+                DoorStatus = VariableControlService.CurrentDoorStatus,
+                Status = VariableControlService.GameStatus.ToString()
+            };
+            return Ok(result);
+        }
     }
 }
