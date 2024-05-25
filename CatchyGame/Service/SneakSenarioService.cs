@@ -375,8 +375,10 @@ namespace CatchyGame.Service
                 || VariableControlService.PlayerTwoWarmLength >= StripTwoMaxLength
                 || VariableControlService.PlayerThreeWarmLength >= StripThreeMaxLength
                 || VariableControlService.PlayerFourWarmLength >= StripFourMaxLength
-                )
-                VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
+                ) { 
+                    VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
+                Console.WriteLine("one Off the player win");
+            }
 
 
         }
