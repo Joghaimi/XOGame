@@ -20,7 +20,10 @@ namespace CatchyGame.Service
         Stopwatch GameTiming = new Stopwatch();
         Stopwatch LevelTime = new Stopwatch();
         bool backgroundSoundStarted = false;
-
+        int StripOneMaxLength = 0;
+        int StripTwoMaxLength = 0;
+        int StripThreeMaxLength = 0;
+        int StripFourMaxLength = 0;
 
         private readonly ILogger<SneakSenarioService> _logger;
 
@@ -154,6 +157,13 @@ namespace CatchyGame.Service
             RGBButtonPixel6.Add(StripSixButton4);
             RGBButtonPixel6.Add(StripSixButton3);
 
+
+            StripOneMaxLength = VariableControlService.StripOneEndIndex - VariableControlService.StripOneStartIndex -1;
+            StripTwoMaxLength = VariableControlService.StripThreeEndIndex - VariableControlService.StripThreeStartIndex -1;
+            StripThreeMaxLength = VariableControlService.StripFourEndIndex - VariableControlService.StripFourEndIndex - 1;
+            StripFourMaxLength = VariableControlService.StripSixEndIndex - VariableControlService.StripSixStartIndex - 1;
+
+
             StripList.Add(new SneakStrip(
                 VariableControlService.PlayerOneWarmColor, VariableControlService.PlayerOneStripDefaultColor,
                 VariableControlService.StripOneStartIndex, VariableControlService.StripOneEndIndex,
@@ -168,7 +178,7 @@ namespace CatchyGame.Service
                 VariableControlService.PlayerThreeWarmColor, VariableControlService.PlayerThreeStripDefaultColor,
                 VariableControlService.StripFourStartIndex, VariableControlService.StripFourEndIndex,
                 RGBButtonPixel4, 2, 2, VariableControlService.DefaultWarmLength));
-         
+
             StripList.Add(new SneakStrip(
                 VariableControlService.PlayerFourWarmColor, VariableControlService.PlayerFourStripDefaultColor,
                 VariableControlService.StripSixStartIndex, VariableControlService.StripSixEndIndex,
@@ -360,6 +370,15 @@ namespace CatchyGame.Service
             StripList[1].UpdateLength(VariableControlService.PlayerTwoWarmLength);
             StripList[2].UpdateLength(VariableControlService.PlayerThreeWarmLength);
             StripList[3].UpdateLength(VariableControlService.PlayerFourWarmLength);
+
+            if (VariableControlService.PlayerOneWarmLength >= StripOneMaxLength
+                || VariableControlService.PlayerTwoWarmLength >= StripTwoMaxLength
+                || VariableControlService.PlayerThreeWarmLength >= StripThreeMaxLength
+                || VariableControlService.PlayerFourWarmLength >= StripFourMaxLength
+                )
+                VariableControlService.GameStatus = GameStatus.Started;
+
+
         }
 
         public void UpdateStripState()
