@@ -206,11 +206,6 @@ namespace CatchyGame.Service
                 VariableControlService.StripSevenDefaultColor);
             RGBWS2811.Commit();
 
-
-            WinningEffect(VariableControlService.StripOneStartIndex, VariableControlService.StripOneEndIndex , VariableControlService.PlayerOneWarmColor);
-
-
-
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -388,19 +383,21 @@ namespace CatchyGame.Service
                 WinningEffect(VariableControlService.StripOneStartIndex, VariableControlService.StripOneEndIndex, VariableControlService.PlayerOneWarmColor);
                 VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
             }
-
-
-
-            if (VariableControlService.PlayerOneWarmLength >= StripOneMaxLength
-                || VariableControlService.PlayerTwoWarmLength >= StripTwoMaxLength
-                || VariableControlService.PlayerThreeWarmLength >= StripThreeMaxLength
-                || VariableControlService.PlayerFourWarmLength >= StripFourMaxLength
-                )
+            if (VariableControlService.PlayerTwoWarmLength >= StripTwoMaxLength)
             {
+                WinningEffect(VariableControlService.StripThreeStartIndex, VariableControlService.StripThreeEndIndex, VariableControlService.PlayerTwoWarmColor);
                 VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
-
             }
-
+            if (VariableControlService.PlayerThreeWarmLength >= StripThreeMaxLength)
+            {
+                WinningEffect(VariableControlService.StripFourStartIndex, VariableControlService.StripFourEndIndex, VariableControlService.PlayerThreeWarmColor);
+                VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
+            }
+            if (VariableControlService.PlayerFourWarmLength >= StripFourMaxLength)
+            {
+                WinningEffect(VariableControlService.StripSixStartIndex, VariableControlService.StripSixEndIndex, VariableControlService.PlayerFourWarmColor);
+                VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
+            }
 
         }
 
