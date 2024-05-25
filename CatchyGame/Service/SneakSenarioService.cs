@@ -422,7 +422,8 @@ namespace CatchyGame.Service
 
             RGBWS2811.SetColorByRange(
                 startPixel, EndPixel,
-                VariableControlService.DefaultColor);
+                VariableControlService.PlayerFourWarmColor);
+            RGBWS2811.Commit();
             Thread.Sleep(3000);
         }
         #endregion
