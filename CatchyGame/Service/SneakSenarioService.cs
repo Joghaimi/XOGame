@@ -356,22 +356,25 @@ namespace CatchyGame.Service
 
         public void UpdateSneakSize()
         {
+            Console.WriteLine("Update Snake Size");
             StripList[0].UpdateLength(VariableControlService.PlayerOneWarmLength);
             StripList[1].UpdateLength(VariableControlService.PlayerTwoWarmLength);
             StripList[2].UpdateLength(VariableControlService.PlayerThreeWarmLength);
             StripList[3].UpdateLength(VariableControlService.PlayerFourWarmLength);
+            Console.WriteLine("Update Snake Size Finished");
+
         }
 
         public void UpdateStripState()
         {
             if (VariableControlService.Team.player.Count() <= 2)
             {
-                StripList[0].Activate(true);
-                StripList[1].Activate(true);
+                StripList[0].Activate(false);
+                StripList[1].Activate(false);
                 StripList[2].Activate(false);
-                StripList[3].Activate(false);
-                StripList[4].Activate(true);
-                StripList[5].Activate(true);
+                StripList[3].Activate(true);
+                StripList[4].Activate(false);
+                StripList[5].Activate(false);
             }
             else if (VariableControlService.Team.player.Count() <= 3)
             {
