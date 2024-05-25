@@ -25,7 +25,7 @@ namespace CatchyGame.Service
 
         public static CatchyTeam Team { get; set; } = new CatchyTeam();
 
-        public static RGBColor WormColor { get; set; } = RGBColor.Red;
+        public static RGBColor WormColor { get; set; } = RGBColor.purple;
         public static RGBColor DefaultColor { get; set; } = RGBColor.Off;
 
         public static int DefaultWarmLength { get; set; } = 5;
@@ -42,7 +42,7 @@ namespace CatchyGame.Service
         public static RGBColor PlayerThreeStripDefaultColor { get; set; } = RGBColor.Off;
         public static int PlayerThreeWarmLength { get; set; } = 5;
 
-        public static RGBColor PlayerFourWarmColor { get; set; } = RGBColor.Turquoise;
+        public static RGBColor PlayerFourWarmColor { get; set; } = RGBColor.Red;
         public static RGBColor PlayerFourStripDefaultColor { get; set; } = RGBColor.Off;
         public static int PlayerFourWarmLength { get; set; } = 5;
 
