@@ -180,7 +180,7 @@ namespace Library.APIIntegration
             requestBody.game_id = 1;
             requestBody.date_time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             foreach (var player in team.player) {
-                requestBody.player_mobiles.Add(player.MobileNumber);
+                //requestBody.player_mobiles.Add(player.MobileNumber);
             }
             HttpClientHandler handler = new HttpClientHandler();
             using (HttpClient httpClient = new HttpClient(handler))
