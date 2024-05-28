@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using Library.APIIntegration;
+using Library.Model;
 
 namespace GatheringRoom.Services
 {
@@ -62,7 +63,7 @@ namespace GatheringRoom.Services
                             _logger.LogTrace($"isInTeam {isInTeam}");
                             if (!isInTeam)
                             {
-                                VariableControlService.TeamScore.player.Add(new Player { Id = newPlayer.Id, FirstName = newPlayer.FirstName, LastName = newPlayer.LastName });
+                                VariableControlService.TeamScore.player.Add(new Player { Id = newPlayer.Id, FirstName = newPlayer.FirstName, LastName = newPlayer.LastName, MobileNumber = newPlayer.MobileNumber });
                                 _logger.LogDebug($"Player {newPlayer?.FirstName} {newPlayer.LastName}");
                             }
                             else
