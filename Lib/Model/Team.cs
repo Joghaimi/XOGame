@@ -8,6 +8,7 @@ namespace Library.Model
 {
     public class Team
     {
+        public int Id { get; set; }
         public string Name { get; set; } = "";
         public List<Player> player { get; set; } = new List<Player>();
         public int FortRoomScore { get; set; }
