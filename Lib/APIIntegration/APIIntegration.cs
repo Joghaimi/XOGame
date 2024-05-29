@@ -107,7 +107,7 @@ namespace Library.APIIntegration
                     return null;
                 }
             }
-        
+
         }
 
         public async static Task<bool> SendScoreToTheNextRoom(string nextRoomURL, Team team)
@@ -128,7 +128,7 @@ namespace Library.APIIntegration
                         return true;
                     else
                         return false;
-               
+
                 }
                 catch (HttpRequestException ex)
                 {
@@ -145,14 +145,15 @@ namespace Library.APIIntegration
         }
 
 
-        public async static Task<string> SendScore(string baseUrl, MakeSignetureRequestDto requestBody ,string hash) {
+        public async static Task<string> SendScore(string baseUrl, MakeSignetureRequestDto requestBody, string hash)
+        {
             SendScoreRequestDto sendScore = new SendScoreRequestDto();
-            sendScore.team_id =requestBody.team_id;
-            sendScore.game_id =requestBody.game_id;
+            sendScore.team_id = requestBody.team_id;
+            sendScore.game_id = requestBody.game_id;
             sendScore.date_time = requestBody.date_time;
-            sendScore.player_mobiles= requestBody.player_mobiles;
+            sendScore.player_mobiles = requestBody.player_mobiles;
             sendScore.signature = hash;
-            sendScore.score= requestBody.score;
+            sendScore.score = requestBody.score;
             sendScore.team_name = requestBody.team_name;
             using (HttpClient httpClient = new HttpClient())
             {
@@ -171,15 +172,16 @@ namespace Library.APIIntegration
             return null;
         }
 
-        public async static Task<(MakeSignetureRequestDto, string)> GetSignature(string baseUrl,Team team)
+        public async static Task<(MakeSignetureRequestDto, string)> GetSignature(string baseUrl, Team team)
         {
             MakeSignetureRequestDto requestBody = new MakeSignetureRequestDto();
             requestBody.team_name = team.Name;
             requestBody.score = team.Total;
-            requestBody.team_id = 1;
+            requestBody.team_id = int.Parse(team.player[0].Id);
             requestBody.game_id = 21;
             requestBody.date_time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            foreach (var player in team.player) {
+            foreach (var player in team.player)
+            {
                 requestBody.player_mobiles.Add(player.MobileNumber);
             }
             HttpClientHandler handler = new HttpClientHandler();
@@ -205,14 +207,14 @@ namespace Library.APIIntegration
                         // Handle the unsuccessful response (non-success status code)
                         string responseBody = await response.Content.ReadAsStringAsync();
                         var signetureDto = JsonConvert.DeserializeObject<SignetureDto>(responseBody);
-                        return (requestBody ,signetureDto.Hash);
+                        return (requestBody, signetureDto.Hash);
                     }
                 }
                 catch (HttpRequestException ex)
                 {
                     // Handle any exceptions that occurred during the request
                     Console.WriteLine($"Request failed: {ex.Message}");
-                    return (null,null);
+                    return (null, null);
                 }
                 return (null, null);
             }
