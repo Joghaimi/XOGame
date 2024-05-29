@@ -177,7 +177,7 @@ namespace Library.APIIntegration
             requestBody.team_name = team.Name;
             requestBody.score = team.Total;
             requestBody.team_id = 1;
-            requestBody.game_id = 1;
+            requestBody.game_id = 21;
             requestBody.date_time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             foreach (var player in team.player) {
                 requestBody.player_mobiles.Add(player.MobileNumber);
