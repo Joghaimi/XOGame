@@ -237,18 +237,24 @@ namespace CatchyGame.Service
                                 break;
                             foreach (var strip in StripList)
                             {
-                                if (LevelTime.ElapsedMilliseconds < 20)
-                                    strip.Move();
-                                else if (LevelTime.ElapsedMilliseconds > 20 || LevelTime.ElapsedMilliseconds < 40)
-                                    strip.MoveTwoPixel();
-                                else
-                                    strip.MoveThreePixel();
+                                //if (LevelTime.ElapsedMilliseconds < 20)
+                                //    strip.Move();
+                                //else if (LevelTime.ElapsedMilliseconds > 20 || LevelTime.ElapsedMilliseconds < 40)
+                                //    strip.MoveTwoPixel();
+                                //else
+                                strip.MoveThreePixel();
                             }
                             RGBWS2811.Commit();
                         }
                         _logger.LogTrace("Round {0} Finished", VariableControlService.GameRound);
                         if (VariableControlService.GameRound == Round.Round5)
+                        {
+                            bool gameNotEndByWinningOneOfThePlayer = VariableControlService.GameStatus != GameStatus.FinishedNotEmpty;
+                            if (gameNotEndByWinningOneOfThePlayer)
+                                LanchWinningEffectIfTimeEnd();
+
                             VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
+                        }
                         VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
 
                     }
@@ -291,7 +297,6 @@ namespace CatchyGame.Service
                             }
                             buttonIndex++;
                         }
-                        //Thread.Sleep(2000);
                         Thread.Sleep(50);
 
                     }
@@ -376,8 +381,16 @@ namespace CatchyGame.Service
             StripList[1].UpdateLength(VariableControlService.PlayerTwoWarmLength);
             StripList[2].UpdateLength(VariableControlService.PlayerThreeWarmLength);
             StripList[3].UpdateLength(VariableControlService.PlayerFourWarmLength);
+            LanchEffectIfSomeOneWinAndEndTheGame();
 
 
+
+
+        }
+
+        #region Winning Effect
+        private void LanchEffectIfSomeOneWinAndEndTheGame()
+        {
             if (VariableControlService.PlayerOneWarmLength >= StripOneMaxLength)
             {
                 WinningEffect(VariableControlService.StripOneStartIndex, VariableControlService.StripOneEndIndex, VariableControlService.PlayerOneWarmColor);
@@ -398,10 +411,47 @@ namespace CatchyGame.Service
                 WinningEffect(VariableControlService.StripSixStartIndex, VariableControlService.StripSixEndIndex, VariableControlService.PlayerFourWarmColor);
                 VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
             }
-
+        }
+        private void LanchWinningEffectIfTimeEnd()
+        {
+            if (VariableControlService.Team.player.Count() <= 2)
+            {
+                int max = Math.Max(VariableControlService.Team.player[0].score, VariableControlService.Team.player[1].score);
+                if (VariableControlService.Team.player[0].score == max)
+                    WinningEffect(VariableControlService.StripOneStartIndex, VariableControlService.StripOneEndIndex, VariableControlService.PlayerOneWarmColor);
+                if (VariableControlService.Team.player[1].score == max)
+                    WinningEffect(VariableControlService.StripThreeStartIndex, VariableControlService.StripThreeEndIndex, VariableControlService.PlayerTwoWarmColor);
+            }
+            else if (VariableControlService.Team.player.Count() <= 3)
+            {
+                int max = Math.Max(VariableControlService.Team.player[0].score,
+                    Math.Max(VariableControlService.Team.player[1].score, VariableControlService.Team.player[2].score));
+                if (VariableControlService.Team.player[0].score == max)
+                    WinningEffect(VariableControlService.StripOneStartIndex, VariableControlService.StripOneEndIndex, VariableControlService.PlayerOneWarmColor);
+                if (VariableControlService.Team.player[1].score == max)
+                    WinningEffect(VariableControlService.StripThreeStartIndex, VariableControlService.StripThreeEndIndex, VariableControlService.PlayerTwoWarmColor);
+                if (VariableControlService.Team.player[2].score == max)
+                    WinningEffect(VariableControlService.StripFourStartIndex, VariableControlService.StripFourEndIndex, VariableControlService.PlayerThreeWarmColor);
+            }
+            else if (VariableControlService.Team.player.Count() <= 4)
+            {
+                int max = Math.Max(
+                    Math.Max(VariableControlService.Team.player[0].score, VariableControlService.Team.player[3].score),
+                    Math.Max(VariableControlService.Team.player[1].score, VariableControlService.Team.player[2].score));
+                if (VariableControlService.Team.player[0].score == max)
+                    WinningEffect(VariableControlService.StripOneStartIndex, VariableControlService.StripOneEndIndex, VariableControlService.PlayerOneWarmColor);
+                if (VariableControlService.Team.player[1].score == max)
+                    WinningEffect(VariableControlService.StripThreeStartIndex, VariableControlService.StripThreeEndIndex, VariableControlService.PlayerTwoWarmColor);
+                if (VariableControlService.Team.player[2].score == max)
+                    WinningEffect(VariableControlService.StripFourStartIndex, VariableControlService.StripFourEndIndex, VariableControlService.PlayerThreeWarmColor);
+                if (VariableControlService.Team.player[3].score == max)
+                    WinningEffect(VariableControlService.StripSixStartIndex, VariableControlService.StripSixEndIndex, VariableControlService.PlayerFourWarmColor);
+            }
         }
 
-        #region Winning Effect
+
+
+
         private void WinningEffect(int startPixel, int EndPixel, RGBColor color)
         {
 
@@ -514,7 +564,8 @@ namespace CatchyGame.Service
         {
             _logger.LogTrace($"Substract Point playerIndex {playerIndex}");
             //  AudioPlayer.PIStartAudio(SoundType.Failure);
-            VariableControlService.Team.player[playerIndex].score -= 1;
+            if (VariableControlService.Team.player[playerIndex].score > 0)
+                VariableControlService.Team.player[playerIndex].score -= 1;
             _logger.LogTrace($"Substract Point To {playerIndex} Total {VariableControlService.Team.player[playerIndex].score}");
             ChangeSneakSize(playerIndex, -1);
         }
