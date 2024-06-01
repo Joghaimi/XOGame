@@ -190,6 +190,7 @@ namespace Library.APIIntegration
                 try
                 {
                     string jsonData = JsonConvert.SerializeObject(requestBody);
+                    Console.WriteLine(jsonData);
                     HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
                     var request = new HttpRequestMessage(HttpMethod.Get, baseUrl);
                     request.Content = content;
