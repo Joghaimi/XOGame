@@ -12,5 +12,6 @@ namespace Library.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MobileNumber { get; set; }
+        public string customer_mid { get; set; }
     }
 }

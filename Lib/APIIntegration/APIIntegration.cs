@@ -147,6 +147,7 @@ namespace Library.APIIntegration
 
         public async static Task<string> SendScore(string baseUrl, MakeSignetureRequestDto requestBody, string hash)
         {
+
             SendScoreRequestDto sendScore = new SendScoreRequestDto();
             sendScore.team_id = requestBody.team_id;
             sendScore.game_id = requestBody.game_id;
@@ -174,6 +175,7 @@ namespace Library.APIIntegration
 
         public async static Task<(MakeSignetureRequestDto, string)> GetSignature(string baseUrl, Team team)
         {
+
             MakeSignetureRequestDto requestBody = new MakeSignetureRequestDto();
             requestBody.team_name = team.Name;
             requestBody.score = team.Total;

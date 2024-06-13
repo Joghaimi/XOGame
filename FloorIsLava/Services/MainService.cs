@@ -266,8 +266,12 @@ namespace FloorIsLava.Services
         {
             if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && !NextRoomRGBButtonStatus)
             {
-                var result = await APIIntegration.GetSignature("https://admin.frenziworld.com/api/make-signature", VariableControlService.TeamScore);
-                await APIIntegration.SendScore("https://admin.frenziworld.com/api/game-score", result.Item1, result.Item2);
+                bool teamNotAssigned = VariableControlService.TeamScore.Name == "" || VariableControlService.TeamScore.Name == null;
+                if (!teamNotAssigned)
+                {
+                    var result = await APIIntegration.GetSignature("https://admin.frenziworld.com/api/make-signature", VariableControlService.TeamScore);
+                    await APIIntegration.SendScore("https://admin.frenziworld.com/api/game-score", result.Item1, result.Item2);
+                }
                 Console.WriteLine("Ready To Leave .. Turn RGB Button On");
                 NextRoomRGBButtonStatus = true;
                 RelayController.Status(NextRoomPBLight, true);
