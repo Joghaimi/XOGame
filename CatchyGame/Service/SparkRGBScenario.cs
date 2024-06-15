@@ -102,7 +102,7 @@ namespace CatchyGame.Service
                             Console.WriteLine($"Player One {VariableControlService.Team.player[3].score}");
                         }
                 }
-                Console.WriteLine($"In llop");
+                //Console.WriteLine($"In llop");
 
             }
         }
