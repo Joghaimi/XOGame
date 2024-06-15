@@ -48,7 +48,7 @@ namespace CatchyGame.Service
             while (true)
             {
                 // Number Of Button 
-                int numberOfButton = random.Next(1, 4);
+                int numberOfButton = random.Next(1, 5);
                 Console.WriteLine($"numberOfButton {numberOfButton}");
                 for (int i = 0; i < numberOfButton; i++)
                 {
