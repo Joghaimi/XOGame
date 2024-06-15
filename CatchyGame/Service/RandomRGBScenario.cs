@@ -5,6 +5,7 @@ using Library;
 using System.Diagnostics;
 using Library.LocalStorage;
 using Library.Model;
+using Library.Media;
 
 namespace CatchyGame.Service
 {
@@ -23,6 +24,8 @@ namespace CatchyGame.Service
         {
 
             MCP23Controller.Init(Room.Fort);
+            AudioPlayer.Init(Room.Catchy);
+
             var loadedData = LocalStorage.LoadData<int>("data.json");
             if (loadedData != null)
             {
@@ -75,6 +78,7 @@ namespace CatchyGame.Service
                 {
                     if (button.isPressed() == 1)
                     {
+                        AudioPlayer.PIStartAudio(SoundType.Success);
                         VariableControlService.Team.player[0].score += 10;
                         Console.WriteLine($"Player One {VariableControlService.Team.player[0].score}");
                     }
