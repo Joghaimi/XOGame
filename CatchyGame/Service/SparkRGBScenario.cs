@@ -1,4 +1,6 @@
 ﻿using Iot.Device.BrickPi3.Sensors;
+using Library.GPIOLib;
+using Library;
 using Library.PinMapping;
 using Library.RGBLib;
 
@@ -15,7 +17,7 @@ namespace CatchyGame.Service
         {
 
 
-
+            MCP23Controller.Init(Room.Fort);
 
 
             RGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1), 5, Library.RGBColor.Green));
@@ -46,11 +48,16 @@ namespace CatchyGame.Service
         {
             while (true)
             {
+                var i = 0;
+
                 foreach (var button in RGBButtonList)
                 {
+                    Console.WriteLine(i);
                     button.Activate(true);
                     Thread.Sleep(500);
+                    i++;
                 }
+
             }
         }
 
