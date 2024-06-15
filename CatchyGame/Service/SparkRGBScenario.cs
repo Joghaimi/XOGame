@@ -163,6 +163,7 @@ namespace CatchyGame.Service
         private void StopTheGame() { }
         public Task StopAsync(CancellationToken cancellationToken)
         {
+            return Task.CompletedTask;
             //throw new NotImplementedException();
         }
         public void Dispose()
