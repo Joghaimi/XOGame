@@ -66,6 +66,9 @@ namespace CatchyGame.Service
         }
         private async Task PlayerCatchingGame(CancellationToken cancellationToken)
         {
+            PlayerOneRGBButtonList[0].SuccessEffect();
+            RGBWS2811.Commit();
+
             while (true)
             {
                 foreach (var button in PlayerOneRGBButtonList)

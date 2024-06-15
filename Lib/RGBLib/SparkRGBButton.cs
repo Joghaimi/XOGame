@@ -51,7 +51,7 @@ namespace Library.RGBLib
         }
 
 
-        private void SuccessEffect()
+        public void SuccessEffect()
         {
             for (int i = 0; i < PixelInAllSpikes; i++)
             {
