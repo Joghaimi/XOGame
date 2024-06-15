@@ -4,6 +4,7 @@ using Library;
 using Library.PinMapping;
 using Library.RGBLib;
 
+
 namespace CatchyGame.Service
 {
     public class SparkRGBScenario : IHostedService, IDisposable
@@ -54,16 +55,21 @@ namespace CatchyGame.Service
                 {
                     Console.WriteLine(i);
                     button.Activate(true);
-                    Thread.Sleep(500);
+                    //Thread.Sleep(500);
                     i++;
                 }
+                Thread.Sleep(5000);
+
                 foreach (var button in RGBButtonList)
                 {
                     Console.WriteLine(i);
                     button.Activate(false);
-                    Thread.Sleep(500);
+                    //Thread.Sleep(500);
                     i++;
                 }
+                Thread.Sleep(5000);
+
+
             }
         }
 
