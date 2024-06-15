@@ -3,6 +3,8 @@ using Library.PinMapping;
 using Library.RGBLib;
 using Library;
 using System.Diagnostics;
+using Library.LocalStorage;
+using Library.Model;
 
 namespace CatchyGame.Service
 {
@@ -21,7 +23,15 @@ namespace CatchyGame.Service
         {
 
             MCP23Controller.Init(Room.Fort);
-
+            var loadedData = LocalStorage.LoadData<int>("data.json");
+            if (loadedData != null)
+            {
+                VariableControlService.TopScore = loadedData;
+            }
+            else
+            {
+                LocalStorage.SaveData(20, "data.json");
+            }
 
 
             PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1), 5, Library.RGBColor.Green));

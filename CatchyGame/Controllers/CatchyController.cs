@@ -21,6 +21,13 @@ namespace CatchyGame.Controllers
             return Ok(VariableControlService.Team);
         }
 
+        [HttpGet("TopScore")]
+        public IActionResult TopScore()
+        {
+            return Ok(VariableControlService.TopScore);
+        }
+
+
         [HttpGet("CurrentTime")]
         public IActionResult CurrentTime()
         {

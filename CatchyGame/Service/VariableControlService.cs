@@ -17,6 +17,7 @@ namespace CatchyGame.Service
 
 
         public static int CurrentTime = 0;
+        public static int TopScore = 0;
         public static int GameTiming = 300000;
         public static int LevelTime = 60000;
 
