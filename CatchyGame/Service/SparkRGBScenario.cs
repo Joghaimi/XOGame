@@ -41,26 +41,39 @@ namespace CatchyGame.Service
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => ControlGame(_cts.Token));
+            Task.Run(() => PlayerCatchingGame(_cts.Token));
             return Task.CompletedTask;
         }
+        private async Task PlayerCatchingGame(CancellationToken cancellationToken)
+        {
+            while (true)
+            {
+                foreach (var button in PlayerOneRGBButtonList)
+                {
+                    button.isPressed();
+                }
+                foreach (var button in PlayerTwoRGBButtonList)
+                {
+                    button.isPressed();
+                }
+                foreach (var button in PlayerThreeRGBButtonList)
+                {
+                    button.isPressed();
+                }
+                foreach (var button in PlayerFourRGBButtonList)
+                {
+                    button.isPressed();
+                }
+            }
+        }
+
         private async Task ControlGame(CancellationToken cancellationToken)
         {
             while (true)
             {
                 // Number Of Button 
-                int numberOfButton = random.Next(1, 5);
-                Console.WriteLine($"numberOfButton {numberOfButton}");
-                for (int i = 0; i < numberOfButton; i++)
-                {
-
-                    int selectedButton = random.Next(0, 4);
-                    Console.WriteLine($"selectedButton {selectedButton}");
-                    PlayerOneRGBButtonList[selectedButton].Activate(true);
-                    PlayerTwoRGBButtonList[selectedButton].Activate(true);
-                    PlayerThreeRGBButtonList[selectedButton].Activate(true);
-                    PlayerFourRGBButtonList[selectedButton].Activate(true);
-                }
-                Thread.Sleep(3000);
+                SelectRandomButton();
+                Thread.Sleep(1000);
                 ResetAllButton();
 
                 //foreach (var button in RGBButtonList)
@@ -105,10 +118,26 @@ namespace CatchyGame.Service
             }
         }
 
+        private void SelectRandomButton()
+        {
+            int numberOfButton = random.Next(1, 5);
+            Console.WriteLine($"numberOfButton {numberOfButton}");
+            for (int i = 0; i < numberOfButton; i++)
+            {
+
+                int selectedButton = random.Next(0, 4);
+                Console.WriteLine($"selectedButton {selectedButton}");
+                PlayerOneRGBButtonList[selectedButton].Activate(true);
+                PlayerTwoRGBButtonList[selectedButton].Activate(true);
+                PlayerThreeRGBButtonList[selectedButton].Activate(true);
+                PlayerFourRGBButtonList[selectedButton].Activate(true);
+            }
+
+        }
 
         private void ResetAllButton()
         {
-            foreach(var button in PlayerOneRGBButtonList)
+            foreach (var button in PlayerOneRGBButtonList)
                 button.Activate(false);
             foreach (var button in PlayerTwoRGBButtonList)
                 button.Activate(false);
