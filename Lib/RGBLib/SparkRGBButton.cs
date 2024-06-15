@@ -34,7 +34,7 @@ namespace Library.RGBLib
             if (_button.CurrentStatus())
                 return 0;
             if (!_button.isSet())
-                return -1;
+                return 0;
             //SuccessEffect();
             Activate(false);
             return 1;

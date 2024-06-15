@@ -3,7 +3,7 @@ using Library.GPIOLib;
 using Library;
 using Library.PinMapping;
 using Library.RGBLib;
-
+using System.Diagnostics;
 
 namespace CatchyGame.Service
 {
@@ -11,17 +11,24 @@ namespace CatchyGame.Service
     {
 
         Random random = new Random();
-
+        Stopwatch GameTiming = new Stopwatch();
+        Stopwatch LevelTime = new Stopwatch();
         private CancellationTokenSource _cts;
         List<SparkRGBButton> PlayerOneRGBButtonList = new List<SparkRGBButton>();
         List<SparkRGBButton> PlayerTwoRGBButtonList = new List<SparkRGBButton>();
         List<SparkRGBButton> PlayerThreeRGBButtonList = new List<SparkRGBButton>();
         List<SparkRGBButton> PlayerFourRGBButtonList = new List<SparkRGBButton>();
-        
+        int delayTime = 800;
         public Task StartAsync(CancellationToken cancellationToken)
         {
 
             MCP23Controller.Init(Room.Fort);
+
+            RGBWS2811.SetColorByRange(
+                VariableControlService.StripSevenStartIndex, VariableControlService.StripSevenEndIndex,
+                VariableControlService.StripSevenDefaultColor);
+            RGBWS2811.Commit();
+
 
             PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1), 5, Library.RGBColor.Green));
             PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR2, RGBButtonPin.RGBG2, RGBButtonPin.RGBB2, RGBButtonPin.RGBPB2), 5, Library.RGBColor.Green));
@@ -43,90 +50,89 @@ namespace CatchyGame.Service
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => ControlGame(_cts.Token));
             Task.Run(() => PlayerCatchingGame(_cts.Token));
+            Task.Run(() => ControlGameTiming(_cts.Token));
+
             return Task.CompletedTask;
         }
         private async Task PlayerCatchingGame(CancellationToken cancellationToken)
         {
-            while (true)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 foreach (var button in PlayerOneRGBButtonList)
                 {
-                    button.isPressed();
+                    VariableControlService.Team.player[0].score += 10 * button.isPressed();
                 }
                 foreach (var button in PlayerTwoRGBButtonList)
                 {
-                    button.isPressed();
+                    if (VariableControlService.Team.player.Count > 1)
+                        VariableControlService.Team.player[1].score += 10 * button.isPressed();
                 }
                 foreach (var button in PlayerThreeRGBButtonList)
                 {
-                    button.isPressed();
+                    if (VariableControlService.Team.player.Count > 2)
+
+                        VariableControlService.Team.player[2].score += 10 * button.isPressed();
                 }
                 foreach (var button in PlayerFourRGBButtonList)
                 {
-                    button.isPressed();
+                    if (VariableControlService.Team.player.Count > 3)
+                        VariableControlService.Team.player[3].score += 10 * button.isPressed();
                 }
             }
         }
 
         private async Task ControlGame(CancellationToken cancellationToken)
         {
-            while (true)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 // Number Of Button 
+                while (VariableControlService.GameStatus == GameStatus.Started)
+                {
+                    LevelTime.Restart();
+                    while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
+                    {
+                        SelectRandomButton();
+                        Thread.Sleep(delayTime);
+                        ResetAllButton();
+                    }
+                    if (VariableControlService.GameRound == Round.Round3)
+                    {
+                        VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
+                        delayTime = 800;
+                    }
+                    VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
 
-                SelectRandomButton();
-                Thread.Sleep(500);
-                ResetAllButton();
-
-                //foreach (var button in RGBButtonList)
-                //{
-                //    Console.WriteLine(i);
-                //    button.Activate(true);
-                //    //Thread.Sleep(500);
-                //    i++;
-                //}
-                //Thread.Sleep(2000);
-
-                //foreach (var button in RGBButtonList)
-                //{
-                //    Console.WriteLine(i);
-                //    button.Activate(false);
-                //    //Thread.Sleep(500);
-                //    i++;
-                //}
-                //Thread.Sleep(2000);
-                //while (true)
-                //{
-                //    int b = 0;
-
-
-                //    foreach (var bu in RGBButtonList)
-                //    {
-                //        if (bu.isPressed() > 0) { 
-
-                //            Console.WriteLine(b);
-                //        }
-                //        b++;
-
-                //    }
-
-                //}
-
-
-
-
-
-
+                }
             }
         }
-
+        private Round NextRound(Round currentRound)
+        {
+            if (currentRound == Round.Round3)
+                return Round.Round3;
+            else
+                delayTime -= 100;
+            return (Round)((int)currentRound + 1);
+        }
+        private async Task ControlGameTiming(CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                VariableControlService.CurrentTime = (int)GameTiming.ElapsedMilliseconds;
+                if (VariableControlService.GameStatus == GameStatus.Started)
+                {
+                    bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.GameTiming;
+                    bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.GameStatus == GameStatus.Started && VariableControlService.IsGameTimerStarted;
+                    if (GameFinishedByTimer)
+                        StopTheGame();
+                }
+            }
+        }
         private void SelectRandomButton()
         {
             int numberOfButton = random.Next(1, 5);
             Console.WriteLine($"numberOfButton {numberOfButton}");
             for (int i = 0; i < numberOfButton; i++)
             {
-
                 int selectedButton = random.Next(0, 4);
                 Console.WriteLine($"selectedButton {selectedButton}");
                 PlayerOneRGBButtonList[selectedButton].Activate(true);
@@ -149,6 +155,7 @@ namespace CatchyGame.Service
                 button.Activate(false);
         }
 
+        private void StopTheGame() { }
         public Task StopAsync(CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
