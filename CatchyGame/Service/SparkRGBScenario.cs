@@ -13,7 +13,7 @@ namespace CatchyGame.Service
         Random random = new Random();
         Stopwatch GameTiming = new Stopwatch();
         Stopwatch LevelTime = new Stopwatch();
-        private CancellationTokenSource _cts;
+        private CancellationTokenSource _cts, _cts2, _cts3;
         List<SparkRGBButton> PlayerOneRGBButtonList = new List<SparkRGBButton>();
         List<SparkRGBButton> PlayerTwoRGBButtonList = new List<SparkRGBButton>();
         List<SparkRGBButton> PlayerThreeRGBButtonList = new List<SparkRGBButton>();
@@ -24,10 +24,6 @@ namespace CatchyGame.Service
 
             MCP23Controller.Init(Room.Fort);
 
-            RGBWS2811.SetColorByRange(
-                VariableControlService.StripSevenStartIndex, VariableControlService.StripSevenEndIndex,
-                VariableControlService.StripSevenDefaultColor);
-            RGBWS2811.Commit();
 
 
             PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1), 5, Library.RGBColor.Green));
@@ -47,10 +43,19 @@ namespace CatchyGame.Service
             PlayerTwoRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR15, RGBButtonPin.RGBG15, RGBButtonPin.RGBB15, RGBButtonPin.RGBPB15), 5, Library.RGBColor.Blue));
             PlayerTwoRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR16, RGBButtonPin.RGBG16, RGBButtonPin.RGBB16, RGBButtonPin.RGBPB16), 5, Library.RGBColor.Green));
 
+            RGBWS2811.SetColorByRange(
+               VariableControlService.StripSevenStartIndex, VariableControlService.StripSevenEndIndex,
+               VariableControlService.StripSevenDefaultColor);
+            RGBWS2811.Commit();
+
+
+
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             Task.Run(() => ControlGame(_cts.Token));
-            Task.Run(() => PlayerCatchingGame(_cts.Token));
-            Task.Run(() => ControlGameTiming(_cts.Token));
+            Task.Run(() => PlayerCatchingGame(_cts2.Token));
+            Task.Run(() => ControlGameTiming(_cts3.Token));
 
             return Task.CompletedTask;
         }
@@ -158,11 +163,11 @@ namespace CatchyGame.Service
         private void StopTheGame() { }
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
         public void Dispose()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }
