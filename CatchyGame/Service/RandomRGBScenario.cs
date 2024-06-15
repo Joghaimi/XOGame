@@ -85,7 +85,7 @@ namespace CatchyGame.Service
                     while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
                     {
                         SelectRandomButton();
-                        Thread.Sleep(delayTime);
+                        Thread.Sleep(2000);
                         ResetAllButton();
                     }
                     if (VariableControlService.GameRound == Round.Round3)
