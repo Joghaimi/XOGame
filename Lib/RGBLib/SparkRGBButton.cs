@@ -36,7 +36,7 @@ namespace Library.RGBLib
             if (!_button.isSet())
                 return -1;
             //SuccessEffect();
-            //Activate(false);
+            Activate(false);
             return 1;
         }
 
