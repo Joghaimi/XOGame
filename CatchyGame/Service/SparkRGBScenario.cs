@@ -68,14 +68,17 @@ namespace CatchyGame.Service
                 //    i++;
                 //}
                 //Thread.Sleep(2000);
-
+                int b = 0;
                 while (true)
                 {
-                    int b = 0;
+                    
                     foreach (var bu in RGBButtonList)
                     {
-                        if (bu.isPressed() > 0)
-                            Console.WriteLine(b++);
+                        if (bu.isPressed() > 0) { 
+                            
+                            Console.WriteLine(b);
+                            b++;                        
+                        }
                     }
 
                 }
