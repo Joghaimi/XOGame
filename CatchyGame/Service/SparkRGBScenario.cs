@@ -21,6 +21,7 @@ namespace CatchyGame.Service
 
         List<Spike> SpikeButtonOne = new List<Spike>();
         List<Spike> SpikeButtonTwo = new List<Spike>();
+        List<Spike> SpikeButtonThree = new List<Spike>();
 
         int delayTime = 800;
         public Task StartAsync(CancellationToken cancellationToken)
@@ -44,20 +45,19 @@ namespace CatchyGame.Service
 
 
             // rgb2
-            SpikeButtonOne.Add(new Spike(475, 475 + 5, Library.RGBColor.Blue));
-            SpikeButtonOne.Add(new Spike(945, 945 + 5, Library.RGBColor.Blue));
-            SpikeButtonOne.Add(new Spike(1153, 1153 + 5, Library.RGBColor.Blue));
-
-            SpikeButtonOne.Add(new Spike(475 - 5, 475, Library.RGBColor.Blue));
-            SpikeButtonOne.Add(new Spike(945 - 5, 945, Library.RGBColor.Blue));
-            SpikeButtonOne.Add(new Spike(1153 - 5, 1153, Library.RGBColor.Blue));
+            SpikeButtonThree.Add(new Spike(475, 475 + 5, Library.RGBColor.Blue));
+            SpikeButtonThree.Add(new Spike(945, 945 + 5, Library.RGBColor.Blue));
+            SpikeButtonThree.Add(new Spike(1153, 1153 + 5, Library.RGBColor.Blue));
+            SpikeButtonThree.Add(new Spike(475 - 5, 475, Library.RGBColor.Blue));
+            SpikeButtonThree.Add(new Spike(945 - 5, 945, Library.RGBColor.Blue));
+            SpikeButtonThree.Add(new Spike(1153 - 5, 1153, Library.RGBColor.Blue));
 
 
 
             // rgb3 
-            SpikeButtonOne.Add(new Spike(280, 280 + 5, Library.RGBColor.Blue));
-            SpikeButtonOne.Add(new Spike(784, 784 + 5, Library.RGBColor.Blue));
-            SpikeButtonOne.Add(new Spike(1137 - 5, 1137, Library.RGBColor.Blue));
+            SpikeButtonOne.Add(new Spike(1099, 1099 + 5, Library.RGBColor.Blue));
+            //SpikeButtonOne.Add(new Spike(784, 784 + 5, Library.RGBColor.Blue));
+            //SpikeButtonOne.Add(new Spike(1137, 1137 + 5, Library.RGBColor.Blue));
 
 
 
