@@ -66,23 +66,41 @@ namespace CatchyGame.Service
             {
                 foreach (var button in PlayerOneRGBButtonList)
                 {
-                    VariableControlService.Team.player[0].score += 10 * button.isPressed();
+                    if (button.isPressed() == 1)
+                    {
+                        VariableControlService.Team.player[0].score += 10;
+                        Console.WriteLine($"Player One {VariableControlService.Team.player[0].score}");
+                    }
+
+
                 }
                 foreach (var button in PlayerTwoRGBButtonList)
                 {
                     if (VariableControlService.Team.player.Count > 1)
-                        VariableControlService.Team.player[1].score += 10 * button.isPressed();
+                        if (button.isPressed() == 1)
+                        {
+                            VariableControlService.Team.player[1].score += 10;
+                            Console.WriteLine($"Player One {VariableControlService.Team.player[1].score}");
+                        }
                 }
                 foreach (var button in PlayerThreeRGBButtonList)
                 {
                     if (VariableControlService.Team.player.Count > 2)
 
-                        VariableControlService.Team.player[2].score += 10 * button.isPressed();
+                        if (button.isPressed() == 1)
+                        {
+                            VariableControlService.Team.player[2].score += 10;
+                            Console.WriteLine($"Player One {VariableControlService.Team.player[2].score}");
+                        }
                 }
                 foreach (var button in PlayerFourRGBButtonList)
                 {
                     if (VariableControlService.Team.player.Count > 3)
-                        VariableControlService.Team.player[3].score += 10 * button.isPressed();
+                        if (button.isPressed() == 1)
+                        {
+                            VariableControlService.Team.player[0].score += 10;
+                            Console.WriteLine($"Player One {VariableControlService.Team.player[3].score}");
+                        }
                 }
             }
         }
