@@ -62,7 +62,7 @@ namespace CatchyGame.Service
         }
         private async Task PlayerCatchingGame(CancellationToken cancellationToken)
         {
-            while (!cancellationToken.IsCancellationRequested)
+            while (true)
             {
                 foreach (var button in PlayerOneRGBButtonList)
                 {
@@ -102,6 +102,8 @@ namespace CatchyGame.Service
                             Console.WriteLine($"Player One {VariableControlService.Team.player[3].score}");
                         }
                 }
+                Console.WriteLine($"In llop");
+
             }
         }
 
