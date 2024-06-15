@@ -43,10 +43,10 @@ namespace CatchyGame.Service
             PlayerTwoRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR15, RGBButtonPin.RGBG15, RGBButtonPin.RGBB15, RGBButtonPin.RGBPB15), 5, Library.RGBColor.Blue));
             PlayerTwoRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR16, RGBButtonPin.RGBG16, RGBButtonPin.RGBB16, RGBButtonPin.RGBPB16), 5, Library.RGBColor.Green));
 
-            RGBWS2811.SetColorByRange(
-               VariableControlService.StripSevenStartIndex, VariableControlService.StripSevenEndIndex,
-               VariableControlService.StripSevenDefaultColor);
-            RGBWS2811.Commit();
+            //RGBWS2811.SetColorByRange(
+            //   VariableControlService.StripSevenStartIndex, VariableControlService.StripSevenEndIndex,
+            //   VariableControlService.StripSevenDefaultColor);
+            //RGBWS2811.Commit();
 
 
 
