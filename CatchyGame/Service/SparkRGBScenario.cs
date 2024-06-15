@@ -61,7 +61,7 @@ namespace CatchyGame.Service
                     PlayerFourRGBButtonList[selectedButton].Activate(true);
                 }
                 Thread.Sleep(3000);
-
+                ResetAllButton();
 
                 //foreach (var button in RGBButtonList)
                 //{
@@ -106,7 +106,17 @@ namespace CatchyGame.Service
         }
 
 
-
+        private void ResetAllButton()
+        {
+            foreach(var button in PlayerOneRGBButtonList)
+                button.Activate(false);
+            foreach (var button in PlayerTwoRGBButtonList)
+                button.Activate(false);
+            foreach (var button in PlayerThreeRGBButtonList)
+                button.Activate(false);
+            foreach (var button in PlayerFourRGBButtonList)
+                button.Activate(false);
+        }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
