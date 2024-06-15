@@ -36,7 +36,7 @@ namespace CatchyGame.Service
             RGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR13, RGBButtonPin.RGBG13, RGBButtonPin.RGBB13, RGBButtonPin.RGBPB13), 5, Library.RGBColor.Blue));
             RGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR14, RGBButtonPin.RGBG14, RGBButtonPin.RGBB14, RGBButtonPin.RGBPB14), 5, Library.RGBColor.Blue));
             RGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR15, RGBButtonPin.RGBG15, RGBButtonPin.RGBB15, RGBButtonPin.RGBPB15), 5, Library.RGBColor.Blue));
-            RGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR16, RGBButtonPin.RGBG16, RGBButtonPin.RGBB16, RGBButtonPin.RGBPB16), 5, Library.RGBColor.Blue));
+            RGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR16, RGBButtonPin.RGBG16, RGBButtonPin.RGBB16, RGBButtonPin.RGBPB16), 5, Library.RGBColor.Green));
 
 
 
@@ -58,23 +58,30 @@ namespace CatchyGame.Service
                     //Thread.Sleep(500);
                     i++;
                 }
-                Thread.Sleep(2000);
+                //Thread.Sleep(2000);
 
-                foreach (var button in RGBButtonList)
+                //foreach (var button in RGBButtonList)
+                //{
+                //    Console.WriteLine(i);
+                //    button.Activate(false);
+                //    //Thread.Sleep(500);
+                //    i++;
+                //}
+                //Thread.Sleep(2000);
+
+                while (true)
                 {
-                    Console.WriteLine(i);
-                    button.Activate(false);
-                    //Thread.Sleep(500);
-                    i++;
+                    int b = 0;
+                    foreach (var bu in RGBButtonList)
+                    {
+                        if (bu.isPressed() > 0)
+                            Console.WriteLine(i++);
+                        b++;
+                    }
+
                 }
-                Thread.Sleep(2000);
 
 
-
-                foreach (var bu in RGBButtonList)
-                {
-                    bu.isPressed();
-                }
 
 
 
