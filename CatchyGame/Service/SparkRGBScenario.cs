@@ -35,19 +35,24 @@ namespace CatchyGame.Service
 
 
             // rgb1 
-            SpikeButtonOne.Add(new Spike(19, 24, Library.RGBColor.Blue));
-            SpikeButtonOne.Add(new Spike(242, 242 + 5, Library.RGBColor.Blue));
-            SpikeButtonOne.Add(new Spike(748, 748 + 5, Library.RGBColor.Blue));
-
-            SpikeButtonOne.Add(new Spike(748 - 5, 748, Library.RGBColor.Blue)); // Line End
-            SpikeButtonOne.Add(new Spike(242 - 5, 242, Library.RGBColor.Blue)); // Line End
-            SpikeButtonOne.Add(new Spike(19 - 5, 19, Library.RGBColor.Blue)); // Line End
+            SpikeButtonTwo.Add(new Spike(19, 24, Library.RGBColor.Blue));
+            SpikeButtonTwo.Add(new Spike(242, 242 + 5, Library.RGBColor.Blue));
+            SpikeButtonTwo.Add(new Spike(748, 748 + 5, Library.RGBColor.Blue));
+            SpikeButtonTwo.Add(new Spike(748 - 5, 748, Library.RGBColor.Blue)); // Line End
+            SpikeButtonTwo.Add(new Spike(242 - 5, 242, Library.RGBColor.Blue)); // Line End
+            SpikeButtonTwo.Add(new Spike(19 - 5, 19, Library.RGBColor.Blue)); // Line End
 
 
             // rgb2
             SpikeButtonOne.Add(new Spike(475, 475 + 5, Library.RGBColor.Blue));
             SpikeButtonOne.Add(new Spike(945, 945 + 5, Library.RGBColor.Blue));
+            SpikeButtonOne.Add(new Spike(1153, 1153 + 5, Library.RGBColor.Blue));
+
+            SpikeButtonOne.Add(new Spike(475 - 5, 475, Library.RGBColor.Blue));
+            SpikeButtonOne.Add(new Spike(945 - 5, 945, Library.RGBColor.Blue));
             SpikeButtonOne.Add(new Spike(1153 - 5, 1153, Library.RGBColor.Blue));
+
+
 
             // rgb3 
             SpikeButtonOne.Add(new Spike(280, 280 + 5, Library.RGBColor.Blue));
@@ -59,7 +64,7 @@ namespace CatchyGame.Service
             //SpikeButtonOne.Add(new Spike(VariableControlService.StripOneStartIndex, VariableControlService.StripOneStartIndex + 5, Library.RGBColor.Blue));
 
             PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1), SpikeButtonOne, 5, Library.RGBColor.Green));
-            PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR2, RGBButtonPin.RGBG2, RGBButtonPin.RGBB2, RGBButtonPin.RGBPB2), 5, Library.RGBColor.Green));
+            PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR2, RGBButtonPin.RGBG2, RGBButtonPin.RGBB2, RGBButtonPin.RGBPB2), SpikeButtonTwo, 5, Library.RGBColor.Green));
             PlayerTwoRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR3, RGBButtonPin.RGBG3, RGBButtonPin.RGBB3, RGBButtonPin.RGBPB3), 5, Library.RGBColor.Green));
             PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR4Extra, RGBButtonPin.RGBG4Extra, RGBButtonPin.RGBB4Extra, RGBButtonPin.RGBPB4Extra), 5, Library.RGBColor.Green));
             PlayerThreeRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR5, RGBButtonPin.RGBG5, RGBButtonPin.RGBB5, RGBButtonPin.RGBPB5), 5, Library.RGBColor.Green));
