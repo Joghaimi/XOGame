@@ -75,8 +75,7 @@ namespace CatchyGame.Service
                     foreach (var bu in RGBButtonList)
                     {
                         if (bu.isPressed() > 0)
-                            Console.WriteLine(i++);
-                        b++;
+                            Console.WriteLine(b++);
                     }
 
                 }
