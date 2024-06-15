@@ -31,6 +31,7 @@ namespace CatchyGame.Service
             else
             {
                 LocalStorage.SaveData(20, "data.json");
+                Console.WriteLine("Save File");
             }
 
 
