@@ -18,15 +18,19 @@ namespace CatchyGame.Service
         List<SparkRGBButton> PlayerTwoRGBButtonList = new List<SparkRGBButton>();
         List<SparkRGBButton> PlayerThreeRGBButtonList = new List<SparkRGBButton>();
         List<SparkRGBButton> PlayerFourRGBButtonList = new List<SparkRGBButton>();
+
+        List<Spike> SpikeButtonOne = new List<Spike>();
+
         int delayTime = 800;
         public Task StartAsync(CancellationToken cancellationToken)
         {
 
             MCP23Controller.Init(Room.Fort);
 
+            SpikeButtonOne.Add(new Spike(VariableControlService.StripTwoStartIndex, VariableControlService.StripTwoStartIndex + 5, Library.RGBColor.Blue));
+            SpikeButtonOne.Add(new Spike(VariableControlService.StripOneStartIndex, VariableControlService.StripOneStartIndex + 5, Library.RGBColor.Blue));
 
-
-            PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1), 5, Library.RGBColor.Green));
+            PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1), SpikeButtonOne, 5, Library.RGBColor.Green));
             PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR2, RGBButtonPin.RGBG2, RGBButtonPin.RGBB2, RGBButtonPin.RGBPB2), 5, Library.RGBColor.Green));
             PlayerTwoRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR3, RGBButtonPin.RGBG3, RGBButtonPin.RGBB3, RGBButtonPin.RGBPB3), 5, Library.RGBColor.Green));
             PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR4Extra, RGBButtonPin.RGBG4Extra, RGBButtonPin.RGBB4Extra, RGBButtonPin.RGBPB4Extra), 5, Library.RGBColor.Green));
@@ -102,8 +106,6 @@ namespace CatchyGame.Service
                             Console.WriteLine($"Player One {VariableControlService.Team.player[3].score}");
                         }
                 }
-                //Console.WriteLine($"In llop");
-
             }
         }
 
@@ -156,11 +158,11 @@ namespace CatchyGame.Service
         private void SelectRandomButton()
         {
             int numberOfButton = random.Next(1, 5);
-            Console.WriteLine($"numberOfButton {numberOfButton}");
+            //Console.WriteLine($"numberOfButton {numberOfButton}");
             for (int i = 0; i < numberOfButton; i++)
             {
                 int selectedButton = random.Next(0, 4);
-                Console.WriteLine($"selectedButton {selectedButton}");
+                //Console.WriteLine($"selectedButton {selectedButton}");
                 PlayerOneRGBButtonList[selectedButton].Activate(true);
                 PlayerTwoRGBButtonList[selectedButton].Activate(true);
                 PlayerThreeRGBButtonList[selectedButton].Activate(true);

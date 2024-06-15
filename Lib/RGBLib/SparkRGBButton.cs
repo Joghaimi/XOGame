@@ -12,11 +12,20 @@ namespace Library.RGBLib
         public List<Spike> SpikeStrips; // To Do 
         public int PixelInAllSpikes;
         public RGBColor color;
+        bool hasSpikes = false;
+        public SparkRGBButton(RGBButton button, List<Spike> spikeStrips, int pixelInAllSpikes, RGBColor color)
+        {
+            //, List<Spike> spikeStrips
+            _button = button;
+            SpikeStrips = spikeStrips;
+            PixelInAllSpikes = pixelInAllSpikes;
+            this.color = color;
+            hasSpikes = true;
+        }
         public SparkRGBButton(RGBButton button, int pixelInAllSpikes, RGBColor color)
         {
             //, List<Spike> spikeStrips
             _button = button;
-            //SpikeStrips = spikeStrips;
             PixelInAllSpikes = pixelInAllSpikes;
             this.color = color;
         }
@@ -35,7 +44,8 @@ namespace Library.RGBLib
                 return 0;
             if (!_button.isSet())
                 return 0;
-            //SuccessEffect();
+            if (hasSpikes)
+                SuccessEffect();
             Activate(false);
             return 1;
         }
