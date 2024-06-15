@@ -20,6 +20,7 @@ namespace CatchyGame.Service
         List<SparkRGBButton> PlayerFourRGBButtonList = new List<SparkRGBButton>();
 
         List<Spike> SpikeButtonOne = new List<Spike>();
+        List<Spike> SpikeButtonTwo = new List<Spike>();
 
         int delayTime = 800;
         public Task StartAsync(CancellationToken cancellationToken)
@@ -27,8 +28,20 @@ namespace CatchyGame.Service
 
             MCP23Controller.Init(Room.Fort);
 
+
+            // Rgbx
             SpikeButtonOne.Add(new Spike(VariableControlService.StripOneStartIndex, VariableControlService.StripOneStartIndex + 5, Library.RGBColor.Blue));
             SpikeButtonOne.Add(new Spike(VariableControlService.StripOneEndIndex - 4, VariableControlService.StripOneEndIndex, Library.RGBColor.Blue));
+
+
+            // rgb1 
+            SpikeButtonOne.Add(new Spike(19, 24, Library.RGBColor.Blue));
+            SpikeButtonOne.Add(new Spike(242, 242 + 5, Library.RGBColor.Blue));
+            SpikeButtonOne.Add(new Spike(748, 748 + 5, Library.RGBColor.Blue));
+
+
+
+
             //SpikeButtonOne.Add(new Spike(VariableControlService.StripOneStartIndex, VariableControlService.StripOneStartIndex + 5, Library.RGBColor.Blue));
 
             PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1), SpikeButtonOne, 5, Library.RGBColor.Green));
