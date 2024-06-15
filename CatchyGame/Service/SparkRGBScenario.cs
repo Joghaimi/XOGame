@@ -17,6 +17,7 @@ namespace CatchyGame.Service
         List<SparkRGBButton> PlayerTwoRGBButtonList = new List<SparkRGBButton>();
         List<SparkRGBButton> PlayerThreeRGBButtonList = new List<SparkRGBButton>();
         List<SparkRGBButton> PlayerFourRGBButtonList = new List<SparkRGBButton>();
+        
         public Task StartAsync(CancellationToken cancellationToken)
         {
 
@@ -72,8 +73,9 @@ namespace CatchyGame.Service
             while (true)
             {
                 // Number Of Button 
+
                 SelectRandomButton();
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
                 ResetAllButton();
 
                 //foreach (var button in RGBButtonList)
