@@ -27,15 +27,9 @@ namespace CatchyGame.Service
             if (loadedData != null)
             {
                 VariableControlService.TopScore = loadedData;
-                Console.WriteLine($"Value {VariableControlService.TopScore}");
-                LocalStorage.SaveData(20, "data.json");
+                Console.WriteLine($"Load Top Score{VariableControlService.TopScore}");
+            }
 
-            }
-            else
-            {
-                LocalStorage.SaveData(20, "data.json");
-                Console.WriteLine("Save File");
-            }
 
 
             PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1), 5, Library.RGBColor.Green));
@@ -98,16 +92,18 @@ namespace CatchyGame.Service
                     LevelTime.Restart();
                     while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
                     {
+
                         SelectRandomButton();
                         Thread.Sleep(3000);
                         ResetAllButton();
                     }
-                    if (VariableControlService.GameRound == Round.Round3)
+                    if (VariableControlService.Team.player[0].score > VariableControlService.TopScore)
                     {
-                        VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
-                        delayTime = 800;
+                        VariableControlService.TopScore = VariableControlService.Team.player[0].score;
+                        LocalStorage.SaveData(VariableControlService.TopScore, "data.json");
                     }
-                    VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
+                    VariableControlService.GameStatus = GameStatus.Empty;
+                    //VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
                 }
             }
         }
@@ -123,14 +119,14 @@ namespace CatchyGame.Service
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                VariableControlService.CurrentTime = (int)GameTiming.ElapsedMilliseconds;
-                if (VariableControlService.GameStatus == GameStatus.Started)
-                {
-                    bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.GameTiming;
-                    bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.GameStatus == GameStatus.Started && VariableControlService.IsGameTimerStarted;
-                    if (GameFinishedByTimer)
-                        StopTheGame();
-                }
+                VariableControlService.CurrentTime = (int)LevelTime.ElapsedMilliseconds;
+                //if (VariableControlService.GameStatus == GameStatus.Started)
+                //{
+                //    bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.GameTiming;
+                //    bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.GameStatus == GameStatus.Started && VariableControlService.IsGameTimerStarted;
+                //    if (GameFinishedByTimer)
+                //        StopTheGame();
+                //}
             }
         }
         private void SelectRandomButton()
