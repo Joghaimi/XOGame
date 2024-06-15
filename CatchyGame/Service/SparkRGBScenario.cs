@@ -57,7 +57,13 @@ namespace CatchyGame.Service
                     Thread.Sleep(500);
                     i++;
                 }
-
+                foreach (var button in RGBButtonList)
+                {
+                    Console.WriteLine(i);
+                    button.Activate(false);
+                    Thread.Sleep(500);
+                    i++;
+                }
             }
         }
 
