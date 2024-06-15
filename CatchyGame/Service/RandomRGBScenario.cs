@@ -27,6 +27,7 @@ namespace CatchyGame.Service
             if (loadedData != null)
             {
                 VariableControlService.TopScore = loadedData;
+                Console.WriteLine($"Value {VariableControlService.TopScore}");
             }
             else
             {
