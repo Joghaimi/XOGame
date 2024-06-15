@@ -45,7 +45,7 @@ namespace CatchyGame.Service
             RGBWS2811.Init();
 
             RGBWS2811.SetColorByRange(
-               VariableControlService.StripSevenStartIndex, VariableControlService.StripSevenEndIndex,
+               VariableControlService.StripOneStartIndex, VariableControlService.StripSevenEndIndex,
                VariableControlService.StripSevenDefaultColor);
             RGBWS2811.Commit();
 
