@@ -38,7 +38,11 @@ namespace CatchyGame.Service
             SpikeButtonOne.Add(new Spike(19, 24, Library.RGBColor.Blue));
             SpikeButtonOne.Add(new Spike(242, 242 + 5, Library.RGBColor.Blue));
             SpikeButtonOne.Add(new Spike(748, 748 + 5, Library.RGBColor.Blue));
+
             SpikeButtonOne.Add(new Spike(748 - 5, 748, Library.RGBColor.Blue)); // Line End
+            SpikeButtonOne.Add(new Spike(242 - 5, 242, Library.RGBColor.Blue)); // Line End
+            SpikeButtonOne.Add(new Spike(19 - 5, 19, Library.RGBColor.Blue)); // Line End
+
 
             // rgb2
             SpikeButtonOne.Add(new Spike(475, 475 + 5, Library.RGBColor.Blue));
