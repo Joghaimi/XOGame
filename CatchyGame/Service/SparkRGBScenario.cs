@@ -58,7 +58,7 @@ namespace CatchyGame.Service
                     //Thread.Sleep(500);
                     i++;
                 }
-                Thread.Sleep(5000);
+                Thread.Sleep(2000);
 
                 foreach (var button in RGBButtonList)
                 {
@@ -67,7 +67,7 @@ namespace CatchyGame.Service
                     //Thread.Sleep(500);
                     i++;
                 }
-                Thread.Sleep(5000);
+                Thread.Sleep(2000);
 
 
             }
