@@ -31,6 +31,7 @@ namespace Library.RGBLib
                 {
                     currentLocation++;
                     RGBWS2811.SetColor(true, currentLocation, color);
+                    RGBWS2811.SetColor(true, currentLocation - 1, RGBColor.White);
                 }
                 else currentLocation = -1;
             }

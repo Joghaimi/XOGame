@@ -59,6 +59,7 @@ namespace Library.RGBLib
                 {
                     spike.MoveForward();
                 }
+                RGBWS2811.Commit();
                 Thread.Sleep(100);
             }
         }
