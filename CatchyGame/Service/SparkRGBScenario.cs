@@ -27,8 +27,8 @@ namespace CatchyGame.Service
 
             MCP23Controller.Init(Room.Fort);
 
-            SpikeButtonOne.Add(new Spike(VariableControlService.StripTwoStartIndex, VariableControlService.StripTwoStartIndex + 5, Library.RGBColor.Blue));
-            SpikeButtonOne.Add(new Spike(VariableControlService.StripOneStartIndex, VariableControlService.StripOneStartIndex + 5, Library.RGBColor.Blue));
+            SpikeButtonOne.Add(new Spike(VariableControlService.StripTwoStartIndex, VariableControlService.StripTwoStartIndex - 5, Library.RGBColor.Blue));
+            SpikeButtonOne.Add(new Spike(VariableControlService.StripOneStartIndex, VariableControlService.StripOneStartIndex - 5, Library.RGBColor.Blue));
 
             PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR1, RGBButtonPin.RGBG1, RGBButtonPin.RGBB1, RGBButtonPin.RGBPB1), SpikeButtonOne, 5, Library.RGBColor.Green));
             PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR2, RGBButtonPin.RGBG2, RGBButtonPin.RGBB2, RGBButtonPin.RGBPB2), 5, Library.RGBColor.Green));
