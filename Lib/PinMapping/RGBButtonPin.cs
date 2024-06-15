@@ -87,30 +87,33 @@ namespace Library.PinMapping
             port = Port.PortB
         };
         // RGB4 
-        ////public static MCP23Pin RGBR4 = new MCP23Pin
-        ////{
-        ////    PinNumber = 1, // Set the PinNumber property
-        ////    Chip = MCP23017.MCP2301726, // Set the Chip property with the MCP23017 instance
-        ////    port = Port.PortA
-        ////};
-        ////public static MCP23Pin RGBG4 = new MCP23Pin
-        ////{
-        ////    PinNumber = 2, // Set the PinNumber property
-        ////    Chip = MCP23017.MCP2301726, // Set the Chip property with the MCP23017 instance
-        ////    port = Port.PortA
-        ////};
-        ////public static MCP23Pin RGBB4 = new MCP23Pin
-        ////{
-        ////    PinNumber = 3, // Set the PinNumber property
-        ////    Chip = MCP23017.MCP2301726, // Set the Chip property with the MCP23017 instance
-        ////    port = Port.PortA
-        ////};
-        //public static MCP23Pin RGBPB4 = new MCP23Pin
-        //{
-        //    PinNumber = 7, // Set the PinNumber property
-        //    Chip = MCP23017.MCP2301727, // Set the Chip property with the MCP23017 instance
-        //    port = Port.PortB
-        //};
+        public static MCP23Pin RGBR4Extra = new MCP23Pin
+        {
+            PinNumber = 1, // Set the PinNumber property
+            Chip = MCP23017.MCP2301726, // Set the Chip property with the MCP23017 instance
+            port = Port.PortA
+        };
+        public static MCP23Pin RGBG4Extra = new MCP23Pin
+        {
+            PinNumber = 2, // Set the PinNumber property
+            Chip = MCP23017.MCP2301726, // Set the Chip property with the MCP23017 instance
+            port = Port.PortA
+        };
+        public static MCP23Pin RGBB4Extra = new MCP23Pin
+        {
+            PinNumber = 3, // Set the PinNumber property
+            Chip = MCP23017.MCP2301726, // Set the Chip property with the MCP23017 instance
+            port = Port.PortA
+        };
+        public static MCP23Pin RGBPB4Extra = new MCP23Pin
+        {
+            PinNumber = 6, // Set the PinNumber property
+            Chip = MCP23017.MCP2301720, // Set the Chip property with the MCP23017 instance
+            port = Port.PortA
+            //PinNumber = 7, // Set the PinNumber property
+            //Chip = MCP23017.MCP2301727, // Set the Chip property with the MCP23017 instance
+            //port = Port.PortB
+        };
 
         // RGB5 
         public static MCP23Pin RGBR5 = new MCP23Pin
@@ -296,30 +299,33 @@ namespace Library.PinMapping
         };
 
         // RGB12
-        //public static MCP23Pin RGBR12 = new MCP23Pin
-        //{
-        //    PinNumber = 1, // Set the PinNumber property
-        //    Chip = MCP23017.MCP2301724, // Set the Chip property with the MCP23017 instance
-        //    port = Port.PortB
-        //};
-        //public static MCP23Pin RGBG12 = new MCP23Pin
-        //{
-        //    PinNumber = 2, // Set the PinNumber property
-        //    Chip = MCP23017.MCP2301724, // Set the Chip property with the MCP23017 instance
-        //    port = Port.PortB
-        //};
-        //public static MCP23Pin RGBB12 = new MCP23Pin
-        //{
-        //    PinNumber = 3, // Set the PinNumber property
-        //    Chip = MCP23017.MCP2301724, // Set the Chip property with the MCP23017 instance
-        //    port = Port.PortB
-        //};
-        //public static MCP23Pin RGBPB12 = new MCP23Pin
-        //{
-        //    PinNumber = 7, // Set the PinNumber property
-        //    Chip = MCP23017.MCP2301727, // Set the Chip property with the MCP23017 instance
-        //    port = Port.PortA
-        //};
+        public static MCP23Pin RGBR12Extra = new MCP23Pin
+        {
+            PinNumber = 1, // Set the PinNumber property
+            Chip = MCP23017.MCP2301724, // Set the Chip property with the MCP23017 instance
+            port = Port.PortB
+        };
+        public static MCP23Pin RGBG12Extra = new MCP23Pin
+        {
+            PinNumber = 2, // Set the PinNumber property
+            Chip = MCP23017.MCP2301724, // Set the Chip property with the MCP23017 instance
+            port = Port.PortB
+        };
+        public static MCP23Pin RGBB12Extra = new MCP23Pin
+        {
+            PinNumber = 3, // Set the PinNumber property
+            Chip = MCP23017.MCP2301724, // Set the Chip property with the MCP23017 instance
+            port = Port.PortB
+        };
+        public static MCP23Pin RGBPB12Extra = new MCP23Pin
+        {
+            PinNumber = 5, // Set the PinNumber property
+            Chip = MCP23017.MCP2301720, // Set the Chip property with the MCP23017 instance
+            port = Port.PortA
+            //PinNumber = 7, // Set the PinNumber property
+            //Chip = MCP23017.MCP2301727, // Set the Chip property with the MCP23017 instance
+            //port = Port.PortA
+        };
 
         // RGB13
         public static MCP23Pin RGBR13 = new MCP23Pin

@@ -242,7 +242,7 @@ namespace ShootingRoom.Services
             Thread.Sleep(1);
             BigTargetTimer.Start();
             BigTargetTimer.Restart();
-            while (true && BigTargetTimer.ElapsedMilliseconds < 60000)
+            while (BigTargetTimer.ElapsedMilliseconds < 60000)
             {
                 if (!IsGameStartedOrInGoing())
                     break;

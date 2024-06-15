@@ -12,13 +12,15 @@ namespace Library.RGBLib
         public List<Spike> SpikeStrips; // To Do 
         public int PixelInAllSpikes;
         public RGBColor color;
-        public SparkRGBButton(RGBButton button, List<Spike> spikeStrips, int pixelInAllSpikes, RGBColor color)
+        public SparkRGBButton(RGBButton button, int pixelInAllSpikes, RGBColor color)
         {
+            //, List<Spike> spikeStrips
             _button = button;
-            SpikeStrips = spikeStrips;
+            //SpikeStrips = spikeStrips;
             PixelInAllSpikes = pixelInAllSpikes;
             this.color = color;
         }
+
         public void Activate(bool activate)
         {
             _button.Set(activate);
@@ -33,8 +35,8 @@ namespace Library.RGBLib
                 return 0;
             if (!_button.isSet())
                 return -1;
-            SuccessEffect();
-            Activate(false);
+            //SuccessEffect();
+            //Activate(false);
             return 1;
         }
 
