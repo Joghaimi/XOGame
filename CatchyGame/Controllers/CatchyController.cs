@@ -1,5 +1,6 @@
 ﻿using CatchyGame.Service;
 using Library;
+using Library.LocalStorage;
 using Library.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,13 @@ namespace CatchyGame.Controllers
         {
             return Ok(VariableControlService.TopScore);
         }
-
+        [HttpPost("ResetTopScore")]
+        public IActionResult ResetTopScore(int newTopScore)
+        {
+            VariableControlService.TopScore = newTopScore;
+            LocalStorage.SaveData(VariableControlService.TopScore, "data.json");
+            return Ok(VariableControlService.TopScore);
+        }
 
         [HttpGet("CurrentTime")]
         public IActionResult CurrentTime()
