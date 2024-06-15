@@ -28,6 +28,8 @@ namespace CatchyGame.Service
             {
                 VariableControlService.TopScore = loadedData;
                 Console.WriteLine($"Value {VariableControlService.TopScore}");
+                LocalStorage.SaveData(20, "data.json");
+
             }
             else
             {
