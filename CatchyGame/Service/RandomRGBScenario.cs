@@ -9,6 +9,7 @@ using Library.Media;
 
 namespace CatchyGame.Service
 {
+
     public class RandomRGBScenario : IHostedService, IDisposable
     {
 
@@ -17,7 +18,7 @@ namespace CatchyGame.Service
         Stopwatch LevelTime = new Stopwatch();
         private CancellationTokenSource _cts, _cts2, _cts3;
         List<SparkRGBButton> PlayerOneRGBButtonList = new List<SparkRGBButton>();
-
+        private TopScore topScore = new TopScore();
 
         int delayTime = 800;
         public Task StartAsync(CancellationToken cancellationToken)
@@ -26,25 +27,26 @@ namespace CatchyGame.Service
             MCP23Controller.Init(Room.Fort);
             AudioPlayer.Init(Room.Catchy);
 
+            topScore.name = "test";
+            topScore.Score = 20;
 
+            LocalStorage.SaveData(topScore, "data.json");
 
-            LocalStorage.SaveData((VariableControlService.TopScoreTeam, VariableControlService.TopScore), "data.json");
-
-            var loadedData = LocalStorage.LoadData<string>("data.json");
-            Console.WriteLine(loadedData + "loadedData");
+            var loadedData = LocalStorage.LoadData<TopScore>("data.json");
+            Console.WriteLine(loadedData + $"loadedData {loadedData.name} - {loadedData.Score}");
             if (loadedData != null && false)
             {
-                var topScore = loadedData.Split(",");
-                if (topScore.Length > 1)
-                {
-                    VariableControlService.TopScoreTeam = topScore[0];
-                    VariableControlService.TopScore = int.Parse(topScore[1]);
-                }
-                else
-                {
-                    LocalStorage.SaveData($"{VariableControlService.TopScoreTeam} {VariableControlService.TopScore}", "data.json");
-                }
-                Console.WriteLine($"Load Top Score{VariableControlService.TopScore} TeamName {VariableControlService.TopScoreTeam} ");
+                //var topScore = loadedData.Split(",");
+                //if (topScore.Length > 1)
+                //{
+                //    VariableControlService.TopScoreTeam = topScore[0];
+                //    VariableControlService.TopScore = int.Parse(topScore[1]);
+                //}
+                //else
+                //{
+                //    LocalStorage.SaveData($"{VariableControlService.TopScoreTeam} {VariableControlService.TopScore}", "data.json");
+                //}
+                //Console.WriteLine($"Load Top Score{VariableControlService.TopScore} TeamName {VariableControlService.TopScoreTeam} ");
             }
 
 
