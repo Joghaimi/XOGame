@@ -31,8 +31,10 @@ namespace CatchyGame.Controllers
         public IActionResult ResetTopScore(int newTopScore)
         {
             VariableControlService.TopScore = newTopScore;
-            LocalStorage.SaveData(VariableControlService.TopScore, "data.json");
-            return Ok(VariableControlService.TopScore);
+
+            LocalStorage.SaveData($"{VariableControlService.TopScoreTeam} {VariableControlService.TopScore}", "data.json");
+            //LocalStorage.SaveData(VariableControlService.TopScore, "data.json");
+            return Ok($"{VariableControlService.TopScoreTeam} {VariableControlService.TopScore}");
         }
 
         [HttpGet("CurrentTime")]

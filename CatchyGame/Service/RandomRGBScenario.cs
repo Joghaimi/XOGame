@@ -26,11 +26,20 @@ namespace CatchyGame.Service
             MCP23Controller.Init(Room.Fort);
             AudioPlayer.Init(Room.Catchy);
 
-            var loadedData = LocalStorage.LoadData<int>("data.json");
+            var loadedData = LocalStorage.LoadData<string>("data.json");
             if (loadedData != null)
             {
-                VariableControlService.TopScore = loadedData;
-                Console.WriteLine($"Load Top Score{VariableControlService.TopScore}");
+                var topScore = loadedData.Split(" ");
+                if (topScore.Length > 1)
+                {
+                    VariableControlService.TopScoreTeam = topScore[0];
+                    VariableControlService.TopScore = int.Parse(topScore[1]);
+                }
+                else
+                {
+                    LocalStorage.SaveData($"{VariableControlService.TopScoreTeam} {VariableControlService.TopScore}", "data.json");
+                }
+                Console.WriteLine($"Load Top Score{VariableControlService.TopScore} TeamName {VariableControlService.TopScoreTeam} ");
             }
 
 
@@ -104,7 +113,7 @@ namespace CatchyGame.Service
                     if (VariableControlService.Team.player[0].score > VariableControlService.TopScore)
                     {
                         VariableControlService.TopScore = VariableControlService.Team.player[0].score;
-                        LocalStorage.SaveData(VariableControlService.TopScore, "data.json");
+                        LocalStorage.SaveData($"{VariableControlService.TopScoreTeam} {VariableControlService.TopScore}", "data.json");
                     }
                     VariableControlService.GameStatus = GameStatus.Empty;
                     //VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
