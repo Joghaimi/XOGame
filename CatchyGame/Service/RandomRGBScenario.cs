@@ -115,7 +115,7 @@ namespace CatchyGame.Service
                     {
 
                         SelectRandomButton();
-                        Thread.Sleep(3000);
+                        Thread.Sleep(2000);
                         ResetAllButton();
                     }
                     if (VariableControlService.Team.player[0].score > VariableControlService.topScore.Score)
