@@ -25,12 +25,12 @@ namespace CatchyGame.Service
 
             MCP23Controller.Init(Room.Fort);
             AudioPlayer.Init(Room.Catchy);
-            LocalStorage.SaveData((VariableControlService.TopScoreTeam, VariableControlService.TopScore), "data.json");
+            LocalStorage.SaveData((VariableControlService.TopScoreTeam,",", VariableControlService.TopScore), "data.json");
 
             var loadedData = LocalStorage.LoadData<string>("data.json");
             if (loadedData != null)
             {
-                var topScore = loadedData.Split(" ");
+                var topScore = loadedData.Split(",");
                 if (topScore.Length > 1)
                 {
                     VariableControlService.TopScoreTeam = topScore[0];
