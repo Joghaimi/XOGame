@@ -8,7 +8,7 @@ namespace Library.Model
 {
     public class CatchyTeam
     {
-        public string teamName = "";
+        public string teamName { get; set; } = "";
         public List<CatchyPlayer> player { get; set; } = new List<CatchyPlayer>();
     }
 }
