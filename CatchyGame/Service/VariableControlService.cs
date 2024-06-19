@@ -17,8 +17,10 @@ namespace CatchyGame.Service
 
 
         public static int CurrentTime = 0;
-        public static int TopScore = 0;
-        public static string TopScoreTeam = "Test Team";
+
+        public static TopScore topScore = new TopScore();
+        //public static int TopScore = 0;
+        //public static string TopScoreTeam = "Test Team";
         public static int GameTiming = 120000;
         public static int LevelTime = 60000;
 
@@ -51,19 +53,19 @@ namespace CatchyGame.Service
         // Strip Defenition 
         public static int StripOneStartIndex { get; set; } = 0;
         public static int StripOneEndIndex { get; set; } = 211;
-        
+
         public static int StripTwoStartIndex { get; set; } = 212;
         public static int StripTwoEndIndex { get; set; } = 438;
-        
+
         public static int StripThreeStartIndex { get; set; } = 439;
         public static int StripThreeEndIndex { get; set; } = 664;
-        
+
         public static int StripFourStartIndex { get; set; } = 665;
         public static int StripFourEndIndex { get; set; } = 880;
 
         public static int StripFiveStartIndex { get; set; } = 881;
         public static int StripFiveEndIndex { get; set; } = 1074;
-        
+
         public static int StripSixStartIndex { get; set; } = 1075;
         public static int StripSixEndIndex { get; set; } = 1240;
 

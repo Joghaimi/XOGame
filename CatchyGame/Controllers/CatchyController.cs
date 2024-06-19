@@ -25,16 +25,14 @@ namespace CatchyGame.Controllers
         [HttpGet("TopScore")]
         public IActionResult TopScore()
         {
-            return Ok(VariableControlService.TopScore);
+            return Ok(VariableControlService.topScore);
         }
         [HttpPost("ResetTopScore")]
-        public IActionResult ResetTopScore(int newTopScore)
+        public IActionResult ResetTopScore(TopScore topScore)
         {
-            VariableControlService.TopScore = newTopScore;
-
-            LocalStorage.SaveData($"{VariableControlService.TopScoreTeam} {VariableControlService.TopScore}", "data.json");
-            //LocalStorage.SaveData(VariableControlService.TopScore, "data.json");
-            return Ok($"{VariableControlService.TopScoreTeam} {VariableControlService.TopScore}");
+            VariableControlService.topScore = topScore;
+            LocalStorage.SaveData(VariableControlService.topScore, "data.json");
+            return Ok(VariableControlService.topScore);
         }
 
         [HttpGet("CurrentTime")]

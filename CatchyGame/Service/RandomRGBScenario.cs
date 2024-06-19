@@ -18,7 +18,7 @@ namespace CatchyGame.Service
         Stopwatch LevelTime = new Stopwatch();
         private CancellationTokenSource _cts, _cts2, _cts3;
         List<SparkRGBButton> PlayerOneRGBButtonList = new List<SparkRGBButton>();
-        private TopScore topScore = new TopScore();
+        //private TopScore topScore = new TopScore();
 
         int delayTime = 800;
         public Task StartAsync(CancellationToken cancellationToken)
@@ -27,27 +27,28 @@ namespace CatchyGame.Service
             MCP23Controller.Init(Room.Fort);
             AudioPlayer.Init(Room.Catchy);
 
-            topScore.name = "test";
-            topScore.Score = 20;
+            //topScore.name = "test";
+            //topScore.Score = 20;
 
-            LocalStorage.SaveData(topScore, "data.json");
+            //LocalStorage.SaveData(topScore, "data.json");
 
             var loadedData = LocalStorage.LoadData<TopScore>("data.json");
             Console.WriteLine(loadedData + $"loadedData {loadedData.name} - {loadedData.Score}");
-            if (loadedData != null && false)
-            {
-                //var topScore = loadedData.Split(",");
-                //if (topScore.Length > 1)
-                //{
-                //    VariableControlService.TopScoreTeam = topScore[0];
-                //    VariableControlService.TopScore = int.Parse(topScore[1]);
-                //}
-                //else
-                //{
-                //    LocalStorage.SaveData($"{VariableControlService.TopScoreTeam} {VariableControlService.TopScore}", "data.json");
-                //}
-                //Console.WriteLine($"Load Top Score{VariableControlService.TopScore} TeamName {VariableControlService.TopScoreTeam} ");
-            }
+            if (loadedData != null)
+                VariableControlService.topScore = loadedData;
+            //{
+            //var topScore = loadedData.Split(",");
+            //if (topScore.Length > 1)
+            //{
+            //    VariableControlService.TopScoreTeam = topScore[0];
+            //    VariableControlService.TopScore = int.Parse(topScore[1]);
+            //}
+            //else
+            //{
+            //LocalStorage.SaveData($"{VariableControlService.TopScoreTeam} {VariableControlService.TopScore}", "data.json");
+            //}
+            //Console.WriteLine($"Load Top Score{VariableControlService.TopScore} TeamName {VariableControlService.TopScoreTeam} ");
+            //}
 
 
 
@@ -117,10 +118,11 @@ namespace CatchyGame.Service
                         Thread.Sleep(3000);
                         ResetAllButton();
                     }
-                    if (VariableControlService.Team.player[0].score > VariableControlService.TopScore)
+                    if (VariableControlService.Team.player[0].score > VariableControlService.topScore.Score)
                     {
-                        VariableControlService.TopScore = VariableControlService.Team.player[0].score;
-                        LocalStorage.SaveData($"{VariableControlService.TopScoreTeam} {VariableControlService.TopScore}", "data.json");
+                        VariableControlService.topScore.Score = VariableControlService.Team.player[0].score;
+                        VariableControlService.topScore.name = VariableControlService.Team.teamName;
+                        LocalStorage.SaveData(VariableControlService.topScore, "data.json");
                     }
                     VariableControlService.GameStatus = GameStatus.Empty;
                     //VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
