@@ -60,6 +60,11 @@ namespace CatchyGame.Controllers
         public IActionResult GameMode(GameMode mode)
         {
             VariableControlService.GameMode = mode;
+            if (VariableControlService.GameMode == Library.GameMode.inWar)
+                VariableControlService.GameTiming = 180000;
+            else
+                VariableControlService.GameTiming = 120000;
+
             return Ok();
         }
     }
