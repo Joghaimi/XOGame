@@ -12,6 +12,7 @@ namespace CatchyGame.Service
     public class RandomRGBScenarioWithGameMode : IHostedService, IDisposable
     {
         Random random = new Random();
+        Stopwatch GameTime = new Stopwatch();
         Stopwatch LevelTime = new Stopwatch();
         private CancellationTokenSource _cts, _cts2, _cts3;
 
@@ -159,6 +160,7 @@ namespace CatchyGame.Service
                     else if (VariableControlService.GameMode == GameMode.inWar)
                     {
                         VariableControlService.GameRound = Round.Round1;
+                        GameTime.Restart();
                         while (VariableControlService.GameRound < Round.Round4)
                         {
                             PlayRoundSound(VariableControlService.GameRound);
@@ -206,7 +208,7 @@ namespace CatchyGame.Service
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                VariableControlService.CurrentTime = (int)LevelTime.ElapsedMilliseconds;
+                VariableControlService.CurrentTime = (int)GameTime.ElapsedMilliseconds;
             }
         }
         private void SelectRandomButton()

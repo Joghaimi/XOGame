@@ -21,7 +21,7 @@ namespace CatchyGame.Service
         public static TopScore topScore = new TopScore();
         //public static int TopScore = 0;
         //public static string TopScoreTeam = "Test Team";
-        public static int GameTiming = 120000;
+        public static int GameTiming = 180000;
         public static int LevelTime = 60000;
 
         public static int PlayerScore = 0;
