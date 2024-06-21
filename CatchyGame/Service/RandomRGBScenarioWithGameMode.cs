@@ -70,56 +70,65 @@ namespace CatchyGame.Service
         }
         private async Task PlayerCatchingGame(CancellationToken cancellationToken)
         {
-
+            foreach (var item in PlayerOneRGBButtonList)
+            {
+                item.Activate(true);
+                //Console.WriteLine($"index {index}");
+                Thread.Sleep(1000);
+                //index++;
+            }
 
             while (true)
             {
-                var index = 0; 
-                foreach (var item in PlayerOneRGBButtonList)
+                //var index = 0; 
+                //foreach (var item in PlayerOneRGBButtonList)
+                //{
+                //    item.Activate(true);
+                //    Console.WriteLine($"index {index}");
+                //    Thread.Sleep(1000);
+                //    index++;
+                //}  
+
+                if (VariableControlService.GameMode == GameMode.inTeam)
                 {
-                    item.Activate(true);
-                    Console.WriteLine($"index {index}");
-                    Thread.Sleep(1000);
-                    index++;
-                }  
-                
-                //if (VariableControlService.GameMode == GameMode.inTeam)
-                //{
-                //    // @ToDo: Change the list name 
-                //    foreach (var button in PlayerOneRGBButtonList)
-                //    {
-                //        if (button.isPressed() == 1)
-                //        {
-                //            AudioPlayer.PIStartAudio(SoundType.Success);
-                //            VariableControlService.Team.player[0].score += 10;
-                //            Console.WriteLine($"Player One {VariableControlService.Team.player[0].score}");
-                //        }
-                //    }
-                //}
-                //else if (VariableControlService.GameMode == GameMode.inWar)
-                //{
-                //    foreach (var button in PlayerOneRGBButtonList)
-                //    {
-                //        if (button.isPressed() == 1)
-                //        {
-                //            AudioPlayer.PIStartAudio(SoundType.Success);
-                //            VariableControlService.Team.player[0].score += 10;
-                //            Console.WriteLine($"Player One Press the Button,new Sore {VariableControlService.Team.player[0].score}");
-                //        }
-                //    }
-                //    foreach (var button in PlayerTwoRGBButtonList)
-                //    {
-                //        if (button.isPressed() == 1)
-                //        {
-                //            AudioPlayer.PIStartAudio(SoundType.Success);
-                //            VariableControlService.Team.player[1].score += 10;
-                //            Console.WriteLine($"Player Two Press the Button,new Sore {VariableControlService.Team.player[1].score}");
-                //        }
-                //    }
-                //}
-          
-            
-            
+                    //    // @ToDo: Change the list name 
+                    int index = 0;
+                    foreach (var button in PlayerOneRGBButtonList)
+                    {
+                        if (button.isPressed() == 1)
+                        {
+
+                            AudioPlayer.PIStartAudio(SoundType.Success);
+                            VariableControlService.Team.player[0].score += 10;
+                            Console.WriteLine($"Player One {VariableControlService.Team.player[0].score} ============ index {index}");
+                            index++;
+                        }
+                    }
+                }
+                else if (VariableControlService.GameMode == GameMode.inWar)
+                {
+                    foreach (var button in PlayerOneRGBButtonList)
+                    {
+                        if (button.isPressed() == 1)
+                        {
+                            AudioPlayer.PIStartAudio(SoundType.Success);
+                            VariableControlService.Team.player[0].score += 10;
+                            Console.WriteLine($"Player One Press the Button,new Sore {VariableControlService.Team.player[0].score}");
+                        }
+                    }
+                    foreach (var button in PlayerTwoRGBButtonList)
+                    {
+                        if (button.isPressed() == 1)
+                        {
+                            AudioPlayer.PIStartAudio(SoundType.Success);
+                            VariableControlService.Team.player[1].score += 10;
+                            Console.WriteLine($"Player Two Press the Button,new Sore {VariableControlService.Team.player[1].score}");
+                        }
+                    }
+                }
+
+
+
             }
         }
 
