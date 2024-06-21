@@ -59,6 +59,7 @@ namespace CatchyGame.Controllers
         [HttpPost("GameMode")]
         public IActionResult GameMode(GameMode mode)
         {
+            Console.WriteLine(mode);
             VariableControlService.GameMode = mode;
             if (VariableControlService.GameMode == Library.GameMode.inWar)
                 VariableControlService.GameTiming = 180000;
