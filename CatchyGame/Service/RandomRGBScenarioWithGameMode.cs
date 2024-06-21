@@ -100,7 +100,8 @@ namespace CatchyGame.Service
 
                             AudioPlayer.PIStartAudio(SoundType.Success);
                             //VariableControlService.Team.player[0].score += 10;
-                            Console.WriteLine($"Player One {VariableControlService.Team.player[0].score} ============ index {index}");
+                            //Console.WriteLine($"Player One {VariableControlService.Team.player[0].score} ============ index {index}");
+                            Console.WriteLine($"pressed index{index}");
                             index++;
                         }
                     }
