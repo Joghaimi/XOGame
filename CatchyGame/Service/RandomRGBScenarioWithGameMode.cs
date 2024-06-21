@@ -90,8 +90,6 @@ namespace CatchyGame.Service
         }
         private async Task PlayerCatchingGame(CancellationToken cancellationToken)
         {
-
-
             while (!cancellationToken.IsCancellationRequested)
             {
 
@@ -133,9 +131,6 @@ namespace CatchyGame.Service
                         }
                     }
                 }
-
-
-
             }
         }
 
@@ -146,18 +141,60 @@ namespace CatchyGame.Service
                 // Number Of Button 
                 while (VariableControlService.GameStatus == GameStatus.Started)
                 {
-                    LevelTime.Restart();
-                    while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
+                    if (VariableControlService.GameMode == GameMode.inTeam)
                     {
-                        SelectRandomButton();
-                        Thread.Sleep(2000);
-                        ResetAllButton();
+                        while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
+                        {
+                            SelectRandomButton();
+                            Thread.Sleep(2000);
+                            ResetAllButton();
+                        }
+                        if (VariableControlService.Team.player[0].score > VariableControlService.topScore.Score)
+                        {
+                            VariableControlService.topScore.Score = VariableControlService.Team.player[0].score;
+                            VariableControlService.topScore.name = VariableControlService.Team.teamName;
+                            LocalStorage.SaveData(VariableControlService.topScore, "data.json");
+                        }
                     }
-                    if (VariableControlService.Team.player[0].score > VariableControlService.topScore.Score)
+                    else if (VariableControlService.GameMode == GameMode.inWar)
                     {
-                        VariableControlService.topScore.Score = VariableControlService.Team.player[0].score;
-                        VariableControlService.topScore.name = VariableControlService.Team.teamName;
-                        LocalStorage.SaveData(VariableControlService.topScore, "data.json");
+                        VariableControlService.GameRound = Round.Round1;
+                        while (VariableControlService.GameRound < Round.Round4)
+                        {
+                            PlayRoundSound(VariableControlService.GameRound);
+                            LevelTime.Restart();
+                            while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
+                            {
+                                SelectRandomButton();
+                                Thread.Sleep(2000);
+                                ResetAllButton();
+                            }
+                            // Check Who Ones 
+                            if (VariableControlService.Team.player[0].score > VariableControlService.Team.player[1].score)
+                            {
+                                Console.WriteLine($"Round Number {VariableControlService.GameRound.ToString()} player One Win");
+                                VariableControlService.Team.player[0].score = 0;
+                                VariableControlService.Team.player[1].score = 0;
+                            }
+                            else if (VariableControlService.Team.player[0].score < VariableControlService.Team.player[1].score)
+                            {
+                                Console.WriteLine($"Round Number {VariableControlService.GameRound.ToString()} player Two Win");
+                                VariableControlService.Team.player[0].score = 0;
+                                VariableControlService.Team.player[1].score = 0;
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Round Number {VariableControlService.GameRound.ToString()} Draw");
+                                VariableControlService.Team.player[0].score = 0;
+                                VariableControlService.Team.player[1].score = 0;
+                            }
+
+
+
+                            // Next Round
+                            VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
+                        }
+
                     }
                     VariableControlService.GameStatus = GameStatus.Empty;
                 }
@@ -175,23 +212,27 @@ namespace CatchyGame.Service
         {
             if (VariableControlService.GameMode == GameMode.inTeam)
             {
-                // To Do , Edit it so the list for the team 
-                int selectedButton = random.Next(0, PlayerOneRGBButtonList.Count());
+                int selectedButton = random.Next(0, TeamRGBButtonList.Count());
                 PlayerOneRGBButtonList[selectedButton].Activate(true);
             }
             else if (VariableControlService.GameMode == GameMode.inWar)
             {
-                int selectedButton = random.Next(0, PlayerOneRGBButtonList.Count());
-                PlayerOneRGBButtonList[selectedButton].Activate(true);
-                selectedButton = random.Next(0, PlayerTwoRGBButtonList.Count());
-                PlayerTwoRGBButtonList[selectedButton].Activate(true);
+
+                int numberOfBtnToSelect = random.Next(0, PlayerOneRGBButtonList.Count());
+                for (int i = 0; i < numberOfBtnToSelect; i++)
+                {
+                    int selectedButton = random.Next(0, PlayerOneRGBButtonList.Count());
+                    PlayerOneRGBButtonList[selectedButton].Activate(true);
+                    selectedButton = random.Next(0, PlayerTwoRGBButtonList.Count());
+                    PlayerTwoRGBButtonList[selectedButton].Activate(true);
+                }
             }
         }
 
         private void ResetAllButton()
         {
             if (VariableControlService.GameMode == GameMode.inTeam)
-                foreach (var button in PlayerOneRGBButtonList)
+                foreach (var button in TeamRGBButtonList)
                     button.Activate(false);
             else if (VariableControlService.GameMode == GameMode.inWar)
             {
@@ -200,6 +241,27 @@ namespace CatchyGame.Service
                 foreach (var button in PlayerTwoRGBButtonList)
                     button.Activate(false);
             }
+        }
+        private void PlayRoundSound(Round currentRound)
+        {
+            switch (currentRound)
+            {
+                case Round.Round1:
+                    AudioPlayer.PIStartAudio(SoundType.RoundOne);
+                    break;
+                case Round.Round2:
+                    AudioPlayer.PIStartAudio(SoundType.RoundTwo);
+                    break;
+                case Round.Round3:
+                    AudioPlayer.PIStartAudio(SoundType.RoundThree); break;
+                default:
+                    break;
+
+            }
+        }
+        private Round NextRound(Round currentRound)
+        {
+            return (Round)((int)currentRound + 1);
         }
 
         private void StopTheGame() { }
