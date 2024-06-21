@@ -194,5 +194,10 @@ namespace Library
         player,
         Extra
     }
+    public enum GameMode
+    {
+        inTeam,
+        inWar
+    }
 
 }

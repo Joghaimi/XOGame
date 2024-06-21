@@ -56,5 +56,11 @@ namespace CatchyGame.Controllers
             VariableControlService.GameStatus = GameStatus.Started;
             return Ok();
         }
+        [HttpPost("GameMode")]
+        public IActionResult GameMode(GameMode mode)
+        {
+            VariableControlService.GameMode = mode;
+            return Ok();
+        }
     }
 }

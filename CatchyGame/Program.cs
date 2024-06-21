@@ -15,7 +15,8 @@ builder.Services.AddSwaggerGen();
 //builder.Services.AddHostedService<SenarioService>(); // The Main Flow .. 
 //builder.Services.AddHostedService<SneakSenarioService>(); // The Main Flow .. 
 //builder.Services.AddHostedService<SparkRGBScenario>(); // The Main Flow .. 
-builder.Services.AddHostedService<RandomRGBScenario>(); // The Main Flow .. 
+//builder.Services.AddHostedService<RandomRGBScenario>(); // The Main Flow .. 
+builder.Services.AddHostedService<RandomRGBScenarioWithGameMode>(); // The Main Flow .. 
 builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.Converters
 .Add(new JsonStringEnumConverter()));
 builder.Services.AddLogging(builder => builder.AddConsole().SetMinimumLevel(LogLevel.Trace));
