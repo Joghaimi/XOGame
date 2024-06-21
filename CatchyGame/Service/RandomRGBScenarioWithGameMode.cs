@@ -175,22 +175,23 @@ namespace CatchyGame.Service
                                 Console.WriteLine($"Round Number {VariableControlService.GameRound.ToString()} player One Win");
                                 VariableControlService.Team.player[0].score = 0;
                                 VariableControlService.Team.player[1].score = 0;
+                                VariableControlService.Team.player[0].winNumber++;
                             }
                             else if (VariableControlService.Team.player[0].score < VariableControlService.Team.player[1].score)
                             {
                                 Console.WriteLine($"Round Number {VariableControlService.GameRound.ToString()} player Two Win");
                                 VariableControlService.Team.player[0].score = 0;
                                 VariableControlService.Team.player[1].score = 0;
+                                VariableControlService.Team.player[1].winNumber++;
                             }
                             else
                             {
                                 Console.WriteLine($"Round Number {VariableControlService.GameRound.ToString()} Draw");
                                 VariableControlService.Team.player[0].score = 0;
                                 VariableControlService.Team.player[1].score = 0;
+                                VariableControlService.Team.player[0].winNumber++;
+                                VariableControlService.Team.player[1].winNumber++;
                             }
-
-
-
                             // Next Round
                             VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
                         }

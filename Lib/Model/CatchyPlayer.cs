@@ -11,5 +11,6 @@ namespace Library.Model
         public string firstname { get; set; }
         public string lastname { get; set; }
         public int score { get; set; }
+        public int winNumber { get; set; }
     }
 }
