@@ -80,6 +80,7 @@ namespace CatchyGame.Service
                     item.Activate(true);
                     Console.WriteLine($"index {index}");
                     Thread.Sleep(1000);
+                    index++;
                 }  
                 
                 //if (VariableControlService.GameMode == GameMode.inTeam)
