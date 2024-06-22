@@ -234,7 +234,7 @@ namespace CatchyGame.Service
             if (VariableControlService.GameMode == GameMode.inTeam)
             {
                 int selectedButton = random.Next(0, TeamRGBButtonList.Count());
-                PlayerOneRGBButtonList[selectedButton].Activate(true);
+                TeamRGBButtonList[selectedButton].Activate(true);
             }
             else if (VariableControlService.GameMode == GameMode.inWar)
             {
