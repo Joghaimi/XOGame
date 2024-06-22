@@ -111,6 +111,10 @@ namespace CatchyGame.Service
                 while (VariableControlService.GameStatus == GameStatus.Started)
                 {
                     LevelTime.Restart();
+                    RGBWS2811.SetColorByRange(
+                        VariableControlService.StripOneStartIndex, VariableControlService.StripSevenEndIndex,
+                        RGBColor.purple);
+                    RGBWS2811.Commit();
                     while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
                     {
 
