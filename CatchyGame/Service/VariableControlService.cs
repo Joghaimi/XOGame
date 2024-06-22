@@ -5,7 +5,7 @@ namespace CatchyGame.Service
 {
     public static class VariableControlService
     {
-        public static int LevelTimeInSec = 60;
+        public static int LevelTimeInSec = 6;
 
 
         public static string GetPlayersURL { get; set; } = "https://qmdug12n2k.execute-api.us-east-1.amazonaws.com/dev/getrfiddataofplayers";
