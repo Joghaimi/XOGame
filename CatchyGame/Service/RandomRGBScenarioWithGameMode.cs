@@ -161,6 +161,7 @@ namespace CatchyGame.Service
                             Thread.Sleep(2000);
                             ResetAllButton();
                         }
+                        ResetAllButton();
                         if (VariableControlService.Team.player[0].score > VariableControlService.topScore.Score)
                         {
                             VariableControlService.topScore.Score = VariableControlService.Team.player[0].score;
