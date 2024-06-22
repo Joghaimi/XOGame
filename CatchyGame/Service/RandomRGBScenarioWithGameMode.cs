@@ -78,7 +78,8 @@ namespace CatchyGame.Service
                VariableControlService.StripOneStartIndex, VariableControlService.StripSevenEndIndex,
                RGBColor.purple);
             RGBWS2811.Commit();
-
+            GameTime.Start();
+            LevelTime.Start();
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -168,6 +169,7 @@ namespace CatchyGame.Service
                             VariableControlService.topScore.name = VariableControlService.Team.teamName;
                             LocalStorage.SaveData(VariableControlService.topScore, "data.json");
                         }
+                        VariableControlService.GameStatus = GameStatus.Empty;
                     }
                     else if (VariableControlService.GameMode == GameMode.inWar)
                     {
@@ -213,9 +215,9 @@ namespace CatchyGame.Service
                             // Next Round
                             VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
                         }
-
+                        VariableControlService.GameStatus = GameStatus.Empty;
                     }
-                    VariableControlService.GameStatus = GameStatus.Empty;
+
                 }
             }
         }
