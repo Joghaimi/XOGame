@@ -62,9 +62,9 @@ namespace CatchyGame.Controllers
             Console.WriteLine(mode);
             VariableControlService.GameMode = mode;
             if (VariableControlService.GameMode == Library.GameMode.inWar)
-                VariableControlService.GameTiming = 180000;
+                VariableControlService.GameTiming = 18000;
             else
-                VariableControlService.GameTiming = 120000;
+                VariableControlService.GameTiming = 12000;
 
             return Ok();
         }
