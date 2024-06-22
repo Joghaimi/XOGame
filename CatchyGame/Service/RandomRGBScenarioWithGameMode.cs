@@ -150,6 +150,10 @@ namespace CatchyGame.Service
                 {
                     if (VariableControlService.GameMode == GameMode.inTeam)
                     {
+                        RGBWS2811.SetColorByRange(
+                           VariableControlService.StripOneStartIndex, VariableControlService.StripSevenEndIndex,
+                           RGBColor.purple);
+                        RGBWS2811.Commit();
                         while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
                         {
                             SelectRandomButton();
@@ -171,6 +175,10 @@ namespace CatchyGame.Service
                         {
                             PlayRoundSound(VariableControlService.GameRound);
                             LevelTime.Restart();
+                            RGBWS2811.SetColorByRange(
+                                VariableControlService.StripOneStartIndex, VariableControlService.StripSevenEndIndex,
+                                RGBColor.purple);
+                            RGBWS2811.Commit();
                             while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
                             {
                                 SelectRandomButton();
