@@ -154,7 +154,8 @@ namespace CatchyGame.Service
                            VariableControlService.StripOneStartIndex, VariableControlService.StripSevenEndIndex,
                            RGBColor.purple);
                         RGBWS2811.Commit();
-                        while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
+                        GameTime.Restart();
+                        while (GameTime.ElapsedMilliseconds < VariableControlService.GameTiming)
                         {
                             SelectRandomButton();
                             Thread.Sleep(2000);
