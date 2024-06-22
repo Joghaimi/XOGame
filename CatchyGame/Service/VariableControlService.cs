@@ -5,7 +5,7 @@ namespace CatchyGame.Service
 {
     public static class VariableControlService
     {
-        public static int LevelTimeInSec = 6;
+        public static int LevelTimeInSec = 62;
 
 
         public static string GetPlayersURL { get; set; } = "https://qmdug12n2k.execute-api.us-east-1.amazonaws.com/dev/getrfiddataofplayers";
@@ -21,8 +21,8 @@ namespace CatchyGame.Service
         public static TopScore topScore = new TopScore();
         //public static int TopScore = 0;
         //public static string TopScoreTeam = "Test Team";
-        public static int GameTiming = 18000;
-        public static int LevelTime = 6000;
+        public static int GameTiming = 180000;
+        public static int LevelTime = 60000;
 
         public static int PlayerScore = 0;
         public static bool IsGameTimerStarted = false;
