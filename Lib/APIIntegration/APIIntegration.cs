@@ -173,14 +173,14 @@ namespace Library.APIIntegration
             return null;
         }
 
-        public async static Task<(MakeSignetureRequestDto, string)> GetSignature(string baseUrl, Team team)
+        public async static Task<(MakeSignetureRequestDto, string)> GetSignature(string baseUrl, GameType gameId, Team team)
         {
 
             MakeSignetureRequestDto requestBody = new MakeSignetureRequestDto();
             requestBody.team_name = team.Name;
             requestBody.score = team.Total;
             requestBody.team_id = int.Parse(team.player[0].Id);
-            requestBody.game_id = 21;
+            requestBody.game_id = (int)gameId;// 21;
             requestBody.date_time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             foreach (var player in team.player)
             {

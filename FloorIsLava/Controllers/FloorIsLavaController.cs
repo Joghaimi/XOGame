@@ -164,20 +164,19 @@ namespace FloorIsLava.Controllers
             return Ok(loadedData);
         }
         [HttpGet("Test")]
-        public async Task <IActionResult> Test()
+        public async Task<IActionResult> Test()
         {
             Team newTeam = new Team();
             newTeam.Name = "TestName";
-            newTeam.Total = 100;
+            newTeam.Total = 1780;
             var player = new Player();
             player.Id = "12";
             player.FirstName = "Test";
             player.LastName = "Test@";
-            player.MobileNumber= "0795282626";
+            player.MobileNumber = "0795282626";
             newTeam.player.Add(player);
-            var result =await APIIntegration.GetSignature("https://admin.frenziworld.com/api/make-signature", newTeam);
-            await APIIntegration.SendScore("https://admin.frenziworld.com/api/game-score", result.Item1 ,result.Item2);
-
+            var result = await APIIntegration.GetSignature("https://admin.frenziworld.com/api/make-signature", GameType.XOGame ,newTeam);
+            await APIIntegration.SendScore("https://admin.frenziworld.com/api/game-score", result.Item1, result.Item2);
 
             return Ok(result);
         }

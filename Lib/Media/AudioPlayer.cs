@@ -221,6 +221,9 @@ namespace Library.Media
                 case SoundType.Failure:
                     soundFilePath = $"{HomePath()}/audio/Failure.wav";
                     break;
+                case SoundType.Wow:
+                    soundFilePath = $"{HomePath()}/audio/wow.mp3";
+                    break;
                 default:
                     break;
             }

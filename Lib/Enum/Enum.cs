@@ -39,7 +39,8 @@ namespace Library
         LightsChange,
         Charge,
         Success,
-        Failure
+        Failure,
+        Wow
     }
     public enum Room
     {
@@ -198,6 +199,11 @@ namespace Library
     {
         inTeam,
         inWar
+    }
+    public enum GameType
+    {
+        XOGame = 21,
+        Catchy = 22
     }
 
 }

@@ -6,6 +6,7 @@ using Library.PinMapping;
 using Library;
 using Library.RGBLib;
 using System.Diagnostics;
+using Library.APIIntegration;
 
 namespace CatchyGame.Service
 {
@@ -14,14 +15,17 @@ namespace CatchyGame.Service
         Random random = new Random();
         Stopwatch GameTime = new Stopwatch();
         Stopwatch LevelTime = new Stopwatch();
-        private CancellationTokenSource _cts, _cts2, _cts3;
-
+        private CancellationTokenSource _cts, _cts2, _cts3, _cts4;
+        bool gameFinishedButScoreNotSend = false;
 
         List<SparkRGBButton> TeamRGBButtonList = new List<SparkRGBButton>();
         List<SparkRGBButton> PlayerOneRGBButtonList = new List<SparkRGBButton>();
         List<SparkRGBButton> PlayerTwoRGBButtonList = new List<SparkRGBButton>();
         int delayTime = 800;
 
+        bool toggleSuccessSound = false;
+
+        RGBColor inActiveGameRGBColor = RGBColor.Red;
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
@@ -84,12 +88,41 @@ namespace CatchyGame.Service
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            _cts4 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
             Task.Run(() => ControlGame(_cts.Token));
             Task.Run(() => PlayerCatchingGame(_cts2.Token));
             Task.Run(() => ControlGameTiming(_cts3.Token));
+            Task.Run(() => ControlRGBLightWhenGameIsOff(_cts4.Token));
 
             return Task.CompletedTask;
         }
+        private async Task ControlRGBLightWhenGameIsOff(CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                if (VariableControlService.GameStatus != GameStatus.Started)
+                {
+                    RGBWS2811.SetColorByRange(
+                           VariableControlService.StripOneStartIndex, VariableControlService.StripSevenEndIndex,
+                           RGBColor.purple);
+                    RGBWS2811.Commit();
+                    inActiveGameRGBColor = NextColor(inActiveGameRGBColor);
+                    Thread.Sleep(10000);
+                }
+            }
+
+        }
+
+        private RGBColor NextColor(RGBColor currentColor)
+        {
+            if ((int)currentColor < (int)RGBColor.Off)
+                return (RGBColor)((int)currentColor + 1);
+            else
+                return (RGBColor)(0);
+        }
+
+
         private async Task PlayerCatchingGame(CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
@@ -106,10 +139,10 @@ namespace CatchyGame.Service
                             if (button.isPressed() == 1)
                             {
 
-                                AudioPlayer.PIStartAudio(SoundType.Success);
+                                SuccessSound();
                                 VariableControlService.Team.player[0].score += 10;
                                 Console.WriteLine($"Player One {VariableControlService.Team.player[0].score} ============ index {index}");
-                                Console.WriteLine($"pressed index{index}");
+                                Console.WriteLine($"pressed index {index}");
                             }
                             index++;
                         }
@@ -120,7 +153,7 @@ namespace CatchyGame.Service
                         {
                             if (button.isPressed() == 1)
                             {
-                                AudioPlayer.PIStartAudio(SoundType.Success);
+                                SuccessSound();
                                 VariableControlService.Team.player[0].score += 10;
                                 Console.WriteLine($"Player One Press the Button,new Sore {VariableControlService.Team.player[0].score}");
                             }
@@ -129,7 +162,7 @@ namespace CatchyGame.Service
                         {
                             if (button.isPressed() == 1)
                             {
-                                AudioPlayer.PIStartAudio(SoundType.Success);
+                                SuccessSound();
                                 VariableControlService.Team.player[1].score += 10;
                                 Console.WriteLine($"Player Two Press the Button,new Sore {VariableControlService.Team.player[1].score}");
                             }
@@ -149,6 +182,7 @@ namespace CatchyGame.Service
                 // Number Of Button 
                 while (VariableControlService.GameStatus == GameStatus.Started)
                 {
+                    gameFinishedButScoreNotSend = true;
                     if (VariableControlService.GameMode == GameMode.inTeam)
                     {
                         RGBWS2811.SetColorByRange(
@@ -219,6 +253,16 @@ namespace CatchyGame.Service
                     }
 
                 }
+                if (gameFinishedButScoreNotSend)
+                {
+                    gameFinishedButScoreNotSend = false;
+                    bool teamNotAssigned = VariableControlService.Team.teamName == "" || VariableControlService.Team.teamName == null;
+
+                    if (!teamNotAssigned && VariableControlService.GameMode == GameMode.inTeam)
+                    {
+                        SendScore();
+                    }
+                }
             }
         }
 
@@ -284,6 +328,28 @@ namespace CatchyGame.Service
         {
             return (Round)((int)currentRound + 1);
         }
+
+
+        // === SEND SCORE 
+        private async void SendScore()
+        {
+            Team team = new Team();
+            team.Name = VariableControlService.Team.teamName;
+            team.player = new List<Player>();
+            team.player.Add(new Player { Id = "", FirstName = VariableControlService.Team.player[0].firstname, LastName = VariableControlService.Team.player[0].lastname });
+            team.Total = VariableControlService.Team.player[0].score;
+            var result = await APIIntegration.GetSignature("https://admin.frenziworld.com/api/make-signature", GameType.Catchy, team);
+            await APIIntegration.SendScore("https://admin.frenziworld.com/api/game-score", result.Item1, result.Item2);
+        }
+        private void SuccessSound()
+        {
+            if (toggleSuccessSound)
+                AudioPlayer.PIStartAudio(SoundType.Success);
+            else
+                AudioPlayer.PIStartAudio(SoundType.Wow);
+            toggleSuccessSound = !toggleSuccessSound;
+        }
+
 
         private void StopTheGame() { }
         public Task StopAsync(CancellationToken cancellationToken)

@@ -269,7 +269,7 @@ namespace FloorIsLava.Services
                 bool teamNotAssigned = VariableControlService.TeamScore.Name == "" || VariableControlService.TeamScore.Name == null;
                 if (!teamNotAssigned)
                 {
-                    var result = await APIIntegration.GetSignature("https://admin.frenziworld.com/api/make-signature", VariableControlService.TeamScore);
+                    var result = await APIIntegration.GetSignature("https://admin.frenziworld.com/api/make-signature", GameType.XOGame, VariableControlService.TeamScore);
                     await APIIntegration.SendScore("https://admin.frenziworld.com/api/game-score", result.Item1, result.Item2);
                 }
                 Console.WriteLine("Ready To Leave .. Turn RGB Button On");
