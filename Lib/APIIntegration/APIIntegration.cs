@@ -163,6 +163,7 @@ namespace Library.APIIntegration
                 HttpResponseMessage response = await httpClient.PostAsync(baseUrl, content);
                 Console.WriteLine($"response.IsSuccessStatusCode {response.IsSuccessStatusCode}");
                 Console.WriteLine($"response.IsSuccessStatusCode {response.Content}");
+                Console.WriteLine($"jsonData {jsonData}");
                 if (response.IsSuccessStatusCode)
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
