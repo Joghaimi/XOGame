@@ -104,7 +104,7 @@ namespace CatchyGame.Service
                 if (VariableControlService.GameStatus != GameStatus.Started)
                 {
                     RGBWS2811.SetColorByRange(
-                           VariableControlService.StripOneStartIndex, 
+                           VariableControlService.StripOneStartIndex,
                            VariableControlService.StripSevenEndIndex,
                            inActiveGameRGBColor);
                     RGBWS2811.Commit();
@@ -186,10 +186,10 @@ namespace CatchyGame.Service
                     gameFinishedButScoreNotSend = true;
                     if (VariableControlService.GameMode == GameMode.inTeam)
                     {
-                        //RGBWS2811.SetColorByRange(
-                        //   VariableControlService.StripOneStartIndex, VariableControlService.StripSevenEndIndex,
-                        //   RGBColor.purple);
-                        //RGBWS2811.Commit();
+                        RGBWS2811.SetColorByRange(
+                           VariableControlService.StripOneStartIndex, VariableControlService.StripSevenEndIndex,
+                           RGBColor.Off);
+                        RGBWS2811.Commit();
                         GameTime.Restart();
                         while (GameTime.ElapsedMilliseconds < VariableControlService.GameTiming)
                         {
@@ -208,16 +208,20 @@ namespace CatchyGame.Service
                     }
                     else if (VariableControlService.GameMode == GameMode.inWar)
                     {
+                        RGBWS2811.SetColorByRange(
+                           VariableControlService.StripOneStartIndex, VariableControlService.StripSevenEndIndex,
+                           RGBColor.Off);
+                        RGBWS2811.Commit();
                         VariableControlService.GameRound = Round.Round1;
                         GameTime.Restart();
                         while (VariableControlService.GameRound < Round.Round4)
                         {
                             PlayRoundSound(VariableControlService.GameRound);
                             LevelTime.Restart();
-                            RGBWS2811.SetColorByRange(
-                                VariableControlService.StripOneStartIndex, VariableControlService.StripSevenEndIndex,
-                                RGBColor.purple);
-                            RGBWS2811.Commit();
+                            //RGBWS2811.SetColorByRange(
+                            //    VariableControlService.StripOneStartIndex, VariableControlService.StripSevenEndIndex,
+                            //    RGBColor.purple);
+                            //RGBWS2811.Commit();
                             while (LevelTime.ElapsedMilliseconds < VariableControlService.LevelTimeInSec * 1000)
                             {
                                 SelectRandomButton();
