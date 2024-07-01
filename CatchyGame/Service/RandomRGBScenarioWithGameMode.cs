@@ -105,7 +105,7 @@ namespace CatchyGame.Service
                 {
                     RGBWS2811.SetColorByRange(
                            VariableControlService.StripOneStartIndex, VariableControlService.StripSevenEndIndex,
-                           RGBColor.purple);
+                           inActiveGameRGBColor);
                     RGBWS2811.Commit();
                     inActiveGameRGBColor = NextColor(inActiveGameRGBColor);
                     Thread.Sleep(10000);
@@ -185,10 +185,10 @@ namespace CatchyGame.Service
                     gameFinishedButScoreNotSend = true;
                     if (VariableControlService.GameMode == GameMode.inTeam)
                     {
-                        RGBWS2811.SetColorByRange(
-                           VariableControlService.StripOneStartIndex, VariableControlService.StripSevenEndIndex,
-                           RGBColor.purple);
-                        RGBWS2811.Commit();
+                        //RGBWS2811.SetColorByRange(
+                        //   VariableControlService.StripOneStartIndex, VariableControlService.StripSevenEndIndex,
+                        //   RGBColor.purple);
+                        //RGBWS2811.Commit();
                         GameTime.Restart();
                         while (GameTime.ElapsedMilliseconds < VariableControlService.GameTiming)
                         {
