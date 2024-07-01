@@ -265,7 +265,7 @@ namespace CatchyGame.Service
 
                     if (!teamNotAssigned && VariableControlService.GameMode == GameMode.inTeam)
                     {
-                        SendScore();
+                        //SendScore();
                     }
                 }
             }
