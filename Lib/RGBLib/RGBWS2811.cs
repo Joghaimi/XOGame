@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -75,6 +76,11 @@ namespace Library.RGBLib
                     pyParams[3] = (0).ToPython();
                     break;
                 case RGBColor.Blue:
+                    pyParams[1] = (0).ToPython();
+                    pyParams[2] = (0).ToPython();
+                    pyParams[3] = (255).ToPython();
+                    break;
+                case RGBColor.Turquoise:
                     pyParams[1] = (0).ToPython();
                     pyParams[2] = (0).ToPython();
                     pyParams[3] = (255).ToPython();

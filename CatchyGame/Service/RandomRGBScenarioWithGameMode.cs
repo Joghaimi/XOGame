@@ -103,12 +103,14 @@ namespace CatchyGame.Service
             {
                 if (VariableControlService.GameStatus != GameStatus.Started)
                 {
+                    Console.WriteLine(inActiveGameRGBColor.ToString());
                     RGBWS2811.SetColorByRange(
-                           VariableControlService.StripOneStartIndex, VariableControlService.StripSevenEndIndex,
+                           VariableControlService.StripOneStartIndex, 
+                           VariableControlService.StripSevenEndIndex,
                            inActiveGameRGBColor);
                     RGBWS2811.Commit();
                     inActiveGameRGBColor = NextColor(inActiveGameRGBColor);
-                    Thread.Sleep(10000);
+                    Thread.Sleep(5000);
                 }
             }
 
@@ -116,10 +118,10 @@ namespace CatchyGame.Service
 
         private RGBColor NextColor(RGBColor currentColor)
         {
-            if ((int)currentColor < (int)RGBColor.Off)
-                return (RGBColor)((int)currentColor + 1);
-            else
-                return (RGBColor)(0);
+            RGBColor newColor = (RGBColor)((int)currentColor + 1);
+            if (newColor == RGBColor.Off)
+                newColor = RGBColor.Red;
+            return newColor;
         }
 
 
