@@ -103,7 +103,6 @@ namespace CatchyGame.Service
             {
                 if (VariableControlService.GameStatus != GameStatus.Started)
                 {
-                    Console.WriteLine(inActiveGameRGBColor.ToString());
                     RGBWS2811.SetColorByRange(
                            VariableControlService.StripOneStartIndex, 
                            VariableControlService.StripSevenEndIndex,
