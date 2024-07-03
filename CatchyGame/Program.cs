@@ -1,5 +1,9 @@
+using CatchyGame.Data;
 using CatchyGame.Service;
 using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
@@ -9,6 +13,9 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
