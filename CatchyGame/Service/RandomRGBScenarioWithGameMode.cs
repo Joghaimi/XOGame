@@ -148,11 +148,11 @@ namespace CatchyGame.Service
             _cts4 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts5 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
-            //Task.Run(() => ControlGame(_cts.Token));
-            //Task.Run(() => PlayerCatchingGame(_cts2.Token));
-            //Task.Run(() => ControlGameTiming(_cts3.Token));
-            //Task.Run(() => ControlRGBLightWhenGameIsOff(_cts4.Token));
-            Task.Run(() => TestRGBButtons(_cts5.Token));
+            Task.Run(() => ControlGame(_cts.Token));
+            Task.Run(() => PlayerCatchingGame(_cts2.Token));
+            Task.Run(() => ControlGameTiming(_cts3.Token));
+            Task.Run(() => ControlRGBLightWhenGameIsOff(_cts4.Token));
+            //Task.Run(() => TestRGBButtons(_cts5.Token));
 
             return Task.CompletedTask;
         }
