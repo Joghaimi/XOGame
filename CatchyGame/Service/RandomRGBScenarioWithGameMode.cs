@@ -337,6 +337,7 @@ namespace CatchyGame.Service
                             VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
                         }
                         VariableControlService.GameStatus = GameStatus.Empty;
+                        ResetAllButton();
                     }
 
                 }
