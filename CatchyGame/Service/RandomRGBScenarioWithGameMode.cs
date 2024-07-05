@@ -236,23 +236,27 @@ namespace CatchyGame.Service
                     }
                     else if (VariableControlService.GameMode == GameMode.inWar)
                     {
+                        int i = 0;
                         foreach (var button in PlayerOneRGBButtonList)
                         {
                             if (button.isPressed() == 1)
                             {
                                 SuccessSound();
                                 VariableControlService.Team.player[0].score += 10;
-                                Console.WriteLine($"Player One Press the Button,new Sore {VariableControlService.Team.player[0].score}");
+                                Console.WriteLine($"Player One Press the Button {i},new Sore {VariableControlService.Team.player[0].score}");
                             }
+                            i++;
                         }
+                        i = 0;
                         foreach (var button in PlayerTwoRGBButtonList)
                         {
                             if (button.isPressed() == 1)
                             {
                                 SuccessSound();
                                 VariableControlService.Team.player[1].score += 10;
-                                Console.WriteLine($"Player Two Press the Button,new Sore {VariableControlService.Team.player[1].score}");
+                                Console.WriteLine($"Player Two Press the Button {i},new Sore {VariableControlService.Team.player[1].score}");
                             }
+                            i++;
                         }
                     }
 
