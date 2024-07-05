@@ -50,7 +50,7 @@ namespace CatchyGame.Service
             //PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR16, RGBButtonPin.RGBG16, RGBButtonPin.RGBB16, RGBButtonPin.RGBPB16), 5, Library.RGBColor.Green));
 
             /// Replace 
-            PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR1, HatOutputPin.OUTPUT1, RGBButtonPin.RGBB1, HatInputPin.IR1), 5, Library.RGBColor.Off, Library.RGBColor.Green));
+            //PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR1, HatOutputPin.OUTPUT1, RGBButtonPin.RGBB1, HatInputPin.IR1), 5, Library.RGBColor.Off, Library.RGBColor.Green));
             PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR2, HatOutputPin.OUTPUT2, RGBButtonPin.RGBB2, HatInputPin.IR2), 5, Library.RGBColor.Off, Library.RGBColor.Green));
             PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR3, HatOutputPin.OUTPUT3, RGBButtonPin.RGBB3, HatInputPin.IR3), 5, Library.RGBColor.Off, Library.RGBColor.Green));
             PlayerOneRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR4Extra, HatOutputPin.OUTPUT4, RGBButtonPin.RGBB4Extra, HatInputPin.IR4), 5, Library.RGBColor.Off, Library.RGBColor.Green));
@@ -72,7 +72,7 @@ namespace CatchyGame.Service
             //PlayerTwoRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR12Extra, RGBButtonPin.RGBG12Extra, RGBButtonPin.RGBB12Extra, RGBButtonPin.RGBPB12Extra), 5, Library.RGBColor.Green));
             PlayerTwoRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR5, HatOutputPin.OUTPUT11, RGBButtonPin.RGBB5, HatInputPin.IR11), 5, Library.RGBColor.Off, Library.RGBColor.Green));
             PlayerTwoRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR6, HatOutputPin.OUTPUT12, RGBButtonPin.RGBB6, HatInputPin.IR12), 5, Library.RGBColor.Off, Library.RGBColor.Green));
-            PlayerTwoRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR7, HatOutputPin.OUTPUT13, RGBButtonPin.RGBB7, HatInputPin.IR13), 5, Library.RGBColor.Off, Library.RGBColor.Green));
+            //PlayerTwoRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR7, HatOutputPin.OUTPUT13, RGBButtonPin.RGBB7, HatInputPin.IR13), 5, Library.RGBColor.Off, Library.RGBColor.Green));
             PlayerTwoRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR8, HatOutputPin.OUTPUT14, RGBButtonPin.RGBB8, HatInputPin.IR14), 5, Library.RGBColor.Off, Library.RGBColor.Green));
             PlayerTwoRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR9, RGBButtonPin.RGBB9, HatOutputPin.OUTPUT15, HatInputPin.IR15), 5, Library.RGBColor.Off, Library.RGBColor.Blue));
             PlayerTwoRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR10, RGBButtonPin.RGBB10, HatOutputPin.OUTPUT17, HatInputPin.IR17), 5, Library.RGBColor.Off, Library.RGBColor.Blue));
@@ -97,7 +97,7 @@ namespace CatchyGame.Service
             //TeamRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR15, RGBButtonPin.RGBG15, RGBButtonPin.RGBB15, RGBButtonPin.RGBPB15), 5, Library.RGBColor.Blue));
             //TeamRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR16, RGBButtonPin.RGBG16, RGBButtonPin.RGBB16, RGBButtonPin.RGBPB16), 5, Library.RGBColor.Green));
 
-            TeamRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR1, HatOutputPin.OUTPUT1, RGBButtonPin.RGBB1, HatInputPin.IR1), 5, Library.RGBColor.Off, Library.RGBColor.Green));
+            //TeamRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR1, HatOutputPin.OUTPUT1, RGBButtonPin.RGBB1, HatInputPin.IR1), 5, Library.RGBColor.Off, Library.RGBColor.Green));
             TeamRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR2, HatOutputPin.OUTPUT2, RGBButtonPin.RGBB2, HatInputPin.IR2), 5, Library.RGBColor.Off, Library.RGBColor.Green));
             TeamRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR3, HatOutputPin.OUTPUT3, RGBButtonPin.RGBB3, HatInputPin.IR3), 5, Library.RGBColor.Off, Library.RGBColor.Green));
             TeamRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR4Extra, HatOutputPin.OUTPUT4, RGBButtonPin.RGBB4Extra, HatInputPin.IR4), 5, Library.RGBColor.Off, Library.RGBColor.Green));
@@ -107,7 +107,7 @@ namespace CatchyGame.Service
             TeamRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR16, HatOutputPin.OUTPUT10, RGBButtonPin.RGBB16, HatInputPin.IR10), 5, Library.RGBColor.Off, Library.RGBColor.Green));
             TeamRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR5, HatOutputPin.OUTPUT11, RGBButtonPin.RGBB5, HatInputPin.IR11), 5, Library.RGBColor.Off, Library.RGBColor.Green));
             TeamRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR6, HatOutputPin.OUTPUT12, RGBButtonPin.RGBB6, HatInputPin.IR12), 5, Library.RGBColor.Off, Library.RGBColor.Green));
-            TeamRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR7, HatOutputPin.OUTPUT13, RGBButtonPin.RGBB7, HatInputPin.IR13), 5, Library.RGBColor.Off, Library.RGBColor.Green));
+            //TeamRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR7, HatOutputPin.OUTPUT13, RGBButtonPin.RGBB7, HatInputPin.IR13), 5, Library.RGBColor.Off, Library.RGBColor.Green));
             TeamRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR8, HatOutputPin.OUTPUT14, RGBButtonPin.RGBB8, HatInputPin.IR14), 5, Library.RGBColor.Off, Library.RGBColor.Green));
             TeamRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR9, RGBButtonPin.RGBB9, HatOutputPin.OUTPUT15, HatInputPin.IR15), 5, Library.RGBColor.Off, Library.RGBColor.Blue));
             TeamRGBButtonList.Add(new SparkRGBButton(new RGBButton(RGBButtonPin.RGBR10, RGBButtonPin.RGBB10, HatOutputPin.OUTPUT17, HatInputPin.IR17), 5, Library.RGBColor.Off, Library.RGBColor.Blue));
