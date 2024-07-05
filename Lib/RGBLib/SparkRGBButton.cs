@@ -49,7 +49,11 @@ namespace Library.RGBLib
             if (activate)
                 _button.TurnColorOn(onColor);
             else
+            {
                 _button.TurnColorOn(offColor);
+                Thread.Sleep(10);
+                _button.TurnColorOn(offColor);
+            }
         }
         public int isPressed()
         {
