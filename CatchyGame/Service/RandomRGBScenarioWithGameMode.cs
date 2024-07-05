@@ -384,8 +384,12 @@ namespace CatchyGame.Service
                 {
                     int selectedButton = random.Next(0, PlayerOneRGBButtonList.Count());
                     PlayerOneRGBButtonList[selectedButton].Activate(true);
+                    Console.WriteLine($"Player One Btn On Index {selectedButton}");
                     selectedButton = random.Next(0, PlayerTwoRGBButtonList.Count());
                     PlayerTwoRGBButtonList[selectedButton].Activate(true);
+                    Console.WriteLine($"Player Two Btn On Index {selectedButton}");
+                    Console.WriteLine($"******************");
+
                 }
             }
         }
