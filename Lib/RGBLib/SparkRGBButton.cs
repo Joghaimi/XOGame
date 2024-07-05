@@ -23,6 +23,16 @@ namespace Library.RGBLib
             this.onColor = color;
             hasSpikes = true;
         }
+        public SparkRGBButton(RGBButton button, int pixelInAllSpikes, RGBColor onColor)
+        {
+            //, List<Spike> spikeStrips
+            _button = button;
+            PixelInAllSpikes = pixelInAllSpikes;
+            this.onColor = onColor;
+            this.offColor = offColor;
+            _button.TurnColorOn(this.offColor);
+        }
+
         public SparkRGBButton(RGBButton button, int pixelInAllSpikes, RGBColor onColor, RGBColor offColor)
         {
             //, List<Spike> spikeStrips
