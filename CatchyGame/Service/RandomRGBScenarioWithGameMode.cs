@@ -15,7 +15,7 @@ namespace CatchyGame.Service
         Random random = new Random();
         Stopwatch GameTime = new Stopwatch();
         Stopwatch LevelTime = new Stopwatch();
-        private CancellationTokenSource _cts, _cts2, _cts3, _cts4;
+        private CancellationTokenSource _cts, _cts2, _cts3, _cts4, _cts5;
         bool gameFinishedButScoreNotSend = false;
 
         List<SparkRGBButton> TeamRGBButtonList = new List<SparkRGBButton>();
@@ -146,13 +146,38 @@ namespace CatchyGame.Service
             _cts2 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts3 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cts4 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            _cts5 = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
-            Task.Run(() => ControlGame(_cts.Token));
-            Task.Run(() => PlayerCatchingGame(_cts2.Token));
-            Task.Run(() => ControlGameTiming(_cts3.Token));
-            Task.Run(() => ControlRGBLightWhenGameIsOff(_cts4.Token));
+            //Task.Run(() => ControlGame(_cts.Token));
+            //Task.Run(() => PlayerCatchingGame(_cts2.Token));
+            //Task.Run(() => ControlGameTiming(_cts3.Token));
+            //Task.Run(() => ControlRGBLightWhenGameIsOff(_cts4.Token));
+            Task.Run(() => TestRGBButtons(_cts5.Token));
 
             return Task.CompletedTask;
+        }
+        private async Task TestRGBButtons(CancellationToken cancellationToken)
+        {
+            foreach (var item in TeamRGBButtonList)
+            {
+                item.Activate(true);
+            }
+            while (true)
+            {
+                int i = 0;
+                foreach (var item in TeamRGBButtonList)
+                {
+                    if (item.isPressed() == 1)
+                    {
+                        Console.WriteLine($"Button #{i}");
+                        SuccessSound();
+                    }
+                    i++;
+                }
+            }
+
+
+
         }
         private async Task ControlRGBLightWhenGameIsOff(CancellationToken cancellationToken)
         {
