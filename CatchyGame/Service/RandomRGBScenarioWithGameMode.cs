@@ -171,9 +171,13 @@ namespace CatchyGame.Service
                     {
                         Console.WriteLine($"Button #{i}");
                         SuccessSound();
+                        Thread.Sleep(100);
+                        item.Activate(true);
                     }
                     i++;
                 }
+                
+
             }
 
 
