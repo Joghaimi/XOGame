@@ -11,7 +11,8 @@ namespace Library.RGBLib
         public RGBButton _button;
         public List<Spike> SpikeStrips; // To Do 
         public int PixelInAllSpikes;
-        public RGBColor color;
+        public RGBColor onColor;
+        public RGBColor offColor;
         bool hasSpikes = false;
         public SparkRGBButton(RGBButton button, List<Spike> spikeStrips, int pixelInAllSpikes, RGBColor color)
         {
@@ -19,24 +20,26 @@ namespace Library.RGBLib
             _button = button;
             SpikeStrips = spikeStrips;
             PixelInAllSpikes = pixelInAllSpikes;
-            this.color = color;
+            this.onColor = color;
             hasSpikes = true;
         }
-        public SparkRGBButton(RGBButton button, int pixelInAllSpikes, RGBColor color)
+        public SparkRGBButton(RGBButton button, int pixelInAllSpikes, RGBColor onColor, RGBColor offColor)
         {
             //, List<Spike> spikeStrips
             _button = button;
             PixelInAllSpikes = pixelInAllSpikes;
-            this.color = color;
+            this.onColor = onColor;
+            this.offColor = offColor;
+            _button.TurnColorOn(this.offColor);
         }
 
         public void Activate(bool activate)
         {
             _button.Set(activate);
             if (activate)
-                _button.TurnColorOn(color);
+                _button.TurnColorOn(onColor);
             else
-                _button.TurnColorOn(RGBColor.Off);
+                _button.TurnColorOn(offColor);
         }
         public int isPressed()
         {
