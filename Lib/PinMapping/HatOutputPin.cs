@@ -83,12 +83,12 @@ namespace Library.PinMapping
             Chip = MCP23017.MCP2301722, // Set the Chip property with the MCP23017 instance
             port = Port.PortA
         };
-        //public static MCP23Pin OUTPUT13 = new MCP23Pin
-        //{
-        //    PinNumber = 7, // Set the PinNumber property
-        //    Chip = MCP23017.MCP2301723, // Set the Chip property with the MCP23017 instance
-        //    port = Port.PortB
-        //};
+        public static MCP23Pin OUTPUT13 = new MCP23Pin
+        {
+            PinNumber = 7, // Set the PinNumber property
+            Chip = MCP23017.MCP2301723, // Set the Chip property with the MCP23017 instance
+            port = Port.PortB
+        };
         public static MCP23Pin OUTPUT14 = new MCP23Pin
         {
             PinNumber = 6, // Set the PinNumber property
