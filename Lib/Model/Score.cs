@@ -11,6 +11,6 @@ namespace Library.Model
         public int Id { get; set; }
         public string TeamName { get; set; }
         public int TeamScore { get; set; }
-
+        public DateTime TimeStamp { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using CatchyGame.Service;
+﻿using CatchyGame.Data;
+using CatchyGame.Repository;
+using CatchyGame.Service;
 using Library;
 using Library.LocalStorage;
 using Library.Model;
@@ -11,6 +13,13 @@ namespace CatchyGame.Controllers
     [ApiController]
     public class CatchyController : ControllerBase
     {
+        public ApplicationDbContext DbContext;
+        public readonly IScoreRepository _scoreRepo;
+        public CatchyController(ApplicationDbContext _dbContext, IScoreRepository scoreRepo)
+        {
+            DbContext = _dbContext;
+            _scoreRepo = scoreRepo;
+        }
         [HttpGet("RoomStatus")]
         public IActionResult GetRoomStatus()
         {
@@ -68,5 +77,43 @@ namespace CatchyGame.Controllers
 
             return Ok();
         }
+        [HttpPost("Test SaveScore")]
+        public IActionResult SaveScoreTest() {
+
+            var score = new Score();
+            //score.Id = 1; 
+            score.TimeStamp =  DateTime.Now.AddDays(-7);
+            score.TeamName = "Test 3";
+            score.TeamScore = 30;
+            var score2 = new Score();
+            //score.Id = 1; 
+            score2.TimeStamp = DateTime.Now.AddDays(-30);
+            score2.TeamName = "Test 5";
+            score2.TeamScore = 50;
+            _scoreRepo.SaveScore(score2);
+            return Ok(_scoreRepo.SaveScore(score));
+        }
+        [HttpGet("GetSaveScoreTest")]
+        public IActionResult GetSaveScoreTest()
+        {
+            var scores = DbContext.Score.ToList();
+            return Ok( scores );
+        }
+        [HttpGet("GetTodayTopScore")]
+        public IActionResult GetTodayTopScore()
+        {
+            return Ok(_scoreRepo.GetTopScoreThisDay());
+        }
+        [HttpGet("GetThisWeekTopScore")]
+        public IActionResult GetThisWeekTopScore()
+        {
+            return Ok(_scoreRepo.GetTopScoreThisWeek());
+        }
+        [HttpGet("GetThisMonthTopScore")]
+        public IActionResult GetThisMonthTopScore()
+        {
+            return Ok(_scoreRepo.GetTopScoreThisMonth());
+        }
+
     }
 }
