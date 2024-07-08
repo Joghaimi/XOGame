@@ -121,7 +121,7 @@ namespace CatchyGame.Controllers
             return Ok(_scoreRepo.SaveScore(score));
         }
         [HttpDelete("Score")]
-        public async Task<IActionResult> RemoveAllScoresAsync(Score score)
+        public async Task<IActionResult> RemoveAllScoresAsync()
         {
             var result = await _scoreRepo.removeAllAsync();
             return Ok(result);
