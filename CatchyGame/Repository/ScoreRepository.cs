@@ -14,7 +14,7 @@ namespace CatchyGame.Repository
         public Score GetTopScoreThisDay()
         {
             var today = DateTime.Now.Date;
-            Score todayScore = _dbcontext.Score.Where(e=>e.TimeStamp.Date ==today).OrderByDescending(e=>e.TeamScore).FirstOrDefault();
+            Score todayScore = _dbcontext.Score.Where(e => e.TimeStamp.Date == today).OrderByDescending(e => e.TeamScore).FirstOrDefault();
             return todayScore;
         }
         public Score GetTopScoreThisMonth()
@@ -35,6 +35,17 @@ namespace CatchyGame.Repository
         public bool SaveScore(Score score)
         {
             _dbcontext.Score.Add(score);
+            return _dbcontext.SaveChanges() > 0;
+        }
+        public async Task<bool> removeAllAsync()
+        {
+            var allScores = await _dbcontext.Score.ToListAsync();
+
+            // Remove all entities
+            _dbcontext.Score.RemoveRange(allScores);
+
+            // Save changes to the database
+            await _dbcontext.SaveChangesAsync();
             return _dbcontext.SaveChanges() > 0;
         }
     }

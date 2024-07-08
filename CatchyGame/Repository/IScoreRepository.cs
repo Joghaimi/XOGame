@@ -8,5 +8,7 @@ namespace CatchyGame.Repository
         public Score GetTopScoreThisWeek();
         public Score GetTopScoreThisDay();
         public bool SaveScore(Score score);
+        public Task<bool> removeAllAsync();
+
     }
 }

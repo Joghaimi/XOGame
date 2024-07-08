@@ -78,11 +78,12 @@ namespace CatchyGame.Controllers
             return Ok();
         }
         [HttpPost("Test SaveScore")]
-        public IActionResult SaveScoreTest() {
+        public IActionResult SaveScoreTest()
+        {
 
             var score = new Score();
             //score.Id = 1; 
-            score.TimeStamp =  DateTime.Now.AddDays(-7);
+            score.TimeStamp = DateTime.Now.AddDays(-7);
             score.TeamName = "Test 3";
             score.TeamScore = 30;
             var score2 = new Score();
@@ -97,7 +98,7 @@ namespace CatchyGame.Controllers
         public IActionResult GetSaveScoreTest()
         {
             var scores = DbContext.Score.ToList();
-            return Ok( scores );
+            return Ok(scores);
         }
         [HttpGet("GetTodayTopScore")]
         public IActionResult GetTodayTopScore()
@@ -114,6 +115,16 @@ namespace CatchyGame.Controllers
         {
             return Ok(_scoreRepo.GetTopScoreThisMonth());
         }
-
+        [HttpPost("AddFakeScore")]
+        public IActionResult AddFakeScore(Score score)
+        {
+            return Ok(_scoreRepo.SaveScore(score));
+        }
+        [HttpDelete("Score")]
+        public async Task<IActionResult> RemoveAllScoresAsync(Score score)
+        {
+            var result = await _scoreRepo.removeAllAsync();
+            return Ok(result);
+        }
     }
 }
