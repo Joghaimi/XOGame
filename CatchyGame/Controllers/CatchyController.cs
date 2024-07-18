@@ -90,8 +90,17 @@ namespace CatchyGame.Controllers
             //score.Id = 1; 
             score2.TimeStamp = DateTime.Now.AddDays(-30);
             score2.TeamName = "Test 5";
-            score2.TeamScore = 50;
+            score2.TeamScore = 200;
+            var score3 = new Score();
+            //score.Id = 1; 
+            score3.TimeStamp = DateTime.Now;
+            score3.TeamName = "Test 5";
+            score3.TeamScore = 100;
+
+
             _scoreRepo.SaveScore(score2);
+            _scoreRepo.SaveScore(score3);
+
             return Ok(_scoreRepo.SaveScore(score));
         }
         [HttpGet("GetSaveScoreTest")]
@@ -100,20 +109,39 @@ namespace CatchyGame.Controllers
             var scores = DbContext.Score.ToList();
             return Ok(scores);
         }
-        [HttpGet("GetTodayTopScore")]
-        public IActionResult GetTodayTopScore()
-        {
-            return Ok(_scoreRepo.GetTopScoreThisDay());
-        }
         [HttpGet("GetThisWeekTopScore")]
         public IActionResult GetThisWeekTopScore()
         {
             return Ok(_scoreRepo.GetTopScoreThisWeek());
         }
+
+        [HttpGet("GetTodayTopScore")]
+        public IActionResult GetTodayTopScore()
+        {
+            return Ok(_scoreRepo.GetTopScoreThisDay());
+        }
         [HttpGet("GetThisMonthTopScore")]
         public IActionResult GetThisMonthTopScore()
         {
             return Ok(_scoreRepo.GetTopScoreThisMonth());
+        }
+
+        [HttpGet("GetTodayTopThreeScore")]
+        public IActionResult GetTodayTopThreeScore()
+        {
+            return Ok(_scoreRepo.TopThreeScoreToday());
+        }
+        
+        [HttpGet("GetThisWeekThreeScore")]
+        public IActionResult GetThisWeekThreeScore()
+        {
+            return Ok(_scoreRepo.TopThreeScoreWeek());
+        }
+       
+        [HttpGet("GetThisMonthTopThreeScore")]
+        public IActionResult GetThisMonthTopThreeScore()
+        {
+            return Ok(_scoreRepo.TopThreeScoreMonth());
         }
         [HttpPost("AddFakeScore")]
         public IActionResult AddFakeScore(Score score)
