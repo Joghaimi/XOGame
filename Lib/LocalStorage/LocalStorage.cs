@@ -9,6 +9,7 @@ namespace Library.LocalStorage
 {
     public static class LocalStorage
     {
+        
         public static void SaveData(object data, string filePath)
         {
             string jsonData = JsonConvert.SerializeObject(data);

@@ -31,10 +31,10 @@ namespace CatchyGame.Service
         //public ApplicationDbContext DbContext;
         public readonly IScoreRepository _scoreRepo;
 
-        public RandomRGBScenarioWithGameMode(IScoreRepository scoreRepo)
-        {
-            _scoreRepo = scoreRepo;
-        }
+        //public RandomRGBScenarioWithGameMode(IScoreRepository scoreRepo)
+        //{
+        //    _scoreRepo = scoreRepo;
+        //}
         public Task StartAsync(CancellationToken cancellationToken)
         {
 
@@ -414,7 +414,7 @@ namespace CatchyGame.Service
             score.TimeStamp = DateTime.Now;
             score.TeamName = VariableControlService.Team.teamName;
             score.TeamScore = VariableControlService.Team.player[0].score;
-            _scoreRepo.SaveScore(score);
+            //_scoreRepo.SaveScore(score);
         }
 
         private void StopTheGame() { }
