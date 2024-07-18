@@ -22,7 +22,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Services 
-builder.Services.AddSingleton<IScoreRepository, ScoreRepository>(); // The Main Flow .. 
+builder.Services.AddScoped<IScoreRepository, ScoreRepository>(); // The Main Flow .. 
 //builder.Services.AddSingleton<IHostedService, RandomRGBScenarioWithGameMode>(); // The Main Flow .. 
 
 
