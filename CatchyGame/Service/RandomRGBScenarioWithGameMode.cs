@@ -9,6 +9,7 @@ using System.Diagnostics;
 using Library.APIIntegration;
 using CatchyGame.Data;
 using CatchyGame.Repository;
+using Microsoft.AspNetCore.DataProtection.Repositories;
 
 namespace CatchyGame.Service
 {
@@ -30,11 +31,14 @@ namespace CatchyGame.Service
         RGBColor inActiveGameRGBColor = RGBColor.Red;
         //public ApplicationDbContext DbContext;
         public readonly IScoreRepository _scoreRepo;
+        private readonly IServiceScopeFactory _scopeFactory;
 
-        //public RandomRGBScenarioWithGameMode(IScoreRepository scoreRepo)
-        //{
-        //    _scoreRepo = scoreRepo;
-        //}
+        public RandomRGBScenarioWithGameMode(IServiceScopeFactory scopeFactory)
+        {
+            _scopeFactory = scopeFactory;
+            _scoreRepo = scopeFactory.CreateScope().ServiceProvider.GetRequiredService<IScoreRepository>();
+        }
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
 
