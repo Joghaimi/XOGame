@@ -418,7 +418,7 @@ namespace CatchyGame.Service
             score.TimeStamp = DateTime.Now;
             score.TeamName = VariableControlService.Team.teamName;
             score.TeamScore = VariableControlService.Team.player[0].score;
-            //_scoreRepo.SaveScore(score);
+            _scoreRepo.SaveScore(score);
         }
 
         private void StopTheGame() { }
