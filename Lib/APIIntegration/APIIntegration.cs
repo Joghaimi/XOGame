@@ -178,53 +178,51 @@ namespace Library.APIIntegration
 
         public async static Task<(MakeSignetureRequestDto, string)> GetSignature(string baseUrl, GameType gameId, Team team)
         {
-
-            MakeSignetureRequestDto requestBody = new MakeSignetureRequestDto();
-            requestBody.team_name = team.Name;
-            requestBody.score = team.Total;
-            requestBody.team_id = int.Parse(team.player[0].Id);
-            requestBody.game_id = (int)gameId;// 21;
-            requestBody.date_time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            requestBody.uid = "45718-fdgg4dg542-457218";
-            foreach (var player in team.player)
+            try
             {
-                requestBody.player_mobiles.Add(player.MobileNumber);
-            }
-            HttpClientHandler handler = new HttpClientHandler();
-            using (HttpClient httpClient = new HttpClient(handler))
-            {
-                try
+                MakeSignetureRequestDto requestBody = new MakeSignetureRequestDto();
+                requestBody.team_name = team.Name;
+                requestBody.score = team.Total;
+                requestBody.team_id = int.Parse(team.player[0].Id);
+                requestBody.game_id = (int)gameId;// 21;
+                requestBody.date_time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                requestBody.uid = "45718-fdgg4dg542-457218";
+                foreach (var player in team.player)
                 {
-                    string jsonData = JsonConvert.SerializeObject(requestBody);
-                    Console.WriteLine(jsonData);
-                    HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-                    var request = new HttpRequestMessage(HttpMethod.Get, baseUrl);
-                    request.Content = content;
-                    HttpResponseMessage response = await httpClient.SendAsync(request);
-                    if (response.IsSuccessStatusCode)
+                    requestBody.player_mobiles.Add(player.MobileNumber);
+                }
+                Console.WriteLine("Body ready");
+
+                HttpClientHandler handler = new HttpClientHandler();
+                using (HttpClient httpClient = new HttpClient(handler))
+                {
+                    try
                     {
-                        // Read the response content as a string
-                        //string responseBody = await response.Content.ReadAsStringAsync();
-                        //Console.WriteLine("Response received:");
-                        //Console.WriteLine(responseBody);
-                        //return (responseBody);
-                    }
-                    else
-                    {
-                        // Handle the unsuccessful response (non-success status code)
+                        string jsonData = JsonConvert.SerializeObject(requestBody);
+                        Console.WriteLine(jsonData);
+                        HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                        var request = new HttpRequestMessage(HttpMethod.Get, baseUrl);
+                        request.Content = content;
+                        HttpResponseMessage response = await httpClient.SendAsync(request);
                         string responseBody = await response.Content.ReadAsStringAsync();
                         var signetureDto = JsonConvert.DeserializeObject<SignetureDto>(responseBody);
                         return (requestBody, signetureDto.Hash);
                     }
+                    catch (HttpRequestException ex)
+                    {
+                        // Handle any exceptions that occurred during the request
+                        Console.WriteLine($"Request failed: {ex.Message}");
+                        return (null, null);
+                    }
                 }
-                catch (HttpRequestException ex)
-                {
-                    // Handle any exceptions that occurred during the request
-                    Console.WriteLine($"Request failed: {ex.Message}");
-                    return (null, null);
-                }
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
                 return (null, null);
             }
+          
         }
 
         public async static Task<bool> SendFinalScore()
