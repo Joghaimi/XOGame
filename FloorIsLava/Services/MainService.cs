@@ -177,7 +177,6 @@ namespace FloorIsLava.Services
             if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && !NextRoomRGBButtonStatus)
             {
                 bool teamNotAssigned = VariableControlService.TeamScore.Name == "" || VariableControlService.TeamScore.Name == null;
-                Console.WriteLine($"/**/*/*/*/ {teamNotAssigned}");
                 if (!teamNotAssigned)
                 {
                     Console.WriteLine("Send Score");
@@ -192,7 +191,6 @@ namespace FloorIsLava.Services
             }
             else if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && NextRoomRGBButtonStatus)
             {
-                Console.WriteLine("=============/**/*/*/*/");
                 bool PBPressed = !MCP23Controller.Read(NextRoomPB, true);
                 if (PBPressed)
                 {
