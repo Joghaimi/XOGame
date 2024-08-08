@@ -84,50 +84,16 @@ namespace FloorIsLava.Services
                 ControlEnteringRGBButton();
                 await CheckNextRoomStatus();
                 await ControlExitingRGBButton();
-                //if (VariableControlService.GameStatus == GameStatus.Empty)
-                //    DoorControl.Control(DoorPin, DoorStatus.Close);
-
             }
-            //while (!cancellationToken.IsCancellationRequested)
-            //{
-            //    PIR1 = _controller.Read(MasterDI.PIRPin1);
-            //    PIR2 = _controller.Read(MasterDI.PIRPin2);
-            //    PIR3 = _controller.Read(MasterDI.PIRPin3);
-            //    PIR4 = _controller.Read(MasterDI.PIRPin4);
-            //    //Console.WriteLine($"PIR Status PIR1:{PIR1} PIR2:{PIR2} PIR3:{PIR3} PIR4:{PIR4}");
-            //    VariableControlService.IsTheirAnyOneInTheRoom = PIR1 || PIR2 || PIR3 || PIR4 || VariableControlService.IsTheirAnyOneInTheRoom;
-            //    ControlRoomAudio();
-            //    if (VariableControlService.EnableGoingToTheNextRoom)
-            //    {
-            //        _logger.LogDebug("Open The Door");
-            //        DoorControl.Status(DoorPin, true);
-            //        while (PIR1 || PIR2 || PIR3 || PIR4)
-            //        {
-            //            PIR1 = _controller.Read(MasterDI.PIRPin1);
-            //            PIR2 = _controller.Read(MasterDI.PIRPin2);
-            //            PIR3 = _controller.Read(MasterDI.PIRPin3);
-            //            PIR4 = _controller.Read(MasterDI.PIRPin4);
-            //        }
-            //        Thread.Sleep(30000);
-            //        DoorControl.Status(DoorPin, false);
-            //        MCP23Controller.Write(MagnetRelay, PinState.Low); // Relese Magnet
-            //        ResetTheGame();
-            //        _logger.LogDebug("No One In The Room , All Gone To The Next Room");
 
-            //    }
-
-            //    Thread.Sleep(10);
-            //}
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            //_cts.Cancel();
             return Task.CompletedTask;
         }
         public void Dispose()
         {
-            //_cts.Dispose();
         }
         private async Task CheckIFRoomIsEmpty(CancellationToken cancellationToken)
         {
@@ -141,52 +107,9 @@ namespace FloorIsLava.Services
 
             }
         }
-        private void ControlRoomAudio()
-        {
-            if (VariableControlService.IsOccupied && !VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished && !thereAreInstructionSoundPlays)
-            {
-                _logger.LogTrace("Start Instruction Audio");
-                thereAreInstructionSoundPlays = true;
-                AudioPlayer.PIBackgroundSound(SoundType.instruction);
-            }
-            else if (VariableControlService.IsOccupied && VariableControlService.IsTheGameStarted
-                && !VariableControlService.IsTheGameFinished
-                && thereAreInstructionSoundPlays && !thereAreBackgroundSoundPlays)
-            {
-                // Stop Background Audio 
-                _logger.LogTrace("Stop Instruction Audio");
-                thereAreInstructionSoundPlays = false;
-                AudioPlayer.PIStopAudio();
-                Thread.Sleep(500);
-                // Start Background Audio
-                _logger.LogTrace("Start Background Audio");
-                thereAreBackgroundSoundPlays = true;
-                AudioPlayer.PIBackgroundSound(SoundType.Background);
-            }
-            else if (VariableControlService.IsTheGameFinished && thereAreBackgroundSoundPlays)
-            {
-                // Game Finished .. 
-                _logger.LogTrace("Stop Background Audio");
-                thereAreBackgroundSoundPlays = false;
-                AudioPlayer.PIStopAudio();
-            }
-        }
         // Control Starting All the Threads
         private async Task GameTimingService(CancellationToken cancellationToken)
         {
-            //while (!cancellationToken.IsCancellationRequested)
-            //{
-            //    if (VariableControlService.IsTheGameStarted && !VariableControlService.IsGameTimerStarted)
-            //    {
-            //        GameTiming.Restart();
-            //        VariableControlService.IsGameTimerStarted = true;
-            //    }
-            //    bool IsGameTimeFinished = GameTiming.ElapsedMilliseconds > VariableControlService.RoomTiming;
-            //    bool GameFinishedByTimer = IsGameTimeFinished && VariableControlService.IsGameTimerStarted;
-
-            //    if (GameFinishedByTimer || VariableControlService.IsTheGameFinished)
-            //        StopTheGame();
-            //}
             while (!cancellationToken.IsCancellationRequested)
             {
                 VariableControlService.CurrentTime = (int)GameTiming.ElapsedMilliseconds;
@@ -206,22 +129,9 @@ namespace FloorIsLava.Services
         }
         private void StopTheGame()
         {
-            //VariableControlService.IsTheGameStarted = false;
-            //VariableControlService.IsTheGameFinished = true;
-            //VariableControlService.EnableGoingToTheNextRoom = true;
-
-            Console.WriteLine("Stoped By Time For Test");
-            VariableControlService.GameStatus = GameStatus.FinishedNotEmpty;
+            VariableControlService.GameStatus = GameStatus.ReadyToLeave;
             VariableControlService.IsTheGameStarted = false;
             VariableControlService.IsTheGameFinished = true;
-            VariableControlService.IsGameTimerStarted = false;
-
-        }
-        private void ResetTheGame()
-        {
-            VariableControlService.EnableGoingToTheNextRoom = false;
-            VariableControlService.IsTheirAnyOneInTheRoom = false;
-            VariableControlService.IsTheGameStarted = false;
             VariableControlService.IsGameTimerStarted = false;
         }
 
@@ -266,6 +176,7 @@ namespace FloorIsLava.Services
         {
             if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && !NextRoomRGBButtonStatus)
             {
+                Console.WriteLine("/**/*/*/*/");
                 bool teamNotAssigned = VariableControlService.TeamScore.Name == "" || VariableControlService.TeamScore.Name == null;
                 if (!teamNotAssigned)
                 {
@@ -278,32 +189,20 @@ namespace FloorIsLava.Services
             }
             else if (VariableControlService.GameStatus == GameStatus.ReadyToLeave && NextRoomRGBButtonStatus)
             {
-
+                Console.WriteLine("=============/**/*/*/*/");
                 bool PBPressed = !MCP23Controller.Read(NextRoomPB, true);
                 if (PBPressed)
                 {
                     NextRoomRGBButtonStatus = false;
-                    while (true)
-                    {
-                        //var result = await APIIntegration.SendScoreToTheNextRoom(VariableControlService.SendScoreToTheNextRoom, VariableControlService.TeamScore);
-                        var result = true;
-                        _logger.LogTrace($"Score Send {result}");
-                        if (result)
-                        {
-                            VariableControlService.GameStatus = GameStatus.Leaving;
-                            RelayController.Status(NextRoomPBLight, false);
-                            DoorControl.Control(DoorPin, DoorStatus.Open);
-                            _logger.LogTrace($"Player Should be out From the room");
-                            Thread.Sleep(30000);
-                            DoorControl.Control(DoorPin, DoorStatus.Close);
-                            VariableControlService.GameStatus = GameStatus.Empty;
-                            _logger.LogTrace($"Room Should be Empty now");
-                            break;
-                        }
-                        Thread.Sleep(3000);
-                    }
-
-
+                    VariableControlService.GameStatus = GameStatus.Leaving;
+                    RelayController.Status(NextRoomPBLight, false);
+                    DoorControl.Control(DoorPin, DoorStatus.Open);
+                    _logger.LogTrace($"Player Should be out From the room");
+                    Thread.Sleep(30000);
+                    DoorControl.Control(DoorPin, DoorStatus.Close);
+                    VariableControlService.GameStatus = GameStatus.Empty;
+                    _logger.LogTrace($"Room Should be Empty now");
+                    Thread.Sleep(3000);
                 }
 
             }
