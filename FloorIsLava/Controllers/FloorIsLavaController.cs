@@ -168,7 +168,7 @@ namespace FloorIsLava.Controllers
         {
             Team newTeam = new Team();
             newTeam.Name = "TestName";
-            newTeam.Total = 2000;
+            newTeam.Total = 2100;
             var player = new Player();
             player.Id = "12";
             player.FirstName = "Test";

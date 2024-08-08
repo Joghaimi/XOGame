@@ -20,5 +20,6 @@ namespace Library.Model
         public int score { get; set; }
         [DataMember(Name = "date_time")]
         public long date_time { get; set; }
+        public string uid { get; set; } = "45718-fdgg4dg542-457218";
     }
 }

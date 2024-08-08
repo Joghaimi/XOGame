@@ -156,6 +156,7 @@ namespace Library.APIIntegration
             sendScore.player_mobiles = requestBody.player_mobiles;
             sendScore.signature = hash;
             sendScore.score = requestBody.score;
+            sendScore.uid = "45718-fdgg4dg542-457218";
             sendScore.team_name = requestBody.team_name;
             using (HttpClient httpClient = new HttpClient())
             {
@@ -184,6 +185,7 @@ namespace Library.APIIntegration
             requestBody.team_id = int.Parse(team.player[0].Id);
             requestBody.game_id = (int)gameId;// 21;
             requestBody.date_time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            requestBody.uid = "45718-fdgg4dg542-457218";
             foreach (var player in team.player)
             {
                 requestBody.player_mobiles.Add(player.MobileNumber);
