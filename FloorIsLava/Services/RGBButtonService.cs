@@ -85,6 +85,16 @@ namespace FloorIsLava.Services
         private async Task RunService(CancellationToken cancellationToken)
         {
             RGBLight.SetColor(RGBColor.Red);
+
+            while (true)
+            {
+                Console.WriteLine($"Button One {RGBButtonList[1].CurrentStatus()}");
+                Console.WriteLine($"Button Two {RGBButtonList[2].CurrentStatus()}");
+                Console.WriteLine($"***********************");
+                Thread.Sleep(1000);
+                //kidsButtonOneClicked = RGBButtonList[1].CurrentStatus();
+            }
+
             while (!cancellationToken.IsCancellationRequested)
             {
                 if (VariableControlService.GameStatus == GameStatus.Empty && !restartedBefore)
@@ -238,6 +248,7 @@ namespace FloorIsLava.Services
         void TaskOneCeilingTask()
         {
             kidsButtonOneClicked = false; kidsButtonTwoClicked = false;
+            Console.WriteLine();
             while (true)
             {
                 if (!IsGameStartedOrInGoing())
