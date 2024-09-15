@@ -88,8 +88,11 @@ namespace FloorIsLava.Services
 
             while (true)
             {
-                Console.WriteLine($"Button One {RGBButtonList[1].CurrentStatus()}");
-                Console.WriteLine($"Button Two {RGBButtonList[2].CurrentStatus()}");
+                RGBButtonList[1].TurnColorOn(RGBColor.Red);
+                RGBButtonList[2].TurnColorOn(RGBColor.Red);
+                //Console.WriteLine($"Button One {RGBButtonList[1].TurnColorOn(RGBColor.Red)}");
+                //Console.WriteLine($"Button One {RGBButtonList[2].TurnColorOn(RGBColor.Red)}");
+                //Console.WriteLine($"Button Two {RGBButtonList[2].CurrentStatus()}");
                 Console.WriteLine($"***********************");
                 Thread.Sleep(1000);
                 //kidsButtonOneClicked = RGBButtonList[1].CurrentStatus();
