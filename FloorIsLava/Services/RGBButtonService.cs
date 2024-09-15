@@ -135,7 +135,7 @@ namespace FloorIsLava.Services
 
                         }
 
-                        VariableControlService.TeamScore.FloorIsLavaRoomScore += 100;
+                        VariableControlService.TeamScore.FloorIsLavaRoomScore += 150;
                         motorTiming = MotorStopWatch.ElapsedMilliseconds + 15000;
                         ceilingMotoruUp = true;
                         pressureMAtCount = false;
@@ -167,7 +167,7 @@ namespace FloorIsLava.Services
                                     magnetOneAttached = true;
                                     AudioPlayer.PIStartAudio(SoundType.Charge);
                                     RGBLight.SetColor(RGBColor.Blue);
-                                    VariableControlService.TeamScore.FloorIsLavaRoomScore += 50;
+                                    VariableControlService.TeamScore.FloorIsLavaRoomScore += 100;
                                 }
 
                                 if (!IN7)
@@ -189,7 +189,7 @@ namespace FloorIsLava.Services
                                 {
                                     AudioPlayer.PIStartAudio(SoundType.Charge);
                                     RGBLight.SetColor(RGBColor.Blue);
-                                    VariableControlService.TeamScore.FloorIsLavaRoomScore += 50;
+                                    VariableControlService.TeamScore.FloorIsLavaRoomScore += 100;
                                     magnetTwoAttached = true;
                                 }
                                 if (!IN5)
@@ -268,7 +268,7 @@ namespace FloorIsLava.Services
                 IN2 = CeilingButton(!MCP23Controller.Read(MasterDI.IN2, true));
                 if (IN2)
                 {
-                    VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                    VariableControlService.TeamScore.FloorIsLavaRoomScore += 50;
                     Console.WriteLine("IN2 Scored");
                     Thread.Sleep(100);
                 }
@@ -278,7 +278,7 @@ namespace FloorIsLava.Services
                 IN3 = CeilingButton(!MCP23Controller.Read(MasterDI.IN3, true));
                 if (IN3)
                 {
-                    VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                    VariableControlService.TeamScore.FloorIsLavaRoomScore += 50;
                     Console.WriteLine("IN3 Scored");
                     Thread.Sleep(100);
                 }
@@ -288,7 +288,7 @@ namespace FloorIsLava.Services
                 IN4 = CeilingButton(!MCP23Controller.Read(MasterDI.IN4, true));
                 if (IN4)
                 {
-                    VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                    VariableControlService.TeamScore.FloorIsLavaRoomScore += 50;
                     Console.WriteLine("IN4 Scored");
                     Thread.Sleep(100);
                 }
@@ -311,7 +311,7 @@ namespace FloorIsLava.Services
                 {
                     RGBButtonList[1].TurnColorOn(RGBColor.Off);
                     CeilingButton(true);
-                    VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                    VariableControlService.TeamScore.FloorIsLavaRoomScore += 50;
                     Thread.Sleep(100);
                 }
             }
@@ -321,14 +321,14 @@ namespace FloorIsLava.Services
                 if (kidsButtonTwoClicked)
                 {
                     RGBButtonList[2].TurnColorOn(RGBColor.Off);
-                    VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                    VariableControlService.TeamScore.FloorIsLavaRoomScore += 50;
                     CeilingButton(true);
                     Thread.Sleep(100);
                 }
             }
             if (kidsButtonOneClicked && kidsButtonTwoClicked)
             {
-                VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                VariableControlService.TeamScore.FloorIsLavaRoomScore += 50;
                 CeilingButton(true);
                 Thread.Sleep(100);
                 return true;
@@ -356,7 +356,7 @@ namespace FloorIsLava.Services
                             IN2 = CeilingButton(!MCP23Controller.Read(MasterDI.IN2, true));
                             if (IN2)
                             {
-                                VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                                VariableControlService.TeamScore.FloorIsLavaRoomScore += 50;
                                 Console.WriteLine("IN2 Scored");
                                 Thread.Sleep(100);
                             }
@@ -366,7 +366,7 @@ namespace FloorIsLava.Services
                             IN3 = CeilingButton(!MCP23Controller.Read(MasterDI.IN3, true));
                             if (IN3)
                             {
-                                VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                                VariableControlService.TeamScore.FloorIsLavaRoomScore += 50;
                                 Console.WriteLine("IN3 Scored");
                                 Thread.Sleep(100);
                             }
@@ -376,7 +376,7 @@ namespace FloorIsLava.Services
                             IN4 = CeilingButton(!MCP23Controller.Read(MasterDI.IN4, true));
                             if (IN4)
                             {
-                                VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                                VariableControlService.TeamScore.FloorIsLavaRoomScore += 50;
                                 Console.WriteLine("IN4 Scored");
                                 Thread.Sleep(100);
                             }
@@ -458,7 +458,7 @@ namespace FloorIsLava.Services
             bool currentValue = MCP23Controller.Read(MasterDI.IN8, false);
             if (!currentValue && !justDecrease)
             {
-                VariableControlService.TeamScore.FloorIsLavaRoomScore -= 10;
+                VariableControlService.TeamScore.FloorIsLavaRoomScore -= 25;
                 justDecrease = true;
                 GameStopWatch.Restart();
                 Console.WriteLine("Pressure mat Pressed");
