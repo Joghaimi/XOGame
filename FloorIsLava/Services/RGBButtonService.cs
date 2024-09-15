@@ -34,13 +34,22 @@ namespace FloorIsLava.Services
         bool taskOneFinished = false;
         bool taskTwoFinished = false;
 
+        bool kidsButtonOneClicked = false;
+        bool kidsButtonTwoClicked = false;
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
             // TO DO Init The RGB Light .. 
             // Init RGB
             Console.WriteLine("Floor Is Lava Service");
             RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR7, RGBButtonPin.RGBG7, RGBButtonPin.RGBB7, RGBButtonPin.RGBPB7));
+            RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR5, RGBButtonPin.RGBG5, RGBButtonPin.RGBB5, RGBButtonPin.RGBPB5));
+            RGBButtonList.Add(new RGBButton(RGBButtonPin.RGBR6, RGBButtonPin.RGBG6, RGBButtonPin.RGBB6, RGBButtonPin.RGBPB6));
             RGBButtonList[0].TurnColorOn(RGBColor.Off);
+            RGBButtonList[1].TurnColorOn(RGBColor.Off);
+            RGBButtonList[2].TurnColorOn(RGBColor.Off);
+
+
 
             MCP23Controller.PinModeSetup(MasterDI.IN8, PinMode.Input);
             MCP23Controller.PinModeSetup(MasterDI.IN2, PinMode.Input);
@@ -75,7 +84,6 @@ namespace FloorIsLava.Services
         }
         private async Task RunService(CancellationToken cancellationToken)
         {
-
             RGBLight.SetColor(RGBColor.Red);
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -105,8 +113,10 @@ namespace FloorIsLava.Services
                 {
                     restartedBefore = false;
                     // Game Sequence 
+                    //if (!taskOneFinished)
+                    //    TaskOne();
                     if (!taskOneFinished)
-                        TaskOne();
+                        TaskOneCeilingTask();
 
                     //bool TaskOneEnded = IN2 && IN3 && IN4 && numberOfPressedMotor == 3 && !ceilingMotorDown;
                     bool CeilingDown = numberOfPressedMotor == 3 && !ceilingMotorDown;
@@ -180,7 +190,7 @@ namespace FloorIsLava.Services
                                     AudioPlayer.PIStartAudio(SoundType.Charge);
                                     RGBLight.SetColor(RGBColor.Blue);
                                     VariableControlService.TeamScore.FloorIsLavaRoomScore += 50;
-                                    magnetTwoAttached=true;
+                                    magnetTwoAttached = true;
                                 }
                                 if (!IN5)
                                     RGBLight.TurnRGBColorDelayedASec(RGBColor.Red);
@@ -225,7 +235,108 @@ namespace FloorIsLava.Services
         }
 
 
+        void TaskOneCeilingTask()
+        {
+            kidsButtonOneClicked = false; kidsButtonTwoClicked = false;
+            while (true)
+            {
+                if (!IsGameStartedOrInGoing())
+                    break;
+                pressureMat();
+                if (VariableControlService.TeamScore.isAdult)
+                {
+                    var taskFinished = AdultPadsTask();
+                    if (taskFinished)
+                        break;
+                }
+                else
+                {
+                    var taskFinished = KidsButtonsTask();
+                    if (taskFinished)
+                        break;
+                }
+                taskOneFinished = true;
+            }
 
+        }
+
+
+        bool AdultPadsTask()
+        {
+            if (!IN2)
+            {
+                IN2 = CeilingButton(!MCP23Controller.Read(MasterDI.IN2, true));
+                if (IN2)
+                {
+                    VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                    Console.WriteLine("IN2 Scored");
+                    Thread.Sleep(100);
+                }
+            }
+            if (!IN3)
+            {
+                IN3 = CeilingButton(!MCP23Controller.Read(MasterDI.IN3, true));
+                if (IN3)
+                {
+                    VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                    Console.WriteLine("IN3 Scored");
+                    Thread.Sleep(100);
+                }
+            }
+            if (!IN4)
+            {
+                IN4 = CeilingButton(!MCP23Controller.Read(MasterDI.IN4, true));
+                if (IN4)
+                {
+                    VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                    Console.WriteLine("IN4 Scored");
+                    Thread.Sleep(100);
+                }
+            }
+            if (IN2 && IN3 && IN4)
+            {
+                taskOneFinished = true;
+                return true;
+            }
+            Thread.Sleep(100);
+            return false;
+        }
+        bool KidsButtonsTask()
+        {
+            if (!kidsButtonOneClicked)
+            {
+                RGBButtonList[1].TurnColorOn(RGBColor.Red);
+                kidsButtonOneClicked = RGBButtonList[1].CurrentStatus();
+                if (kidsButtonOneClicked)
+                {
+                    RGBButtonList[1].TurnColorOn(RGBColor.Off);
+                    CeilingButton(true);
+                    VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                    Thread.Sleep(100);
+                }
+            }
+            if (!kidsButtonTwoClicked)
+            {
+                RGBButtonList[2].TurnColorOn(RGBColor.Red);
+                if (kidsButtonTwoClicked)
+                {
+                    RGBButtonList[2].TurnColorOn(RGBColor.Off);
+                    VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                    CeilingButton(true);
+                    Thread.Sleep(100);
+                }
+            }
+            if (kidsButtonOneClicked && kidsButtonTwoClicked)
+            {
+                VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                CeilingButton(true);
+                Thread.Sleep(100);
+                return true;
+
+            }
+
+            return false;
+        }
 
 
         void TaskOne()
@@ -238,42 +349,86 @@ namespace FloorIsLava.Services
 
                 try
                 {
-                    if (!IN2)
+                    if (VariableControlService.TeamScore.isAdult)
                     {
-                        IN2 = CeilingButton(!MCP23Controller.Read(MasterDI.IN2, true));
-                        if (IN2)
+                        if (!IN2)
                         {
-                            VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
-                            Console.WriteLine("IN2 Scored");
-                            Thread.Sleep(100);
+                            IN2 = CeilingButton(!MCP23Controller.Read(MasterDI.IN2, true));
+                            if (IN2)
+                            {
+                                VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                                Console.WriteLine("IN2 Scored");
+                                Thread.Sleep(100);
+                            }
                         }
-                    }
-                    if (!IN3)
-                    {
-                        IN3 = CeilingButton(!MCP23Controller.Read(MasterDI.IN3, true));
-                        if (IN3)
+                        if (!IN3)
                         {
-                            VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
-                            Console.WriteLine("IN3 Scored");
-                            Thread.Sleep(100);
+                            IN3 = CeilingButton(!MCP23Controller.Read(MasterDI.IN3, true));
+                            if (IN3)
+                            {
+                                VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                                Console.WriteLine("IN3 Scored");
+                                Thread.Sleep(100);
+                            }
                         }
-                    }
-                    if (!IN4)
-                    {
-                        IN4 = CeilingButton(!MCP23Controller.Read(MasterDI.IN4, true));
-                        if (IN4)
+                        if (!IN4)
                         {
-                            VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
-                            Console.WriteLine("IN4 Scored");
-                            Thread.Sleep(100);
+                            IN4 = CeilingButton(!MCP23Controller.Read(MasterDI.IN4, true));
+                            if (IN4)
+                            {
+                                VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                                Console.WriteLine("IN4 Scored");
+                                Thread.Sleep(100);
+                            }
                         }
+                        if (IN2 && IN3 && IN4)
+                        {
+                            taskOneFinished = true;
+                            break;
+                        }
+                        Thread.Sleep(100);
                     }
-                    if (IN2 && IN3 && IN4)
+                    else
                     {
-                        taskOneFinished = true;
-                        break;
                     }
-                    Thread.Sleep(100);
+
+
+                    //if (!IN2)
+                    //{
+                    //    IN2 = CeilingButton(!MCP23Controller.Read(MasterDI.IN2, true));
+                    //    if (IN2)
+                    //    {
+                    //        VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                    //        Console.WriteLine("IN2 Scored");
+                    //        Thread.Sleep(100);
+                    //    }
+                    //}
+                    //if (!IN3)
+                    //{
+                    //    IN3 = CeilingButton(!MCP23Controller.Read(MasterDI.IN3, true));
+                    //    if (IN3)
+                    //    {
+                    //        VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                    //        Console.WriteLine("IN3 Scored");
+                    //        Thread.Sleep(100);
+                    //    }
+                    //}
+                    //if (!IN4)
+                    //{
+                    //    IN4 = CeilingButton(!MCP23Controller.Read(MasterDI.IN4, true));
+                    //    if (IN4)
+                    //    {
+                    //        VariableControlService.TeamScore.FloorIsLavaRoomScore += 25;
+                    //        Console.WriteLine("IN4 Scored");
+                    //        Thread.Sleep(100);
+                    //    }
+                    //}
+                    //if (IN2 && IN3 && IN4)
+                    //{
+                    //    taskOneFinished = true;
+                    //    break;
+                    //}
+                    //Thread.Sleep(100);
                 }
                 catch (Exception ex) { Console.WriteLine(ex.ToString()); }
 

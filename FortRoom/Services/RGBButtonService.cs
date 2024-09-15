@@ -127,7 +127,7 @@ namespace FortRoom.Services
                                             numberOfClickedButton++;
                                             item.BlockForASec();
                                             //VariableControlService.ActiveButtonPressed++;
-                                            VariableControlService.TeamScore.FortRoomScore += 10;
+                                            VariableControlService.TeamScore.FortRoomScore += 30;
                                             numberOfTurenedOnButton--;
                                             Console.WriteLine($"Selected {numberOfTurenedOnButton} score {VariableControlService.TeamScore.FortRoomScore}");
                                         }

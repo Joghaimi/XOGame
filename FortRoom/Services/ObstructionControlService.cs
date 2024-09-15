@@ -65,57 +65,72 @@ namespace FortRoom.Services
 
         private void ControlObstructionSpeed(Round round)
         {
-            switch (round)
+            if (VariableControlService.TeamScore.isAdult)
             {
-                case Round.Round1:
-                    if (IsGameStartedOrInGoing())
-                        RunCommand(ModbusSlave.Slave1, MotorSpeed.Motor1Round1, MotorStatus.Run);
-                    if (IsGameStartedOrInGoing())
-                        RunCommand(ModbusSlave.Slave2, MotorSpeed.Motor2Round1, MotorStatus.Reverse);
-                    if (IsGameStartedOrInGoing())
-                        RunCommand(ModbusSlave.Slave3, MotorSpeed.Motor3Round1, MotorStatus.Reverse);
-                    if (IsGameStartedOrInGoing())
-                        RunCommand(ModbusSlave.Slave4, MotorSpeed.Motor4Round1, MotorStatus.Reverse);
-                    break;
-                case Round.Round2:
-                    if (IsGameStartedOrInGoing())
-                        RunCommand(ModbusSlave.Slave1, MotorSpeed.Motor1Round2, MotorStatus.Run);
-                    if (IsGameStartedOrInGoing())
-                        RunCommand(ModbusSlave.Slave2, MotorSpeed.Motor2Round2, MotorStatus.Reverse);
-                    if (IsGameStartedOrInGoing())
-                        RunCommand(ModbusSlave.Slave3, MotorSpeed.Motor3Round2, MotorStatus.Reverse);
-                    if (IsGameStartedOrInGoing())
-                        RunCommand(ModbusSlave.Slave4, MotorSpeed.Motor4Round2, MotorStatus.Reverse);
-                    break;
-                case Round.Round3:
-                    if (IsGameStartedOrInGoing())
-                        RunCommand(ModbusSlave.Slave1, MotorSpeed.Motor1Round3, MotorStatus.Run);
-                    if (IsGameStartedOrInGoing())
-                        RunCommand(ModbusSlave.Slave2, MotorSpeed.Motor2Round3, MotorStatus.Reverse);
-                    if (IsGameStartedOrInGoing())
-                        RunCommand(ModbusSlave.Slave3, MotorSpeed.Motor3Round3, MotorStatus.Reverse);
-                    if (IsGameStartedOrInGoing())
-                        RunCommand(ModbusSlave.Slave4, MotorSpeed.Motor4Round3, MotorStatus.Reverse);
-                    break;
-                case Round.Round4:
-                    if (IsGameStartedOrInGoing())
-                        RunCommand(ModbusSlave.Slave1, MotorSpeed.Motor1Round4, MotorStatus.Run);
-                    if (IsGameStartedOrInGoing())
-                        RunCommand(ModbusSlave.Slave2, MotorSpeed.Motor2Round4, MotorStatus.Reverse);
-                    if (IsGameStartedOrInGoing())
-                        RunCommand(ModbusSlave.Slave3, MotorSpeed.Motor3Round4, MotorStatus.Reverse);
-                    if (IsGameStartedOrInGoing())
-                        RunCommand(ModbusSlave.Slave4, MotorSpeed.Motor4Round4, MotorStatus.Reverse);
-                    break;
+                switch (round)
+                {
+                    case Round.Round1:
+                        if (IsGameStartedOrInGoing())
+                            RunCommand(ModbusSlave.Slave1, MotorSpeed.Motor1Round1, MotorStatus.Run);
+                        if (IsGameStartedOrInGoing())
+                            RunCommand(ModbusSlave.Slave2, MotorSpeed.Motor2Round1, MotorStatus.Reverse);
+                        if (IsGameStartedOrInGoing())
+                            RunCommand(ModbusSlave.Slave3, MotorSpeed.Motor3Round1, MotorStatus.Reverse);
+                        if (IsGameStartedOrInGoing())
+                            RunCommand(ModbusSlave.Slave4, MotorSpeed.Motor4Round1, MotorStatus.Reverse);
+                        break;
+                    case Round.Round2:
+                        if (IsGameStartedOrInGoing())
+                            RunCommand(ModbusSlave.Slave1, MotorSpeed.Motor1Round2, MotorStatus.Run);
+                        if (IsGameStartedOrInGoing())
+                            RunCommand(ModbusSlave.Slave2, MotorSpeed.Motor2Round2, MotorStatus.Reverse);
+                        if (IsGameStartedOrInGoing())
+                            RunCommand(ModbusSlave.Slave3, MotorSpeed.Motor3Round2, MotorStatus.Reverse);
+                        if (IsGameStartedOrInGoing())
+                            RunCommand(ModbusSlave.Slave4, MotorSpeed.Motor4Round2, MotorStatus.Reverse);
+                        break;
+                    case Round.Round3:
+                        if (IsGameStartedOrInGoing())
+                            RunCommand(ModbusSlave.Slave1, MotorSpeed.Motor1Round3, MotorStatus.Run);
+                        if (IsGameStartedOrInGoing())
+                            RunCommand(ModbusSlave.Slave2, MotorSpeed.Motor2Round3, MotorStatus.Reverse);
+                        if (IsGameStartedOrInGoing())
+                            RunCommand(ModbusSlave.Slave3, MotorSpeed.Motor3Round3, MotorStatus.Reverse);
+                        if (IsGameStartedOrInGoing())
+                            RunCommand(ModbusSlave.Slave4, MotorSpeed.Motor4Round3, MotorStatus.Reverse);
+                        break;
+                    case Round.Round4:
+                        if (IsGameStartedOrInGoing())
+                            RunCommand(ModbusSlave.Slave1, MotorSpeed.Motor1Round4, MotorStatus.Run);
+                        if (IsGameStartedOrInGoing())
+                            RunCommand(ModbusSlave.Slave2, MotorSpeed.Motor2Round4, MotorStatus.Reverse);
+                        if (IsGameStartedOrInGoing())
+                            RunCommand(ModbusSlave.Slave3, MotorSpeed.Motor3Round4, MotorStatus.Reverse);
+                        if (IsGameStartedOrInGoing())
+                            RunCommand(ModbusSlave.Slave4, MotorSpeed.Motor4Round4, MotorStatus.Reverse);
+                        break;
+                }
+
             }
+            else
+            {
+                if (IsGameStartedOrInGoing())
+                    RunCommand(ModbusSlave.Slave1, MotorSpeed.Motor1Round1, MotorStatus.Run);
+                if (IsGameStartedOrInGoing())
+                    RunCommand(ModbusSlave.Slave2, MotorSpeed.Motor2Round1, MotorStatus.Reverse);
+                if (IsGameStartedOrInGoing())
+                    RunCommand(ModbusSlave.Slave3, MotorSpeed.Motor3Round1, MotorStatus.Reverse);
+                if (IsGameStartedOrInGoing())
+                    RunCommand(ModbusSlave.Slave4, MotorSpeed.Motor4Round1, MotorStatus.Reverse);
+            }
+
+
             VariableControlService.IsThingsChangedForTheNewRound = true;
 
         }
         private void RunCommand(ModbusSlave slave, MotorSpeed speed, MotorStatus status)
         {
             ObstructionLib.RunCommand(slave, speed, status);
-            //Modbus.WriteSingleRegister((byte)slave, (int)ModbusAddress.Speed, (ushort)speed);  // Start As Mode #1 
-            //Modbus.WriteSingleRegister((byte)slave, (int)ModbusAddress.startStop, (ushort)status);
             Thread.Sleep(500);
         }
 
@@ -123,7 +138,6 @@ namespace FortRoom.Services
         private bool IsGameStartedOrInGoing()
         {
             return VariableControlService.GameStatus == GameStatus.Started;
-            //return VariableControlService.IsTheGameStarted && !VariableControlService.IsTheGameFinished;
         }
         void StopObstructionService()
         {
@@ -139,7 +153,6 @@ namespace FortRoom.Services
         public Task StopAsync(CancellationToken cancellationToken)
         {
             Stopped();
-            //_cts1?.Cancel();
             return Task.CompletedTask;
         }
         public void Dispose()
@@ -151,7 +164,6 @@ namespace FortRoom.Services
             _logger.LogInformation("Obstruction Stopped");
             StopObstructionService();
             RGBLight.SetColor(VariableControlService.DefaultColor);
-            //Modbus.ReleasePort();
             ObstructionLib.Release();
             _logger.LogInformation("Obstruction - Port Released");
         }

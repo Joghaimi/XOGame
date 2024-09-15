@@ -54,7 +54,7 @@ namespace FortRoom.Services
                             AudioPlayer.PIStartAudio(SoundType.Descend);
                             scoreJustDecreased = true;
                             timer.Restart();
-                            VariableControlService.TeamScore.FortRoomScore -= 20;
+                            VariableControlService.TeamScore.FortRoomScore -= 15;
                             _logger.LogTrace("Time {0} - Pressure mate Hit new Score {1}", (VariableControlService.RoomTiming - VariableControlService.CurrentTime) / 1000, VariableControlService.TeamScore.FortRoomScore);
 
                         }

@@ -17,5 +17,6 @@ namespace Library.Model
         public int DarkRoomScore { get; set; }
         public int FloorIsLavaRoomScore { get; set; }
         public int Total { get; set; } = 0;
+        public bool isAdult = true;
     }
 }
