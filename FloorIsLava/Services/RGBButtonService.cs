@@ -323,6 +323,7 @@ namespace FloorIsLava.Services
                 kidsButtonOneClicked = !RGBButtonList[1].CurrentStatus();
                 if (kidsButtonOneClicked)
                 {
+                    Console.WriteLine("RGB Button One Pressed");
                     RGBButtonList[1].TurnColorOn(RGBColor.Off);
                     CeilingButton(true);
                     VariableControlService.TeamScore.FloorIsLavaRoomScore += 50;
@@ -336,6 +337,8 @@ namespace FloorIsLava.Services
 
                 if (kidsButtonTwoClicked)
                 {
+                    Console.WriteLine("RGB Button Two Pressed");
+
                     RGBButtonList[2].TurnColorOn(RGBColor.Off);
                     VariableControlService.TeamScore.FloorIsLavaRoomScore += 50;
                     CeilingButton(true);
