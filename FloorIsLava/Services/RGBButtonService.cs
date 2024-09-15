@@ -320,7 +320,7 @@ namespace FloorIsLava.Services
             if (!kidsButtonOneClicked)
             {
                 RGBButtonList[1].TurnColorOn(RGBColor.Red);
-                kidsButtonOneClicked = RGBButtonList[1].CurrentStatus();
+                kidsButtonOneClicked = !RGBButtonList[1].CurrentStatus();
                 if (kidsButtonOneClicked)
                 {
                     RGBButtonList[1].TurnColorOn(RGBColor.Off);
@@ -332,6 +332,8 @@ namespace FloorIsLava.Services
             if (!kidsButtonTwoClicked)
             {
                 RGBButtonList[2].TurnColorOn(RGBColor.Red);
+                kidsButtonTwoClicked = !RGBButtonList[2].CurrentStatus();
+
                 if (kidsButtonTwoClicked)
                 {
                     RGBButtonList[2].TurnColorOn(RGBColor.Off);
