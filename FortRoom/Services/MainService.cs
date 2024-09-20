@@ -74,7 +74,7 @@ namespace FortRoom.Services
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                //RoomAudio();
+                RoomAudio();
                 ControlEnteringRGBButton();
                 await CheckNextRoomStatus();
                 await ControlExitingRGBButton();
@@ -84,20 +84,20 @@ namespace FortRoom.Services
 
         private void RoomAudio()
         {
-            if (VariableControlService.GameStatus == GameStatus.NotStarted && !thereAreInstructionSoundPlays)
-            {
-                Thread.Sleep(VariableControlService.DelayTimeBeforeInstructionInMs);
-                _logger.LogTrace("Start Instruction Audio");
-                //AudioPlayer.PIBackgroundSound(SoundType.instruction);
-                thereAreInstructionSoundPlays = true;
-            }
-            else if (thereAreInstructionSoundPlays && VariableControlService.GameStatus != GameStatus.NotStarted)
-            {
-                _logger.LogTrace("Stop Instruction Audio");
-                thereAreInstructionSoundPlays = false;
-                //AudioPlayer.PIStopAudio();
-                Thread.Sleep(500);
-            }
+            //if (VariableControlService.GameStatus == GameStatus.NotStarted && !thereAreInstructionSoundPlays)
+            //{
+            //    Thread.Sleep(VariableControlService.DelayTimeBeforeInstructionInMs);
+            //    _logger.LogTrace("Start Instruction Audio");
+            //    //AudioPlayer.PIBackgroundSound(SoundType.instruction);
+            //    thereAreInstructionSoundPlays = true;
+            //}
+            //else if (thereAreInstructionSoundPlays && VariableControlService.GameStatus != GameStatus.NotStarted)
+            //{
+            //    _logger.LogTrace("Stop Instruction Audio");
+            //    thereAreInstructionSoundPlays = false;
+            //    //AudioPlayer.PIStopAudio();
+            //    Thread.Sleep(500);
+            //}
 
             if (VariableControlService.GameStatus == GameStatus.Started && !thereAreBackgroundSoundPlays)
             {
