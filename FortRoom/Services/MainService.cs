@@ -120,7 +120,7 @@ namespace FortRoom.Services
 
             if (VariableControlService.GameStatus == GameStatus.InstructionAudioEnded)
             {
-                Thread.Sleep(VariableControlService.DelayTimeBeforeTurnPBOnInMs);
+                //Thread.Sleep(VariableControlService.DelayTimeBeforeTurnPBOnInMs);
                 _logger.LogTrace("Ready To Start The Game .. Turn RGB Button On");
                 EnterRGBButtonStatus = true;
                 RelayController.Status(EnterRGBButton, true);
