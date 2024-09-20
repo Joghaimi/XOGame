@@ -256,7 +256,7 @@ namespace ShootingRoom.Services
                     Console.WriteLine($"Target Hit # {VariableControlService.LevelScore}");
                     RGBLight.SetColor(RGBColor.Blue);
                     RGBLight.TurnRGBColorDelayedASec(VariableControlService.DefaultColor);
-                    Thread.Sleep(500);
+                    Thread.Sleep(2000);
                 }
                 if (VariableControlService.LevelScore == 5)
                 {
