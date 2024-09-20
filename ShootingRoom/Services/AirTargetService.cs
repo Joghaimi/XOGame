@@ -239,7 +239,8 @@ namespace ShootingRoom.Services
         {
             Stopwatch BigTargetTimer = new Stopwatch();
             ControlPin(BigTargetRelay, true);
-            Thread.Sleep(1);
+
+            Thread.Sleep(5000);
             BigTargetTimer.Start();
             BigTargetTimer.Restart();
             while (BigTargetTimer.ElapsedMilliseconds < 60000)
@@ -263,7 +264,7 @@ namespace ShootingRoom.Services
                     Console.WriteLine($"Remove Big Target and start the game");
                     break;
                 }
-                Thread.Sleep(10);
+                Thread.Sleep(100);
             }
             VariableControlService.GameRound = NextRound(VariableControlService.GameRound);
             VariableControlService.LevelScore = 0;
