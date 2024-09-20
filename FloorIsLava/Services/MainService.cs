@@ -215,14 +215,14 @@ namespace FloorIsLava.Services
             {
                 Thread.Sleep(VariableControlService.DelayTimeBeforeInstructionInMs);
                 _logger.LogTrace("Start Instruction Audio");
-                AudioPlayer.PIBackgroundSound(SoundType.instruction);
+                //AudioPlayer.PIBackgroundSound(SoundType.instruction);
                 thereAreInstructionSoundPlays = true;
             }
             else if (thereAreInstructionSoundPlays && VariableControlService.GameStatus != GameStatus.NotStarted)
             {
                 _logger.LogTrace("Stop Instruction Audio");
                 thereAreInstructionSoundPlays = false;
-                AudioPlayer.PIStopAudio();
+                //AudioPlayer.PIStopAudio();
                 Thread.Sleep(500);
             }
 

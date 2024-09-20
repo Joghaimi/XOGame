@@ -74,7 +74,7 @@ namespace FortRoom.Services
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                RoomAudio();
+                //RoomAudio();
                 ControlEnteringRGBButton();
                 await CheckNextRoomStatus();
                 await ControlExitingRGBButton();
@@ -116,19 +116,21 @@ namespace FortRoom.Services
 
         private void ControlEnteringRGBButton()
         {
-            if (!EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.NotStarted)
+
+
+            if (VariableControlService.GameStatus == GameStatus.InstructionAudioEnded)
             {
                 Thread.Sleep(VariableControlService.DelayTimeBeforeTurnPBOnInMs);
                 _logger.LogTrace("Ready To Start The Game .. Turn RGB Button On");
                 EnterRGBButtonStatus = true;
                 RelayController.Status(EnterRGBButton, true);
             }
-            else if (EnterRGBButtonStatus && VariableControlService.GameStatus != GameStatus.NotStarted)
-            {
-                EnterRGBButtonStatus = false;
-                RelayController.Status(EnterRGBButton, false);
-            }
-            bool RGBButtonIsOnAndGameNotStarted = EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.NotStarted;
+            //else if (EnterRGBButtonStatus && VariableControlService.GameStatus != GameStatus.NotStarted)
+            //{
+            //    EnterRGBButtonStatus = false;
+            //    RelayController.Status(EnterRGBButton, false);
+            //}
+            bool RGBButtonIsOnAndGameNotStarted = EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.InstructionAudioEnded;
             if (RGBButtonIsOnAndGameNotStarted)
             {
                 bool PBPressed = !MCP23Controller.Read(EnterRoomPB);
@@ -142,6 +144,36 @@ namespace FortRoom.Services
 
                 }
             }
+
+
+
+
+            //if (!EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.NotStarted)
+            //{
+            //    Thread.Sleep(VariableControlService.DelayTimeBeforeTurnPBOnInMs);
+            //    _logger.LogTrace("Ready To Start The Game .. Turn RGB Button On");
+            //    EnterRGBButtonStatus = true;
+            //    RelayController.Status(EnterRGBButton, true);
+            //}
+            //else if (EnterRGBButtonStatus && VariableControlService.GameStatus != GameStatus.NotStarted)
+            //{
+            //    EnterRGBButtonStatus = false;
+            //    RelayController.Status(EnterRGBButton, false);
+            //}
+            //bool RGBButtonIsOnAndGameNotStarted = EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.NotStarted;
+            //if (RGBButtonIsOnAndGameNotStarted)
+            //{
+            //    bool PBPressed = !MCP23Controller.Read(EnterRoomPB);
+            //    if (PBPressed)
+            //    {
+            //        EnterRGBButtonStatus = false;
+            //        RelayController.Status(NextRoomPBLight, false);
+            //        VariableControlService.GameStatus = GameStatus.Started;
+            //        VariableControlService.IsGameTimerStarted = false;
+            //        _logger.LogTrace("Start The Game Btn Pressed, Game Status {0}", VariableControlService.GameStatus);
+
+            //    }
+            //}
         }
 
         private async Task ControlExitingRGBButton()
