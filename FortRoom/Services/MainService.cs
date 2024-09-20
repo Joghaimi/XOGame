@@ -120,16 +120,10 @@ namespace FortRoom.Services
 
             if (VariableControlService.GameStatus == GameStatus.InstructionAudioEnded)
             {
-                //Thread.Sleep(VariableControlService.DelayTimeBeforeTurnPBOnInMs);
                 _logger.LogTrace("Ready To Start The Game .. Turn RGB Button On");
                 EnterRGBButtonStatus = true;
                 RelayController.Status(EnterRGBButton, true);
             }
-            //else if (EnterRGBButtonStatus && VariableControlService.GameStatus != GameStatus.NotStarted)
-            //{
-            //    EnterRGBButtonStatus = false;
-            //    RelayController.Status(EnterRGBButton, false);
-            //}
             bool RGBButtonIsOnAndGameNotStarted = EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.InstructionAudioEnded;
             if (RGBButtonIsOnAndGameNotStarted)
             {
