@@ -100,19 +100,18 @@ namespace DivingRoom.Services
         }
         private void ControlEnteringRGBButton()
         {
-            if (!EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.NotStarted)
+            if (VariableControlService.GameStatus == GameStatus.InstructionAudioEnded)
             {
-                Thread.Sleep(VariableControlService.DelayTimeBeforeTurnPBOnInMs);
                 _logger.LogTrace("Ready To Start The Game .. Turn RGB Button On");
                 EnterRGBButtonStatus = true;
                 RelayController.Status(EnterRGBButton, true);
             }
-            else if (EnterRGBButtonStatus && VariableControlService.GameStatus != GameStatus.NotStarted)
-            {
-                EnterRGBButtonStatus = false;
-                RelayController.Status(EnterRGBButton, false);
-            }
-            bool RGBButtonIsOnAndGameNotStarted = EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.NotStarted;
+            //else if (EnterRGBButtonStatus && VariableControlService.GameStatus != GameStatus.NotStarted)
+            //{
+            //    EnterRGBButtonStatus = false;
+            //    RelayController.Status(EnterRGBButton, false);
+            //}
+            bool RGBButtonIsOnAndGameNotStarted = EnterRGBButtonStatus && VariableControlService.GameStatus == GameStatus.InstructionAudioEnded;
             if (RGBButtonIsOnAndGameNotStarted)
             {
                 bool PBPressed = !MCP23Controller.Read(EnterRoomPB, true);
@@ -226,22 +225,22 @@ namespace DivingRoom.Services
      
         private void RoomAudio()
         {
-            if (VariableControlService.GameStatus == GameStatus.NotStarted && !thereAreInstructionSoundPlays)
-            {
-                Thread.Sleep(VariableControlService.DelayTimeBeforeInstructionInMs);
+            //if (VariableControlService.GameStatus == GameStatus.NotStarted && !thereAreInstructionSoundPlays)
+            //{
+            //    Thread.Sleep(VariableControlService.DelayTimeBeforeInstructionInMs);
 
 
-                _logger.LogTrace("Start Instruction Audio");
-                //AudioPlayer.PIBackgroundSound(SoundType.instruction);
-                thereAreInstructionSoundPlays = true;
-            }
-            else if (thereAreInstructionSoundPlays && VariableControlService.GameStatus != GameStatus.NotStarted)
-            {
-                _logger.LogTrace("Stop Instruction Audio");
-                thereAreInstructionSoundPlays = false;
-                //AudioPlayer.PIStopAudio();
-                Thread.Sleep(500);
-            }
+            //    _logger.LogTrace("Start Instruction Audio");
+            //    //AudioPlayer.PIBackgroundSound(SoundType.instruction);
+            //    thereAreInstructionSoundPlays = true;
+            //}
+            //else if (thereAreInstructionSoundPlays && VariableControlService.GameStatus != GameStatus.NotStarted)
+            //{
+            //    _logger.LogTrace("Stop Instruction Audio");
+            //    thereAreInstructionSoundPlays = false;
+            //    //AudioPlayer.PIStopAudio();
+            //    Thread.Sleep(500);
+            //}
 
             if (VariableControlService.GameStatus == GameStatus.Started && !thereAreBackgroundSoundPlays)
             {
