@@ -165,8 +165,8 @@ namespace FloorIsLava.Services
             //}
             if (VariableControlService.GameStatus == GameStatus.InstructionAudioEnded)
             {
-                Console.WriteLine("InstructionAudioEnded");
-                _logger.LogTrace("Ready To Start The Game .. Turn RGB Button On");
+                //Console.WriteLine("InstructionAudioEnded");
+                //_logger.LogTrace("Ready To Start The Game .. Turn RGB Button On");
                 EnterRGBButtonStatus = true;
                 RelayController.Status(EnterRGBButton, true);
             }
@@ -176,7 +176,7 @@ namespace FloorIsLava.Services
                 bool PBPressed = !MCP23Controller.Read(EnterRoomPB);
                 if (PBPressed)
                 {
-                    Console.WriteLine("Pressed Start Button");
+                    //Console.WriteLine("Pressed Start Button");
 
                     EnterRGBButtonStatus = false;
                     RelayController.Status(NextRoomPBLight, false);
